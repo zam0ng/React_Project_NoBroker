@@ -18,8 +18,33 @@ class User extends Model{
                     type : DataTypes.STRING,
                     allowNull : false,
                 },
+                // 공인중개사 신청 여부(true : 공인중개사, false : 일반 유저)
+                role : {
+                    type : DataTypes.BOOLEAN,
+                    allowNull : false,
+                },
+                // 공인중개사 자격증 이미지
+                certificate_img :{
+                    type : DataTypes.STRING,
+                },
+                // 인증된 공인중개사 인지 여부
+                // 인증된 공인중개사 회원인지 여부 (0: 공인중개사 승인, 1: 신청중, 2: 승인 거절)
+                certificate_user :{
+                    type : DataTypes.INTEGER,
+                    defaultValue : 1,
+                },
+                // 허위 매물 등록횟수
+                fake_count :{
+                    type : DataTypes.INTEGER,
+                    defaultValue : 0,
+                },
+                // 판매 가능 여부 (패널티 여부)
+                ban :{
+                    type : DataTypes.BOOLEAN,
+                    defaultValue : false,
+                },
                 // 유저 이름
-                name :{
+                user_name :{
                     type : DataTypes.STRING,
                     allowNull : false,
                 },
@@ -91,6 +116,7 @@ class User extends Model{
         db.User.hasMany(db.Comment, { foreignKey : "user_id", sourceKey : "id"});
         db.User.hasMany(db.Recomment, { foreignKey : "user_id", sourceKey : "id"});
         db.User.hasMany(db.Likes, { foreignKey : "user_id", sourceKey : "id"});
+        db.User.hasMany(db.Vote, { foreignKey : "user_id", sourceKey : "id"});
 
     }
 

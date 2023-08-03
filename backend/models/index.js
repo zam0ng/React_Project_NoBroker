@@ -6,6 +6,7 @@ const Transaction = require ("./transaction");
 const Comment = require ("./comment");
 const Recomment = require ("./recomment");
 const Likes = require ("./likes");
+const Vote = require("./vote");
 
 const sequelize = new Sequelize(config.dev);
 
@@ -17,6 +18,7 @@ db.Transaction = Transaction;
 db.Comment = Comment;
 db.Recomment = Recomment;
 db.Likes = Likes;
+db.Vote = Vote;
 
 User.init(sequelize);
 Real_estate.init(sequelize);
@@ -24,6 +26,7 @@ Transaction.init(sequelize);
 Comment.init(sequelize);
 Recomment.init(sequelize);
 Likes.init(sequelize);
+Vote.init(sequelize);
 
 User.assicoate(db);
 Real_estate.assicoate(db);
@@ -31,5 +34,6 @@ Transaction.assicoate(db);
 Comment.assicoate(db);
 Recomment.assicoate(db);
 Likes.assicoate(db);
+Vote.assicoate(db);
 
 module.exports = db;

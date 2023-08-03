@@ -8,7 +8,7 @@ const {sequelize} = require("./models");
 app.use(express.urlencoded({extended :false}));
 
 sequelize
-    .sync({ force: false })
+    .sync({ force: true })
     .then(() => {
         console.log("database Connect");
     })

@@ -9,15 +9,20 @@ class Real_estate extends Model{
                     type : DataTypes.INTEGER,
                     allowNull : false,
                 },
-                // 매물 등록 후 admin 승인여부 전 상태(기본값 : false) , 승인 후 : true
+                // 투표 결과(0 : 진행중, 1 : 정상매물, 2 : 허위매물, 3: 미달)
                 accpet : {
-                    type : DataTypes.BOOLEAN,
-                    defaultValue : false,
+                    type : DataTypes.INTEGER,
+                    defaultValue : 0,
                 },
                 // 거래 상태 (0: 매매가능&기본값, 1:거래요청, 2:거래중, 3:거래완료)
                 state : {
                     type : DataTypes.INTEGER,
                     defaultValue : 0,
+                },  
+                // 투표 마감 기간j
+                vote_end_date :{
+                    type : DataTypes.DATE,
+                    defaultValue  : new Date(new Date().getTime() + (7 * 24 * 60 * 60 * 1000)),
                 },
                 // 조회수
                 views : {
@@ -25,7 +30,7 @@ class Real_estate extends Model{
                     defaultValue : 0,
                 },
                 // 건물 이름 
-                name : {
+                estate_name : {
                     type : DataTypes.STRING,
                     allowNull : false,
                 },
@@ -89,7 +94,7 @@ class Real_estate extends Model{
                     type : DataTypes.FLOAT,
                     allowNull : false,
                 },
-                // 인증 서류 이미지(본인 땅인지 확인)
+                // 부동산 고유번호
                 doc :{
                     type : DataTypes.STRING,
                     allowNull : false,
@@ -102,37 +107,30 @@ class Real_estate extends Model{
                 // 매물 사진
                 img_1 :{
                     type : DataTypes.STRING,
-                    allowNull : false,
                 },
                 // 매물 사진
                 img_2 :{
                     type : DataTypes.STRING,
-                    allowNull : false,
                 },
                 // 매물 사진
                 img_3 :{
                     type : DataTypes.STRING,
-                    allowNull : false,
                 },
                 // 매물 사진
                 img_4 :{
                     type : DataTypes.STRING,
-                    allowNull : false,
                 },
                 // 매물 사진
                 img_5 :{
                     type : DataTypes.STRING,
-                    allowNull : false,
                 },
                 // 매물 사진
                 img_6 :{
                     type : DataTypes.STRING,
-                    allowNull : false,
                 },
                 // 매물 사진
                 img_7 :{
                     type : DataTypes.STRING,
-                    allowNull : false,
                 },
 
             },{
@@ -154,6 +152,7 @@ class Real_estate extends Model{
         db.Real_estate.hasMany(db.Transaction, { foreignKey : "real_estate_id", sourceKey : "id"});
         db.Real_estate.hasMany(db.Comment, { foreignKey : "real_estate_id", sourceKey : "id"});
         db.Real_estate.hasMany(db.Likes, { foreignKey : "real_estate_id", sourceKey : "id"});
+        db.Real_estate.hasMany(db.Vote, { foreignKey : "real_estate_id", sourceKey : "id"});
 
     }
 }
