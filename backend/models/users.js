@@ -31,7 +31,6 @@ class User extends Model{
                 // 인증된 공인중개사 회원인지 여부 (0: 공인중개사 승인, 1: 신청중, 2: 승인 거절)
                 certificate_user :{
                     type : DataTypes.INTEGER,
-                    defaultValue : 1,
                 },
                 // 허위 매물 등록횟수
                 fake_count :{
