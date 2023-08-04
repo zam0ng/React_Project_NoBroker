@@ -6,10 +6,11 @@ import Insert from './components/insertPage/Insert';
 function App() {
   return (
     <div className="App">
+      <NavHeader></NavHeader>
       <Routes>
         <Route path='/insert' element={<Insert/>} />
       </Routes>
-      <NavHeader></NavHeader>
+      
     </div>
   );
 }
