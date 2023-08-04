@@ -3,6 +3,8 @@ const cors = require("cors");
 const dot = require("dotenv").config();
 const session = require("express-session");
 
+const { estateDetailRouter } = require("./routers");
+
 const app = express();
 
 const {sequelize} = require("./models");
@@ -22,7 +24,7 @@ app.use(session({
 }))
 
 sequelize
-    .sync({ force: true })
+    .sync({ force: false })
     .then(() => {
         console.log("database Connect");
     })
@@ -30,6 +32,8 @@ sequelize
         console.error(err);
     });
 
+
+app.use("/detail", estateDetailRouter);
 
 const server = app.listen(8080,()=>{
     console.log("Server on");
