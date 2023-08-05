@@ -7,19 +7,39 @@
     <meta name="theme-color" content="#000000" />
 
     <title>React App</title>
-  </head>
+
+    <!-- 구글 맵 css -->
+    <link rel="stylesheet" href="./style.css"/>
+    
+
+    <!-- [CSF⭐] 설치 -->
+      <!-- 1) Google Maps API 로드 -->
+          <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio&libraries=maps,marker&v=beta"></script>
+          <!-- [async 속성 이해]
+                - 요약 : async 없으면 동기, async 있으면, 'html 요소의 병렬적 로딩' 이 가능 (비동기)
+                '비동기처리' 를 가능하게 함. 
+                즉, script 에 async 가 없으면, <script> 가 페이지를 다 로드할 때 까지, 다른 것들은 다 멈춰! 야 한다. 
+                그런데, asyncs 를 넣으면, <script> 가 페이지를 가져올 때, '이것만 기다리지 말고, 다른 html 요소들도 같이 가져옵시다' 가 된다.
+                  
+                [libraries=maps,marker&v=beta 속성 이해]
+                  - libraries=maps, marker : 라이브러리 중 maps 기능을 사용하고 싶다. marker 기능을 사용하고 싶다는 말
+                  - v = beta : 라이브러리 버전 중 beta 버전을 쓰고 싶다는 말            
+          -->
+
+
+      <!-- 2) MarkerClusterer 라이브러리 로드 -->
+        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+          <!-- [기능] 
+              마커를 가져오고, 관리하는데에 사용됨 -->
+
+    </head>
+
+
+
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <!-- [CSF⭐] 이게 타겟 DOM 이걸 지우면 안 나옴   -->
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>
