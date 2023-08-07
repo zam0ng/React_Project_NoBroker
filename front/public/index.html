@@ -13,8 +13,8 @@
     
 
     <!-- [CSF⭐] 설치 -->
-      <!-- 1) Google Maps API 로드 -->
-          <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio&libraries=maps,marker&v=beta"></script>
+      <!-- 1) Google Maps API 로드 | 공식 문서에서는, script 를 밑에 놨는데, 여기는 위에 놨네? -->
+          <!-- <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio&libraries=maps,marker&v=beta"></script> -->
           <!-- [async 속성 이해]
                 - 요약 : async 없으면 동기, async 있으면, 'html 요소의 병렬적 로딩' 이 가능 (비동기)
                 '비동기처리' 를 가능하게 함. 
@@ -26,11 +26,27 @@
                   - v = beta : 라이브러리 버전 중 beta 버전을 쓰고 싶다는 말            
           -->
 
-
       <!-- 2) MarkerClusterer 라이브러리 로드 -->
         <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
           <!-- [기능] 
               마커를 가져오고, 관리하는데에 사용됨 -->
+
+      <!-- 3) 자동완성시 필요한 스크립트  -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio&libraries=places"></script>
+            <!-- 클러스터랑 다른 스크립트가 필요함. 어떻게 합칠지는 고민해야 함. -->
+
+
+    <!-- 오래된 브라우저에서 최신 JS 기능 사용할 수 있게 하는 스크립트 : 구글 공식문서 AUTO PLACE COMPOTE 튜토리얼에서 추가 | -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+    <!-- 데이터 레이어 추가에서, 날씨 데이터 가져오는 부분 -->
+        <!-- <script src="https://storage.googleapis.com/mapsdevsite/json/quakes.geo.json" > </script> -->
+            <!-- [JSONP 기능] 
+                - 특정 url 주소에 요청하면, 전달받은 데이터는 '콜백함수의 인자' 로 전달됨
+                - 콜백함수 이름은 사전에 합의된걸로 적어야 함. (그래야, 전달받은 데이터가 콜백함수 인자로 쏙 들어감.)
+                
+            -->
 
     </head>
 

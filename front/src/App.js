@@ -7,7 +7,7 @@ import GoogleMap_2 from './components/GoogleMap_2'
 import GoogleMap_3 from './components/GoogleMap_3'
 
 import GoogleMap_2_1 from './components/GoogleMap_2_1'
-
+import PlaceAutoCompleteSearch from './components/PlaceAutoCompleteSearch/index'
 
 import { Wrapper } from '@googlemaps/react-wrapper';
 import SearchBox from './components/SearchBox/index';
@@ -26,16 +26,18 @@ function App() {
 
         {/* <GoogleMap_2> </GoogleMap_2> */}
 
-        {/* 작동함 🔵 */}
+        {/* 작동함 | 클러스터링 | 🔵 */}
         {/* <GoogleMap_2_1> </GoogleMap_2_1> */}
 
         {/* 유튜브 버전으로 진행 */}
       
         {/* <GoogleMap_3> </GoogleMap_3> */}
 
+        <PlaceAutoCompleteSearch> </PlaceAutoCompleteSearch>
+
         {/* <TestMarker> </TestMarker> */}
 
-        <SearchBox> </SearchBox>
+        {/* <SearchBox> </SearchBox> */}
 
       </Wrapper>
       

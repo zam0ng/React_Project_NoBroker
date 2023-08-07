@@ -4,8 +4,8 @@ import {GoogleMap , useLoadScript , Marker} from "@react-google-maps/api";
 import mapContainerStyle from './GoogleMap_3_STYLED'
 
 import Select from 'react-select';
-
-
+import SearchBox from 'components/SearchBox/index';
+import ComboboxInput from 'components/ComboboxInput';
 
 import usePlacesAutocomplete, {
     getGeocode, 
@@ -26,22 +26,6 @@ import usePlacesAutocomplete, {
         { value: 'strawberry', label: 'Strawberry' },
         { value: 'vanilla', label: 'Vanilla' },
     ];
-
-
-
-// import {
-//     Combobox,   // 컨테이너 역할. 이 안에, comboboxinput, comboboxpopover 등이 들어감 
-//     ComboboxInput,      // 실제 입력 필드
-//     ComboboxPopover,    // 제안 목록이 표시되는 곳
-//     ComboboxList,       // 실제 제안이 포함된 목록을 레더링 | 📛 ComboboxPopover 와의 차이는?  
-//     ComboboxOption,     // 제안 목록들 중 하나. ComboboxList 에 포함됨.  
-// } from "@reach/combobox"
-    /* [Combobox 기능] 
-        사용자가 입력하면 ->  관련 제안 목록이 나타남 
-        use-places-autocomplete 와 함께 사용하면, google place 에서 가져온 제안을 동적으로 표시 가능 ⭐⭐⭐
-    */
-
-// import "@reach/combobox/style.css"
 
 
 export default function GoogleMap_3() {
@@ -72,7 +56,7 @@ const Map = () => {
         // [효과]
             // 실수로, 중심을 다시 44, -80 으로 바꾸는 문제를 해결
     
-    {/* 자동 완성 기능 사용하면 -> 선택한 장소의 위도와 경도를 selected에 저장함 */}
+    /* 자동 완성 기능 사용하면 -> 선택한 장소의 위도와 경도를 selected에 저장함 */
     const [selected , setSelected] = useState(null);
         // [아직 모르겠음 😥]
             // 이 상태가 변경되면 -> 해당 변경 사항이 자식 컴포넌트에 반영
@@ -95,6 +79,7 @@ const Map = () => {
             <GoogleMap                 
                 // GoogleMap 컴포넌트에 3가지 props 필요⭐
                 mapContainerClassName="map-container"    
+                // mapContainerStyle={mapContainerStyle}
                 zoom={10} 
                 center={center} 
             >
@@ -142,45 +127,40 @@ const PlacesAutocomplete = ({setSelected}) => {
         setSelected({lat , lng})
     }
 
-    console.log(data)
+    console.log("추천된 데이터" ,data)
 
+
+    const selectedOptions = data.map(({ place_id, description }) => ({
+        // key : place_id,/
+        value: description,
+        label: description,
+    }));
+
+    
     return (
-        <Select onSelect={handleSelect}>
+
+        <Select 
+            onChange={(e) => {console.log(e.target.value)}} 
+            options={options}
+            defaultValue={selectedOptions[0]}
+            >
             
         </Select>
+
+        // <Select
+        //     value={selectedOptions.find(function(option){ 
+        //         return option.value === value})}
+
+        //     onChange={option => {
+        //         setValue(option.value);
+        //         handleSelect(option.label);
+        //     }}
+        //     options={selectedOptions}
+        //     isDisabled={!ready}
+        //     placeholder="Search an address"
+        //     className="select-input"
+        // />
     )
     
-    
-    
-    // value : 사용자가 입력한 주소값 
-    // onChange = { (e)=> setValue(e.target.value) } : input 창에 입력한 값 가져와서 저장하는 메소드 
-    
-    // <SearchBox  onSelect={handleSelect} value = {value}  onChange= { (e) => setValue(e.target.value) }  placeholder="Search an address">
-    // </SearchBox>
-
-
-    // <Combobox onSelect = {handleSelect} >
-    //         {/* combobox 안에 input 까지 넣어야 화면에 보임 */}
-    //         <ComboboxInput 
-    //             value = {value}
-    //             onChange = { (e)=> setValue(e.target.value) }
-    //             disabled = {!ready}     // 바로 타이핑 시작할 수 있음. 
-    //             className = "combobox-input"
-    //             placeholder = "Search an address"
-    //         />
-
-    //         {/* 검색된 것의 '결과' 보여주기 */}
-    //         <ComboboxPopover>
-    //             {/* 추천 '결과' 가 나옴 */}
-    //             <ComboboxList>
-    //                 {/* status 가 괜찮을 때 -> 실제로 data 를 추천 받음 */}
-    //                 {status === "OK" && 
-    //                     data.map( ( {place_id , description} ) => {
-    //                         <ComboboxOption  key={place_id} value={description} />
-    //                     } )
-    //                 }
-    //             </ComboboxList>
-    //         </ComboboxPopover>
-    //     </Combobox>
 
 }
