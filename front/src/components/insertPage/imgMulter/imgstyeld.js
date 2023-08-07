@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const Container = styled.div`
     width: 85%;
-    height: 100px;
+    height: 80px;
     border: 1px solid black;
     display: flex;
     & span{
@@ -11,27 +11,22 @@ export const Container = styled.div`
 ` 
 export const Title = styled.div`
     width: 10%;
-    height: 100px;
+    height: 80px;
     border: 1px solid black;
     text-align: left;
-    line-height: 100px;
+    line-height: 80px;
     font-size: smaller;
     font-weight: 600;
     background-color: #fafafa;
 
 `
-export const SelectContainer = styled.div`
-    width : 90%;
-    height: 100px;
-    border: 1px solid black;
+export const MulterBox = styled.div`
+    width: 90%;
+    height: 80px;
+    /* border: 1px solid red; */
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    & img{
-        width: 80px;
-        height: 80px;
-    }
-`
-export const Radio = styled.div`
+
+   
     
 `
