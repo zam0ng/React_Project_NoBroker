@@ -14,7 +14,7 @@ class Recomment extends Model{
                     type : DataTypes.INTEGER,
                     allowNull : false,
                 },
-                // 댓글 내용
+                // 대댓글 내용
                 re_content : {
                     type : DataTypes.STRING,
                     allowNull : false,
@@ -33,7 +33,7 @@ class Recomment extends Model{
     }
 
     static assicoate(db) {
-        
+
         db.Recomment.belongsTo(db.User, { foreignKey : "user_id", targetKey : "id"});
         db.Recomment.belongsTo(db.Comment, { foreignKey : "comment_id", targetKey : "id"});
 
