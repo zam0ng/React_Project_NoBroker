@@ -35,10 +35,10 @@ exports.getEstate = async (req, res) => {
     await estate.update({ views: estate.views + 1 }, { where: { id } });
 
     // 허위 매물 업로드 경력
-    const seller = await User.findOne({ where: { id: estate.seller } });
+    const seller = await User.findOne({ attributes : ['id', 'user_name', 'phone', 'fake_count'], where: { id: estate.seller } });
 
     console.log(estate);
-    return res.json({ estate, like, fake_count: seller.fake_count });
+    return res.json({ estate, like, seller });
   } catch (error) {
     console.log(error);
     return res.json({ error });
