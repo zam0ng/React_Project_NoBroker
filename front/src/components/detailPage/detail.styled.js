@@ -15,7 +15,8 @@ export const RightDiv = styled.div`
 
     & .fixed {
         position: fixed;
-        top : 0
+        /* top : 0; */
+        /* bottom : 0; */
     }
 `
 

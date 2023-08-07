@@ -6,7 +6,7 @@ const { getEstate, buyEstate, likeEstate, delLikeEstate, postComment, postRecomm
 router.get("/:id", getEstate);
 
 // 로그인 필요
-// 매물 구매(판매 가능한 등급(패널티 없는 사람)인지 판별 필요)
+// 매물 구매
 router.post("/buyEstate", buyEstate);
 
 // 로그인 필요

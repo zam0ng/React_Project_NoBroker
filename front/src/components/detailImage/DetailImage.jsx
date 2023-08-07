@@ -46,18 +46,21 @@ const DetailImage = ({list}) => {
     const loop = () => {
         let arr = [];
         list.forEach((el, index) => {
+            let src = "";
             if(el!=null) {
-                arr.push(<DetailImg> <img id={`img_${index}`} onClick={(e)=>{thumbnailImg(e)}} src={el} /> </DetailImg>);
+                src = el;
                 // arr.push(<DetailImg><img src={el} alt="매물 이미지" /></DetailImg>);
             } else {
-                arr.push(<DetailImg> <img id={`img_${index}`} onClick={(e)=>{thumbnailImg(e)}} src='http://localhost:8080/estate_imgs/null.png' /> </DetailImg>);
+                src = 'http://localhost:8080/estate_imgs/null.png';
+                // arr.push(<DetailImg> <img id={`img_${index}`} onClick={(e)=>{thumbnailImg(e)}} src='http://localhost:8080/estate_imgs/null.png' /> </DetailImg>);
             }
+            arr.push(<DetailImg> <img id={`img_${index}`} onClick={(e)=>{thumbnailImg(e)}} src={src} /> </DetailImg>);
         });
         return arr;
     }
 
   return (
-    <div id='detailImage'>
+    <>
     <PopupBack display = {display} onClick={()=>{setDisplay("none")}}>
         {/* 닫기 버튼 */}
         {/* <span onClick={()=>{setDisplay("none")}}>X</span> */}
@@ -71,7 +74,7 @@ const DetailImage = ({list}) => {
     </ImgDiv>
 
     <SmallImgDiv><div>{loop()}</div></SmallImgDiv>
-    </div>
+    </>
   )
 }
 

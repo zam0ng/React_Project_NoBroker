@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const DetailLabel = styled.label`
+export const DetailTitle = styled.label`
     font-weight: bold;
-    padding-bottom: 1000000px;
+    padding-bottom: 10px;
 `
