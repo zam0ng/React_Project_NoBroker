@@ -15,7 +15,7 @@ function App() {
         <NavHeader></NavHeader>
         <Routes>
           <Route path="/insert" element={<Insert />} />
-          <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/detail/:id" element={<Detail queryClient={queryClient} />} />
         </Routes>
       </div>
     </QueryClientProvider>

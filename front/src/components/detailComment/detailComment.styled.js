@@ -13,8 +13,8 @@ export const CommentInput = styled.input`
 `
 
 export const InsertBtn = styled.div`
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     background-color: beige;
     /* z-index: 1100; */
 `

@@ -1,9 +1,12 @@
 const router = require("express").Router();
-const { getEstate, buyEstate, likeEstate, delLikeEstate, postComment, postRecomment } = require("../controllers/estateDetailController");
+const { getEstate, viewEstate, buyEstate, likeEstate, delLikeEstate, postComment, postRecomment } = require("../controllers/estateDetailController");
 
 
 // 매물 상세 정보 반환(댓글,대댓글,찜 여부 반환)
 router.get("/:id", getEstate);
+
+// 매물 조회수 올리기
+router.post("/view/:id", viewEstate);
 
 // 로그인 필요
 // 매물 구매

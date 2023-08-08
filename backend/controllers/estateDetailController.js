@@ -19,31 +19,46 @@ exports.getEstate = async (req, res) => {
       include: { model: Comment, include: [{ model: Recomment }] },
     });
 
-    let like = false;
+    let user_like = false;
     // 로그인 되어 있으면
     if (user_id) {
       // 찜 여부 반환
-      const likes = await Likes.findOne({
+      const like = await Likes.findOne({
         where: { user_id, real_estate_id: id },
       });
-      if (likes) {
-        like = true;
+      if (like) {
+        user_like = true;
       }
     }
-
-    // 조회수 올리기
-    await estate.update({ views: estate.views + 1 }, { where: { id } });
+    const likes = await Likes.count({where : {real_estate_id : id}});
 
     // 허위 매물 업로드 경력
     const seller = await User.findOne({ attributes : ['id', 'user_name', 'phone', 'fake_count'], where: { id: estate.seller } });
 
     console.log(estate);
-    return res.json({ estate, like, seller });
+    return res.json({ estate, like:{user_like, likes}, seller });
   } catch (error) {
     console.log(error);
     return res.json({ error });
   }
 };
+
+// 매물 조회수 올리기
+exports.viewEstate = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 조회수 올리기
+    const estate = await Real_estate.findOne({where: { id } });
+    console.log("조회수", id, estate)
+    await Real_estate.update({ views: estate.views + 1 }, { where: { id } });
+
+    return res.json({message : "성공"});
+  } catch (error) {
+    console.log(error);
+    return res.json({ error });
+  }
+}
 
 // 매물 구매 신청
 exports.buyEstate = async (req, res) => {
