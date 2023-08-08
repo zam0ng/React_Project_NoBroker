@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const dot = require("dotenv").config();
 const session = require("express-session");
+const path =require("path");
+const uploadRouter = require("./routers/upload");
 
 const app = express();
 
@@ -9,9 +11,12 @@ const {sequelize} = require("./models");
 
 app.use(express.json());
 app.use(express.urlencoded({extended :false}));
+app.use("/estate_imgs",express.static(path.join(__dirname,"imgs","estate")));
+// app.use("/img",express.static(path.join(__dirname,"uploads")));
+
 app.use(cors({
     origin : [
-        "http://127.0.0.1:3000",
+        "http://localhost:3000",
     ],
     credentials : true
 }));
@@ -22,7 +27,7 @@ app.use(session({
 }))
 
 sequelize
-    .sync({ force: true })
+    .sync({ force: false })
     .then(() => {
         console.log("database Connect");
     })
@@ -30,6 +35,7 @@ sequelize
         console.error(err);
     });
 
+app.use("/upload",uploadRouter);
 
 const server = app.listen(8080,()=>{
     console.log("Server on");

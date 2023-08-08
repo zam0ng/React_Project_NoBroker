@@ -3,7 +3,9 @@ import { styled } from "styled-components";
 export const Container = styled.div`
     width: 85%;
     height: 80px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    border-bottom: 1px solid #eeeeee;
+
     display: flex;
     & span{
         color : #0055FF;
@@ -12,7 +14,7 @@ export const Container = styled.div`
 export const Title = styled.div`
     width: 10%;
     height: 80px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     text-align: left;
     line-height: 80px;
     font-size: smaller;

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import {MainTitle,Caution,Bodyy,EstataInfoTitle,WarningSpan,EssentialSpan,Modalbody,Modal} from './insertstyled';
+import {MainTitle,Caution,Bodyy,EstataInfoTitle,WarningSpan,EssentialSpan,
+        Modalbody,Modal,FinalCheck,CheckInput,CheckDiv,CheckContent,CheckBtn} from './insertstyled';
 import Postcode from './postPopup/Post'
 import TypeSelect from './estateTypeSelect/TypeSelect'
 import Area from './estateArea/Area';
@@ -8,6 +9,7 @@ import EstateBuilt from './estate_year_built/EstateBuilt'
 import Deposite from './deposite/Deposite'
 import ImgMulter from './imgMulter/ImgMulter';
 import { useState } from 'react';
+import Footer from '../footer/Footer';
 const Insert = () => {
 
   const [balance,setBalance] = useState(0);
@@ -25,9 +27,32 @@ const Insert = () => {
     setDisplay("block");
     document.body.style.overflow="hidden";
   }
-  // useEffect(()=>{
-    
-  // },[balance])
+  
+  function btnClick(){
+    console.log("매물등록 버튼 눌림");
+  }
+  function isChecked() {
+    const checkbox = document.getElementById('checkbox');
+    const ischecked = checkbox.checked;
+    console.log(ischecked);
+
+    const checkbtn = document.getElementById('checkbtn');
+
+    if(ischecked){
+      checkbtn.disabled = false;
+      checkbtn.style.backgroundColor="#0067a3";
+      checkbtn.style.color ="white";
+      checkbtn.style.cursor = "pointer";
+    }
+    else{
+      checkbtn.disabled = true;
+      checkbtn.style.backgroundColor="#e0e0e0";
+      checkbtn.style.color ="white";
+      checkbtn.style.cursor = "default";
+      
+
+    }
+  }
   return (
     <>
     <Bodyy>
@@ -59,6 +84,18 @@ const Insert = () => {
         <WarningSpan onClick={Block}>* 사진 등록 전, 반드시 확인해주세요!</WarningSpan>
       </EstataInfoTitle>
       <ImgMulter></ImgMulter>
+
+      <FinalCheck>
+        <CheckDiv>
+          <CheckInput onClick ={isChecked} type="checkbox" id="checkbox"></CheckInput>
+          <CheckContent>매물관리규정을 확인하였으며, 입력한 정보는 실제 매물과 다름이 없습니다.</CheckContent>
+        </CheckDiv>
+
+        <CheckDiv height={"90px"}>
+          <CheckBtn onClick={btnClick} id="checkbtn">매물 등록</CheckBtn>
+        </CheckDiv> 
+      </FinalCheck>
+      <Footer></Footer>
     </Bodyy>
 
     <Modalbody display ={display}>
@@ -75,6 +112,8 @@ const Insert = () => {
       <button onClick={None}>닫기</button>
       </Modal>
     </Modalbody>
+
+    
     </>
   )
 }

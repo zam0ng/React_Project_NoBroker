@@ -3,10 +3,8 @@ import axios from 'axios';
 
 const {kakao} =window;
 
+const MapApi = ({placeAddress, setIsNone}) => {
 
-const MapApi = ({placeAddress}) => {
-
-  
     const [lng,setLng] =useState(0);
     const [lat,setLat] =useState(0);
     const [mapLoaded ,setMapLoaded] = useState(false);
@@ -18,7 +16,6 @@ const MapApi = ({placeAddress}) => {
     placeAddress
     )}`;
 
-        
     axios.get(url, {
     headers: {
       Authorization: `KakaoAK ${process.env.REACT_APP_REST_API_KEY}`,
@@ -32,14 +29,15 @@ const MapApi = ({placeAddress}) => {
         console.log(err);
     });
 
-
-
     useEffect(()=>{
 
+        console.log("------------------mapLoaded");
         console.log(mapLoaded);
         console.log(lat)
         console.log(lng)
         if(mapLoaded){
+        setIsNone("none");
+
         const container = document.getElementById('map');
         const options = {
             center : new kakao.maps.LatLng(lat, lng),
@@ -67,10 +65,6 @@ const MapApi = ({placeAddress}) => {
 
     },[lat,lng,mapLoaded]);
 
-    // useEffect(() => {
-    //     createMap();
-    // }, []);
-    
   return (
     <>
     {/* <input type="text" id="sample5_address" placeholder="주소"/> */}

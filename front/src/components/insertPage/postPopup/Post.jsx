@@ -8,6 +8,7 @@ const Postcode = () => {
   const [road,setRoad] = useState();
   const [jibun,setJibun] = useState();
   const [placeAddress,setPlaceAddress] = useState();
+  const [isNone,setIsNone]= useState("block");
   const scriptUrl = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
   const open = useDaumPostcodePopup(scriptUrl);
@@ -59,8 +60,9 @@ const Postcode = () => {
               <AdditionalInput width={"90%"}></AdditionalInput>
             </AdditionalBox>
       </AddressContainer>
-      <MapContainer>
-        <MapApi placeAddress={placeAddress}></MapApi>
+      <MapContainer> 
+        <p style={{display:isNone}}>주소를 검색하시면 <br></br> 해당 위치가 지도에 표시됩니다.</p>
+        <MapApi placeAddress={placeAddress} setIsNone={setIsNone}></MapApi>
       </MapContainer>    
     </Container>
 

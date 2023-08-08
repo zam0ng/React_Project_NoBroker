@@ -64,12 +64,12 @@ class Real_estate extends Model{
                     type : DataTypes.STRING,
                     allowNull : false,
                 },
-                // 계약금
+                // 판매가
                 deposit: {
                     type : DataTypes.INTEGER,
                     allowNull : false,
                 },
-                // 잔금 (기본값 계약금의 10%)
+                // 계약금 (기본값 계약금의 10%)
                 balance: {
                     type : DataTypes.INTEGER,
                     allowNull : false,

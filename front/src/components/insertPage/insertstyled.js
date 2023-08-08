@@ -6,13 +6,13 @@ export const MainTitle = styled.div`
     line-height: 200px;
     font-size: 250%;
     font-weight: 600;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 `
 export const Caution = styled.div`
     width: 85%;
     height: 200px;
     line-height: 50px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: flex;
     & ul{
         height: 100px;
@@ -29,7 +29,7 @@ export const Caution = styled.div`
 export const Bodyy = styled.div`
     width: 100%;
     height: 100%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -38,7 +38,8 @@ export const Bodyy = styled.div`
 export const EstataInfoTitle = styled.div`
     width: 85%;
     height: 80px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    border-bottom: 3px solid black;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -117,3 +118,55 @@ export const Modal = styled.div`
 
 `
 
+export const FinalCheck = styled.div`
+
+    width: 85%;
+    height: 250px;
+    /* border: 1px solid black; */
+`
+export const CheckDiv = styled.div`
+    width: 100%;
+    height: ${(props)=>props.height || "160px"};
+    /* border: 1px solid black; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+export const CheckInput = styled.input`
+    /* width: 20px;
+    height: 20px;
+    border: 1px solid black;
+
+    &:checked{
+        background-color: #0067a3;
+    } */
+
+    appearance: none;
+    border: 1.5px solid gainsboro;
+    border-radius: 5px;
+    width: 20px;
+    height: 20px;
+
+  &:checked {
+    border-color: transparent;
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e");
+    background-size: 120% 120%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-color: #0067a3;
+  }
+`
+export const CheckContent = styled.span`
+    width: 450px;
+    font-size: smaller;
+    /* border: 1px solid black; */
+`
+export const CheckBtn = styled.button`
+    margin-top: -70px;
+    width: 130px;
+    height: 60px;
+    background-color: #e0e0e0;
+    border: none;
+    color: white;
+    font-weight: 600;
+`

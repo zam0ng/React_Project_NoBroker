@@ -3,7 +3,9 @@ import { styled } from "styled-components";
 export const Container = styled.div`
     width: 85%;
     height: 400px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    border-bottom: 1px solid #eeeeee;
+
     display: flex;
     & span{
         color : #0055FF;
@@ -12,7 +14,7 @@ export const Container = styled.div`
 export const Title = styled.div`
     width: 10%;
     height: 400px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     text-align: left;
     line-height: 400px;
     font-size: smaller;
@@ -23,7 +25,7 @@ export const Title = styled.div`
 export const AddressContainer = styled.div`
     width: 50%;
     height: 400px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,7 +36,13 @@ export const AddressContainer = styled.div`
 export const MapContainer = styled.div`
     width: 40%;
     height: 400px;
-    border: 1px solid black;
+    border: 1px solid lightgray;
+    color: black;
+    font-size: smaller;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafafa;
 `
 
 export const AddressSearchBtn = styled.button`
