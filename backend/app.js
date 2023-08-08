@@ -4,7 +4,7 @@ const dot = require("dotenv").config();
 const path = require("path");
 const session = require("express-session");
 
-const { estateDetailRouter } = require("./routers");
+const { estateDetailRouter, estateVoteRouter } = require("./routers");
 
 const app = express();
 
@@ -37,6 +37,7 @@ sequelize
 // 매물 이미지 경로 지정
 app.use("/estate_imgs", express.static(path.join(__dirname, "imgs", "estate")));
 app.use("/detail", estateDetailRouter);
+app.use("/vote", estateVoteRouter);
 
 const server = app.listen(8080,()=>{
     console.log("Server on");
