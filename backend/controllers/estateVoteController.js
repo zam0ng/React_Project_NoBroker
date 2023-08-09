@@ -4,17 +4,21 @@ const { Real_estate, User, Vote } = require("../models");
 
 
 // 투표 결과 처리
-const setVoteResult = async (id) => {
+const setVoteResult = async (real_estate_id, balance) => {
   try {
-    const voteCount = await Vote.count({ where: { id } });
+    const voteCount = await Vote.count({ where: { real_estate_id } });
     // 미달
-    
+    if (voteCount < Math.floor(balance/10000000)) {
+      // 미달 처리
+      await Real_estate.update({accpet : 3}, {where : {real_estate_id}});
+      return;
+    }
 
     const trueCount = await Vote.count({
-      where: { id, result: true },
+      where: { real_estate_id, result: true },
     });
     const falseCount = await Vote.count({
-      where: { id, result: false },
+      where: { real_estate_id, result: false },
     });
 
     if (trueCount > falseCount) {
@@ -54,9 +58,9 @@ exports.voteEstate = async (req, res) => {
     await Vote.create({ user_id, real_estate_id, result });
 
     const voteCount = await Vote.count({ where: { id: real_estate_id } });
-    if (voteCount >= estate.balance) {
+    if (voteCount >= Math.floor(estate.balance/10000000)) {
 
-      setVoteResult(real_estate_id);
+      setVoteResult(real_estate_id, estate.balance);
 
       // if () //
       // await Real_estate.update({accept : }, {where : {id : real_estate_id}});
