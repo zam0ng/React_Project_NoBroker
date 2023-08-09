@@ -1,3 +1,4 @@
 import userimg from "./userimg.png";
+import heartButton from './heart-button.svg'
 
-export {userimg};
+export {userimg , heartButton};

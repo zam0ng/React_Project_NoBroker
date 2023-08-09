@@ -27,7 +27,7 @@ export const NavbarIcon =styled.div`
     justify-content: center;
 
 
-    & div{
+    & div {
         width: 50px;
         height: 50px;
         background-image: url(${userimg});

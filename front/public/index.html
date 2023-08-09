@@ -31,22 +31,19 @@
           <!-- [기능] 
               마커를 가져오고, 관리하는데에 사용됨 -->
 
+          
+
       <!-- 3) 자동완성시 필요한 스크립트  -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio&libraries=places"></script>
+        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio&libraries=places"></script> -->
             <!-- 클러스터랑 다른 스크립트가 필요함. 어떻게 합칠지는 고민해야 함. -->
 
 
     <!-- 오래된 브라우저에서 최신 JS 기능 사용할 수 있게 하는 스크립트 : 구글 공식문서 AUTO PLACE COMPOTE 튜토리얼에서 추가 | -->
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
+      <!-- super cluster 관련 스크립트 -->
+        <script src="https://unpkg.com/supercluster@8.0.0/dist/supercluster.min.js"></script>
 
-    <!-- 데이터 레이어 추가에서, 날씨 데이터 가져오는 부분 -->
-        <!-- <script src="https://storage.googleapis.com/mapsdevsite/json/quakes.geo.json" > </script> -->
-            <!-- [JSONP 기능] 
-                - 특정 url 주소에 요청하면, 전달받은 데이터는 '콜백함수의 인자' 로 전달됨
-                - 콜백함수 이름은 사전에 합의된걸로 적어야 함. (그래야, 전달받은 데이터가 콜백함수 인자로 쏙 들어감.)
-                
-            -->
 
     </head>
 

@@ -31,7 +31,7 @@ import usePlacesAutocomplete, {
 export default function GoogleMap_3() {
     const {isLoaded} = useLoadScript({
         // git 에 올릴 때는 지우고 올려야 함
-        googleMapsApiKey : "AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio",
+        // googleMapsApiKey : "AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio",
             // googleMapsApiKey : process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
 
         // API 추가 기능 가져오기 
