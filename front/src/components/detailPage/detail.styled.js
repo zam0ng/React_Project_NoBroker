@@ -1,22 +1,28 @@
 import styled from "styled-components"
 
+
 export const LeftDiv = styled.div`
-    width: 600px;
-    background-color: cadetblue;
+    width: 80%;
+    /* background-color: cadetblue; */
 `
 
 export const RightDiv = styled.div`
-    width : 200px;
-    background-color: blueviolet;
-    /* position: fixed; */
+    width : 20%;
+    background-color: aliceblue;
     position: absolute;
-    /* top : 0; */
     right: 0;
 
-    & .fixed {
+    &.fixed {
         position: fixed;
-        /* top : 0; */
-        /* bottom : 0; */
+        top : 0;
     }
 `
 
+
+export const DivList = styled.div`
+    width: 100%;
+    display: flex;
+    & ${LeftDiv} {
+        /* background-color: aquamarine; */
+    }
+`

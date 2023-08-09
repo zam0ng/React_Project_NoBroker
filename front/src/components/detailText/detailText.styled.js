@@ -1,6 +1,24 @@
 import styled from "styled-components"
 
-export const DetailTitle = styled.label`
+export const DetailTitle = styled.p`
     font-weight: bold;
-    padding-bottom: 10px;
+    font-size: 16px;
+`
+export const DetailContent = styled.p`
+    font-size: 18px;
+`
+
+export const DetailUl = styled.ul`
+    list-style: none;
+    & li {
+        display: flex;
+    }
+
+    & li ${DetailTitle} {
+        width : 30%;
+    }
+
+    & li ${DetailContent} {
+        width: 70%;
+    }
 `

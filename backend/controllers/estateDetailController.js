@@ -16,7 +16,7 @@ exports.getEstate = async (req, res) => {
 
     const estate = await Real_estate.findOne({
       where: { id },
-      include: { model: Comment, include: [{ model: Recomment }] },
+      include: { model: Comment, include: [{ model: Recomment, include : {model : User, attributes : ['user_name']} }, {model : User, attributes : ['user_name']}] },
     });
 
     let user_like = false;

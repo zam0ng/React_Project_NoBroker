@@ -1,5 +1,5 @@
 import React from 'react'
-import { DetailTitle } from './detailText.styled'
+import { DetailTitle, DetailUl, DetailContent } from './detailText.styled'
 
 const DetailText = ({estate, seller}) => {
     console.log(estate)
@@ -8,26 +8,29 @@ const DetailText = ({estate, seller}) => {
 
   return (
     <div>
-        <div>
+      <h3>상세 정보</h3>
+      <DetailUl>
+        <li>
         <DetailTitle>매매가</DetailTitle>
-        <DetailTitle>{estate.balance + estate.deposit}</DetailTitle>
-        </div>
-        <div>
+        <DetailContent>{estate.balance + estate.deposit}</DetailContent>
+        </li>
+        <li>
         <DetailTitle>주소</DetailTitle>
-        <DetailTitle>{estate.additional_address}</DetailTitle>
-        </div>
-        <div>
+        <DetailContent>{estate.road} <br /> {estate.additional_address}</DetailContent>
+        </li>
+        <li>
         <DetailTitle>건축년도</DetailTitle>
-        <DetailTitle>{estate.year_built}</DetailTitle>
-        </div>
-        <div>
+        <DetailContent>{estate.year_built}</DetailContent>
+        </li>
+        <li>
         <DetailTitle>전용 면적</DetailTitle>
-        <DetailTitle>{estate.area}㎡</DetailTitle>
-        </div>
-        <div>
+        <DetailContent>{estate.area}㎡</DetailContent>
+        </li>
+        <li>
         <DetailTitle>타입</DetailTitle>
-        <DetailTitle>{estate.type}</DetailTitle>
-        </div>
+        <DetailContent>{estate.type}</DetailContent>
+        </li>
+      </DetailUl>
 
     </div>
   )

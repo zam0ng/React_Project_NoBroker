@@ -7,7 +7,7 @@ import DetailImage from '../detailImage/DetailImage';
 import DetailText from '../detailText/DetailText';
 import DetailBuy from '../detailBuy/DetailBuy';
 
-import { LeftDiv, RightDiv } from './detail.styled';
+import { DivList, LeftDiv, RightDiv } from './detail.styled';
 import DetailComment from '../detailComment/DetailComment';
 
 const Detail = ({queryClient}) => {
@@ -29,17 +29,21 @@ const Detail = ({queryClient}) => {
 
   viewEstate();
 
-  // window.addEventListener("scroll", ()=>{
-  //   // if (window.scrollY >= document.querySelector("#detailImage").getBoundingClientRect().top + window.scrollY) {
-  //   if (window.scrollY >= document.querySelector("[id='detailImage']").getBoundingClientRect().bottom + window.scrollY) {
-  //     // document.querySelector("[id='detailBuy']").classList.add("fixed");
-  //     document.querySelector("[id='rightDiv']").classList.add("fixed");
-  //   } else {
-  //     // document.querySelector("[id='detailBuy']").classList.remove("fixed");
-  //     document.querySelector("[id='rightDiv']").classList.remove("fixed");
-  //   }
+  window.addEventListener("scroll", ()=>{
+    if (!document.querySelector("[id='detailImage']")) {
+      return;
+    }
+    // if (window.scrollY >= document.querySelector("#detailImage").getBoundingClientRect().top + window.scrollY) {
+    if (window.scrollY >= document.querySelector("[id='detailImage']").getBoundingClientRect().bottom + window.scrollY) {
+      // document.querySelector("[id='detailBuy']").classList.add("fixed");
+      document.querySelector("[id='rightDiv']").classList.add("fixed");
+      console.log("dsfjksdlf");
+    } else {
+      // document.querySelector("[id='detailBuy']").classList.remove("fixed");
+      document.querySelector("[id='rightDiv']").classList.remove("fixed");
+    }
 
-  // })
+  })
 
 
 
@@ -65,20 +69,16 @@ const Detail = ({queryClient}) => {
       <div id='detailImage'>
       <DetailImage list={[data.estate.img_1, data.estate.img_2, data.estate.img_3, data.estate.img_4, data.estate.img_5, data.estate.img_6, data.estate.img_7]} />
       </div>
-      <LeftDiv>
-        <DetailText estate = {data.estate}/>
-      </LeftDiv>
-      <div id='rightDiv'>
-      <RightDiv>
-        <DetailBuy estate = {data.estate} seller = {data.seller} like = {data.like} queryClient={queryClient}/>
-      </RightDiv>
-      </div>
-      <div>
-        <DetailComment estateId = {data.estate.id} comment = {data.estate.Comments} queryClient={queryClient}></DetailComment>
+      <DivList>
+        <LeftDiv>
+          <DetailText estate = {data.estate}/>
+          <DetailComment estateId = {data.estate.id} comment = {data.estate.Comments} queryClient={queryClient}></DetailComment>
 
-      </div>
-      {/* <div>like : {data.like}</div>
-      <div>seller : {data.seller}</div> */}
+        </LeftDiv>
+        <RightDiv id='rightDiv'>
+          <DetailBuy estate = {data.estate} seller = {data.seller} like = {data.like} queryClient={queryClient}/>
+        </RightDiv>
+      </DivList>
     </>
   )
 }
