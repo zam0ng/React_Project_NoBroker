@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { getEstate, viewEstate, buyEstate, likeEstate, delLikeEstate, postComment, postRecomment } = require("../controllers/estateDetailController");
+const { getEstate, viewEstate, buyEstate, likeEstate, delLikeEstate, postComment, postRecomment,getTradableEstate } = require("../controllers/estateDetailController");
 
 // | test | 심사 통과된, 판매가능한, 모든 매물
 router.get("/tradableEstate", getTradableEstate);

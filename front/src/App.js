@@ -2,12 +2,13 @@ import "./App.css";
 import NavHeader from "./components/navbar/NavHeader";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import NavHeader from "./components/navbar/NavHeader";
-import List from "./components/listPage/ListPage";
+// import NavHeader from "./components/navbar/NavHeader";
+import ListPage from "./components/listPage/ListPage";
 import { Detail } from "./components";
 
+import Insert from "components/insertPage/Insert";
 import List from "components/List";
-import NavHeader from "components/navbar/NavHeader";
+// import NavHeader from "components/navbar/NavHeader";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 
