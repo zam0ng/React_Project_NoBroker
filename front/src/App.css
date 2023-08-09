@@ -137,3 +137,9 @@ body {
   border-radius: 4px;
   opacity: 0.7;
 }
+
+
+
+.TrackX {
+  overflow: hidden;
+}

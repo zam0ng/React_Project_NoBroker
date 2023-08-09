@@ -207,8 +207,6 @@
                             // autocomplete 의 'bounds' 속성을, map 객체의 'bounds' 속성에 '바인딩' 
                             // 그러면, '지도 영역 내 or 기반으로 추천' 해줌
                         // [문법] createdMap 변수가 setMap(createdMap) 훅에 의해 -> map 에 담김
-                
-
 
                 // 추천 항목 클릭하면 벌어지는 일
                 autocomplete.addListener('place_changed', () => {
