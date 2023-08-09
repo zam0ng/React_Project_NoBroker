@@ -5,8 +5,7 @@ import {Container,Title,AddressContainer,MapContainer,AddressSearchBtn,AddressLi
 import MapApi from '../map/MapApi';
 
 const Postcode = ({setProvince,setCity,setTown,jibun,setJibun,road,setRoad,setaddiAddress}) => {
-  // const [road,setRoad] = useState();
-  // const [jibun,setJibun] = useState();
+
   const [placeAddress,setPlaceAddress] = useState();
   const [isNone,setIsNone]= useState("block");
   const scriptUrl = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';

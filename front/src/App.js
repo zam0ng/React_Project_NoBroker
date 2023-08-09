@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Insert from "./components/insertPage/Insert";
 import List from "./components/listPage/ListPage";
 function App() {
+
   return (
     <div className="App">
       <NavHeader></NavHeader>
