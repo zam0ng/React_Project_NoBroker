@@ -4,28 +4,38 @@ import {Container,Title,AddressContainer,MapContainer,AddressSearchBtn,AddressLi
         ,Namee,Address,AddressBox,AdditionalBox,AdditionalInput} from './poststyled'
 import MapApi from '../map/MapApi';
 
-const Postcode = () => {
-  const [road,setRoad] = useState();
-  const [jibun,setJibun] = useState();
+const Postcode = ({setProvince,setCity,setTown,jibun,setJibun,road,setRoad,setaddiAddress}) => {
+  // const [road,setRoad] = useState();
+  // const [jibun,setJibun] = useState();
   const [placeAddress,setPlaceAddress] = useState();
   const [isNone,setIsNone]= useState("block");
   const scriptUrl = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
   const open = useDaumPostcodePopup(scriptUrl);
 
+  function addiAddress(e) {
+    setaddiAddress(e.target.value);
+  }
+
   const handleComplete = (data) => {
     console.log(data); // 
-    console.log(data.address)//
+    // console.log(data.address)//
 
     const ta = data.address;
     setPlaceAddress(ta);
 
     const roadAddress = data.roadAddress;
     const jibunAddress = data.jibunAddress;
-    setRoad(roadAddress);
-    setJibun(jibunAddress);
+    
     let fullAddress = data.address;
     let extraAddress = '';
+
+    // 넘길 데이터 콘솔 찍어서 확인
+    setProvince(data.sido); // 시도
+    setCity(data.sigungu); //시군구
+    setTown(data.bname); // 읍면동
+    setRoad(roadAddress); // 도로명 주소
+    setJibun(jibunAddress); // 지번주소
 
     if (data.addressType === 'R') {
       if (data.bname !== '') {
@@ -57,7 +67,7 @@ const Postcode = () => {
         </AddressList>
             <AdditionalBox>
               <p>상세주소 입력</p>
-              <AdditionalInput width={"90%"}></AdditionalInput>
+              <AdditionalInput onChange={addiAddress} width={"90%"}></AdditionalInput>
             </AdditionalBox>
       </AddressContainer>
       <MapContainer> 

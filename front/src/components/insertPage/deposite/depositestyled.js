@@ -33,7 +33,7 @@ export const DepositBox = styled.div`
     
 `
 export const DivBox = styled.div`
-    width: 20%;
+    width: 210px;
     height: 80px;
     /* border: 1px solid blue; */
 

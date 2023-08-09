@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState, useContext } from 'react'
 import axios from 'axios';
+import { Global } from '../Insert';
 
 const {kakao} =window;
 
 const MapApi = ({placeAddress, setIsNone}) => {
 
-    const [lng,setLng] =useState(0);
-    const [lat,setLat] =useState(0);
+    const {lng,setLng,lat,setLat} = useContext(Global);
     const [mapLoaded ,setMapLoaded] = useState(false);
 
-    console.log("placeAddress");
-    console.log(placeAddress); // 내가 검색한 주소 들어옴
+    // console.log("placeAddress");
+    // console.log(placeAddress); // 내가 검색한 주소 들어옴
 
     const url = `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURI(
     placeAddress

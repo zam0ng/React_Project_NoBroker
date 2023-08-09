@@ -19,7 +19,7 @@ class Real_estate extends Model{
                     type : DataTypes.INTEGER,
                     defaultValue : 0,
                 },  
-                // 투표 마감 기간j
+                // 투표 마감 기간
                 vote_end_date :{
                     type : DataTypes.DATE,
                     defaultValue  : new Date(new Date().getTime() + (7 * 24 * 60 * 60 * 1000)),

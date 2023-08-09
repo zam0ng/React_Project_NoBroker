@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext, createContext} from 'react'
 import {MainTitle,Caution,Bodyy,EstataInfoTitle,WarningSpan,EssentialSpan,
         Modalbody,Modal,FinalCheck,CheckInput,CheckDiv,CheckContent,CheckBtn} from './insertstyled';
 import Postcode from './postPopup/Post'
@@ -10,14 +10,33 @@ import Deposite from './deposite/Deposite'
 import ImgMulter from './imgMulter/ImgMulter';
 import { useState } from 'react';
 import Footer from '../footer/Footer';
-const Insert = () => {
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
+export const Global = createContext();
 
+const Insert = () => {
+  const navigate = useNavigate();
   const [balance,setBalance] = useState(0);
   const [deposite,setDeposite] = useState(0);
   const [display,setDisplay] = useState("none");
-  console.log(balance);
-  console.log(deposite);
+  
+  const[province,setProvince]= useState("");
+  const[city,setCity]= useState("");
+  const[town,setTown]= useState("");
+  const[jibun,setJibun]= useState("");
+  const[road,setRoad]= useState("");
+  const[lng,setLng] =useState(0);
+  const[lat,setLat] =useState(0);
+  const[addiAddress,setaddiAddress] = useState("");
+  const[m2,setM2] = useState("");
+  const[uniqueNum,setUniqueNum] = useState("");
+  const[selectValue,setSelectValue] = useState("1");
+  const[temp,setTemp] = useState([]);
+  const[year,setYear] = useState("");
 
+  const obj = {
+    lng,setLng,lat,setLat
+  }
   function None() {
     setDisplay("none");
     document.body.style.overflow="visible";
@@ -28,8 +47,47 @@ const Insert = () => {
     document.body.style.overflow="hidden";
   }
   
-  function btnClick(){
+  async function btnClick (){
     console.log("매물등록 버튼 눌림");
+    let seller = 1;
+    console.log(province,city,town,jibun,road,lng,lat,addiAddress);
+    console.log(balance,deposite,m2,uniqueNum);
+    console.log(selectValue,year);
+
+    const years = year.slice(0,4);
+
+    const estateInfoArr = [seller,province,city,town,jibun,road,lng,lat,addiAddress,balance,deposite,m2,uniqueNum,selectValue,years]
+
+    const notNull= estateInfoArr.filter((el) => !el);
+    // console.log(notNull.length);
+    if(notNull.length>0){
+      alert("필수 입력 항목을 모두 입력해주세요.")
+      return;
+    }
+    console.log("나 클릭", temp)
+    const form = new FormData();
+    const files = temp;
+    
+    for(const key in estateInfoArr){
+      console.log(`key : ${key}, value : ${estateInfoArr[key]}`)
+      form.append(`${key}`,`${estateInfoArr[key]}`)
+    }
+    for (let i = 0; i < files.length; i++) {
+      form.append("upload", files[i]); 
+    }
+    console.log("------------------------------- files",files)
+
+    axios.post("http://localhost:8080/upload",form,{
+          
+          "Content-Type" : "multipart/form-data",
+          withCredentials : true,
+        }).then((e)=>{
+          console.log(e);
+          console.log("잘 전달됨.")
+        }).catch((err)=>{
+            console.log(err);
+        })
+        navigate('/list')
   }
   function isChecked() {
     const checkbox = document.getElementById('checkbox');
@@ -49,12 +107,12 @@ const Insert = () => {
       checkbtn.style.backgroundColor="#e0e0e0";
       checkbtn.style.color ="white";
       checkbtn.style.cursor = "default";
-      
-
     }
+
   }
   return (
     <>
+    <Global.Provider value={obj}>
     <Bodyy>
       <MainTitle>방내놓기</MainTitle>
       <Caution>
@@ -69,11 +127,12 @@ const Insert = () => {
         <EssentialSpan>* 필수 입력</EssentialSpan>
       </EstataInfoTitle>
 
-      <TypeSelect></TypeSelect>
-      <Postcode></Postcode>
-      <Area></Area>
-      <EstateDoc></EstateDoc>
-      <EstateBuilt></EstateBuilt>
+      <TypeSelect selectValue={selectValue} setSelectValue={setSelectValue} ></TypeSelect>
+      <Postcode jibun={jibun} road={road} setProvince={setProvince} setCity={setCity} setTown={setTown}
+       setJibun={setJibun} setRoad={setRoad} setaddiAddress={setaddiAddress}></Postcode>
+      <Area setM2={setM2} m2={m2}></Area>
+      <EstateDoc setUniqueNum={setUniqueNum}></EstateDoc>
+      <EstateBuilt setYear={setYear}></EstateBuilt>
       
       <EstataInfoTitle>
         <div>거래 정보</div>
@@ -83,7 +142,7 @@ const Insert = () => {
         <div>사진 등록</div>
         <WarningSpan onClick={Block}>* 사진 등록 전, 반드시 확인해주세요!</WarningSpan>
       </EstataInfoTitle>
-      <ImgMulter></ImgMulter>
+      <ImgMulter temp={temp} setTemp={setTemp}></ImgMulter>
 
       <FinalCheck>
         <CheckDiv>
@@ -97,6 +156,7 @@ const Insert = () => {
       </FinalCheck>
       <Footer></Footer>
     </Bodyy>
+    </Global.Provider>
 
     <Modalbody display ={display}>
       <Modal>

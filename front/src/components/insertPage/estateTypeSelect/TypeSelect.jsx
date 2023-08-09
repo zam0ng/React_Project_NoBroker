@@ -2,13 +2,11 @@ import React, { useEffect } from 'react'
 import { Container,Title,SelectContainer } from './typeSelectstyled'
 import { useState } from 'react'
 import { apartimg,homeimg } from '../../../img'
-const TypeSelect = () => {
-    const [selectValue,setSelectValue] = useState("1");
+const TypeSelect = ({selectValue,setSelectValue}) => {
     
-  
   const select =(e) =>{
     setSelectValue(e.target.value);
-    
+
   }
 
   useEffect(()=>{

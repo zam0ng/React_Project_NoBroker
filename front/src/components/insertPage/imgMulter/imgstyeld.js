@@ -77,7 +77,7 @@ export const FileInput = styled.input`
 `
 
 export const ImgBoxDiv = styled.div`
-    /* width: 1020px; */
+    width: 1020px;
     /* height: 210px; */
     /* height: 420px; */
     /* border:  1px solid red; */
