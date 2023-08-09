@@ -14,6 +14,10 @@ class Transaction extends Model{
                     type : DataTypes.INTEGER,
                     allowNull : false,
                 },
+                // 거래 기간(마감)
+                transaction_date : {
+                    type : DataTypes.DATE
+                },
                 // 어떤 매물인지 식별, 매물 테이블의 id 참조
                 real_estate_id :{
                     type : DataTypes.INTEGER,

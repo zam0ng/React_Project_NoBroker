@@ -130,10 +130,3 @@ body {
   /* background: #f5f5f5; */
   background: blue;
 }
-
-.ScrollbarsCustom-ThumbY {
-  /* background: #888; */
-  background: blue;
-  border-radius: 4px;
-  opacity: 0.7;
-}
