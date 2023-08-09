@@ -2,6 +2,34 @@ const { Real_estate, User, Vote } = require("../models");
 
 // 투표 가능한 매물 목록 반환(투표 완료한 매물 제외)
 
+
+// 투표 결과 처리
+const setVoteResult = async (id) => {
+  try {
+    const voteCount = await Vote.count({ where: { id } });
+    // 미달
+    
+
+    const trueCount = await Vote.count({
+      where: { id, result: true },
+    });
+    const falseCount = await Vote.count({
+      where: { id, result: false },
+    });
+
+    if (trueCount > falseCount) {
+      // 정상매물
+    } else {
+      // 허위매물
+    }
+
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 // 매물 허위/정상매물인지 투표
 exports.voteEstate = async (req, res) => {
   try {
@@ -27,9 +55,9 @@ exports.voteEstate = async (req, res) => {
 
     const voteCount = await Vote.count({ where: { id: real_estate_id } });
     if (voteCount >= estate.balance) {
-      const trueCount = await Vote.count({
-        where: { id: real_estate_id, result: true },
-      });
+
+      setVoteResult(real_estate_id);
+
       // if () //
       // await Real_estate.update({accept : }, {where : {id : real_estate_id}});
     }
@@ -45,5 +73,14 @@ exports.voteEstate = async (req, res) => {
 // 투표 마감 기간이 (vote_end_date) 현재 날짜의 하루 전 날이면
 // 해당하는 매물들 투표 결과 내기
 // 미달 제외 참여한 업자에게 보상 제공
+exports.setEstateAccept = async () => {
+  try {
+    // 해당하는 매물 찾아서 for문 돌림. for문에서 setVoteResult 함수, 참여한 업자 보상 제공 함수 실행
+
+  } catch (error) {
+    console.log(error);
+
+  }
+}
 
 //

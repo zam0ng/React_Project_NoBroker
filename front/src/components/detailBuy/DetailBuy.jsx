@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { useMutation } from 'react-query';
-import { LikeBtn, BuyBtn } from './detailBuy.styled';
+import { LikeBtn, BuyBtn, Title, Content, ContentDiv, LikeBtnDiv } from './detailBuy.styled';
 
 const DetailBuy = ({estate, seller, like, queryClient}) => {
     const now = new Date();
@@ -101,21 +101,26 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
   return (
     <div>
         {fakeText}
-        <div>판매자 이름 : {seller.user_name}</div>
-        <div>판매자 연락처 : {seller.phone}</div>
+        <ContentDiv><Title>판매자 이름</Title> <Content>{seller.user_name}</Content></ContentDiv>
+        <ContentDiv><Title>판매자 연락처</Title> <Content>{seller.phone}</Content></ContentDiv>
         {/* 일주일 간격 */}
-        <input type="date" id='date_input' min={new Date(now.setDate(now.getDate() + 7)).toISOString().split('T')[0]}/>
-        {/* <input type="date" id='date_input' min={new Date(now.setDate(now.getDate() + 7)).toISOString().split('T')[0]}/> */}
-        <div>
 
+        <h4>구매 신청</h4>
+        <ContentDiv><Title>거래 기간</Title> <input type="date" id='date_input' min={new Date(now.setDate(now.getDate() + 7)).toISOString().split('T')[0]}/></ContentDiv>
+        {/* <input type="date" id='date_input' min={new Date(now.setDate(now.getDate() + 7)).toISOString().split('T')[0]}/> */}
+
+        <div>
         {/* 구매 가능 상태 아니면 회색 버튼 */}
-        {estate.state==0 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"rgba(72, 145, 255)"}>구매 신청</BuyBtn> : <BuyBtn onClick={clickBuyBtn} backgroundColor = {"grey"}>구매 불가</BuyBtn>}
-        <LikeBtn onClick={clickLikeBtn}>
+        {estate.state==0 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"rgba(72, 145, 255)"}>신청하기</BuyBtn> : <BuyBtn onClick={clickBuyBtn} backgroundColor = {"grey"}>구매 불가</BuyBtn>}
+        <LikeBtnDiv>
         <div>조회수 : {estate.views}</div>
+        <LikeBtn onClick={clickLikeBtn}>
         {like.user_like ? <img src='../../img/"꽉 찬 하트"'  alt ="꽉 찬 하트"></img> : <img src='../../img/"빈하트"' alt ="빈 하트"></img>}
             찜 {like.likes}
         </LikeBtn>
+        </LikeBtnDiv>
         </div>
+
     </div>
   )
 }

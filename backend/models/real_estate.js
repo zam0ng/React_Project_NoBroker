@@ -18,7 +18,7 @@ class Real_estate extends Model{
                 state : {
                     type : DataTypes.INTEGER,
                     defaultValue : 0,
-                },  
+                },
                 // 투표 마감 기간j
                 vote_end_date :{
                     type : DataTypes.DATE,
@@ -29,7 +29,7 @@ class Real_estate extends Model{
                     type : DataTypes.INTEGER,
                     defaultValue : 0,
                 },
-                // 건물 이름 
+                // 건물 이름
                 estate_name : {
                     type : DataTypes.STRING,
                     allowNull : false,
@@ -99,7 +99,7 @@ class Real_estate extends Model{
                     type : DataTypes.STRING,
                     allowNull : false,
                 },
-                // 매물 타입(아파트, 주택 등)
+                // 매물 타입
                 type :{
                     type : DataTypes.STRING,
                     allowNull : false,
@@ -146,7 +146,7 @@ class Real_estate extends Model{
     }
 
     static assicoate(db) {
-        
+
         db.Real_estate.belongsTo(db.User, { foreignKey : "seller", targetKey : "id"});
 
         db.Real_estate.hasMany(db.Transaction, { foreignKey : "real_estate_id", sourceKey : "id"});
