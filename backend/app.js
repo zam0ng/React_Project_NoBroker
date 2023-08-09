@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const dot = require("dotenv").config();
-const path = require("path");
 const session = require("express-session");
 const path =require("path");
 const uploadRouter = require("./routers/upload");

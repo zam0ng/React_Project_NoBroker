@@ -47,8 +47,11 @@ const DetailImage = ({list}) => {
         let arr = [];
         list.forEach((el, index) => {
             let src = "";
-            if(el!=null) {
-                src = el;
+            if(el!="") {
+                console.log("path", el.split("\\")[2]);
+
+                src = "http://localhost:8080/estate_imgs/"+el.split("\\")[2];
+                // src = "../"+el;
                 // arr.push(<DetailImg><img src={el} alt="매물 이미지" /></DetailImg>);
             } else {
                 src = 'http://localhost:8080/estate_imgs/null.png';

@@ -9,6 +9,8 @@ const MapApi = ({placeAddress, setIsNone}) => {
     const {lng,setLng,lat,setLat} = useContext(Global);
     const [mapLoaded ,setMapLoaded] = useState(false);
 
+    console.log("mapapi", process.env.REACT_APP_REST_API_KEY);
+
     // console.log("placeAddress");
     // console.log(placeAddress); // 내가 검색한 주소 들어옴
 
@@ -53,7 +55,7 @@ const MapApi = ({placeAddress, setIsNone}) => {
 
         map.setCenter(coords);
         // 마커를 결과값으로 받은 위치로 옮긴다.
-        
+
         var marker = new kakao.maps.Marker({
             position: new kakao.maps.LatLng(lat, lng),
             map: map
