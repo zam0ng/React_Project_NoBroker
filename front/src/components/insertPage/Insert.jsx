@@ -33,7 +33,7 @@ const Insert = () => {
   const[selectValue,setSelectValue] = useState("1");
   const[temp,setTemp] = useState([]);
   const[year,setYear] = useState("");
-
+  let type ;
   const obj = {
     lng,setLng,lat,setLat
   }
@@ -55,8 +55,14 @@ const Insert = () => {
     console.log(selectValue,year);
 
     const years = year.slice(0,4);
+    if(selectValue==1){
+      type="아파트";
+    }
+    else{
+      type="주택";
+    }
 
-    const estateInfoArr = [seller,province,city,town,jibun,road,lng,lat,addiAddress,balance,deposite,m2,uniqueNum,selectValue,years]
+    const estateInfoArr = [seller,province,city,town,jibun,road,lng,lat,addiAddress,balance,deposite,m2,uniqueNum,type,years]
 
     const notNull= estateInfoArr.filter((el) => !el);
     // console.log(notNull.length);
