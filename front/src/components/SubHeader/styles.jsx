@@ -4,7 +4,7 @@ const SubHeaderWrapper = styled.div`
 
     width : 100%;
     height : 64px;
-    background-color : white
+    background-color : #ecebeb
 
 `
 

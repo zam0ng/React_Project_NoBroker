@@ -1,7 +1,18 @@
 node_modules
-<<<<<<< HEAD
-package-lock.json
-=======
 package-lock.json
 .env
->>>>>>> ahyeon
+
+# 테스트용 파일
+GoogleMap_2_1_작동함_keep.jsx
+GoogleMap_2_1_주석달기.jsx
+GoogleMap_2.jsx
+GoogleMap_3 combobox버전.jsx
+GoogleMap_3 혼자서해보는중.jsx
+GoogleMap_3_STYLED.jsx
+GoogleMap_3.jsx
+TestMarker.jsx
+
+# 테스트용 폴더
+components/Supercluster_Test2
+components/Supercluster_Test
+

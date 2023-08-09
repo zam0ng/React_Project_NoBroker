@@ -20,7 +20,7 @@ export const CardItem = styled.div`
 
 export const ImgWrap = styled.div`
     width : 140px;
-    height : 168px;
+    height : 140px;
     min-height : 140px;
     position : relative;
     flex-shrink : 0;
@@ -88,6 +88,7 @@ export const RoomType = styled.div`
     font-size : 13px;
     font-weight : 400;
 
+    letter-spacing : -1px;
     white-space : nowrap;
     text-overflow : ellipsis;
     overflow : hidden;
@@ -96,6 +97,7 @@ export const RoomType = styled.div`
 export const RoomDesc = styled.div`
     font-size : 14px;
     font-weight : 400;
+    letter-spacing : -0.85px;
 
     white-space : nowrap;
     text-overflow : ellipsis;

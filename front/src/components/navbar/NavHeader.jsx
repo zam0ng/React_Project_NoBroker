@@ -32,6 +32,7 @@ const NavHeader = () => {
         
       </MenuListTitle>
       <MenuList><Link to ='/insert'>매물 등록</Link></MenuList>
+      <MenuList><Link to ='/list'>매물 목록</Link></MenuList>
 
     </Menu>
     </Bodyy>

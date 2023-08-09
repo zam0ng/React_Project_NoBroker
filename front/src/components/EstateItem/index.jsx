@@ -49,6 +49,7 @@ const EstateItem = () => {
 
             {/* 특징 : 1) 신축 여부 (신축 0~5년, 준신축 5년~10년, ) 2) 면적 */}
             {/* m2 이거 변환해야 함 */}
+            {/* const squareMeter = "m\u00B2"; */}
           <RoomDesc>
             신축(5년이내) , 28.93m2, 
           </RoomDesc>
