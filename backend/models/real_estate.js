@@ -19,7 +19,7 @@ class Real_estate extends Model{
                     type : DataTypes.INTEGER,
                     defaultValue : 0,
                 },
-                // 투표 마감 기간j
+                // 투표 마감 기간
                 vote_end_date :{
                     type : DataTypes.DATE,
                     defaultValue  : new Date(new Date().getTime() + (7 * 24 * 60 * 60 * 1000)),
@@ -30,10 +30,10 @@ class Real_estate extends Model{
                     defaultValue : 0,
                 },
                 // 건물 이름
-                estate_name : {
-                    type : DataTypes.STRING,
-                    allowNull : false,
-                },
+                // estate_name : {
+                //     type : DataTypes.STRING,
+                //     allowNull : false,
+                // },
                 // 시,도 (서울특별시, 경기도 등)
                 province : {
                     type : DataTypes.STRING,
@@ -64,12 +64,12 @@ class Real_estate extends Model{
                     type : DataTypes.STRING,
                     allowNull : false,
                 },
-                // 계약금
+                // 판매가
                 deposit: {
                     type : DataTypes.INTEGER,
                     allowNull : false,
                 },
-                // 잔금 (기본값 계약금의 10%)
+                // 계약금 (기본값 계약금의 10%)
                 balance: {
                     type : DataTypes.INTEGER,
                     allowNull : false,
@@ -94,12 +94,12 @@ class Real_estate extends Model{
                     type : DataTypes.FLOAT,
                     allowNull : false,
                 },
-                // 부동산 고유번호
+                // 건축물 고유번호
                 doc :{
                     type : DataTypes.STRING,
                     allowNull : false,
                 },
-                // 매물 타입
+                // 매물 타입(아파트, 주택 등)
                 type :{
                     type : DataTypes.STRING,
                     allowNull : false,

@@ -1,14 +1,16 @@
 import "./App.css";
-import NavHeader from "./components/navbar/NavHeader";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Insert from "./components/insertPage/Insert";
 
-import { QueryClient, QueryClientProvider } from "react-query";
+import NavHeader from "./components/navbar/NavHeader";
+import Insert from "./components/insertPage/Insert";
+import List from "./components/listPage/ListPage";
 import { Detail } from "./components";
 
-const queryClient = new QueryClient();
+import { QueryClient, QueryClientProvider } from "react-query";
 
+const queryClient = new QueryClient();
 function App() {
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
@@ -16,8 +18,10 @@ function App() {
         <Routes>
           <Route path="/insert" element={<Insert />} />
           <Route path="/detail/:id" element={<Detail queryClient={queryClient} />} />
-        </Routes>
-      </div>
+          <Route path="/list" element={<List />} />
+      </Routes>
+
+    </div>
     </QueryClientProvider>
   );
 }
