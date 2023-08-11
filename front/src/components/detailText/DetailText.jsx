@@ -1,15 +1,12 @@
 import React from 'react'
-import { DetailTitle, DetailUl, DetailContent } from './detailText.styled'
+import { DetailTitle, DetailUl, DetailContent, H1 } from './detailText.styled'
 
 const DetailText = ({estate, seller}) => {
-    console.log(estate)
-    console.log(seller)
-    console.log(estate.additional_address);
 
   return (
     <div>
-      <h3>상세 정보</h3>
       <DetailUl>
+        <H1>상세정보</H1>
         <li>
         <DetailTitle>매매가</DetailTitle>
         <DetailContent>{estate.balance + estate.deposit}</DetailContent>

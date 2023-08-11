@@ -10,6 +10,8 @@ export const DetailContent = styled.p`
 
 export const DetailUl = styled.ul`
     list-style: none;
+    padding-inline-start: 0px;
+
     & li {
         display: flex;
     }
@@ -21,4 +23,10 @@ export const DetailUl = styled.ul`
     & li ${DetailContent} {
         width: 70%;
     }
+`
+
+export const H1 = styled.h1`
+    display: flex;
+    padding-left: 20px;
+    justify-content: start;
 `

@@ -2,16 +2,29 @@ import styled from "styled-components"
 
 export const Comment = styled.div`
     width: 100%;
-    font-weight: bold;
-    /* background-color: aliceblue; */
     margin-top: 20px;
+    font-weight: bold;
+    text-align: start;
     cursor: pointer;
+`
+export const UserImg = styled.img`
+    width: 30px;
+    height: 30px;
 `
 
 export const Recomment = styled.div`
     width: 100%;
-    /* background-color: aliceblue; */
+    text-align: start;
     margin-bottom: 10px;
+
+    & img {
+        width: 20px;
+    }
+
+    & ${UserImg} {
+        width: 30px;
+        height: 30px;
+    }
 `
 
 export const InputDiv = styled.div`
@@ -30,6 +43,17 @@ export const InsertBtn = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: gray;
+    background-color: orange;
     /* z-index: 1100; */
+`
+
+export const H1 = styled.h1`
+    display: flex;
+    justify-content: start;
+    padding-left: 20px;
+
+`
+
+export const CommentDiv = styled.div`
+    padding-left: 20px;
 `

@@ -1,15 +1,11 @@
 import React from 'react'
 import axios from 'axios'
 import { useMutation } from 'react-query';
-import { LikeBtn, BuyBtn, Title, Content, ContentDiv, LikeBtnDiv } from './detailBuy.styled';
+import { LikeBtn, BuyBtn, Title, Content, ContentDiv, LikeBtnDiv, UserImg } from './detailBuy.styled';
+import { detail_heart, detail_emptyheart, userimg } from '../../img/index'
 
 const DetailBuy = ({estate, seller, like, queryClient}) => {
     const now = new Date();
-
-    let fakeText = "";
-    if (seller.fake_count != 0) {
-        fakeText = `해당 판매자는 허위 매물 ${seller.fake_count}회 올렸습니다.`
-    }
 
     // 구매
     const createBuyMutation = useMutation(async (buyForm)=>{
@@ -99,25 +95,33 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
     }
 
   return (
-    <div>
-        {fakeText}
-        <ContentDiv><Title>판매자 이름</Title> <Content>{seller.user_name}</Content></ContentDiv>
-        <ContentDiv><Title>판매자 연락처</Title> <Content>{seller.phone}</Content></ContentDiv>
-        {/* 일주일 간격 */}
+    <div style={{position : "absolute", width:"100%", top:"50%", left: "50%", transform:"translate(-50%,-50%)"}}>
+        {seller.fake_count!=0 ?  <p>해당 판매자는 허위 매물 <span style={{color:"red"}}>{seller.fake_count}</span>회 올린 적이 있습니다.</p> : <></>}
 
-        <h4>구매 신청</h4>
+
+        {/* 일주일 간격 */}
+        <h3>구매 신청</h3>
         <ContentDiv><Title>거래 기간</Title> <input type="date" id='date_input' min={new Date(now.setDate(now.getDate() + 7)).toISOString().split('T')[0]}/></ContentDiv>
         {/* <input type="date" id='date_input' min={new Date(now.setDate(now.getDate() + 7)).toISOString().split('T')[0]}/> */}
 
         <div>
         {/* 구매 가능 상태 아니면 회색 버튼 */}
-        {estate.state==0 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"rgba(72, 145, 255)"}>신청하기</BuyBtn> : <BuyBtn onClick={clickBuyBtn} backgroundColor = {"grey"}>구매 불가</BuyBtn>}
+        <div style={{display : 'flex', justifyContent: 'center'}}>
+            {estate.state==0 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"orange"}>신청하기</BuyBtn> : <BuyBtn onClick={clickBuyBtn} backgroundColor = {"grey"}>구매 불가</BuyBtn>}
+        </div>
+
+        <h3>판매자 정보</h3>
+        <UserImg src={seller.user_img!="userimg" || !seller.user_img ? "http://localhost:8080/user_imgs/"+seller.user_img.split("\\")[2] : userimg} alt="유저 이미지" />
+        <ContentDiv><Title>이름</Title> <Content>{seller.user_name}</Content></ContentDiv>
+        <ContentDiv><Title>연락처</Title> <Content>{seller.phone}</Content></ContentDiv>
+
+
         <LikeBtnDiv>
-        <div>조회수 : {estate.views}</div>
-        <LikeBtn onClick={clickLikeBtn}>
-        {like.user_like ? <img src='../../img/"꽉 찬 하트"'  alt ="꽉 찬 하트"></img> : <img src='../../img/"빈하트"' alt ="빈 하트"></img>}
-            찜 {like.likes}
-        </LikeBtn>
+            <div>조회수 : {estate.views}</div>
+            <LikeBtn onClick={clickLikeBtn}>
+            {like.user_like ? <img src={detail_heart} alt ="꽉 찬 하트"></img> : <img src={detail_emptyheart} alt ="빈 하트"></img>}
+            {like.likes}
+            </LikeBtn>
         </LikeBtnDiv>
         </div>
 

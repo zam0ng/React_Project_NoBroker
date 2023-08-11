@@ -13,8 +13,6 @@ import DetailComment from '../detailComment/DetailComment';
 const Detail = ({queryClient}) => {
   // 매물 아이디
   const { id } = useParams();
-  console.log("매물 아이디", id);
-  console.log("세션",window.sessionStorage.getItem(`viewEstate_${id}`))
 
   // 조회수 올리기
   const viewEstate = async () => {
@@ -33,13 +31,10 @@ const Detail = ({queryClient}) => {
     if (!document.querySelector("[id='detailImage']")) {
       return;
     }
-    // if (window.scrollY >= document.querySelector("#detailImage").getBoundingClientRect().top + window.scrollY) {
     if (window.scrollY >= document.querySelector("[id='detailImage']").getBoundingClientRect().bottom + window.scrollY) {
-      // document.querySelector("[id='detailBuy']").classList.add("fixed");
       document.querySelector("[id='rightDiv']").classList.add("fixed");
       console.log("dsfjksdlf");
     } else {
-      // document.querySelector("[id='detailBuy']").classList.remove("fixed");
       document.querySelector("[id='rightDiv']").classList.remove("fixed");
     }
 
@@ -61,6 +56,12 @@ const Detail = ({queryClient}) => {
   if (isLoading) {
     return (
       <div>loading...</div>
+    )
+  }
+
+  if (data.error) {
+    return (
+      <div>존재하지 않는 매물입니다.</div>
     )
   }
 

@@ -16,7 +16,8 @@ exports.getEstate = async (req, res) => {
 
     const estate = await Real_estate.findOne({
       where: { id },
-      include: { model: Comment, include: [{ model: Recomment, include : {model : User, attributes : ['user_name']} }, {model : User, attributes : ['user_name']}] },
+      // include: { model: Comment, order:[['createdAt', 'DESC']], include: [{ model: Recomment, order : [['createdAt', 'DESC']], include : {model : User, attributes : ['user_name', 'user_img']} }, {model : User, attributes : ['user_name', 'user_img']}] },
+      include: { model: Comment, include: [{ model: Recomment, include : {model : User, attributes : ['user_name', 'user_img']} }, {model : User, attributes : ['user_name', 'user_img']}] },
     });
 
     let user_like = false;
@@ -33,9 +34,8 @@ exports.getEstate = async (req, res) => {
     const likes = await Likes.count({where : {real_estate_id : id}});
 
     // 허위 매물 업로드 경력
-    const seller = await User.findOne({ attributes : ['id', 'user_name', 'phone', 'fake_count'], where: { id: estate.seller } });
+    const seller = await User.findOne({ attributes : ['id', 'user_name', 'phone', 'fake_count', 'user_img'], where: { id: estate.seller } });
 
-    console.log(estate);
     return res.json({ estate, like:{user_like, likes}, seller });
   } catch (error) {
     console.log(error);
