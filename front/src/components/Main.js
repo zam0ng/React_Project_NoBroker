@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import * as WorldWind from "@nasaworldwind/worldwind"; // WorldWind 라이브러리를 불러옵니다.
-import Placemark from "../components/Placemark";
+import Placemark from "./Placemark";
 
 const Main = () => {
   // 컴포넌트가 마운트 되었을 때 해당 코드 실행
@@ -90,7 +90,7 @@ const Main = () => {
     //   1.0
     // );
 
-    const app = document.querySelector(".App")
+    const app = document.querySelector(".App");
     var placemarkImage = document.createElement("img");
     placemarkImage.src =
       WorldWind.configuration.baseUrl + "images/pushpins/plain-red.png";
@@ -99,16 +99,15 @@ const Main = () => {
       console.log("클릭좀 떠라 진짜");
     });
 
-    placemarkImage.style.position='absolute'
-    placemarkImage.style.top='0'
+    placemarkImage.style.position = "absolute";
+    placemarkImage.style.top = "0";
 
-
-    app.append(placemarkImage)
+    app.append(placemarkImage);
     // 좌표 이미지 경로 설정
     // placemarkAttributes.imageSource =
     //   WorldWind.configuration.baseUrl + "images/pushpins/plain-red.png";
     // position : 좌표 위치 설정 (위도 경도 고도?)
-    placemarkAttributes.imageSource = placemarkImage
+    placemarkAttributes.imageSource = placemarkImage;
     var position = new WorldWind.Position(37.0, 127.0, 100.0);
     // 좌표 생성
     var placemark = new WorldWind.Placemark(
