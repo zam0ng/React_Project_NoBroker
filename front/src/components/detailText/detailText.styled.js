@@ -2,10 +2,10 @@ import styled from "styled-components"
 
 export const DetailTitle = styled.p`
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
 `
 export const DetailContent = styled.p`
-    font-size: 18px;
+    font-size: 20px;
 `
 
 export const DetailUl = styled.ul`

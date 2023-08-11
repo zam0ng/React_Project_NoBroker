@@ -1,5 +1,5 @@
 import React from 'react'
-import { DetailTitle, DetailUl, DetailContent, H1 } from './detailText.styled'
+import { DetailTitle, DetailUl, DetailContent, H1, Divider } from './detailText.styled'
 
 const DetailText = ({estate, seller}) => {
 
@@ -28,7 +28,6 @@ const DetailText = ({estate, seller}) => {
         <DetailContent>{estate.type}</DetailContent>
         </li>
       </DetailUl>
-
     </div>
   )
 }

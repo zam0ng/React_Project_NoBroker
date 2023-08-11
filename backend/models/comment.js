@@ -20,10 +20,22 @@ class Comment extends Model{
                     allowNull : false,
                 },
 
+                // 작성 시각
+                createdAt : {
+                    type : DataTypes.STRING,
+                    defaultValue : new Date().toLocaleString("ko-KR", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    })
+                  }
             },{
                 sequelize,
                 underscored : false,
-                timestamps : true,
+                timestamps : false,
                 modelName : "Comment",
                 tableName : "comment",
                 charset : "utf8",
@@ -33,10 +45,10 @@ class Comment extends Model{
     }
 
     static assicoate(db) {
-        
+
         db.Comment.belongsTo(db.User, { foreignKey : "user_id", targetKey : "id"});
         db.Comment.belongsTo(db.Real_estate, { foreignKey : "real_estate_id", targetKey : "id"});
-        
+
         db.Comment.hasMany(db.Recomment, { foreignKey : "comment_id", sourceKey : "id"});
 
 

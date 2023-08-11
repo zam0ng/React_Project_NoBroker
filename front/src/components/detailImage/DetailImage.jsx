@@ -82,7 +82,7 @@ const DetailImage = ({list}) => {
 
         <BigDetailImg onClick={bigImg}>
             <img id='bigImg' src="" alt="임시" />
-            {idx+1 + "/7"}
+            <div><p>{idx+1 + " / 7"}</p></div>
         </BigDetailImg>
 
         {/* 다음 버튼 */}

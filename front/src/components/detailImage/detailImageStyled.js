@@ -13,19 +13,57 @@ export const DetailImg = styled.div`
     cursor: pointer;
 
     & img {
-        width: 50px;
+        max-width: 50px;
+        max-height: 50px;
+    }
+`
+
+// 이전/다음 버튼
+export const ImgBtn = styled.div`
+    width : 60px;
+    height : 60px;
+    display: flex;
+    justify-content: center;
+    align-items : center;
+    cursor: pointer;
+    & svg {
+        width: 80px;
+        height : 80px;
+    }
+    & svg path{
+        stroke: orange;
+        stroke-width : 3;
     }
 `
 
 export const BigDetailImg = styled.div`
     width : 100%;
     cursor: pointer;
+    position: relative;
     /* background-color: aliceblue; */
 
     & img {
         object-fit: cover;
         width: 100%;
         height: 400px;
+    }
+
+    & div {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    & p {
+        width: 80px;
+        background-color: rgba(0,0,0,0.4);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 4px;
+        border-radius: 20px;
     }
 `
 
@@ -73,21 +111,3 @@ export const SmallImgDiv = styled.div`
     }
 `
 
-// 이전/다음 버튼
-export const ImgBtn = styled.div`
-    width : 60px;
-    height : 60px;
-    /* background-color: rgba(0,0,0,0.5); */
-    display: flex;
-    justify-content: center;
-    align-items : center;
-    cursor: pointer;
-    & svg {
-        width: 80px;
-        height : 80px;
-    }
-    & svg path{
-        stroke: orange;
-        stroke-width : 3;
-    }
-`

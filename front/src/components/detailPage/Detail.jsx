@@ -7,7 +7,7 @@ import DetailImage from '../detailImage/DetailImage';
 import DetailText from '../detailText/DetailText';
 import DetailBuy from '../detailBuy/DetailBuy';
 
-import { DivList, LeftDiv, RightDiv } from './detail.styled';
+import { DivList, LeftDiv, RightDiv, Divider } from './detail.styled';
 import DetailComment from '../detailComment/DetailComment';
 
 const Detail = ({queryClient}) => {
@@ -73,6 +73,7 @@ const Detail = ({queryClient}) => {
       <DivList>
         <LeftDiv>
           <DetailText estate = {data.estate}/>
+          <Divider />
           <DetailComment estateId = {data.estate.id} comment = {data.estate.Comments} queryClient={queryClient}></DetailComment>
 
         </LeftDiv>

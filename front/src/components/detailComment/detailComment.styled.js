@@ -1,29 +1,51 @@
 import styled from "styled-components"
 
-export const Comment = styled.div`
-    width: 100%;
-    margin-top: 30px;
-    font-weight: bold;
-    font-size: 18px;
-    text-align: start;
-    cursor: pointer;
-`
 export const UserImg = styled.img`
     width: 30px;
     height: 30px;
+    margin-right: 4px;
 `
 
+export const Date = styled.p`
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 4px;
+    color: rgba(0,0,0,0.8);
+    /* display: inline-block; */
+`
+
+export const Comment = styled.div`
+    width: 96%;
+    margin-top: 30px;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: start;
+    border-radius: 10px;
+    background-color: rgba(255, 185, 0, 0.08);
+    padding: 4px;
+    padding-left: 20px;
+    cursor: pointer;
+
+    & ${UserImg} {
+        margin-right: 4px;
+    }
+`
+
+
 export const Recomment = styled.div`
-    width: 100%;
+    width: 96%;
     text-align: start;
     margin-bottom: 10px;
     font-size: 18px;
     margin-top: 10px;
+    padding: 4px;
+    padding-left: 20px;
     display: flex;
 
     & img {
         width: 20px;
         height: 20px;
+        margin-right: 4px;
     }
 
     /* & img:nth-child(1) {
@@ -43,10 +65,15 @@ export const InputDiv = styled.div`
     display: none;
     width: 100%;
     justify-content: center;
+    margin-top: 20px;
 `
 
 export const CommentInput = styled.input`
-    width: 50%;
+    width: 70%;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 16px;
+    border-radius: 10px;
 `
 
 export const InsertBtn = styled.div`
@@ -56,6 +83,10 @@ export const InsertBtn = styled.div`
     align-items: center;
     justify-content: center;
     background-color: orange;
+    border-radius: 10px;
+    margin-left: 4px;
+    user-select: none;
+    cursor: pointer;
     /* z-index: 1100; */
 `
 
@@ -67,5 +98,5 @@ export const H1 = styled.h1`
 `
 
 export const CommentDiv = styled.div`
-    padding-left: 20px;
+    padding-left: 50px;
 `
