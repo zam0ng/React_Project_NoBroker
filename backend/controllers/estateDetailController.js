@@ -5,6 +5,7 @@ const {
   Comment,
   Recomment,
   Transaction,
+  Vote
 } = require("../models");
 
 // 매물 상세 정보 반환
@@ -36,7 +37,11 @@ exports.getEstate = async (req, res) => {
     // 허위 매물 업로드 경력
     const seller = await User.findOne({ attributes : ['id', 'user_name', 'phone', 'fake_count', 'user_img'], where: { id: estate.seller } });
 
-    return res.json({ estate, like:{user_like, likes}, seller });
+    // 투표 여부 반환
+    let vote = await Vote.findOne({where : {real_estate_id:id, user_id}})
+    vote ? vote = true : vote = false;
+
+    return res.json({ estate, like:{user_like, likes}, seller, vote });
   } catch (error) {
     console.log(error);
     return res.json({ error });

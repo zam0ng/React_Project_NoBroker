@@ -5,6 +5,7 @@ import NavHeader from "./components/navbar/NavHeader";
 import Insert from "./components/insertPage/Insert";
 import List from "./components/listPage/ListPage";
 import Main from "./components/Main";
+import Vote from "./components/votePage/Vote";
 import { Detail } from "./components";
 
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -24,6 +25,7 @@ function App() {
             element={<Detail queryClient={queryClient} />}
           />
           <Route path="/list" element={<List />} />
+          <Route path="/vote" element={<Vote />} />
         </Routes>
       </div>
     </QueryClientProvider>
