@@ -29,7 +29,7 @@ app.use(session({
 }))
 
 sequelize
-    .sync({ force: true })
+    .sync({ force: false })
     .then(() => {
         console.log("database Connect");
     })
