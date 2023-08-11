@@ -50,9 +50,9 @@ const DetailImage = ({list}) => {
         list.forEach((el, index) => {
             let src = "";
             if(el!="") {
-                console.log("path", el.split("\\")[2]);
+                // console.log("path", el.split("\\")[2]);
 
-                src = "http://localhost:8080/estate_imgs/"+el.split("\\")[2];
+                src = "http://localhost:8080/estate_imgs/"+el.substr(12);
                 // src = "../"+el;
                 // arr.push(<DetailImg><img src={el} alt="매물 이미지" /></DetailImg>);
             } else {

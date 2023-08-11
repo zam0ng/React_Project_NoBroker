@@ -83,7 +83,9 @@ const DetailComment = ({estateId, comment, queryClient}) => {
         comment.forEach(el => {
             // 댓글 출력
             arr.push(<Comment onClick={(e)=>{commentClick(e)}} id={`comment_${el.id}`}>
-                <UserImg src={el.User.user_img !="userimg" || !el.User.user_img ? "http://localhost:8080/user_imgs/"+el.User.user_img.split("\\")[2] : userimg} alt="유저 이미지" /> {el.User.user_name} <br />
+                <div>
+                <UserImg src={el.User.user_img !="userimg" || !el.User.user_img ? "http://localhost:8080/user_imgs/"+el.User.user_img.split("\\")[2] : userimg} alt="유저 이미지" /> {el.User.user_name}
+                </div>
                 {el.content}</Comment>)
 
             // 대댓글 출력
@@ -91,12 +93,14 @@ const DetailComment = ({estateId, comment, queryClient}) => {
                 el.Recomments.forEach((re)=>{
                     arr.push(<Recomment>
                         <img src={detail_arrow}></img>
-                        <UserImg src={re.User.user_img !="userimg" || !re.User.user_img ? "http://localhost:8080/user_imgs/"+re.User.user_img.split("\\")[2] : userimg} alt="유저 이미지" /> {re.User.user_name}
+                        <div>
+                        <UserImg src={re.User.user_img !="userimg" || !re.User.user_img ? "http://localhost:8080/user_imgs/"+re.User.user_img.split("\\")[2] : userimg} alt="유저 이미지" /> {re.User.user_name} <br />
                         {re.re_content}
+                        </div>
                         </Recomment>)
                 })
             }
-            
+
             arr.push(<><InputDiv id={`recommentInputDiv_${el.id}`}>
                 <CommentInput placeholder='대댓글을 입력하세요.' id={`recommentInput_${el.id}`}/>
                 <InsertBtn id={`recommentBtn_${el.id}`} onClick={(e)=>{recommentInsert(e)}}>등록</InsertBtn>

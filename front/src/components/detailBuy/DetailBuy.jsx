@@ -115,7 +115,6 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
         <ContentDiv><Title>이름</Title> <Content>{seller.user_name}</Content></ContentDiv>
         <ContentDiv><Title>연락처</Title> <Content>{seller.phone}</Content></ContentDiv>
 
-
         <LikeBtnDiv>
             <div>조회수 : {estate.views}</div>
             <LikeBtn onClick={clickLikeBtn}>
