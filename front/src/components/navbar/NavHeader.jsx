@@ -32,6 +32,7 @@ const NavHeader = () => {
         
       </MenuListTitle>
       <MenuList><Link to ='/insert'>매물 등록</Link></MenuList>
+      <MenuList></MenuList>
 
     </Menu>
     </Bodyy>
@@ -45,9 +46,12 @@ const NavHeader = () => {
     </Hamburger>
     <NavbarTitleName>NoBroker</NavbarTitleName>
 
-    <NavbarIcon>
-      <div></div>
-    </NavbarIcon>
+    <Link to ='/mypage'>
+      <NavbarIcon>
+        <div></div>
+      </NavbarIcon>
+    </Link>
+      
   </NavbarTitle>
 
   )

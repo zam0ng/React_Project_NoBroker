@@ -24,7 +24,7 @@ const Footer = () => {
       <QuestionBox>
         <QuestionBtn width={"100px"}>자주묻는 질문</QuestionBtn>
         <QuestionBtn width={"70px"}>1:1문의</QuestionBtn>
-        <QuestionBtn width={"70px"} bg={"rgb(50, 108, 249)"}>광고문의</QuestionBtn>
+        <QuestionBtn width={"70px"} bg={"orange"}>광고문의</QuestionBtn>
 
       </QuestionBox>
       <SinceAtagBox>

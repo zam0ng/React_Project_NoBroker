@@ -1,3 +1,4 @@
+const { raw } = require('express');
 const {Real_estate} =require('../models');
 
 exports.EstateInfo = async(req,res)=>{
@@ -18,21 +19,28 @@ exports.EstateInfo = async(req,res)=>{
   const type = req.body[13];
   const year_built = req.body[14];
   
-  console.log("매물정보 뜨나??");
+  // console.log("매물정보 뜨나??");
   
   // console.log(seller,province,city,town,jibun,road,lng,lat,
   //   additional_address,balance,deposit);
     
     const imgpathArr = new Array(7).fill("");
-    console.log(imgpathArr);
+    // console.log(imgpathArr);
 
   for (let index = 0; index < req.files.length; index++) {
 
     imgpathArr[index]=req.files[index].path;
   }
     console.log("++++++++++++++++++")
-    console.log(imgpathArr);
+    // console.log(imgpathArr);
     try {
+      const data = await Real_estate.findOne({
+        where :{doc : doc},
+        raw : true,
+      })
+      
+      console.log("doc정보임", data);
+      if(data==null){
       await Real_estate.create({
         seller,
         province,
@@ -58,7 +66,12 @@ exports.EstateInfo = async(req,res)=>{
         img_7:imgpathArr[6],
       })
       
-      res.send();
+      res.send("매물 등록 완료");
+    }
+    else {
+      res.json({msg : "이미 등록", accpetData : data.accpet});
+    }
+
     } catch (error) {
         console.log(error);
     }

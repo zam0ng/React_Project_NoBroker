@@ -49,8 +49,9 @@ export const AddressSearchBtn = styled.button`
     width: 200px;
     height: 50px;
     border: 1px solid black;
-    background-color: black;
+    background-color: orange;
     color : white;
+    font-weight :600;
 `
 
 export const AddressList = styled.div`

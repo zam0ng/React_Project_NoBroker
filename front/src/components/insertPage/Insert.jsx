@@ -11,10 +11,12 @@ import ImgMulter from './imgMulter/ImgMulter';
 import { useState } from 'react';
 import Footer from '../footer/Footer';
 import axios from 'axios';
+import { useQuery } from 'react-query';
 import {useNavigate} from 'react-router-dom'
+import Islogin from './isLogined/Islogin';
 export const Global = createContext();
 
-const Insert = () => {
+const Insert = ({queryClient}) => {
   const navigate = useNavigate();
   const [balance,setBalance] = useState(0);
   const [deposite,setDeposite] = useState(0);
@@ -33,10 +35,9 @@ const Insert = () => {
   const[selectValue,setSelectValue] = useState("1");
   const[temp,setTemp] = useState([]);
   const[year,setYear] = useState("");
+
   let type ;
-  const obj = {
-    lng,setLng,lat,setLat
-  }
+  
   function None() {
     setDisplay("none");
     document.body.style.overflow="visible";
@@ -46,8 +47,30 @@ const Insert = () => {
     setDisplay("block");
     document.body.style.overflow="hidden";
   }
+  // // 매물등록 버튼 눌렀을 때 서버에 고유번호로 등록되어있는 매물있는지 확인하기
+  // const docgetInfo = async()=>{
+  //   const data =  await axios.get("http://localhost:8080/insert/docinfo",{
+  //     withCredentials : true,
+  //   });
+  //   return data.data;
+  // }
+
+  // const {data: docInfo, isLoading : docisLoading, error : docerror} = useQuery('docinfo',docgetInfo);
+
+  // if (docisLoading) {
+  //   return <div>로딩 중...</div>;
+  // }
+
+  // if (docerror) {
+  //   return <div>오류: {error.message}</div>;
+  // }
+  // //
+  
+
   
   async function btnClick (){
+    // console.log("고유번호",docInfo);
+
     console.log("매물등록 버튼 눌림");
     let seller = 1;
     console.log(province,city,town,jibun,road,lng,lat,addiAddress);
@@ -89,12 +112,58 @@ const Insert = () => {
           withCredentials : true,
         }).then((e)=>{
           console.log(e);
-          console.log("잘 전달됨.")
+          console.log(e.data.msg)
+          console.log(e.data.acceptData)
+          console.log(typeof(e.data.acceptData))
+          console.log("잘 전달됨.");
+          if(e.data.msg=="이미 등록"){
+            switch (e.data.accpetData) {
+              case 0:
+                alert("입력하신 매물고유번호로 등록된 매물은 투표 진행중입니다.")
+                break;
+              case 1:
+                alert("입력하신 매물고유번호로 등록된 매물은 정상매물로 등록되어있습니다. ")
+                
+                break;
+              case 2:
+                alert("입력하신 매물고유번호로 등록된 매물은 허위매물로 분류되어 등록이 불가합니다.")
+                
+                break; 
+              case 3:
+                alert("입력하신 매물고유번호로 등록된 매물은 투표 수 미달되었습니다. 마이페이지에서 재등록이 가능합니다.")
+                
+                break;
+            }
+          }
+
+          else{
+            queryClient.invalidateQueries('users');
+            navigate('/list')
+          }
         }).catch((err)=>{
             console.log(err);
         })
-        navigate('/list')
+        
   }
+    // 유저정보 가져와서 식별 
+
+    const getUserInfo = async () => {
+      const response = await axios.get('http://localhost:8080/insert/userinfo');
+      return response.data;
+    };
+
+    // console.log(useQuery(queryKey,getUserInfo));
+    const { data: user, isLoading : userisLoading, error : usererror } = useQuery('users', getUserInfo);
+
+    if (userisLoading) {
+      return <div>로딩 중...</div>;
+    }
+  
+    if (usererror) {
+      return <div>오류: {usererror.message}</div>;
+    }
+  
+  
   function isChecked() {
     const checkbox = document.getElementById('checkbox');
     const ischecked = checkbox.checked;
@@ -104,7 +173,7 @@ const Insert = () => {
 
     if(ischecked){
       checkbtn.disabled = false;
-      checkbtn.style.backgroundColor="#0067a3";
+      checkbtn.style.backgroundColor="orange";
       checkbtn.style.color ="white";
       checkbtn.style.cursor = "pointer";
     }
@@ -116,9 +185,15 @@ const Insert = () => {
     }
 
   }
+
+  const obj = {
+    lng,setLng,lat,setLat,user
+  }
+
   return (
     <>
     <Global.Provider value={obj}>
+      <Islogin/>
     <Bodyy>
       <MainTitle>방내놓기</MainTitle>
       <Caution>
