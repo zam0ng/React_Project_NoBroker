@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState ,createContext} from 'react'
 import {MypageContainer,MypageAlldiv,UserInfoDiv,FakeInfo,UserInfoUpdate,FakeDiv,
     MypageList,TabInfo, ListItem} from './mypagestyled'
 import Account from './accounttab/Account'
@@ -6,6 +6,10 @@ import Check from './checktab/Check'
 import Register from './registertab/Register'
 import Transaciton from './transactiontab/Transaciton'
 import Vote from './votetab/Vote'
+import axios from 'axios'
+import MypageIslogin from '../insertPage/isLogined/MypageIslogin'
+import { useQuery } from 'react-query'
+export const MypageGlobal = createContext();
 const Mypage = () => {
     const [componentsValue, setComponentsValue] = useState("Account");
     // const listBtn =()=>{
@@ -21,6 +25,7 @@ const Mypage = () => {
     // function selectComponents(params) {
     //     setComponentsValue(params);
     // }
+
     const selectComponents= (params)=>{
         setComponentsValue(params);
 
@@ -55,10 +60,33 @@ const Mypage = () => {
 
             break;
     }
+    const getUserInfo = async () => {
+        const response = await axios.get('http://localhost:8080/mypage/mypageinfo');
+        return response.data;
+      };
+  
+      const { data: MyPageUserInfo, isLoading : userisLoading, error : usererror } = useQuery('users', getUserInfo);
+
+    //   console.log(MyPageUserInfo);
+
+    
+    if (userisLoading) {
+        return <div>로딩 중...</div>;
+      }
+    
+      if (usererror) {
+        return <div>오류: {usererror.message}</div>;
+      }
+
+      const obj ={
+        MyPageUserInfo,
+    }
 
   return (
+    <MypageGlobal.Provider value={obj}>
+    <MypageIslogin/>
     <MypageAlldiv>
-        <MypageContainer height={"230px"}>
+        <MypageContainer height={"210px"}>
             <UserInfoDiv height={"230px"}>
                 <div></div>
                 <span>010-1234-5678</span>
@@ -76,7 +104,7 @@ const Mypage = () => {
                     <div>회원정보 수정</div>
                 </UserInfoUpdate>
         </MypageContainer>
-        <MypageContainer height={"430px"}>
+        <MypageContainer height={"640px"}>
             <MypageList>
                 <ListItem isActive={componentsValue==="Account"} onClick={()=>selectComponents("Account")}>입출금</ListItem>
                 <ListItem isActive={componentsValue==="Check"} onClick={()=>selectComponents("Check")}>등록한 매물 내역</ListItem>
@@ -96,7 +124,7 @@ const Mypage = () => {
 
         
     </MypageAlldiv>
-
+    </MypageGlobal.Provider>
   )
 }
 

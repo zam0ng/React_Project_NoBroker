@@ -4,8 +4,8 @@ const dot = require("dotenv").config();
 const session = require("express-session");
 const path =require("path");
 const uploadRouter = require("./routers/upload");
-const getUserInfoRouter = require("./routers/insertPageUserInfo");
-
+const getUserInfoRouter = require("./routers/insertpageRouter");
+const MypageRouter = require("./routers/mypageRouter")
 const { estateDetailRouter, estateVoteRouter } = require("./routers");
 
 const app = express();
@@ -40,7 +40,7 @@ sequelize
 
 app.use("/upload",uploadRouter);
 app.use("/insert",getUserInfoRouter);
-
+app.use("/mypage",MypageRouter);
 
 // 매물 이미지 경로 지정
 app.use("/estate_imgs", express.static(path.join(__dirname, "imgs", "estate")));

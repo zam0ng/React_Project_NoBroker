@@ -23,10 +23,6 @@ class Transaction extends Model{
                     type : DataTypes.INTEGER,
                     allowNull : false,
                 },
-                // 거래 기간(마감)
-                transaction_date : {
-                    type : DataTypes.DATE
-                },
                 // 취소 여부
                 cancel :{
                     type : DataTypes.BOOLEAN,

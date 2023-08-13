@@ -1,16 +1,19 @@
 import { styled } from "styled-components";
+
 export const MypageAlldiv = styled.div` 
-    width: 100%;
+    width: 1300px;
     height: 100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    margin : 0 auto;
 `
 export const MypageContainer = styled.div`
     width: 95%;
     height: ${(props)=>props.height};
     border-top: 1px solid lightgray;
     display: flex;
+    /* border: 1px solid; */
 `
 export const UserInfoDiv = styled.div`
     width: 20%;
@@ -37,7 +40,6 @@ export const UserInfoDiv = styled.div`
 `
 
 export const ListItem = styled.div`
-    width: 55%;
     height: 30px;
     text-align: left;
     /* font-weight: 600 */
@@ -47,7 +49,7 @@ export const ListItem = styled.div`
 export const MypageList = styled.div`
     width: 20%;
     height: 430px;
-    border-right: 1px solid lightgray;
+    /* border-right: 1px solid lightgray; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -130,6 +132,7 @@ export const UserInfoUpdate = styled.div`
 `
 export const TabInfo = styled.div`
     width: 80%;
-    height: 430px;
+    height: 640px;
+    border-left: 1px solid lightgray;
 `
 

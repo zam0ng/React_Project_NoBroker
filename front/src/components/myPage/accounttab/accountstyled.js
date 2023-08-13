@@ -8,7 +8,7 @@ export const Container = styled.div`
 
 export const Myaccount = styled.div`
     width: 40%;
-    height: 100%;
+    height: 67%;
     /* border: 1px solid; */
     display: flex;
     flex-wrap: wrap;

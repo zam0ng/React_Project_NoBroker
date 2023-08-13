@@ -143,7 +143,6 @@ const Insert = ({queryClient}) => {
         }).catch((err)=>{
             console.log(err);
         })
-        
   }
     // 유저정보 가져와서 식별 
 
@@ -154,7 +153,7 @@ const Insert = ({queryClient}) => {
 
     // console.log(useQuery(queryKey,getUserInfo));
     const { data: user, isLoading : userisLoading, error : usererror } = useQuery('users', getUserInfo);
-
+    console.log("insertjsx",user)
     if (userisLoading) {
       return <div>로딩 중...</div>;
     }

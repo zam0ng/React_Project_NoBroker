@@ -54,6 +54,8 @@ const ImgMulter = ({temp,setTemp}) => {
     // 아래서 input 값을 비워도 upload할때는 input으로 하는게 아니고 temp2로 함.
     temp2 = [...temp2, ...input.files];
     setTemp(temp2);
+    // 매물을 또 등록할 때 이전에 등록한 매물의 사진이 쌓여서 초기화
+    temp2=[];
     setCnt(cnt+ parseInt(input.files.length));
     
     const imgContainer = document.getElementById("imgCotainer");
