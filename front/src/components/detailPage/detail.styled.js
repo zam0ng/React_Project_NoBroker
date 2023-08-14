@@ -9,7 +9,7 @@ export const LeftDiv = styled.div`
 
 export const RightDiv = styled.div`
     width : 30%;
-    height: 80vh;
+    height: 76vh;
     border-radius: 20px;
     position: absolute;
     right: 0;

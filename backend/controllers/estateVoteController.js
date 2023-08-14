@@ -129,6 +129,31 @@ exports.voteEstate = async (req, res) => {
   }
 };
 
+// 매물 투표했는지 여부 반환
+exports.getUserVote = async (req, res) => {
+  try {
+    // const user_id = req.decoded.id;
+    const user_id = 1;
+    const { real_estate_id } = req.params;
+
+    const vote = await Vote.findOne({where : {user_id, real_estate_id}});
+
+    const voteCount = await Vote.count({where : {real_estate_id}});
+    const trueCount = await Vote.count({where : {real_estate_id, result : true}});
+    const falseCount = await Vote.count({where : {real_estate_id, result : false}});
+    const estate = await Real_estate.findOne({where : {id : real_estate_id}});
+
+    let maxVote = Math.floor(estate.dataValues.balance / 10000000);
+    if (maxVote==0) { maxVote = 1};
+
+    return res.json({ vote, voteCounts : {voteCount, trueCount, falseCount, maxVote} });
+  } catch (error) {
+    console.log(error);
+    return res.json({ error });
+  }
+}
+
+
 // 투표 마감 기간이 (vote_end_date) 현재 날짜의 하루 전 날이면
 // 해당하는 매물들 투표 결과 내기
 // 미달 제외 참여한 업자에게 보상 제공

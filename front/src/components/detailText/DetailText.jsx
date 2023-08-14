@@ -1,5 +1,5 @@
 import React from 'react'
-import { DetailTitle, DetailUl, DetailContent, H1, Divider } from './detailText.styled'
+import { DetailTitle, DetailUl, DetailContent, H1 } from './detailText.styled'
 
 const DetailText = ({estate, seller}) => {
 

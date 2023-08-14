@@ -83,7 +83,7 @@ const Detail = ({queryClient, vote}) => {
       </DivList>
 
       {/* 투표 버튼 표시 */}
-      {vote ? <VoteBtn estate={data.estate} queryClient={queryClient}  /> : <></>}
+      {vote ? <><Divider style={{margin:"20px"}} /> <VoteBtn estate={data.estate} queryClient={queryClient}  /></> : <></>}
     </>
   );
 };

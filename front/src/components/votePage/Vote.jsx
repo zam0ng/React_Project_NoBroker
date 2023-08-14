@@ -36,7 +36,7 @@ const Vote = () => {
 
   return (
     <div>
-      <h1>목록</h1>
+      <h1>투표 목록</h1>
       <VoteList votable = {data.votable} />
     </div>
   )
