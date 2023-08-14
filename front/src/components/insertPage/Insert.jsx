@@ -35,6 +35,7 @@ const Insert = ({queryClient}) => {
   const[selectValue,setSelectValue] = useState("1");
   const[temp,setTemp] = useState([]);
   const[year,setYear] = useState("");
+  const[isdisable , setisDisable]= useState(true);
 
   let type ;
   
@@ -47,26 +48,6 @@ const Insert = ({queryClient}) => {
     setDisplay("block");
     document.body.style.overflow="hidden";
   }
-  // // 매물등록 버튼 눌렀을 때 서버에 고유번호로 등록되어있는 매물있는지 확인하기
-  // const docgetInfo = async()=>{
-  //   const data =  await axios.get("http://localhost:8080/insert/docinfo",{
-  //     withCredentials : true,
-  //   });
-  //   return data.data;
-  // }
-
-  // const {data: docInfo, isLoading : docisLoading, error : docerror} = useQuery('docinfo',docgetInfo);
-
-  // if (docisLoading) {
-  //   return <div>로딩 중...</div>;
-  // }
-
-  // if (docerror) {
-  //   return <div>오류: {error.message}</div>;
-  // }
-  // //
-  
-
   
   async function btnClick (){
     // console.log("고유번호",docInfo);
@@ -171,12 +152,14 @@ const Insert = ({queryClient}) => {
     const checkbtn = document.getElementById('checkbtn');
 
     if(ischecked){
+      setisDisable(false);
       checkbtn.disabled = false;
       checkbtn.style.backgroundColor="orange";
       checkbtn.style.color ="white";
       checkbtn.style.cursor = "pointer";
     }
     else{
+      setisDisable(true);
       checkbtn.disabled = true;
       checkbtn.style.backgroundColor="#e0e0e0";
       checkbtn.style.color ="white";
@@ -231,7 +214,7 @@ const Insert = ({queryClient}) => {
         </CheckDiv>
 
         <CheckDiv height={"90px"}>
-          <CheckBtn onClick={btnClick} id="checkbtn">매물 등록</CheckBtn>
+          <CheckBtn onClick={btnClick} id="checkbtn" disabled={isdisable}>매물 등록</CheckBtn>
         </CheckDiv> 
       </FinalCheck>
       <Footer></Footer>

@@ -3,6 +3,7 @@ import {DateImg,EstateAllInfo,OtherInfo,JustState} from './checkstyled';
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 const List = ({data}) => {
+    console.log(data);
     const [isDisplay,setIsDisplay] = useState(false);
 
     const state = data.accpet === 0 ? "투표중" :
@@ -40,6 +41,7 @@ const List = ({data}) => {
         /(\d{2})\/(\d{2})\/(\d{4})/,
         "$3/$1/$2"
     );
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
     const ImgUrl = data.img_1.split("\\")[2];
 

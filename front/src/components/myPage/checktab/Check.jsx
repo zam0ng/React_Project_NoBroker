@@ -32,7 +32,7 @@ const Check = () => {
     else if (isSelect == "ALL") {
       finalfilter = MyPageUserInfo;
     }
-    return finalfilter.map((item)=><List data={item} isSelect={isSelect}></List>)
+    return finalfilter.map((item)=><List data={item}></List>)
   }
   
   useEffect(()=>{

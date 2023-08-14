@@ -57,7 +57,7 @@ const Detail = ({queryClient}) => {
   }
 
   const { data, isLoading } = useQuery(['estate', id], getEstateDetail);
-
+  console.log(data);
   if (isLoading) {
     return (
       <div>loading...</div>

@@ -12,19 +12,6 @@ import { useQuery } from 'react-query'
 export const MypageGlobal = createContext();
 const Mypage = () => {
     const [componentsValue, setComponentsValue] = useState("Account");
-    // const listBtn =()=>{
-    //     console.log( "눌림")
-    //     let list = document.querySelectorAll(".list");
-
-    //     list.forEach((el,index) => {
-    //         el.onclick =()=>{
-    //             console.log(index);
-    //         }
-    //     });
-    // }
-    // function selectComponents(params) {
-    //     setComponentsValue(params);
-    // }
 
     const selectComponents= (params)=>{
         setComponentsValue(params);
@@ -60,26 +47,42 @@ const Mypage = () => {
 
             break;
     }
+
+    // real_estate 테이블에서 내가 등록한 매물 내역 불러오기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     const getUserInfo = async () => {
         const response = await axios.get('http://localhost:8080/mypage/mypageinfo');
         return response.data;
-      };
+      };  
   
-      const { data: MyPageUserInfo, isLoading : userisLoading, error : usererror } = useQuery('users', getUserInfo);
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-    //   console.log(MyPageUserInfo);
+    // transaction 테이블에서 내가 판매한, 구매한 내역 가져오기
+    const getMyRegisterInfo = async ()=>{
+        const {data} = await axios.get('http://localhost:8080/mypage/getmyregisterinfo',{
+            withCredentials: true,
+        })
+        return data;
+    }
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
+    const { data: MyPageUserInfo, isLoading : userisLoading, error : usererror } = useQuery('users', getUserInfo);
     
-    if (userisLoading) {
+    const {data: getmyregisterinfo,isLoading:getmyregisterinfoLoading, error : getmyregisterinfoError} = useQuery('getmyregister',getMyRegisterInfo);
+    // console.log(getmyregisterinfo);
+
+    if (userisLoading || getmyregisterinfoLoading) {
         return <div>로딩 중...</div>;
-      }
-    
-      if (usererror) {
-        return <div>오류: {usererror.message}</div>;
-      }
+    }
 
-      const obj ={
-        MyPageUserInfo,
+    if (usererror) {
+        return <div>오류: {usererror.message}</div>;
+    }
+    
+    if (getmyregisterinfoError) {
+        return <div>오류: {getmyregisterinfoError.message}</div>;
+    }
+    const obj ={
+        MyPageUserInfo,getmyregisterinfo
     }
 
   return (
@@ -109,7 +112,7 @@ const Mypage = () => {
                 <ListItem isActive={componentsValue==="Account"} onClick={()=>selectComponents("Account")}>입출금</ListItem>
                 <ListItem isActive={componentsValue==="Check"} onClick={()=>selectComponents("Check")}>등록한 매물 내역</ListItem>
                 <ListItem isActive={componentsValue==="Register"} onClick={()=>selectComponents("Register")}>매물 거래 내역</ListItem>
-                <ListItem isActive={componentsValue==="Transaciton"} onClick={()=>selectComponents("Transaciton")}>찜한 매물</ListItem>
+                <ListItem isActive={componentsValue==="Transaciton"} onClick={()=>selectComponents("Transaciton")}>찜한 매물 / 취소 보상 내역</ListItem>
                 <ListItem isActive={componentsValue==="Vote"} onClick={()=>selectComponents("Vote")}>투표한 매물 내역</ListItem>
             </MypageList>
             <TabInfo>

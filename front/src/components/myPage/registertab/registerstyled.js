@@ -32,7 +32,7 @@ export const StateDiv = styled.div`
     font-size: smaller;
     color : ${(props)=>props.color || "white"};
     cursor: pointer;
-    border-bottom: ${(props)=>props.isActive ? `3px solid ${props.color}` : "none"};
+    border-bottom: 3px solid ${(props)=>props.isActive ? `white` : "none"};
     & span{
         font-size: large;
     }
@@ -43,7 +43,7 @@ export const Selectstate = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     overflow-y: scroll;
 `
 export const SellDiv = styled.div`
@@ -62,5 +62,25 @@ export const BuyDiv = styled(SellDiv)`
     
     border-left: 3px solid white;
     background-image: linear-gradient(to right,rgb(74,200,37),rgb(214,205,1));
+
+`
+export const UpdateBtn = styled.button`
+        width: 52px;
+        height: 20px;
+        font-size: x-small;
+        background-color: orange;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 5px;
+`
+
+export const EstateAllInfo = styled.div`
+    width: 90%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-bottom: 1px solid lightgray;
 
 `

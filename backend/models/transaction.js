@@ -25,9 +25,19 @@ class Transaction extends Model{
                 },
                 // 취소 여부
                 cancel :{
+                    type : DataTypes.INTEGER,
+                    defaultValue : null,
+                },
+                // 판매자의 승인 여부
+                approved :{
                     type : DataTypes.BOOLEAN,
                     defaultValue : false,
                 },
+                // 거래 완료 여부 (현재 날짜 > 거래 날짜 일 때 true)
+                completed :{
+                    type : DataTypes.BOOLEAN,
+                    defaultValue : false,
+                }
 
             },{
                 sequelize,
@@ -45,6 +55,7 @@ class Transaction extends Model{
 
         db.Transaction.belongsTo(db.User, { foreignKey : "buyer", targetKey : "id"});
         db.Transaction.belongsTo(db.User, { foreignKey : "seller", targetKey : "id"});
+        db.Transaction.belongsTo(db.User, { foreignKey : "cancel", targetKey : "id"});
         db.Transaction.belongsTo(db.Real_estate, { foreignKey : "real_estate_id", targetKey : "id"});
 
     }
