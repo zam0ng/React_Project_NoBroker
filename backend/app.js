@@ -52,6 +52,7 @@ app.use("/vote", estateVoteRouter);
 
 // 투표 마감기한인 매물 처리
 cron.schedule('0 0 * * *', setEstateAccept)
+// cron.schedule('57 10 * * *', setEstateAccept)
 
 const server = app.listen(8080, () => {
   console.log("Server on");

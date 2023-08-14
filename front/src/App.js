@@ -26,6 +26,7 @@ function App() {
           />
           <Route path="/list" element={<List />} />
           <Route path="/vote" element={<Vote />} />
+          <Route path="/vote/:id" element={<Detail queryClient={queryClient} vote={true} />} />
         </Routes>
       </div>
     </QueryClientProvider>

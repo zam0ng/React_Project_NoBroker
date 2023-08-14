@@ -18,7 +18,7 @@ exports.getEstate = async (req, res) => {
     const estate = await Real_estate.findOne({
       where: { id },
       // include: { model: Comment, order:[['createdAt', 'DESC']], include: [{ model: Recomment, order : [['createdAt', 'DESC']], include : {model : User, attributes : ['user_name', 'user_img']} }, {model : User, attributes : ['user_name', 'user_img']}] },
-      include: { model: Comment, include: [{ model: Recomment, include : {model : User, attributes : ['user_name', 'user_img']} }, {model : User, attributes : ['user_name', 'user_img']}] },
+      include: { model: Comment, include: [{ model: Recomment, include: { model: User, attributes: ['user_name', 'user_img'] } }, { model: User, attributes: ['user_name', 'user_img'] }] },
     });
 
     let user_like = false;
@@ -32,16 +32,16 @@ exports.getEstate = async (req, res) => {
         user_like = true;
       }
     }
-    const likes = await Likes.count({where : {real_estate_id : id}});
+    const likes = await Likes.count({ where: { real_estate_id: id } });
 
     // 허위 매물 업로드 경력
-    const seller = await User.findOne({ attributes : ['id', 'user_name', 'phone', 'fake_count', 'user_img'], where: { id: estate.seller } });
+    const seller = await User.findOne({ attributes: ['id', 'user_name', 'phone', 'fake_count', 'user_img'], where: { id: estate.seller } });
 
     // 투표 여부 반환
-    let vote = await Vote.findOne({where : {real_estate_id:id, user_id}})
+    let vote = await Vote.findOne({ where: { real_estate_id: id, user_id } })
     vote ? vote = true : vote = false;
 
-    return res.json({ estate, like:{user_like, likes}, seller, vote });
+    return res.json({ estate, like: { user_like, likes }, seller, vote });
   } catch (error) {
     console.log(error);
     return res.json({ error });
@@ -54,11 +54,11 @@ exports.viewEstate = async (req, res) => {
     const { id } = req.params;
 
     // 조회수 올리기
-    const estate = await Real_estate.findOne({where: { id } });
+    const estate = await Real_estate.findOne({ where: { id } });
     console.log("조회수", id, estate)
     await Real_estate.update({ views: estate.views + 1 }, { where: { id } });
 
-    return res.json({message : "성공"});
+    return res.json({ message: "성공" });
   } catch (error) {
     console.log(error);
     return res.json({ error });

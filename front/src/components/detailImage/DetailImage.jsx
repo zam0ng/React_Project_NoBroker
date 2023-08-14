@@ -48,17 +48,7 @@ const DetailImage = ({list}) => {
     const loop = () => {
         let arr = [];
         list.forEach((el, index) => {
-            let src = "";
-            if(el!="") {
-                // console.log("path", el.split("\\")[2]);
-                src = "http://localhost:8080/estate_imgs/"+el.substr(12);
-                // src = "../"+el;
-                // arr.push(<DetailImg><img src={el} alt="매물 이미지" /></DetailImg>);
-            } else {
-                src = 'http://localhost:8080/estate_imgs/null.png';
-                // arr.push(<DetailImg> <img id={`img_${index}`} onClick={(e)=>{thumbnailImg(e)}} src='http://localhost:8080/estate_imgs/null.png' /> </DetailImg>);
-            }
-            arr.push(<DetailImg> <img id={`img_${index}`} onClick={(e)=>{thumbnailImg(e)}} src={src} /> </DetailImg>);
+            arr.push(<DetailImg> <img id={`img_${index}`} onClick={(e)=>{thumbnailImg(e)}} src={el && el != "" ? "http://localhost:8080/estate_imgs/"+el.substr(12): 'http://localhost:8080/estate_imgs/null.png'} /> </DetailImg>);
         });
         return arr;
     }
