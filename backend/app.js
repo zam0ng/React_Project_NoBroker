@@ -6,7 +6,7 @@ const path =require("path");
 const cron = require("node-cron");
 const uploadRouter = require("./routers/upload");
 
-const { estateDetailRouter, estateVoteRouter } = require("./routers");
+const { estateDetailRouter, estateVoteRouter, loginRouter } = require("./routers");
 
 const { setEstateAccept } = require("./controllers/estateVoteController");
 
@@ -40,11 +40,9 @@ sequelize
         console.error(err);
     });
 
-const mainRouter = require("./router/main");
 
-app.use("/", mainRouter);
 app.use("/upload",uploadRouter);
-
+app.use("/login", loginRouter)
 // 매물 이미지 경로 지정
 app.use("/estate_imgs", express.static(path.join(__dirname, "imgs", "estate")));
 app.use("/detail", estateDetailRouter);
