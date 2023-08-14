@@ -12,6 +12,7 @@ const NavHeader = () => {
   return (
     isactive ?
     <>
+    
     <NavbarTitle>
     <Hamburger onClick ={MenuOpen}>
         <span></span>
@@ -49,7 +50,6 @@ const NavHeader = () => {
       <div></div>
     </NavbarIcon>
   </NavbarTitle>
-
   )
 }
 

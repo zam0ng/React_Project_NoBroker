@@ -1,4 +1,4 @@
 const estateDetailRouter = require("../routers/estateDetailRouter");
 const estateVoteRouter = require("../routers/estateVoteRouter");
-
-module.exports = { estateDetailRouter, estateVoteRouter }
+const loginRouter = require("./loginRouter")
+module.exports = { estateDetailRouter, estateVoteRouter, loginRouter }
