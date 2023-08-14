@@ -3,9 +3,12 @@ const cors = require("cors");
 const dot = require("dotenv").config();
 const session = require("express-session");
 const path =require("path");
+const cron = require("node-cron");
 const uploadRouter = require("./routers/upload");
 
 const { estateDetailRouter, estateVoteRouter, loginRouter } = require("./routers");
+
+const { setEstateAccept } = require("./controllers/estateVoteController");
 
 const app = express();
 // const mine = require('mime-types')
@@ -44,6 +47,10 @@ app.use("/login", loginRouter)
 app.use("/estate_imgs", express.static(path.join(__dirname, "imgs", "estate")));
 app.use("/detail", estateDetailRouter);
 app.use("/vote", estateVoteRouter);
+
+// 투표 마감기한인 매물 처리
+cron.schedule('0 0 * * *', setEstateAccept)
+// cron.schedule('57 10 * * *', setEstateAccept)
 
 const server = app.listen(8080, () => {
   console.log("Server on");

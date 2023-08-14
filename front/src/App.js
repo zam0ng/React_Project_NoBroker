@@ -7,6 +7,7 @@ import List from "./components/listPage/ListPage";
 import Main from "./components/MainPage/Main";
 import Login from "./components/LoginPage/Login";
 import Signup from "./components/SignupPage/Signup";
+import Vote from "./components/votePage/Vote";
 import { Detail } from "./components";
 
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -27,7 +28,9 @@ function App() {
             path="/detail/:id"
             element={<Detail queryClient={queryClient} />}
           />
-          <Route path="/list" element={<List />} />z
+          <Route path="/list" element={<List />} />
+          <Route path="/vote" element={<Vote />} />
+          <Route path="/vote/:id" element={<Detail queryClient={queryClient} vote={true} />} />
         </Routes>
       </div>
     </QueryClientProvider>

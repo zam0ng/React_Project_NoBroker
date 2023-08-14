@@ -2,7 +2,8 @@ import styled from "styled-components"
 
 
 export const LeftDiv = styled.div`
-    width: 70%;
+    width: 60%;
+    margin: 20px;
     /* background-color: cadetblue; */
 `
 
@@ -28,4 +29,13 @@ export const DivList = styled.div`
     & ${LeftDiv} {
         /* background-color: aquamarine; */
     }
+`
+
+
+export const Divider = styled.div`
+    width: 100%;
+    height: 1px;
+    background-color: rgba(0,0,0,0.3);
+    margin-top: 20px;
+    margin-bottom: 20px;
 `

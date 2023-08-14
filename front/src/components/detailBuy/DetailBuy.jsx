@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { useMutation } from 'react-query';
-import { LikeBtn, BuyBtn, Title, Content, ContentDiv, LikeBtnDiv, UserImg } from './detailBuy.styled';
+import { LikeBtn, BuyBtn, Title, Content, ContentDiv, LikeBtnDiv, UserImg, Divider } from './detailBuy.styled';
 import { detail_heart, detail_emptyheart, userimg } from '../../img/index'
 
 const DetailBuy = ({estate, seller, like, queryClient}) => {
@@ -96,11 +96,9 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
 
   return (
     <div style={{position : "absolute", width:"100%", top:"50%", left: "50%", transform:"translate(-50%,-50%)"}}>
-        {seller.fake_count!=0 ?  <p>해당 판매자는 허위 매물 <span style={{color:"red"}}>{seller.fake_count}</span>회 올린 적이 있습니다.</p> : <></>}
-
 
         {/* 일주일 간격 */}
-        <h3>구매 신청</h3>
+        <h2>구매 신청</h2>
         <ContentDiv><Title>거래 기간</Title> <input type="date" id='date_input' min={new Date(now.setDate(now.getDate() + 7)).toISOString().split('T')[0]}/></ContentDiv>
         {/* <input type="date" id='date_input' min={new Date(now.setDate(now.getDate() + 7)).toISOString().split('T')[0]}/> */}
 
@@ -110,14 +108,16 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
             {estate.state==0 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"orange"}>신청하기</BuyBtn> : <BuyBtn onClick={clickBuyBtn} backgroundColor = {"grey"}>구매 불가</BuyBtn>}
         </div>
 
-        <h3>판매자 정보</h3>
+        <Divider />
+
+        <h2 style={{marginTop:"40px"}}>판매자 정보</h2>
+        {seller.fake_count!=0 ?  <p>해당 판매자는 허위 매물 <span style={{color:"red"}}>{seller.fake_count}</span>회 올린 적이 있습니다.</p> : <></>}
         <UserImg src={seller.user_img!="userimg" || !seller.user_img ? "http://localhost:8080/user_imgs/"+seller.user_img.split("\\")[2] : userimg} alt="유저 이미지" />
         <ContentDiv><Title>이름</Title> <Content>{seller.user_name}</Content></ContentDiv>
         <ContentDiv><Title>연락처</Title> <Content>{seller.phone}</Content></ContentDiv>
 
-
         <LikeBtnDiv>
-            <div>조회수 : {estate.views}</div>
+            <div>{estate.views}번 조회된 매물입니다.</div>
             <LikeBtn onClick={clickLikeBtn}>
             {like.user_like ? <img src={detail_heart} alt ="꽉 찬 하트"></img> : <img src={detail_emptyheart} alt ="빈 하트"></img>}
             {like.likes}

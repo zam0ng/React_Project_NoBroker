@@ -3,15 +3,16 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
-import DetailImage from "../detailImage/DetailImage";
-import DetailText from "../detailText/DetailText";
-import DetailBuy from "../detailBuy/DetailBuy";
+import DetailImage from '../detailImage/DetailImage';
+import DetailText from '../detailText/DetailText';
+import DetailBuy from '../detailBuy/DetailBuy';
+import VoteBtn from '../voteBtn/VoteBtn';
 
-import { DivList, LeftDiv, RightDiv } from "./detail.styled";
-import DetailComment from "../detailComment/DetailComment";
+import { DivList, LeftDiv, RightDiv, Divider } from './detail.styled';
+import DetailComment from '../detailComment/DetailComment';
 import NavHeader from "../navbar/NavHeader";
 
-const Detail = ({ queryClient }) => {
+const Detail = ({queryClient, vote}) => {
   // 매물 아이디
   const { id } = useParams();
 
@@ -19,12 +20,9 @@ const Detail = ({ queryClient }) => {
   const viewEstate = async () => {
     // 현재 브라우저의 세션에 해당 매물 봤다는 기록이 있다면 조회수 올라감
     if (!window.sessionStorage.getItem(`viewEstate_${id}`)) {
-      const { data } = await axios.post(
-        `http://localhost:8080/detail/view/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const { data } = await axios.post(`http://localhost:8080/detail/view/${id}`, {
+        withCredentials : true
+      });
       window.sessionStorage.setItem(`viewEstate_${id}`, true);
     }
   };
@@ -42,7 +40,6 @@ const Detail = ({ queryClient }) => {
         window.scrollY
     ) {
       document.querySelector("[id='rightDiv']").classList.add("fixed");
-      console.log("dsfjksdlf");
     } else {
       document.querySelector("[id='rightDiv']").classList.remove("fixed");
     }
@@ -53,7 +50,7 @@ const Detail = ({ queryClient }) => {
     const { data } = await axios.get(`http://localhost:8080/detail/${id}`, {
       withCredentials: true,
     });
-    console.log("받아온 데이터", data);
+    console.log("받아온 데이터",data);
     return data;
   };
 
@@ -70,37 +67,23 @@ const Detail = ({ queryClient }) => {
   return (
     <>
       <NavHeader></NavHeader>
-      <div id="detailImage">
-        <DetailImage
-          list={[
-            data.estate.img_1,
-            data.estate.img_2,
-            data.estate.img_3,
-            data.estate.img_4,
-            data.estate.img_5,
-            data.estate.img_6,
-            data.estate.img_7,
-          ]}
-        />
+      <div id='detailImage'>
+      <DetailImage list={[data.estate.img_1, data.estate.img_2, data.estate.img_3, data.estate.img_4, data.estate.img_5, data.estate.img_6, data.estate.img_7]} />
       </div>
       <DivList>
         <LeftDiv>
-          <DetailText estate={data.estate} />
-          <DetailComment
-            estateId={data.estate.id}
-            comment={data.estate.Comments}
-            queryClient={queryClient}
-          ></DetailComment>
+          <DetailText estate = {data.estate}/>
+          <Divider />
+          <DetailComment estateId = {data.estate.id} comment = {data.estate.Comments} queryClient={queryClient}></DetailComment>
+
         </LeftDiv>
-        <RightDiv id="rightDiv">
-          <DetailBuy
-            estate={data.estate}
-            seller={data.seller}
-            like={data.like}
-            queryClient={queryClient}
-          />
+        <RightDiv id='rightDiv'>
+          <DetailBuy estate = {data.estate} seller = {data.seller} like = {data.like} queryClient={queryClient}/>
         </RightDiv>
       </DivList>
+
+      {/* 투표 버튼 표시 */}
+      {vote ? <VoteBtn estate={data.estate} queryClient={queryClient}  /> : <></>}
     </>
   );
 };
