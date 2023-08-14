@@ -1,7 +1,5 @@
 const router = require("express").Router();
-
-router.get("/", () => {
-  console.log("서버연결 완료");
-});
+const { Login } = require("../controllers");
+router.post("/", Login);
 
 module.exports = router;
