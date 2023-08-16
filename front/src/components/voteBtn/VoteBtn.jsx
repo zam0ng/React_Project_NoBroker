@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from 'axios'
+import axios from '../../Axios'
 import { useQuery, useMutation } from 'react-query'
 import { Btn, BtnDiv, H1 } from './voteBtn.styled'
 
@@ -11,7 +11,7 @@ const VoteBtn = ({ estate, queryClient }) => {
   const createMutation = useMutation(
     async (vote) => {
       const { data } = await axios.post(
-        "http://localhost:8080/vote/voteEstate",
+        "/vote/voteEstate",
         vote,
         {
           withCredentials: true,
@@ -45,7 +45,7 @@ const VoteBtn = ({ estate, queryClient }) => {
   };
 
   const getUserVote = async () => {
-    const { data } = await axios.get(`http://localhost:8080/vote/getUserVote/${estate.id}`, {
+    const { data } = await axios.get(`/vote/getUserVote/${estate.id}`, {
       withCredentials: true,
     });
     console.log("받아온 데이터", data);

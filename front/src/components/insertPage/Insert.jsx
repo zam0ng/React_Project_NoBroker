@@ -10,7 +10,7 @@ import Deposite from './deposite/Deposite'
 import ImgMulter from './imgMulter/ImgMulter';
 import { useState } from 'react';
 import Footer from '../footer/Footer';
-import axios from 'axios';
+import axios from '../../Axios';
 import { useQuery } from 'react-query';
 import {useNavigate} from 'react-router-dom'
 import Islogin from './isLogined/Islogin';
@@ -101,7 +101,7 @@ const Insert = ({queryClient}) => {
     }
     console.log("------------------------------- files", files);
 
-    axios.post("http://localhost:8080/upload",form,{
+    axios.post("/upload",form,{
 
           "Content-Type" : "multipart/form-data",
           withCredentials : true,
@@ -142,7 +142,7 @@ const Insert = ({queryClient}) => {
     // 유저정보 가져와서 식별
 
     const getUserInfo = async () => {
-      const response = await axios.get('http://localhost:8080/insert/userinfo');
+      const response = await axios.get('/insert/userinfo');
       return response.data;
     };
 

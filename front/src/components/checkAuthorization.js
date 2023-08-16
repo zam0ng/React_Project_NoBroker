@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios from '../Axios';
 import { Navigate } from 'react-router-dom';
 
 // 권한 확인
 const CheckAuthorization = async ({element : Component}) => {
 
-    const { data } = await axios.get(`http://localhost:8080/vote/`, {
+    const { data } = await axios.get(`/vote/`, {
         withCredentials: true
     });
     console.log("받아온 데이터", data);

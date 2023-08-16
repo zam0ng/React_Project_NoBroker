@@ -4,7 +4,7 @@ import { LoginBox } from "./LoginBoxStyled";
 import { LoginBtn } from "./LoginBtnStyled";
 import { LoginInput } from "./LoginInputStyled";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../Axios";
 
 const Login = () => {
   const nav = useNavigate();
@@ -19,7 +19,7 @@ const Login = () => {
     console.log("아이디 - ", ID, "   패스워드 - ", PW);
     axios
       .post(
-        "http://localhost:8080/login",
+        "/login",
         { ID, PW },
         { withCredentials: true }
       )

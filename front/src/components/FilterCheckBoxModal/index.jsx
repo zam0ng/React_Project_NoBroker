@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FilterModalContainer , ModalHeaderWrap , ModalContentWrap , ModalCheck} from 'components/BuiltYearCheckBoxModal/styles'
 import { useQuery } from 'react-query'
-import axios from 'axios'
+import axios from '../../Axios'
 import { components } from 'react-select'
 
 // import {

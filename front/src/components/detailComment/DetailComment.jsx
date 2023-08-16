@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import axios from "../../Axios";
 import { useMutation } from "react-query";
 
 import {
@@ -23,7 +23,7 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
   const createMutation = useMutation(
     async (comment) => {
       const { data } = await axios.post(
-        "http://localhost:8080/detail/postComment",
+        "/detail/postComment",
         comment,
         {
           withCredentials: true,
@@ -62,7 +62,7 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
   const createRecommentMutation = useMutation(
     async (recomment) => {
       const { data } = await axios.post(
-        "http://localhost:8080/detail/postRecomment",
+        "/detail/postRecomment",
         recomment,
         {
           withCredentials: true,

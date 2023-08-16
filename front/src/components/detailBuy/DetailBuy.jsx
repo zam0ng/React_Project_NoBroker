@@ -1,17 +1,15 @@
 import React from 'react'
-import axios from 'axios'
+import axios from '../../Axios'
 import { useMutation } from 'react-query';
 import { LikeBtn, BuyBtn, Title, Content, ContentDiv, LikeBtnDiv, UserImg, Divider } from './detailBuy.styled';
 import { detail_heart, detail_emptyheart, userimg } from '../../img/index'
-import { useNavigate } from 'react-router-dom';
 
 const DetailBuy = ({estate, seller, like, queryClient}) => {
     const now = new Date();
-    const nav = useNavigate();
 
     // 구매
     const createBuyMutation = useMutation(async (buyForm)=>{
-        const { data } = await axios.post("http://localhost:8080/detail/buyEstate", buyForm, {
+        const { data } = await axios.post("/detail/buyEstate", buyForm, {
         withCredentials : true
         });
         return data;
@@ -25,9 +23,6 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
                 queryClient.invalidateQueries('estate');
             } else if (data.message && data.message == "돈 부족") {
                 alert("돈이 부족합니다.");
-            } else if (data.message && data.message == "다시 로그인") {
-                alert("로그인 하세요.");
-                nav("/login");
             } else {
                 console.log("오류",data);
                 alert("오류 발생");
@@ -51,7 +46,7 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
 
     // 찜 추가
     const createAddLikeMutation = useMutation(async (likeForm) => {
-        const { data } = await axios.post("http://localhost:8080/detail/like", likeForm, {
+        const { data } = await axios.post("/detail/like", likeForm, {
         withCredentials : true
         });
         return data;
@@ -61,9 +56,6 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
                 console.log("찜 추가 성공");
 
                 queryClient.invalidateQueries('estate');
-            } else if (data.message && data.message == "다시 로그인") {
-                alert("로그인 하세요.");
-                nav("/login");
             } else {
                 console.log("오류",data);
                 alert("오류 발생");
@@ -74,7 +66,7 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
 
     // 찜 취소
     const createDelLikeMutation = useMutation(async (delLikeForm)=>{
-        const { data } = await axios.post("http://localhost:8080/detail/delLike", delLikeForm, {
+        const { data } = await axios.post("/detail/delLike", delLikeForm, {
         withCredentials : true
         });
         return data;

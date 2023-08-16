@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {DateImg,EstateAllInfo,OtherInfo,JustState} from './checkstyled';
-import axios from 'axios';
+import axios from '../../../Axios';
+import { serverUrl } from 'components/serverURL';
 import { useMutation, useQueryClient } from 'react-query';
 const List = ({data}) => {
     // console.log(data);
@@ -46,7 +47,7 @@ const List = ({data}) => {
     const ImgUrl = data.img_1?.split("\\")[2];
 
     const updateAccept = async(el)=>{
-        const data= await axios.get('http://localhost:8080/mypage/resubmit',{
+        const data= await axios.get('/mypage/resubmit',{
             params :{el},
             withCredentials : true,
         })
@@ -75,7 +76,7 @@ const List = ({data}) => {
     <EstateAllInfo>
         <DateImg>
             <span>{revisedFormattedDate}</span>
-            <img src={`http://localhost:8080/estate_imgs/${ImgUrl}`}></img>
+            <img src={`${serverUrl}/estate_imgs/${ImgUrl}`}></img>
         </DateImg>
         <OtherInfo>
             <div>{data.balance}만원</div>
