@@ -12,25 +12,25 @@ const Register = () => {
   }
 
   useEffect(()=>{
-    let ta;
-    let tb=[];
-    ta = getmyregisterinfo.data?.filter((el)=>el.seller==getmyregisterinfo.user_id && el.approved==0 && el.cancel==null && el.completed ==0);
-    tb.push(ta.length);
-    ta = getmyregisterinfo.data?.filter((el)=>el.seller==getmyregisterinfo.user_id && el.approved==1 && el.cancel==null && el.completed==0 );
-    tb.push(ta.length);
-    ta = getmyregisterinfo.data?.filter((el)=>el.seller==getmyregisterinfo.user_id && el.completed==1);
-    tb.push(ta.length);
-    ta = getmyregisterinfo.data.filter((el)=>el.seller==getmyregisterinfo.user_id && el.cancel==getmyregisterinfo.user_id);
-    tb.push(ta.length);
-    ta = getmyregisterinfo.data?.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.approved==0 && el.cancel==null && el.completed ==0);
-    tb.push(ta.length);
-    ta = getmyregisterinfo.data?.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.approved==1 && el.cancel==null && el.completed==0);
-    tb.push(ta.length);
-    ta = getmyregisterinfo.data?.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.completed==1);
-    tb.push(ta.length);
-    ta = getmyregisterinfo.data.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.cancel==getmyregisterinfo.user_id);
-    tb.push(ta.length);
-    setcntArr(tb);
+    let cnt;
+    let cntArr=[];
+    cnt = getmyregisterinfo.data?.filter((el)=>el.seller==getmyregisterinfo.user_id && el.approved==0 && el.cancel==null && el.completed ==0);
+    cntArr.push(cnt.length);
+    cnt = getmyregisterinfo.data?.filter((el)=>el.seller==getmyregisterinfo.user_id && el.approved==1 && el.cancel==null && el.completed==0 );
+    cntArr.push(cnt.length);
+    cnt = getmyregisterinfo.data?.filter((el)=>el.seller==getmyregisterinfo.user_id && el.completed==1);
+    cntArr.push(cnt.length);
+    cnt = getmyregisterinfo.data.filter((el)=>el.seller==getmyregisterinfo.user_id && el.cancel==getmyregisterinfo.user_id);
+    cntArr.push(cnt.length);
+    cnt = getmyregisterinfo.data?.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.approved==0 && el.cancel==null && el.completed ==0);
+    cntArr.push(cnt.length);
+    cnt = getmyregisterinfo.data?.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.approved==1 && el.cancel==null && el.completed==0);
+    cntArr.push(cnt.length);
+    cnt = getmyregisterinfo.data?.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.completed==1);
+    cntArr.push(cnt.length);
+    cnt = getmyregisterinfo.data.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.cancel==getmyregisterinfo.user_id);
+    cntArr.push(cnt.length);
+    setcntArr(cntArr);
   },[getmyregisterinfo.data])
 
   // console.log(cntArr);

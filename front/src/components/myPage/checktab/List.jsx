@@ -3,7 +3,7 @@ import {DateImg,EstateAllInfo,OtherInfo,JustState} from './checkstyled';
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 const List = ({data}) => {
-    console.log(data);
+    // console.log(data);
     const [isDisplay,setIsDisplay] = useState(false);
 
     const state = data.accpet === 0 ? "투표중" :
