@@ -8,10 +8,10 @@ import Insert from "./components/insertPage/Insert";
 import Main from "./components/MainPage/Main";
 import Login from "./components/LoginPage/Login";
 import Signup from "./components/SignupPage/Signup";
+import Mypage from "./components/myPage/Mypage";
 import Vote from "./components/votePage/Vote";
 
 // import NavHeader from "components/navbar/NavHeader";
-
 import { QueryClient, QueryClientProvider } from "react-query";
 import "./App.css";
 import PAC_Map from 'components/PAC_Map'
@@ -29,7 +29,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/insert" element={<Insert />} />
+          <Route path="/insert" element={<Insert queryClient={queryClient}/>} />
           <Route
             path="/detail/:id"
             element={<Detail queryClient={queryClient} />}
@@ -37,10 +37,11 @@ function App() {
           <Route path="/list" element={<PAC_Map/>}></Route>
           <Route path="/vote" element={<Vote />} />
           <Route path="/vote/:id" element={<Detail queryClient={queryClient} vote={true} />} />
+          <Route path="/mypage" element={<Mypage queryClient={queryClient}/>} />
     </Routes>
 
-  </div>
-  </QueryClientProvider>
+      </div>
+    </QueryClientProvider>
   );
 }
 

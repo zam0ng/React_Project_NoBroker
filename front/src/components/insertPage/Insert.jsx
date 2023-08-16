@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useContext, createContext } from "react";
 import {
   MainTitle,
@@ -28,10 +29,29 @@ import { useNavigate } from "react-router-dom";
 import NavHeader from "../navbar/NavHeader";
 
 
+=======
+import React, { useEffect, useContext, createContext} from 'react'
+import {MainTitle,Caution,Bodyy,EstataInfoTitle,WarningSpan,EssentialSpan,
+        Modalbody,Modal,FinalCheck,CheckInput,CheckDiv,CheckContent,CheckBtn} from './insertstyled';
+import Postcode from './postPopup/Post'
+import TypeSelect from './estateTypeSelect/TypeSelect'
+import Area from './estateArea/Area';
+import EstateDoc from './estatedoc/EstateDoc'
+import EstateBuilt from './estate_year_built/EstateBuilt'
+import Deposite from './deposite/Deposite'
+import ImgMulter from './imgMulter/ImgMulter';
+import { useState } from 'react';
+import Footer from '../footer/Footer';
+import axios from 'axios';
+import { useQuery } from 'react-query';
+import {useNavigate} from 'react-router-dom'
+import Islogin from './isLogined/Islogin';
+>>>>>>> j
 export const Global = createContext();
 
-const Insert = () => {
+const Insert = ({queryClient}) => {
   const navigate = useNavigate();
+<<<<<<< HEAD
   const [balance, setBalance] = useState(0);
   const [deposite, setDeposite] = useState(0);
   const [display, setDisplay] = useState("none");
@@ -56,6 +76,29 @@ const Insert = () => {
     lat,
     setLat,
   };
+=======
+  const [balance,setBalance] = useState(0);
+  const [deposite,setDeposite] = useState(0);
+  const [display,setDisplay] = useState("none");
+  
+  const[province,setProvince]= useState("");
+  const[city,setCity]= useState("");
+  const[town,setTown]= useState("");
+  const[jibun,setJibun]= useState("");
+  const[road,setRoad]= useState("");
+  const[lng,setLng] =useState(0);
+  const[lat,setLat] =useState(0);
+  const[addiAddress,setaddiAddress] = useState("");
+  const[m2,setM2] = useState("");
+  const[uniqueNum,setUniqueNum] = useState("");
+  const[selectValue,setSelectValue] = useState("1");
+  const[temp,setTemp] = useState([]);
+  const[year,setYear] = useState("");
+  const[isdisable , setisDisable]= useState(true);
+
+  let type ;
+  
+>>>>>>> j
   function None() {
     setDisplay("none");
     document.body.style.overflow = "visible";
@@ -64,8 +107,15 @@ const Insert = () => {
     setDisplay("block");
     document.body.style.overflow = "hidden";
   }
+<<<<<<< HEAD
 
   async function btnClick() {
+=======
+  
+  async function btnClick (){
+    // console.log("고유번호",docInfo);
+
+>>>>>>> j
     console.log("매물등록 버튼 눌림");
     let seller = 1;
     console.log(province, city, town, jibun, road, lng, lat, addiAddress);
@@ -116,6 +166,7 @@ const Insert = () => {
     }
     console.log("------------------------------- files", files);
 
+<<<<<<< HEAD
     axios
       .post("http://localhost:8080/upload", form, {
         "Content-Type": "multipart/form-data",
@@ -129,7 +180,65 @@ const Insert = () => {
         console.log(err);
       });
     navigate("/list");
+=======
+    axios.post("http://localhost:8080/upload",form,{
+          
+          "Content-Type" : "multipart/form-data",
+          withCredentials : true,
+        }).then((e)=>{
+          console.log(e);
+          console.log(e.data.msg)
+          console.log(e.data.acceptData)
+          console.log(typeof(e.data.acceptData))
+          console.log("잘 전달됨.");
+          if(e.data.msg=="이미 등록"){
+            switch (e.data.accpetData) {
+              case 0:
+                alert("입력하신 매물고유번호로 등록된 매물은 투표 진행중입니다.")
+                break;
+              case 1:
+                alert("입력하신 매물고유번호로 등록된 매물은 정상매물로 등록되어있습니다. ")
+                
+                break;
+              case 2:
+                alert("입력하신 매물고유번호로 등록된 매물은 허위매물로 분류되어 등록이 불가합니다.")
+                
+                break; 
+              case 3:
+                alert("입력하신 매물고유번호로 등록된 매물은 투표 수 미달되었습니다. 마이페이지에서 재등록이 가능합니다.")
+                
+                break;
+            }
+          }
+
+          else{
+            queryClient.invalidateQueries('users');
+            navigate('/list')
+          }
+        }).catch((err)=>{
+            console.log(err);
+        })
+>>>>>>> j
   }
+    // 유저정보 가져와서 식별 
+
+    const getUserInfo = async () => {
+      const response = await axios.get('http://localhost:8080/insert/userinfo');
+      return response.data;
+    };
+
+    // console.log(useQuery(queryKey,getUserInfo));
+    const { data: user, isLoading : userisLoading, error : usererror } = useQuery('users', getUserInfo);
+    console.log("insertjsx",user)
+    if (userisLoading) {
+      return <div>로딩 중...</div>;
+    }
+  
+    if (usererror) {
+      return <div>오류: {usererror.message}</div>;
+    }
+  
+  
   function isChecked() {
     const checkbox = document.getElementById("checkbox");
     const ischecked = checkbox.checked;
@@ -137,20 +246,38 @@ const Insert = () => {
 
     const checkbtn = document.getElementById("checkbtn");
 
+<<<<<<< HEAD
     if (ischecked) {
       checkbtn.disabled = false;
       checkbtn.style.backgroundColor = "#0067a3";
       checkbtn.style.color = "white";
       checkbtn.style.cursor = "pointer";
     } else {
+=======
+    if(ischecked){
+      setisDisable(false);
+      checkbtn.disabled = false;
+      checkbtn.style.backgroundColor="orange";
+      checkbtn.style.color ="white";
+      checkbtn.style.cursor = "pointer";
+    }
+    else{
+      setisDisable(true);
+>>>>>>> j
       checkbtn.disabled = true;
       checkbtn.style.backgroundColor = "#e0e0e0";
       checkbtn.style.color = "white";
       checkbtn.style.cursor = "default";
     }
   }
+
+  const obj = {
+    lng,setLng,lat,setLat,user
+  }
+
   return (
     <>
+<<<<<<< HEAD
       <Global.Provider value={obj}>
         <NavHeader></NavHeader>
         <Bodyy>
@@ -175,6 +302,23 @@ const Insert = () => {
             <div>매물 정보</div>
             <EssentialSpan>* 필수 입력</EssentialSpan>
           </EstataInfoTitle>
+=======
+    <Global.Provider value={obj}>
+      <Islogin/>
+    <Bodyy>
+      <MainTitle>방내놓기</MainTitle>
+      <Caution>
+      <ul> 
+        <li>주소를 다르게 입력할 경우 허위매물로 신고될 수 있으니 꼭 동일하게 입력 바랍니다.</li>
+        <li>매물을 등록하면 투표가 진행되고 총 투표율이 70% 미만시 투표 미달로 분류되며 재등록이 가능합니다.</li>
+        <li>총 투표율이 70% 이상시 과반수에 따라 정상, 허위 매물로 분류되며 허위매물로 분류시에 경고 1회 누적됩니다.</li>
+      </ul>
+      </Caution>
+      <EstataInfoTitle>
+        <div>매물 정보</div>
+        <EssentialSpan>* 필수 입력</EssentialSpan>
+      </EstataInfoTitle>
+>>>>>>> j
 
           <TypeSelect
             selectValue={selectValue}
@@ -210,6 +354,7 @@ const Insert = () => {
           </EstataInfoTitle>
           <ImgMulter temp={temp} setTemp={setTemp}></ImgMulter>
 
+<<<<<<< HEAD
           <FinalCheck>
             <CheckDiv>
               <CheckInput
@@ -222,6 +367,15 @@ const Insert = () => {
                 없습니다.
               </CheckContent>
             </CheckDiv>
+=======
+        <CheckDiv height={"90px"}>
+          <CheckBtn onClick={btnClick} id="checkbtn" disabled={isdisable}>매물 등록</CheckBtn>
+        </CheckDiv> 
+      </FinalCheck>
+      <Footer></Footer>
+    </Bodyy>
+    </Global.Provider>
+>>>>>>> j
 
             <CheckDiv height={"90px"}>
               <CheckBtn onClick={btnClick} id="checkbtn">

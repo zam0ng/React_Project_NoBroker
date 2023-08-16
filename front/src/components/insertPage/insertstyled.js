@@ -153,7 +153,7 @@ export const CheckInput = styled.input`
     background-size: 120% 120%;
     background-position: 50%;
     background-repeat: no-repeat;
-    background-color: #0067a3;
+    background-color: orange;
   }
 `
 export const CheckContent = styled.span`
