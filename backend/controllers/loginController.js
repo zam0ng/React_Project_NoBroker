@@ -28,10 +28,9 @@ exports.Login = async (req, res) => {
         );
         req.session.access_token = token;
         return res.json({ message: "로그인 완료" });
-
       } else {
         console.log("비밀번호 틀림");
-        return res.json({message : "비밀번호 오류"})
+        return res.json({ message: "비밀번호 오류" });
       }
     } else {
       console.log("없는 유저");
