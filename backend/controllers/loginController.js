@@ -11,7 +11,8 @@ exports.Login = async (req, res) => {
       console.log("있는 유저");
       console.log(userSelec.dataValues.password);
       if (userSelec.dataValues.password == PW) {
-        const { user_id, user_name, user_img, fake_count } = userSelec;
+        const { user_id, user_name, user_img, fake_count, certificate_user } =
+          userSelec;
         let token = jwt.sign(
           {
             user_id,
