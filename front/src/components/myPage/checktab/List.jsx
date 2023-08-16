@@ -19,7 +19,7 @@ const List = ({data}) => {
           setIsDisplay(false);
         }
       }, [data.accpet]);
-     
+
     // createdAt 시간 바꾸기
     let ta = new Date(data.createdAt);
 
@@ -43,7 +43,7 @@ const List = ({data}) => {
     );
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-    const ImgUrl = data.img_1.split("\\")[2];
+    const ImgUrl = data.img_1?.split("\\")[2];
 
     const updateAccept = async(el)=>{
         const data= await axios.get('http://localhost:8080/mypage/resubmit',{
@@ -68,7 +68,7 @@ const List = ({data}) => {
 
        mutation.mutate(el);
     }
-    
+
 
   return (
     <>
@@ -83,7 +83,7 @@ const List = ({data}) => {
             <div><span>{data.area}㎡</span><span>,&nbsp;{data.type}</span></div>
         </OtherInfo>
         <JustState id="juststate">
-            <span>{state}</span>            
+            <span>{state}</span>
             {isDisplay ? <button onClick={()=>{resubmit(data.id)}}>재등록</button>:<></>}
         </JustState>
 

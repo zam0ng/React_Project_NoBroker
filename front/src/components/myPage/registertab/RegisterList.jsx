@@ -54,7 +54,7 @@ const RegisterList = ({data}) => {
       setbtnName("");
       setbtnName2("");
     }
-   
+
   },[data])
 
   let ta;
@@ -85,7 +85,7 @@ const RegisterList = ({data}) => {
     );
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-    const ImgUrl = data.Real_estate.img_1.split("\\")[2];
+    const ImgUrl = data.Real_estate.img_1?.split("\\")[2];
 
     const transactionStateUpdate = async(el)=>{
       const data = await axios.get("http://localhost:8080/mypage/transactionStateUpdate",{
@@ -99,14 +99,14 @@ const RegisterList = ({data}) => {
       onSuccess : (data)=>{
         console.log("거래 상태 업데이트 완료 ",data)
         if(data=="성공"){
-      
+
           queryClient.invalidateQueries(['getmyregister'])
           alert('판매 취소가 완료되었습니다.')
         }
         else if(data=='판매취소완료'){
           queryClient.invalidateQueries(['getmyregister'])
           alert('판매 취소가 완료되었습니다.')
-          
+
         }
         else if(data=='판매자잔고부족'){
           alert("잔고금액이 계약금의 2배보다 적어 판매 취소가 불가능합니다.")
@@ -114,15 +114,15 @@ const RegisterList = ({data}) => {
         else if(data=='구매취소완료'){
           queryClient.invalidateQueries(['getmyregister']);
         }
-      } 
+      }
     })
     const customConfirm = (message) => {
       return window.confirm(message);
     };
-    
+
     const transactionStateUpdateBtn=(btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,approved) =>{
       console.log("params",btnname);
-    
+
       if(btnname=="승인"){
         mutation.mutate({btnname,estateId,userID,transactionID});
       }
@@ -130,7 +130,7 @@ const RegisterList = ({data}) => {
         if(approved==1){
 
           if(customConfirm('거래중인 매물을 판매 취소할 경우 계약금 2배를 구매자에게 배상합니다.')){
-  
+
             mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID});
           }
           else{
@@ -147,7 +147,7 @@ const RegisterList = ({data}) => {
         if(approved==1){
 
           if(customConfirm('거래중인 매물을 구매 취소할 경우 계약금을 돌려받을 수 없습니다..')){
-  
+
             mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID});
           }
           else{
@@ -173,7 +173,7 @@ const RegisterList = ({data}) => {
         <div><span>{data.Real_estate.area}㎡</span><span>,&nbsp;{data.Real_estate.type}</span></div>
       </OtherInfo>
       <JustState>
-        <span>{state}</span>            
+        <span>{state}</span>
         {btnName ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved)}}>{btnName}</UpdateBtn> :<></>}
         {btnName2 ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName2,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved)}}>{btnName2}</UpdateBtn> :<></>}
       </JustState>
