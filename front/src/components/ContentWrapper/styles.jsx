@@ -3,10 +3,16 @@ import styled from 'styled-components'
 
 
 const ContentWrapper = styled.div`
-    /* overflow-y : scroll; */
+    /* 이전 */
+    /* width : 400px; */
     /* overflow-x : hidden; */
-    width : 400px;
-    height : calc(100% - 149px);
+    /* height : calc(100% - 149px); */
+
+    width : 490px;
+    height : 85vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
     background-color : lightblue;
     position : relative;
 

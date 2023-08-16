@@ -28,7 +28,7 @@
     // react-query 로 데이터 가져오기 
         const { data, error, isLoading, isError } = useQuery('fetchData', () =>
 
-        axios.get('http://localhost:8080/detail/tradableEstate', {
+        axios.get('http://localhost:8080/list/tradableEstate', {
                 withCredentials: true,
             })
             .then((res) => res.data)
@@ -124,7 +124,7 @@
             console.dir(error);
         }
         if (!isLoading && !isError && data) {
-            console.log("서버에서 받아온 데이터" , data.tradableEstate)
+            console.log("@PAC_MAP 서버에서 받아온 데이터" , data.tradableEstate)
             setTradableData(data.tradableEstate)
             console.log("setTradableData 저장되는 순간" , tradableData)
             // 데이터 사용하는 코드를 여기에 작성하면 됩니다.

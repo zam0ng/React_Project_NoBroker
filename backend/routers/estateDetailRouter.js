@@ -1,12 +1,7 @@
 const router = require("express").Router();
-const { getEstate, viewEstate, buyEstate, likeEstate, delLikeEstate, postComment, postRecomment,getTradableEstate } = require("../controllers/estateDetailController");
-
-// | test | 심사 통과된, 판매가능한, 모든 매물
-router.get("/tradableEstate", getTradableEstate);
+const { getEstate, buyEstate, viewEstate, likeEstate, delLikeEstate, postComment, postRecomment } = require("../controllers/estateDetailController");
 
 // 매물 상세 정보 반환(댓글,대댓글,찜 여부 + 위도 경도 등 반환)
-    // [수정 사유] 경로 파라미터가 위에 있으면, 그 밑에 있는 것들도 영향을 받아서 내림
-    // ex) tradableEstate 경로로 요청을 보내도, getEstate 이게 실행됨.
 router.get("/:id", getEstate);
 
 // 매물 조회수 올리기

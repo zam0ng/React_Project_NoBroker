@@ -12,9 +12,9 @@ const PlaceAutoCompleteSearch = () => {
 
         {/* <PAC_Card /> */}
         
-        <PAC_Map_Wrapper>
+        {/* <PAC_Map_Wrapper> */}
           <PAC_Map />
-        </PAC_Map_Wrapper>
+        {/* </PAC_Map_Wrapper> */}
   
         {/* <PAC_Card_InfoWindow /> */}
 

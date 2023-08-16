@@ -51,12 +51,12 @@ export const ImgThumbnail = styled.div`
 
 export const InfoWrap = styled.div`
     padding-left : 20px;
-    width : 230px;
+    width : 205px;
     height : 100%;
     display : flex;
     flex-direction : column;
     justify-content: space-evenly;
-    
+    align-items : flex-start;
 `
 
 export const LikeBtnWrap = styled.button`
@@ -95,9 +95,12 @@ export const RoomType = styled.div`
 `
 
 export const RoomDesc = styled.div`
+
+    width : 195px;
+    text-align : left;
     font-size : 14px;
     font-weight : 400;
-    letter-spacing : -0.85px;
+    letter-spacing : -0.9px;
 
     white-space : nowrap;
     text-overflow : ellipsis;

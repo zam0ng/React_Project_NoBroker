@@ -89,7 +89,7 @@ class Real_estate extends Model{
                     type : DataTypes.FLOAT,
                     allowNull : false,
                 },
-                // 전용 면적
+                // 전용 면적, m2 단위 
                 area :{
                     type : DataTypes.FLOAT,
                     allowNull : false,

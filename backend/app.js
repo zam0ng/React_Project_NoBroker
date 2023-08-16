@@ -5,7 +5,7 @@ const session = require("express-session");
 const path =require("path");
 const uploadRouter = require("./routers/upload");
 
-const { estateDetailRouter, estateVoteRouter } = require("./routers");
+const { estateDetailRouter, estateVoteRouter , estateListRouter } = require("./routers");
 
 const app = express();
 
@@ -42,6 +42,7 @@ app.use("/upload",uploadRouter);
 // 매물 이미지 경로 지정
 app.use("/estate_imgs", express.static(path.join(__dirname, "imgs", "estate")));
 app.use("/detail", estateDetailRouter);
+app.use("/list", estateListRouter);     // 목록 페이지 라우터
 app.use("/vote", estateVoteRouter);
 
 const server = app.listen(8080,()=>{

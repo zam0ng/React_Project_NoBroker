@@ -22,7 +22,9 @@ root.render(
         {/* devtools */}
         <ReactQueryDevtools initialIsOpen={true} />
         <BrowserRouter>
+        
             <App />
+        
         </BrowserRouter>
 
     </QueryClientProvider>

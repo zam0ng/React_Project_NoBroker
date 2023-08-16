@@ -1,12 +1,15 @@
 import React from 'react'
+import InfowindowContentWrap from 'components/PAC_Card_InfoWindow/styles'
 
 const PAC_Card_InfoWindow = () => {
   return (
     
-    <div id="infowindow-content">
+    <InfowindowContentWrap>
+    {/* <div id="infowindow-content"> */}
         <span id="place-name" class="title"></span><br />
         <span id="place-address"></span>
-    </div>
+    {/* </div> */}
+    </InfowindowContentWrap>
 
 
   )
