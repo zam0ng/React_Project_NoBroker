@@ -43,3 +43,13 @@
 .LoginBtns {
   display: flex;
 }
+/* 이 밑에는 내가 쓴거 styled component 로 옮기는 중 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇 */
+
+*{
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}

@@ -7,6 +7,6 @@ import detail_arrow from './detail_arrow.png'
 import Logo from './NoBroker_Logo.png'
 import userIcon from './userIcon.png'
 import userIcon_white from './userIcon_white.png'
+import heartButton from './heart-button.svg'
 
-
-export {userimg,homeimg,apartimg, detail_heart, detail_emptyheart, detail_arrow, Logo, userIcon, userIcon_white};
+export {userimg,homeimg,apartimg, detail_heart, detail_emptyheart, detail_arrow, Logo, userIcon, userIcon_white, heartButton};

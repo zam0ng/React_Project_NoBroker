@@ -1,3 +1,21 @@
 node_modules
 package-lock.json
 .env
+
+# 테스트용 파일
+GoogleMap_2_1_작동함_keep.jsx
+GoogleMap_2_1_주석달기.jsx
+GoogleMap_2.jsx
+GoogleMap_3 combobox버전.jsx
+GoogleMap_3 혼자서해보는중.jsx
+GoogleMap_3_STYLED.jsx
+GoogleMap_3.jsx
+TestMarker.jsx
+
+# 테스트용 폴더
+components/Supercluster_Test2
+components/Supercluster_Test
+
+# git ignore 가 되면, 불이 꺼져야 함 
+# 그런데, 이건 지금 불이 안 꺼지고 있음.
+

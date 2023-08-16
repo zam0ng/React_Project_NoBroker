@@ -6,7 +6,7 @@ const path =require("path");
 const cron = require("node-cron");
 const uploadRouter = require("./routers/upload");
 
-const { estateDetailRouter, estateVoteRouter, loginRouter } = require("./routers");
+const { estateDetailRouter, estateVoteRouter, estateListRouter, loginRouter } = require("./routers");
 
 const { setEstateAccept } = require("./controllers/estateVoteController");
 
@@ -46,6 +46,7 @@ app.use("/login", loginRouter)
 // 매물 이미지 경로 지정
 app.use("/estate_imgs", express.static(path.join(__dirname, "imgs", "estate")));
 app.use("/detail", estateDetailRouter);
+app.use("/list", estateListRouter);     // 목록 페이지 라우터
 app.use("/vote", estateVoteRouter);
 
 // 투표 마감기한인 매물 처리
