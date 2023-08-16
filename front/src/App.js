@@ -24,7 +24,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
     <div className="App">
-      <NavHeader></NavHeader>
+      {/* <NavHeader></NavHeader> */}
       <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
