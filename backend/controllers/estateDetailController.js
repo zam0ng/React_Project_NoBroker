@@ -37,33 +37,13 @@ exports.getEstate = async (req, res) => {
     // 허위 매물 업로드 경력
     const seller = await User.findOne({ where: { id: estate.seller } });
 
-    console.log(estate);
+    // console.log(estate);
     return res.json({ estate, like, fake_count: seller.fake_count });
   } catch (error) {
     console.log(error);
     return res.json({ error });
   }
 };
-
-// 거래 가능한 모든 매물 반환 | 우선 state = 0 으로 테스트
-exports.getTradableEstate = async(req , res) => {
-  try {
-    // state == null (0 값) 반환하게 테스트 중
-    const tradableEstate = await Real_estate.findAll({
-      where: {state : null} ,
-    });
-
-    console.log("👐👐👐 거래가능한 데이터 ")
-    console.log(tradableEstate)
-    
-    return res.json({ tradableEstate })
-
-  } catch (error) {
-    console.log("@getTradableEstate" , error);
-    return res.json({error})
-  }
-}
-
 
 
 // 매물 구매 신청

@@ -3,7 +3,7 @@ const cors = require("cors");
 const dot = require("dotenv").config();
 const session = require("express-session");
 
-const { estateDetailRouter } = require("./routers");
+const { estateDetailRouter , estateListRouter } = require("./routers");
 
 const app = express();
 
@@ -34,6 +34,7 @@ sequelize
 
 
 app.use("/detail", estateDetailRouter);
+app.use("/list", estateListRouter);     // 목록 페이지 라우터
 
 const server = app.listen(8080,()=>{
     console.log("Server on");

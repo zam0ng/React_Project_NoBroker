@@ -28,7 +28,7 @@
     // react-query 로 데이터 가져오기 
         const { data, error, isLoading, isError } = useQuery('fetchData', () =>
 
-        axios.get('http://localhost:8080/detail/tradableEstate', {
+        axios.get('http://localhost:8080/list/tradableEstate', {
                 withCredentials: true,
             })
             .then((res) => res.data)

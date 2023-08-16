@@ -8,8 +8,8 @@ const ContentWrapper = styled.div`
     /* overflow-x : hidden; */
     /* height : calc(100% - 149px); */
 
-    width : 530px;
-    height : 75vh;
+    width : 490px;
+    height : 85vh;
     overflow-x: hidden;
     overflow-y: scroll;
 

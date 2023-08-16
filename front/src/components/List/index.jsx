@@ -20,11 +20,11 @@ const List = () => {
 
         {/* PlaceAutoCompleteSearch 작동함🔵 | 검색 기능, 마커 info window에 데이터 연결 가능, 클러스터 기능*/}
 
-          <SubHeader />
+          {/* <SubHeader /> */}
 
-          <MainContentWrap>
+          {/* <MainContentWrap> */}
               
-            <ContentWrapper>
+            {/* <ContentWrapper>
               <ItemList className="ItemList" /> 
               <ItemList className="ItemList" /> 
               <ItemList className="ItemList" /> 
@@ -38,10 +38,10 @@ const List = () => {
               <ItemList className="ItemList" /> 
               <ItemList className="ItemList" /> 
               
-            </ContentWrapper>
+            </ContentWrapper> */}
           
             <PlaceAutoCompleteSearch /> 
-          </MainContentWrap>
+          {/* </MainContentWrap> */}
 
       </Wrapper>
       
