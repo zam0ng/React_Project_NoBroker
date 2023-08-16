@@ -21,7 +21,8 @@
 
     import FilterCheckBoxModal from 'components/FilterCheckBoxModal/index';
     import FilterRangeModal from 'components/FilterRangeModal/index';
-    
+    import MapMainWrap from 'components/MapMainWrap/styles'  
+
     // import { 
     //     FilterModalContainer,
     //     ModalCheck
@@ -502,7 +503,8 @@
 
 
     return (
-        <>                  
+        <>        
+            {/* <MapMainWrap> */}
                 <SubHeaderWrapper>
 
                     <SearchContainer>
@@ -609,7 +611,7 @@
 
                     </PAC_Map_Wrapper>
                 </MainContentWrap>
-
+            {/* </MapMainWrap> */}
         </>
     )    
     }

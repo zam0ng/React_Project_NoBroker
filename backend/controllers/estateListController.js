@@ -21,7 +21,7 @@ exports.getTradableEstate = async(req , res) => {
       // 배열로 만들어서, 내가 필요한 값이 있나 없나 filter 를 안 해줘도 됨.  
 
     const whereConditions = {
-        state : null,   // 모든 집값 상태를 가져오겠다.
+        state : 0,   // 모든 집값 상태를 가져오겠다.
     }
 
 
