@@ -14,9 +14,11 @@ import {
   Date
 } from "./detailComment.styled";
 import { detail_arrow, userimg } from "../../img";
+import { useNavigate } from "react-router-dom";
 
 const DetailComment = ({ estateId, comment, queryClient }) => {
   let comment_id;
+  const nav = useNavigate();
 
   const createMutation = useMutation(
     async (comment) => {
@@ -35,6 +37,9 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
           document.querySelector("#commentInput").value = "";
 
           queryClient.invalidateQueries("estate");
+        } else if (data.message && data.message == "다시 로그인") {
+          alert("로그인 하세요.");
+          nav("/login");
         } else {
           alert("오류 발생");
         }
@@ -71,6 +76,9 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
           document.querySelector(`#recommentInput_${comment_id}`).value = "";
 
           queryClient.invalidateQueries("estate");
+        }else if (data.message && data.message == "다시 로그인") {
+          alert("로그인 하세요.");
+          nav("/login");
         } else {
           alert("오류 발생");
         }

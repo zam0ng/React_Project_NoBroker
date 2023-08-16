@@ -53,12 +53,11 @@ const setVoteResult = async (real_estate_id, balance, seller) => {
   }
 }
 
-
 // 투표 가능한 매물 목록 반환(투표 완료한 매물 제외)
 exports.getEstate = async (req, res) => {
   try {
-    // const user_id = req.decoded.id;
-    const user_id = 1;
+    const user_id = req.acc_decoded.id;
+    // const user_id = 1;
 
     // 해당 유저가 투표할 수 있는 등급인지 판별
     const user = await User.findOne({ where: { id: user_id } });
@@ -92,8 +91,8 @@ exports.getEstate = async (req, res) => {
 // 매물 허위/정상매물인지 투표
 exports.voteEstate = async (req, res) => {
   try {
-    // const user_id = req.decoded.id;
-    const user_id = 1;
+    const user_id = req.acc_decoded.id;
+    // const user_id = 1;
 
     const { real_estate_id, result } = req.body;
 
@@ -129,11 +128,27 @@ exports.voteEstate = async (req, res) => {
   }
 };
 
+// 권한 확인
+exports.checkAuthorization = async (req, res) => {
+  try {
+    const { certificate_user } = req.acc_decoded;
+
+    if (certificate_user!=0) {
+      return res.json({message : "권한 있음"});
+    } else {
+      return res.json({message : "권한 없음"});
+    }
+  } catch (error) {
+    console.log(error);
+    return res.json({ error });
+  }
+}
+
 // 매물 투표했는지 여부 반환
 exports.getUserVote = async (req, res) => {
   try {
-    // const user_id = req.decoded.id;
-    const user_id = 1;
+    const user_id = req.acc_decoded.id;
+    // const user_id = 1;
     const { real_estate_id } = req.params;
 
     const vote = await Vote.findOne({where : {user_id, real_estate_id}});

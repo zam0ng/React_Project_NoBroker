@@ -12,8 +12,9 @@ const {
 exports.getEstate = async (req, res) => {
   try {
     const { id } = req.params;
-    // const user_id = req.decoded.id;
-    const user_id = 1;
+    const user_id = req.acc_decoded?.id;
+
+    console.log("user_id!!  : ", user_id);
 
     const estate = await Real_estate.findOne({
       where: { id },
@@ -37,9 +38,12 @@ exports.getEstate = async (req, res) => {
     // 허위 매물 업로드 경력
     const seller = await User.findOne({ attributes: ['id', 'user_name', 'phone', 'fake_count', 'user_img'], where: { id: estate.seller } });
 
+    let vote = false;
     // 투표 여부 반환
-    let vote = await Vote.findOne({ where: { real_estate_id: id, user_id } })
-    vote ? vote = true : vote = false;
+    if (user_id) {
+      vote = await Vote.findOne({ where: { real_estate_id: id, user_id } })
+      vote ? vote = true : vote = false;
+    }
 
     return res.json({ estate, like: { user_like, likes }, seller, vote });
   } catch (error) {
@@ -68,8 +72,8 @@ exports.viewEstate = async (req, res) => {
 // 매물 구매 신청
 exports.buyEstate = async (req, res) => {
   try {
-    // const buyer = req.decoded.id;
-    const buyer = 1;
+    const buyer = req.acc_decoded.id;
+    // const buyer = 1;
     const { real_estate_id, transaction_date } = req.body;
 
     const estate = await Real_estate.findOne({ where: { id: real_estate_id } });
@@ -124,8 +128,9 @@ exports.buyEstate = async (req, res) => {
 // 매물 찜
 exports.likeEstate = async (req, res) => {
   try {
-    // const user_id = req.decoded.id;
-    const user_id = 1;
+    const user_id = req.acc_decoded.id;
+    console.log("req.decoded ", req.decoded)
+    // const user_id = 1;
     const { real_estate_id } = req.body;
 
     await Likes.create({ user_id, real_estate_id });
@@ -140,8 +145,8 @@ exports.likeEstate = async (req, res) => {
 // 매물 찜 취소
 exports.delLikeEstate = async (req, res) => {
   try {
-    // const user_id = req.decoded.id;
-    const user_id = 1;
+    const user_id = req.acc_decoded.id;
+    // const user_id = 1;
     const { real_estate_id } = req.body;
 
     await Likes.destroy({ where: { user_id, real_estate_id } });
@@ -156,8 +161,8 @@ exports.delLikeEstate = async (req, res) => {
 // 댓글 작성
 exports.postComment = async (req, res) => {
   try {
-    // const user_id = req.decoded.id;
-    const user_id = 1;
+    const user_id = req.acc_decoded.id;
+    // const user_id = 1;
     const { real_estate_id, content } = req.body;
 
     await Comment.create({ user_id, real_estate_id, content });
@@ -172,8 +177,8 @@ exports.postComment = async (req, res) => {
 // 대댓글 작성
 exports.postRecomment = async (req, res) => {
   try {
-    // const user_id = req.decoded.id;
-    const user_id = 1;
+    const user_id = req.acc_decoded.id;
+    // const user_id = 1;
     const { comment_id, re_content } = req.body;
 
     await Recomment.create({ user_id, comment_id, re_content });

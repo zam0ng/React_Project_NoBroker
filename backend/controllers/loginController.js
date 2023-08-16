@@ -11,13 +11,15 @@ exports.Login = async (req, res) => {
       console.log("있는 유저");
       console.log(userSelec.dataValues.password);
       if (userSelec.dataValues.password == PW) {
-        const { user_id, user_name, user_img, fake_count } = userSelec;
+        const { id, user_id, user_name, user_img, fake_count, certificate_user } = userSelec.dataValues;
         let token = jwt.sign(
           {
+            id,
             user_id,
             user_img,
             user_name,
             fake_count,
+            certificate_user
           },
           process.env.ACCESS_TOKEN_KEY,
           {

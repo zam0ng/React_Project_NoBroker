@@ -3,9 +3,11 @@ import axios from 'axios'
 import { useMutation } from 'react-query';
 import { LikeBtn, BuyBtn, Title, Content, ContentDiv, LikeBtnDiv, UserImg, Divider } from './detailBuy.styled';
 import { detail_heart, detail_emptyheart, userimg } from '../../img/index'
+import { useNavigate } from 'react-router-dom';
 
 const DetailBuy = ({estate, seller, like, queryClient}) => {
     const now = new Date();
+    const nav = useNavigate();
 
     // 구매
     const createBuyMutation = useMutation(async (buyForm)=>{
@@ -23,6 +25,9 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
                 queryClient.invalidateQueries('estate');
             } else if (data.message && data.message == "돈 부족") {
                 alert("돈이 부족합니다.");
+            } else if (data.message && data.message == "다시 로그인") {
+                alert("로그인 하세요.");
+                nav("/login");
             } else {
                 console.log("오류",data);
                 alert("오류 발생");
@@ -56,6 +61,9 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
                 console.log("찜 추가 성공");
 
                 queryClient.invalidateQueries('estate');
+            } else if (data.message && data.message == "다시 로그인") {
+                alert("로그인 하세요.");
+                nav("/login");
             } else {
                 console.log("오류",data);
                 alert("오류 발생");
