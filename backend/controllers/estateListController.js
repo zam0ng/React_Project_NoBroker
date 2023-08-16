@@ -55,7 +55,7 @@ exports.getTradableEstate = async(req , res) => {
     }
 
 
-    if(req.query.priceRangeValue){
+    if(req.query.areaRangeValue){
       const minArea = parseInt(req.query.areaRangeValue.split(',')[0], 10);
       const maxArea = parseInt(req.query.areaRangeValue.split(',')[1], 10);
       whereConditions.area = {
