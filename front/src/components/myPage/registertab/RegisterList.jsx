@@ -4,7 +4,7 @@ import { MypageGlobal } from '../Mypage';
 import { useContext } from 'react';
 import {UpdateBtn, EstateAllInfo} from './registerstyled';
 import axios from 'axios';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient,useQuery } from 'react-query';
 const RegisterList = ({data}) => {
   const {getmyregisterinfo} =useContext(MypageGlobal);
   const userID = getmyregisterinfo.user_id;
@@ -24,14 +24,14 @@ const RegisterList = ({data}) => {
       setbtnName("판매취소");
       setbtnName2("");
     }
-    else if(data.seller==userID && data.completed==1){
+    else if(data.seller==userID && data.completed==2){
       setState("판매완료");
       setbtnName("");
       setbtnName2("");
     }
     else if(data.seller==userID && data.cancel==userID){
       setState("판매취소");
-      setbtnName("");
+      setbtnName("재등록");
       setbtnName2("");
     }
     else if(data.buyer==userID && data.approved==0 && data.cancel==null && data.completed ==0){
@@ -44,7 +44,7 @@ const RegisterList = ({data}) => {
       setbtnName("구매취소");
       setbtnName2("");
     }
-    else if(data.buyer==userID && data.completed==1){
+    else if(data.buyer==userID && data.completed==2){
       setState("구매완료");
       setbtnName("");
       setbtnName2("");
@@ -87,6 +87,8 @@ const RegisterList = ({data}) => {
 
     const ImgUrl = data.Real_estate.img_1?.split("\\")[2];
 
+    
+    
     const transactionStateUpdate = async(el)=>{
       const data = await axios.get("http://localhost:8080/mypage/transactionStateUpdate",{
         params : {el},
@@ -95,6 +97,8 @@ const RegisterList = ({data}) => {
       return data.data;
     }
     const queryClient = useQueryClient();
+    
+
     const mutation = useMutation(transactionStateUpdate,{
       onSuccess : (data)=>{
         console.log("거래 상태 업데이트 완료 ",data)
@@ -113,6 +117,10 @@ const RegisterList = ({data}) => {
         }
         else if(data=='구매취소완료'){
           queryClient.invalidateQueries(['getmyregister']);
+        }
+        else if(data=='재등록 완료'){
+          queryClient.invalidateQueries(['getmyregister']);
+
         }
       }
     })
@@ -160,7 +168,12 @@ const RegisterList = ({data}) => {
 
 
       }
+      else if(btnname=="재등록"){
+        mutation.mutate({btnname,estateId,userID,transactionID});
+      }
     }
+    
+
   return (
     <EstateAllInfo>
       <DateImg>

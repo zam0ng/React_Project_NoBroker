@@ -65,10 +65,24 @@ const Mypage = () => {
     }
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
+    // 거래 완료 된 completed 1인거 정산
+    const transactionCom = async() =>{
+        const {data}= await axios.get('http://localhost:8080/mypage/transactionCom',
+        {
+          withCredentials : true,
+        })
+        return data;
+    }
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+
     const { data: MyPageUserInfo, isLoading : userisLoading, error : usererror } = useQuery('users', getUserInfo);
     
     const {data: getmyregisterinfo,isLoading:getmyregisterinfoLoading, error : getmyregisterinfoError} = useQuery('getmyregister',getMyRegisterInfo);
     // console.log(getmyregisterinfo);
+
+    const { data: transactionComdata, isLoading : transisLoading, error : transerror } = useQuery('transCom', transactionCom);
+    // console.log(transactionComdata);
 
     if (userisLoading || getmyregisterinfoLoading) {
         return <div>로딩 중...</div>;
@@ -117,7 +131,7 @@ const Mypage = () => {
             </MypageList>
             <TabInfo>
                 {componentsValue==='Account' && <Account/>}
-                {componentsValue==='Check' && <Check/>}
+                {componentsValue==='Check' && <Check MyPageUserInfo={MyPageUserInfo} getmyregisterinfo={getmyregisterinfo}/>}
                 {componentsValue==='Register' && <Register/>}
                 {componentsValue==='Transaciton' && <Transaciton/>}
                 {componentsValue==='Vote' && <Vote/>}

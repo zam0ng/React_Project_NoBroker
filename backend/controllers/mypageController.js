@@ -1,4 +1,4 @@
-const {User,Real_estate,Transaction, sequelize} =require('../models');
+const {User,Real_estate,Transaction, sequelize,Likes} =require('../models');
 const { findOne } = require('../models/users');
 const {Op, Sequelize} =require("sequelize");
 const cron = require("node-cron");
@@ -40,83 +40,105 @@ exports.reSubmit = async(req,res)=>{
     }
 }
 
-exports.getmyregisterinfo = async (req,res)=>{
-    
-    // 더미
+exports.getmyregisterinfo = async (req, res) => {
     const id = 1;
+    // 매시간마다 Transaction 테이블에 거래 날짜와 현재 날짜를 비교하여
+    // 현재 날짜 > 거래 날짜 이면 completed 를 1로 변경transactionCompleted
+    cron.schedule('0 * * * *', async (req, res) => {
+        try {
+            const transactionCom = await Transaction.findAll({
+                attributes: ["transaction_date", "completed", "id"],
+                where: {
+                    approved: 1,
+                    completed: 0,
+                },
+                raw: true,
+            })
 
-    try {
-        // 매시간마다 Transaction 테이블에 거래 날짜와 현재 날짜를 비교하여
-        // 현재 날짜 > 거래 날짜 이면 completed 를 1로 변경
-        cron.schedule('* * * * *', async (req,res) => {
-        const transactionCom = await Transaction.findAll({
-            attributes :["transaction_date","completed","id"],
-            where :{
-                approved : 1,
-                completed : 0,
-            },
-            raw: true,
-        })
-        
-        const currentTime = new Date();
+            const currentTime = new Date();
 
-        transactionCom.forEach(async(el) => {
-            console.log(el);
-            const transactionTime = new Date(el.transaction_date);
 
-            if(currentTime > transactionTime){
-                const ta = await Transaction.update({completed : true},{
-                    where : { id : el.id},
-                })
-                // console.log(ta);
-            }
-        });
-        
-        res.send("거래완료");
-        },{
-            scheduled : true,
-            timezone : 'Asia/Seoul',
+            transactionCom.forEach(async(el) => {
+                const transactionTime = new Date(el.transaction_date);
+
+                if (currentTime > transactionTime) {
+                    const ta = await Transaction.update({ completed: true }, {
+                        where: { id: el.id }
+                    })
+
+                }
+            })
+        } catch (error) {
+            console.log("transactionCompleted에서 오류",error);
         }
-        );
-
-        //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
+        
+    }, {
+        scheduled: true,
+        timezone: 'Asia/Seoul',
+    });
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    try {
         const data = await Transaction.findAll({
-            where :{
-                [Op.or]:[
-                    {seller :id},
-                    {buyer : id},
+            where: {
+                [Op.or]: [
+                    { seller: id },
+                    { buyer: id },
                 ],
             },
-            include : [{model : Real_estate, attributes : ["id","jibun","additional_address","balance","deposit","year_built","area","type","img_1"]}],
+            include: [{ model: Real_estate, attributes: ["id", "jibun", "additional_address", "balance", "deposit", "year_built", "area", "type", "img_1"] }],
             // raw: true,
         })
 
-        // const realestateInfo =[];
-
-        // for( const transaction of data){
-        //     const realestateId = transaction.real_estate_id;
-        //     const estateData = await Real_estate.findOne({
-        //         where :{ id: realestateId},
-        //         raw : true,
-        //     });
-
-        //     realestateInfo.push(estateData);
-        // }
-
-      
-        return res.json({data, user_id:id});
+        return res.json({ data, user_id: id });
     } catch (error) {
-        console.log("getmyregisterinfo 에서 오류",error);
+        console.log("getmyregisterinfo 에서 오류", error);
     }
 
+}
+// 구매자의 disable_won 을 잔금 만큼 빼고, 판매자의 won 에 잔금만큼 더하기
+exports.transactionCom = async(req,res)=>{
+    try {
+        console.log("ㄷ르어옴?>>>");
+        const data = await Transaction.findAll({
+            where : { completed :1 },
+            include : [{model: Real_estate,attributes:["id","balance","deposit"]}],
+            // raw : true,
+        })
+        console.log(data);
+        data.forEach(async(el) => {
+            console.log(el.buyer)
+            console.log(el.Real_estate.deposit-el.Real_estate.balanc);
+
+            await User.update({
+                disabled_won : sequelize.literal(`disabled_won - ${el.Real_estate.deposit-el.Real_estate.balance}`),
+                
+            },{
+                where : {id : el.buyer},
+            })
+
+            await User.update({
+                won : sequelize.literal(`won + ${el.Real_estate.deposit-el.Real_estate.balance}`),
+            },{
+                where : {id : el.seller}
+            })
+
+            await Transaction.update({
+                completed : 2
+            },{
+                where : {real_estate_id : el.Real_estate.id}
+            })
+        });
+        
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 exports.transactionStateUpdate = async(req,res)=>{
     
     try {
+
         const {el}=req.query;
-        console.log(el);
         // 계약금 2배
         // 계약금 : (amount/2) , 잔금 : ((amount/2)*9) , 전체금액 : (amount*5)
         const amount = parseInt((el.deposit *2) * 10000);
@@ -277,9 +299,41 @@ exports.transactionStateUpdate = async(req,res)=>{
             }
             res.send("구매취소완료")
         }
+        // 매물id로 거래 테이블 삭제하고, 매물 accpet 를 1로
+        else if(el.btnname=="재등록"){
+            console.log(el);
+            await Transaction.destroy({where : {real_estate_id : el.estateId}})
+            await Real_estate.update({
+                accpet : 1,
+                
+            },{
+                where : {id : el.estateId},
+            })
+
+            res.send("재등록 완료");
+        }
+        
         
     } catch (error) {
         console.log("거래 상태 업데이트 컨트롤러에서 오류",error)
+    }
+}
+
+exports.getMycheck =async(req,res)=>{
+    //더미
+    const user_id = 1;
+    try {
+        console.log("getmycheck 들어옴>>");
+        const data = await Likes.findAll({
+            where :{user_id : user_id},
+
+            include: [{ model: Real_estate, attributes: ["id", "jibun", "additional_address", "balance","deposit", "year_built", "area", "type", "img_1"] }],
+
+        })
+        res.json(data);
+
+    } catch (error) {
+        console.log("getMycheck 컨트롤러 오류",error);
     }
 }
     
