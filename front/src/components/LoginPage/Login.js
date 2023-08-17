@@ -25,6 +25,7 @@ const Login = () => {
       )
       .then((e) => {
         console.log("로그인 성공 목록으로", e.data.message);
+        console.log("로그인", e.data.message)
         if (e.data.message == "로그인 완료") {
           nav("/list");
         } else if (e.data.message == "비밀번호 오류") {
