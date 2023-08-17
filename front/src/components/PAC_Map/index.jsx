@@ -36,6 +36,15 @@
 
     const PAC_Map = () => {
 
+        console.log("axios : ", axios.defaults.baseURL);
+        const testFunc = async() => {
+            const test = await axios.get("/list/test" , {
+                withCredentials : true, 
+            });
+            console.log("test : " , test);
+        }
+        testFunc();
+
     const mapRef = useRef();
     const autoCompleteRef = useRef();
         // [useRef 이해]
