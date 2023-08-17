@@ -1,6 +1,8 @@
 node_modules
 package-lock.json
 .env
+noBroker.pem
+
 
 # 테스트용 파일
 GoogleMap_2_1_작동함_keep.jsx
