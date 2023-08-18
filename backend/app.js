@@ -34,13 +34,34 @@ app.use(
   })
 );
 
+// test
+const fs = require('fs');
+
 sequelize
   .sync({ force: false })
   .then(() => {
     console.log("database Connect");
+
+    fs.writeFile("./errtest", "database Connect", function(err){
+      if (err === null) {
+          console.log('success');
+      } else {
+          console.log('fail');
+      }
+    });
+
   })
   .catch((err) => {
     console.error(err);
+
+    fs.writeFile("./errtest", err, function(err){
+      if (err === null) {
+          console.log('success');
+      } else {
+          console.log('fail');
+      }
+    });
+
   });
 
 
