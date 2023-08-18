@@ -27,6 +27,7 @@ const Login = () => {
         console.log("로그인 성공 목록으로", e.data.message);
         if (e.data.message == "로그인 완료") {
           nav("/list");
+          setLogin(true);
         } else if (e.data.message == "비밀번호 오류") {
           alert("패스워드를 확인해주세요!");
         } else {

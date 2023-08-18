@@ -52,7 +52,7 @@ const VoteBtn = ({ estate, queryClient }) => {
     return data;
   }
 
-  const { data, isLoading } = useQuery(["vote"], getUserVote);
+  const { data, isLoading } = useQuery(["vote", estate.id], getUserVote);
 
   if (isLoading) {
     return <div>loading...</div>;
@@ -60,7 +60,29 @@ const VoteBtn = ({ estate, queryClient }) => {
 
   return (
     <>
-      <H1>투표</H1>
+      {
+        !data?.certificate_user
+        ?
+        <>
+        <H1>투표 권한 없음</H1>
+        </>
+        :
+        <>
+        <H1>투표</H1>
+        <div>
+          현재 투표 : {data.voteCounts.voteCount}표
+          정상 매물 : {data.voteCounts.trueCount}표
+          허위 매물 : {data.voteCounts.falseCount}표
+          최대 투표 가능 수 : {data.voteCounts.maxVote}표
+
+          진행률 : {data.voteCounts.voteCount!=0 ? <>{Math.ceil(data.voteCounts.voteCount / data.voteCounts.maxVote * 100)}%</> : "0%"}
+        </div>
+        <BtnDiv>
+          {estate.accpet == 0 ? data.vote?.result != null ? <><Btn backgroundColor="gray">투표 불가</Btn></> : <><Btn backgroundColor="green" onClick={() => { voteEstate(true) }}>정상매물</Btn> <Btn backgroundColor="red" onClick={() => { voteEstate(false) }}>허위매물</Btn></> : <><Btn backgroundColor="gray">투표 불가</Btn></>}
+        </BtnDiv>
+        </>
+      }
+      {/* <H1>투표</H1>
       <div>
         현재 투표 : {data.voteCounts.voteCount}표
         정상 매물 : {data.voteCounts.trueCount}표
@@ -71,7 +93,7 @@ const VoteBtn = ({ estate, queryClient }) => {
       </div>
       <BtnDiv>
         {estate.accpet == 0 ? data.vote?.result != null ? <><Btn backgroundColor="gray">투표 불가</Btn></> : <><Btn backgroundColor="green" onClick={() => { voteEstate(true) }}>정상매물</Btn> <Btn backgroundColor="red" onClick={() => { voteEstate(false) }}>허위매물</Btn></> : <><Btn backgroundColor="gray">투표 불가</Btn></>}
-      </BtnDiv>
+      </BtnDiv> */}
     </>
 
   )

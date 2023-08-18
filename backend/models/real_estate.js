@@ -66,12 +66,12 @@ class Real_estate extends Model{
                 },
                 // 판매가
                 deposit: {
-                    type : DataTypes.INTEGER,
+                    type : DataTypes.BIGINT,
                     allowNull : false,
                 },
                 // 계약금 (기본값 계약금의 10%)
                 balance: {
-                    type : DataTypes.INTEGER,
+                    type : DataTypes.BIGINT,
                     allowNull : false,
                 },
                 // 건축년도
@@ -89,7 +89,7 @@ class Real_estate extends Model{
                     type : DataTypes.FLOAT,
                     allowNull : false,
                 },
-                // 전용 면적, m2 단위 
+                // 전용 면적, m2 단위
                 area :{
                     type : DataTypes.FLOAT,
                     allowNull : false,
