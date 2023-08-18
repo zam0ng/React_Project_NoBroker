@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import FilterModalContainer from 'components/FilterCheckBoxModal/styles'
 import { useQuery } from 'react-query'
-import axios from 'axios'
+import axios from '../../Axios'
 
 
 const FilterCheckBoxModal = ({ checkboxValue, setCheckboxValue , handleCheckBox, tradableData, setTradableData , title, left}) => {
 
   const fetchFilterTradableEstateData = async () => {
 
-    const response = await axios.get(`http://localhost:8080/list/tradableEstate?roomType=${checkboxValue}` , {
+    const response = await axios.get(`/list/tradableEstate?roomType=${checkboxValue}` , {
       withCredentials : true, 
     })
     console.log("response 들어왔나🐣🐣🐣" , response)   // 📛 back 에서 아직 데이터가 안 들어옴

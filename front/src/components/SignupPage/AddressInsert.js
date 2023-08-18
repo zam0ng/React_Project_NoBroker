@@ -1,12 +1,13 @@
 import React from "react";
 
-const AddressInsert = () => {
+const AddressInsert = (props) => {
   // 주소 검색 api URL
   //   const adrInURL =
   //     "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
 
+  // console.log("뭔데에에엑", props.adr);
   const PostSearchClick = () => {
-    console.log("클릭은 되는걸까,.,,?");
+    // console.log("클릭은 되는걸까,.,,?");
     DaumPostcode();
   };
 
@@ -53,16 +54,24 @@ const AddressInsert = () => {
           var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
           guideTextBox.innerHTML = "(예상 도로명 주소 : " + expRoadAddr + ")";
           guideTextBox.style.display = "block";
-        // } else if (data.autoJibunAddress) {
-        //   var expJibunAddr = data.autoJibunAddress;
-        //   guideTextBox.innerHTML = "(예상 지번 주소 : " + expJibunAddr + ")";
-        //   guideTextBox.style.display = "block";
+          // } else if (data.autoJibunAddress) {
+          //   var expJibunAddr = data.autoJibunAddress;
+          //   guideTextBox.innerHTML = "(예상 지번 주소 : " + expJibunAddr + ")";
+          //   guideTextBox.style.display = "block";
         } else {
           guideTextBox.innerHTML = "";
           guideTextBox.style.display = "none";
         }
       },
     }).open();
+  };
+
+  const AdrChange = () => {
+    const adr1 = document.getElementById("roadAddress").value;
+    const adr2 = document.getElementById("detailAddress").value;
+
+    let Adr = `${adr1} ${adr2}`
+    props.adr(Adr)
   };
 
   return (
@@ -83,6 +92,7 @@ const AddressInsert = () => {
             type="text"
             id="roadAddress"
             placeholder="도로명주소"
+            onChange={AdrChange}
           />
           {/* <input className="adrInput" type="text" id="jibunAddress" placeholder="지번주소" /> */}
           <span id="guide"></span>
@@ -91,6 +101,7 @@ const AddressInsert = () => {
             type="text"
             id="detailAddress"
             placeholder="상세주소"
+            onChange={AdrChange}
           />
           {/* <input className="adrInput" type="text" id="extraAddress" placeholder="참고항목" /> */}
         </div>

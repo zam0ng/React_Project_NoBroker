@@ -1,5 +1,5 @@
     import React, { useState, useEffect , useRef, useCallback} from 'react'
-    import axios from 'axios';
+    import axios from '../../Axios';
     import { useQuery } from 'react-query';
     import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
@@ -281,7 +281,7 @@
 
                 console.log("roomTypes 현재 상태" , checkedRoomTypes)
 
-                let url = 'http://localhost:8080/list/tradableEstate';
+                let url = '/list/tradableEstate';
                 let params = [];
 
                 if(checkedRoomTypes){

@@ -6,7 +6,7 @@ import Check from './checktab/Check'
 import Register from './registertab/Register'
 import Transaciton from './transactiontab/Transaciton'
 import Vote from './votetab/Vote'
-import axios from 'axios'
+import axios from '../../Axios'
 import MypageIslogin from '../insertPage/isLogined/MypageIslogin'
 import { useQuery } from 'react-query'
 export const MypageGlobal = createContext();
@@ -50,7 +50,7 @@ const Mypage = () => {
 
     // real_estate 테이블에서 내가 등록한 매물 내역 불러오기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     const getUserInfo = async () => {
-        const response = await axios.get('http://localhost:8080/mypage/mypageinfo');
+        const response = await axios.get('/mypage/mypageinfo');
         return response.data;
       };  
   
@@ -58,7 +58,7 @@ const Mypage = () => {
 
     // transaction 테이블에서 내가 판매한, 구매한 내역 가져오기
     const getMyRegisterInfo = async ()=>{
-        const {data} = await axios.get('http://localhost:8080/mypage/getmyregisterinfo',{
+        const {data} = await axios.get('/mypage/getmyregisterinfo',{
             withCredentials: true,
         })
         return data;

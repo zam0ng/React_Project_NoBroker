@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import axios from "../../Axios";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
@@ -20,7 +20,7 @@ const Detail = ({queryClient, vote}) => {
   const viewEstate = async () => {
     // 현재 브라우저의 세션에 해당 매물 봤다는 기록이 있다면 조회수 올라감
     if (!window.sessionStorage.getItem(`viewEstate_${id}`)) {
-      const { data } = await axios.post(`http://localhost:8080/detail/view/${id}`, {
+      const { data } = await axios.post(`/detail/view/${id}`, {
         withCredentials : true
       });
       window.sessionStorage.setItem(`viewEstate_${id}`, true);
@@ -47,7 +47,7 @@ const Detail = ({queryClient, vote}) => {
 
   // 매물 상세 정보 요청
   const getEstateDetail = async () => {
-    const { data } = await axios.get(`http://localhost:8080/detail/${id}`, {
+    const { data } = await axios.get(`/detail/${id}`, {
       withCredentials: true,
     });
     console.log("받아온 데이터",data);

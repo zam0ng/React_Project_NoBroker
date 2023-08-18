@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../Axios';
 import React from 'react'
 import { useQuery } from 'react-query';
 import VoteList from '../voteList/VoteList';
@@ -8,7 +8,7 @@ const Vote = () => {
 
   // 투표 가능한 매물 목록 받아오기
   const getVotableEstates = async () => {
-    const { data } = await axios.get(`http://localhost:8080/vote`, {
+    const { data } = await axios.get(`/vote`, {
       withCredentials : true
     });
     console.log("받아온 데이터",data);

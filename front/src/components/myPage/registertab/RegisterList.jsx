@@ -3,7 +3,7 @@ import {DateImg,OtherInfo,JustState} from '../checktab/checkstyled'
 import { MypageGlobal } from '../Mypage';
 import { useContext } from 'react';
 import {UpdateBtn, EstateAllInfo} from './registerstyled';
-import axios from 'axios';
+import axios from '../../../Axios';
 import { useMutation, useQueryClient } from 'react-query';
 const RegisterList = ({data}) => {
   const {getmyregisterinfo} =useContext(MypageGlobal);
@@ -88,7 +88,7 @@ const RegisterList = ({data}) => {
     const ImgUrl = data.Real_estate.img_1?.split("\\")[2];
 
     const transactionStateUpdate = async(el)=>{
-      const data = await axios.get("http://localhost:8080/mypage/transactionStateUpdate",{
+      const data = await axios.get("/mypage/transactionStateUpdate",{
         params : {el},
         withCredentials : true,
       })

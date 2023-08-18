@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../Axios';
 import { useNavigate } from 'react-router-dom';
 
 import { Detail } from "./index";
