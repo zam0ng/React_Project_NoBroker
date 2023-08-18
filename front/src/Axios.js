@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Set default base URL for API requests
 // axios.defaults.baseURL = 'http://3.37.244.154:8080/api';    // aws 에서 탄력적 ip 주소 넣음
-axios.defaults.baseURL = '/api';    // aws 에서 탄력적 ip 주소 넣음
+axios.defaults.baseURL = 'http://3.37.244.154:8080/api';    // aws 에서 탄력적 ip 주소 넣음
 // axios.defaults.baseURL = 'http://localhost:8080';
 
 // Set default headers, such as authorization token
