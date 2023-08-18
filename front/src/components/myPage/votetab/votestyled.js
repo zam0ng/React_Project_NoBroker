@@ -13,28 +13,31 @@ export const Container = styled.div`
 export const ResigterEstate = styled.div`
     width: 81%;
     height: 80px;
-    /* border: 1px solid black; */
-    border-bottom : 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
 `
 export const StateDiv = styled.div`
-    width: ${(props)=>props.width || "12%"};
+    width: 20%;
     height: 50px;
-    /* border: 1px solid black; */
-    border-right: ${(props)=>props.br};
     display: flex;
-    align-items: center;
-    justify-content: space-evenly;
     flex-direction: column;
-    font-weight :600;
+    font-weight: 600;
     font-size: smaller;
-    color : ${(props)=>props.color || "black"};
-    cursor: pointer; 
-    border-bottom: 3px solid ${(props)=>props.isActive ?  "pink": "none"};
+    color: black;
+    cursor: pointer;
+    border-bottom: 3px solid none;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
     & span{
         font-size: large;
+    }
+    & img{
+        width: 80px;
+        height: 80px;
     }
 `
 

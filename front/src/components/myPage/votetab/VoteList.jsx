@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {EstateAllInfo,DateImg,OtherInfo,JustState} from '../checktab/checkstyled';
-import axios from 'axios';
-import { useMutation,useQueryClient} from 'react-query';
-const TransList = ({data,el}) => {
-    console.log(el);
 
+const VoteList = ({data}) => {
+    // console.log(data);
+    const [voteState, setvoteState]= useState("");
     // createdAt 시간 바꾸기
     let ta = new Date(data.createdAt);
 
@@ -28,27 +27,23 @@ const TransList = ({data,el}) => {
     );
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     const ImgUrl = data.img_1?.split("\\")[2];
-      
-    const checkCancel= async(el)=>{
-      const data = await axios.get("http://localhost:8080/mypage/checkcancel",{
-        params : {el},
-        withCredentials : true,
-      })
-      return data.data;
-    }
-    const queryClient = useQueryClient();
-    const mutation = useMutation(checkCancel,{
-      onSuccess : (data)=>{
-        console.log(data);
-        if(data=="찜취소성공"){
-          queryClient.invalidateQueries('mycheck');
-        }
-      }
-    })
+    // 아직 투표중일때
 
-    const checkCancelBtn =async(el)=>{
-      mutation.mutate({el});
-    }
+    useEffect(()=>{
+        console.log(data.Real_estate.accpet)
+        if(data.Real_estate.accpet == 0 ){
+            setvoteState("투표중")
+        }
+        // 미달 일때
+        else if(data.Real_estate.accpet == 3){
+            setvoteState("미달")
+        }
+        // 나머지
+        else if(data.Real_estate.accpet==1 || data.Real_estate.accpet==2) {
+            setvoteState("나머지")
+        }
+    },[data])
+    
   return (
     <EstateAllInfo>
       <DateImg>
@@ -62,13 +57,13 @@ const TransList = ({data,el}) => {
       </OtherInfo>
       <JustState>
         {/* <span>{state}</span> */}
-        {el==="check" ? <button onClick={()=>{checkCancelBtn(data.real_estate_id)}}>찜취소</button> :
-        <span>보상금액<br></br> :{data.Real_estate.deposit*2}만원</span>}
+        {voteState === "투표중" ? <><span>투표중</span><p>정산 전</p></>: voteState ==="미달" ? <><span>미달</span><p>미지급</p></>:<><span>정산완료</span>
+        <p>+1000</p></>}
       </JustState>
-
-
     </EstateAllInfo>
+    
+
   )
 }
 
-export default TransList
+export default VoteList

@@ -1,4 +1,4 @@
-const {User,Real_estate,Transaction, sequelize,Likes} =require('../models');
+const {User,Real_estate,Transaction, sequelize,Likes,Vote} =require('../models');
 const { findOne } = require('../models/users');
 const {Op, Sequelize} =require("sequelize");
 const cron = require("node-cron");
@@ -44,7 +44,6 @@ exports.getmyregisterinfo = async (req, res) => {
     const id = 1;
     // 매시간마다 Transaction 테이블에 거래 날짜와 현재 날짜를 비교하여
     // 현재 날짜 > 거래 날짜 이면 completed 를 1로 변경transactionCompleted
-    cron.schedule('0 * * * *', async (req, res) => {
         try {
             const transactionCom = await Transaction.findAll({
                 attributes: ["transaction_date", "completed", "id"],
@@ -56,8 +55,6 @@ exports.getmyregisterinfo = async (req, res) => {
             })
 
             const currentTime = new Date();
-
-
             transactionCom.forEach(async(el) => {
                 const transactionTime = new Date(el.transaction_date);
 
@@ -70,12 +67,40 @@ exports.getmyregisterinfo = async (req, res) => {
             })
         } catch (error) {
             console.log("transactionCompleted에서 오류",error);
-        }
+    }
+    try {
+        const data = await Transaction.findAll({
+            where : { completed :1 },
+            include : [{model: Real_estate,attributes:["id","balance","deposit"]}],
+            // raw : true,
+        })
+        data.forEach(async(el) => {
+
+            await User.update({
+                disabled_won : sequelize.literal(`disabled_won - ${el.Real_estate.deposit-el.Real_estate.balance}`),
+                
+            },{
+                where : {id : el.buyer},
+            })
+
+            await User.update({
+                won : sequelize.literal(`won + ${el.Real_estate.deposit-el.Real_estate.balance}`),
+            },{
+                where : {id : el.seller}
+            })
+
+            await Transaction.update({
+                completed : 2
+            },{
+                where : {real_estate_id : el.Real_estate.id}
+            })
+        });
         
-    }, {
-        scheduled: true,
-        timezone: 'Asia/Seoul',
-    });
+    } catch (error) {
+        console.log(error);
+    }
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     try {
         const data = await Transaction.findAll({
@@ -98,19 +123,17 @@ exports.getmyregisterinfo = async (req, res) => {
 // 구매자의 disable_won 을 잔금 만큼 빼고, 판매자의 won 에 잔금만큼 더하기
 exports.transactionCom = async(req,res)=>{
     try {
-        console.log("ㄷ르어옴?>>>");
         const data = await Transaction.findAll({
             where : { completed :1 },
             include : [{model: Real_estate,attributes:["id","balance","deposit"]}],
             // raw : true,
         })
-        console.log(data);
         data.forEach(async(el) => {
             console.log(el.buyer)
             console.log(el.Real_estate.deposit-el.Real_estate.balanc);
 
             await User.update({
-                disabled_won : sequelize.literal(`disabled_won - ${el.Real_estate.deposit-el.Real_estate.balance}`),
+                disabled_won : sequelize.litseral(`disabled_won - ${el.Real_estate.deposit-el.Real_estate.balance}`),
                 
             },{
                 where : {id : el.buyer},
@@ -323,7 +346,6 @@ exports.getMycheck =async(req,res)=>{
     //더미
     const user_id = 1;
     try {
-        console.log("getmycheck 들어옴>>");
         const data = await Likes.findAll({
             where :{user_id : user_id},
 
@@ -336,4 +358,55 @@ exports.getMycheck =async(req,res)=>{
         console.log("getMycheck 컨트롤러 오류",error);
     }
 }
-    
+
+exports.checkcancel = async(req,res)=>{
+    try {
+        const {el}= req.query;
+
+        const data = await Likes.destroy({
+            where :{real_estate_id : el.el}
+        })
+        res.json("찜취소성공");
+    } catch (error) {
+        console.log("checkcancel 컨트롤러에서 오류남",error);
+    }
+}
+
+exports.getCancelList = async(req,res) =>{
+    console.log("들어오니?");
+    const id = 1;
+    // 구매했는데 취소가 내가 아닐 때 
+    try {
+        const data = await Transaction.findAll({
+            where:{
+                buyer : id,
+                approved : 1,
+                cancel :{
+                    [Op.ne] : id,
+                }
+            },
+            include: [{ model: Real_estate, attributes: ["id", "jibun", "additional_address", "balance", "deposit", "year_built", "area", "type", "img_1"] }],
+            // raw : true,
+        })
+        res.json(data);
+    } catch (error) {
+        console.log("getCancelList 컨트롤러에서 오류남",error);
+    }
+}
+
+exports.getMyvotedata = async(req,res)=>{
+
+    const id = 2;
+    try {
+        const data = await Vote.findAll({
+            where : {
+                user_id : id,
+            },
+            include: [{ model: Real_estate, attributes: ["id", "accpet","jibun", "additional_address", "balance", "deposit", "year_built", "area", "type", "img_1"] }],
+        })
+        console.log(data);
+        res.json(data);
+    } catch (error) {
+        console.log("getMyvotedata 컨트롤러에서 오류남",error);
+    }
+}

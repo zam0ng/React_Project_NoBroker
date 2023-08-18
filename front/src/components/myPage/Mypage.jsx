@@ -11,6 +11,7 @@ import MypageIslogin from '../insertPage/isLogined/MypageIslogin'
 import { useQuery } from 'react-query'
 export const MypageGlobal = createContext();
 const Mypage = () => {
+    const [isActive, setisActive] = useState(false);
     const [componentsValue, setComponentsValue] = useState("Account");
 
     const selectComponents= (params)=>{
@@ -20,7 +21,8 @@ const Mypage = () => {
     const user_id = "qwer";
     const fake_count = 1;
     // (true : 공인중개사, false : 일반 유저)
-    const role = false;
+    const role = true;
+
     let roleText;
     if(role==false){
          roleText = "일반유저";
@@ -99,6 +101,9 @@ const Mypage = () => {
         MyPageUserInfo,getmyregisterinfo
     }
 
+    const infoUpdate = ()=>{
+        setisActive(!isActive);
+    }  
   return (
     <MypageGlobal.Provider value={obj}>
     <MypageIslogin/>
@@ -117,7 +122,7 @@ const Mypage = () => {
                         <div>{fakeInfoMsg}</div>
                     </FakeDiv>
                 </FakeInfo>
-                <UserInfoUpdate>
+                <UserInfoUpdate onClick={infoUpdate}>
                     <div>회원정보 수정</div>
                 </UserInfoUpdate>
         </MypageContainer>
@@ -127,7 +132,7 @@ const Mypage = () => {
                 <ListItem isActive={componentsValue==="Check"} onClick={()=>selectComponents("Check")}>등록한 매물 내역</ListItem>
                 <ListItem isActive={componentsValue==="Register"} onClick={()=>selectComponents("Register")}>매물 거래 내역</ListItem>
                 <ListItem isActive={componentsValue==="Transaciton"} onClick={()=>selectComponents("Transaciton")}>찜한 매물 / 취소 보상 내역</ListItem>
-                <ListItem isActive={componentsValue==="Vote"} onClick={()=>selectComponents("Vote")}>투표한 매물 내역</ListItem>
+                {role ?<ListItem isActive={componentsValue==="Vote"} onClick={()=>selectComponents("Vote")}>투표한 매물 내역</ListItem>:<></>}
             </MypageList>
             <TabInfo>
                 {componentsValue==='Account' && <Account/>}
