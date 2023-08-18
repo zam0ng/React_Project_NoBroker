@@ -410,3 +410,19 @@ exports.getMyvotedata = async(req,res)=>{
         console.log("getMyvotedata 컨트롤러에서 오류남",error);
     }
 }
+
+exports.getUpdateinfo= async(req,res)=>{
+    console.log("9999999")
+
+    const id=1;
+    try {
+        const data = await User.findOne({
+            where :{id : id},
+            attributes : ['user_img','user_id','user_name','address',
+            'phone','ssn']
+        })
+    res.json(data);
+    } catch (error) {
+        console.log("getUpdateinfo error",error)
+    }
+}

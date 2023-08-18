@@ -1,6 +1,7 @@
 import React, { useState ,createContext} from 'react'
 import {MypageContainer,MypageAlldiv,UserInfoDiv,FakeInfo,UserInfoUpdate,FakeDiv,
-    MypageList,TabInfo, ListItem,UpdateModal,UpdateBox} from './mypagestyled'
+    MypageList,TabInfo, ListItem,UpdateModal,UpdateBox,Closediv,Updateimg
+,Updatebox} from './mypagestyled'
 import Account from './accounttab/Account'
 import Check from './checktab/Check'
 import Register from './registertab/Register'
@@ -76,12 +77,22 @@ const Mypage = () => {
         return data;
     }
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
+    const getUpdateinfo = async()=>{
+        const data = await axios.get('http://localhost:8080/mypage/getUpdateinfo',{
+            withCredentials : true,
+        })
+        return data.data;
+    }
 
     const { data: MyPageUserInfo, isLoading : userisLoading, error : usererror } = useQuery('users', getUserInfo);
     
     const {data: getmyregisterinfo,isLoading:getmyregisterinfoLoading, error : getmyregisterinfoError} = useQuery('getmyregister',getMyRegisterInfo);
     // console.log(getmyregisterinfo);
+
+    const {data : updatedata } =useQuery('update',getUpdateinfo)
+    console.log(updatedata)
+    console.log(updatedata.user_id)
+
 
     const { data: transactionComdata, isLoading : transisLoading, error : transerror } = useQuery('transCom', transactionCom);
     // console.log(transactionComdata);
@@ -104,12 +115,44 @@ const Mypage = () => {
     const infoUpdate = ()=>{
         setisActive(!isActive);
     }  
+
+
   return (
     <MypageGlobal.Provider value={obj}>
     <MypageIslogin/>
     <MypageAlldiv>
         {isActive ? <UpdateModal>
-            <UpdateBox></UpdateBox>
+            <UpdateBox>
+            <Closediv>
+                <button>x</button>
+            </Closediv>
+            <Updateimg>
+                <img src="" alt="" />
+
+            </Updateimg>
+            <Updatebox>
+                <span>이름</span>
+                <div>{updatedata.user_name}</div>
+            </Updatebox>
+            <Updatebox>
+                <span>생녀월일</span>
+                <div></div>
+            </Updatebox>
+            <Updatebox>
+                <span>id</span>
+                <div>qqer</div>
+            </Updatebox>
+            <Updatebox>
+                <span>phone</span>
+                <div>01097671800</div>
+            </Updatebox>
+            <Updatebox>
+                <span>address</span>
+                <div></div>
+            </Updatebox>
+
+
+            </UpdateBox>
         </UpdateModal>: <></>}
         <MypageContainer height={"210px"}>
             <UserInfoDiv height={"230px"}>

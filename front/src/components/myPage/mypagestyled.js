@@ -153,3 +153,26 @@ export const UpdateBox = styled.div`
     transform: translate(-50%, -50%);
 
 `
+
+export const Closediv= styled.div`
+width: 100%;
+height: 20px;
+display: flex;
+justify-content: flex-end;
+
+`
+
+export const Updateimg = styled.div`
+    width: 100%;
+    height: 200px;
+    border: 1px solid white;
+`
+export const Updatebox = styled.div`
+    width: 100%;
+    height: 50px;
+    border: 1px solid white;
+    color : white;
+    display: flex;
+    justify-content: space-around;
+    
+    `
