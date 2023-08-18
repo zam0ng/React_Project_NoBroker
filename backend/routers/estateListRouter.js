@@ -11,7 +11,8 @@ router.get("/tradableEstate", getTradableEstate);
 
 router.get("/test", (req, res)=>{
     console.log("test요청 들어옴");
-    return res.json({test : "test", __dirname});
+    // return res.json({test : "test", __dirname});     // 이전 test
+    return res.json({test : "test"});
 });
 
 module.exports = router;
