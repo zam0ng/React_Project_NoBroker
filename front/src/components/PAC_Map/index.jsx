@@ -43,6 +43,7 @@
             });
             console.log("test : " , test);
             console.log("test 입니다.")
+            console.log("test 입니다.")
         }
         testFunc();
 
