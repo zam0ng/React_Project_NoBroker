@@ -1,6 +1,6 @@
 import React, { useState ,createContext} from 'react'
 import {MypageContainer,MypageAlldiv,UserInfoDiv,FakeInfo,UserInfoUpdate,FakeDiv,
-    MypageList,TabInfo, ListItem} from './mypagestyled'
+    MypageList,TabInfo, ListItem,UpdateModal,UpdateBox} from './mypagestyled'
 import Account from './accounttab/Account'
 import Check from './checktab/Check'
 import Register from './registertab/Register'
@@ -108,6 +108,9 @@ const Mypage = () => {
     <MypageGlobal.Provider value={obj}>
     <MypageIslogin/>
     <MypageAlldiv>
+        {isActive ? <UpdateModal>
+            <UpdateBox></UpdateBox>
+        </UpdateModal>: <></>}
         <MypageContainer height={"210px"}>
             <UserInfoDiv height={"230px"}>
                 <div></div>
@@ -146,6 +149,7 @@ const Mypage = () => {
 
         
     </MypageAlldiv>
+    
     </MypageGlobal.Provider>
   )
 }

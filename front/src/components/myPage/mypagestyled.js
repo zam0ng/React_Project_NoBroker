@@ -135,4 +135,21 @@ export const TabInfo = styled.div`
     height: 640px;
     border-left: 1px solid lightgray;
 `
+export const UpdateModal = styled.div`
+    width : 100%;
+    height : 1100px;
+    background-color: black;
+    position: absolute;
+    top : 0;
+    left: 0;
+`
+export const UpdateBox = styled.div`
+    width: 500px;
+    height: 700px;
+    border : 1px solid white;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
+`
