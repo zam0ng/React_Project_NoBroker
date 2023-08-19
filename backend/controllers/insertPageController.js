@@ -1,10 +1,9 @@
 const {User,Real_estate} =require('../models');
 const { findOne } = require('../models/users');
 
-exports.getUserInfo =async(req,res)=>{
-    // 더미 데이터
-    // const user_id = "";
-    const user_id = "qwer";
+exports.getUserInfo = async (req,res)=>{
+    console.log(req);
+    console.log(req.acc_decoded);
 
     try {
         if(user_id==""){

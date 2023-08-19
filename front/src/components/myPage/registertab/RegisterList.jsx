@@ -155,25 +155,25 @@ const RegisterList = ({data}) => {
       return window.confirm(message);
     };
 
-    const transactionStateUpdateBtn=(btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,approved) =>{
+    const transactionStateUpdateBtn=(btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,approved,balance) =>{
       console.log("params",btnname);
 
       if(btnname=="승인"){
-        approveMutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID});
+        approveMutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,balance});
       }
       else if(btnname=="판매취소"){
         if(approved==1){
 
           if(customConfirm('거래중인 매물을 판매 취소할 경우 계약금 2배를 구매자에게 배상합니다.')){
 
-            mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID});
+            mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,balance});
           }
           else{
             return;
           }
         }
         else{
-          mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID});
+          mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,balance});
         }
 
 
@@ -183,14 +183,14 @@ const RegisterList = ({data}) => {
 
           if(customConfirm('거래중인 매물을 구매 취소할 경우 계약금을 돌려받을 수 없습니다..')){
 
-            mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID});
+            mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,balance});
           }
           else{
             return;
           }
         }
         else{
-          mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID});
+          mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,balance});
         }
 
 
@@ -214,8 +214,8 @@ const RegisterList = ({data}) => {
       </OtherInfo>
       <JustState>
         <span>{state}</span>
-        {btnName ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved)}}>{btnName}</UpdateBtn> :<></>}
-        {btnName2 ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName2,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved)}}>{btnName2}</UpdateBtn> :<></>}
+        {btnName ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved,data.Real_estate.balance)}}>{btnName}</UpdateBtn> :<></>}
+        {btnName2 ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName2,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved,data.Real_estate.balance)}}>{btnName2}</UpdateBtn> :<></>}
       </JustState>
 
 

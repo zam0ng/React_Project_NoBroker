@@ -228,6 +228,7 @@ const Insert = ({queryClient}) => {
             setBalance={setBalance}
             setDeposite={setDeposite}
             deposite={deposite}
+            balance={balance}
           ></Deposite>
           <EstataInfoTitle>
             <div>사진 등록</div>

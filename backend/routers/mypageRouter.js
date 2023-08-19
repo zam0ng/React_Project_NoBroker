@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {getMypageInfo,reSubmit,getmyregisterinfo,transactionStateUpdate,transactionCom
 ,getMycheck,checkcancel,getCancelList,getMyvotedata,getUpdateinfo,userInfoUpdate,approvedUpdate} = require("../controllers/mypageController");
 const {updateUpload} =require("../middleware/imgUpload");
+const {isLogin} = require("../middleware/isLogin")
 
 router.get('/mypageinfo',getMypageInfo);
 router.get('/resubmit', reSubmit)
