@@ -23,37 +23,7 @@ const Mypage = () => {
         setComponentsValue(params);
 
     }
-    const user_id = "qwer";
-    const fake_count = 1;
-    // (true : 공인중개사, false : 일반 유저)
-    const role = true;
-
-    let roleText;
-    if(role==false){
-         roleText = "일반유저";
-    }
-    else{
-         roleText = "공인중개사"
-    }
-    let fakeInfoMsg ="";
-
-    switch (fake_count) {
-        case 0:
-            fakeInfoMsg = " 👍 누적된 경고가 없습니다."
-            break;
-        case 1:
-            fakeInfoMsg = " 🟨 누적된 경고1회, 2회 추가 경고 시 판매글 작성 불가"
-            break;
-
-        case 2:
-            fakeInfoMsg = " ❗ 누적된 경고2회, 1회 추가 경고 시 판매글 작성 불가."
-            break;
     
-        default:
-            fakeInfoMsg = " ⛔ 누적된 경고3회, 판매글 작성 불가"
-
-            break;
-    }
     useEffect(()=>{
         if(isActive==true){
             document.body.style.overflow="hidden";
@@ -103,7 +73,9 @@ const Mypage = () => {
     // console.log(getmyregisterinfo);
 
     const {data : updatedata,isLoading:updatedataLoading, error : updatedataError } =useQuery('update',getUpdateinfo)
+    console.log(updatedata);
     const ta = (updatedata?.ssn)?.split("-");
+    const ImgUrl = (updatedata?.user_img)?.split("\\")[2];
     
 
     const { data: transactionComdata, isLoading : transisLoading, error : transerror } = useQuery('transCom', transactionCom);
@@ -127,6 +99,34 @@ const Mypage = () => {
     }
     const obj ={
         MyPageUserInfo,getmyregisterinfo
+    }
+    // (true : 공인중개사, false : 일반 유저)
+
+    let roleText;
+    if(updatedata.role==false){
+         roleText = "일반유저";
+    }
+    else{
+         roleText = "공인중개사"
+    }
+    let fakeInfoMsg ="";
+
+    switch (updatedata.fake_count) {
+        case 0:
+            fakeInfoMsg = " 👍 누적된 경고가 없습니다."
+            break;
+        case 1:
+            fakeInfoMsg = " 🟨 누적된 경고1회, 2회 추가 경고 시 판매글 작성 불가"
+            break;
+
+        case 2:
+            fakeInfoMsg = " ❗ 누적된 경고2회, 1회 추가 경고 시 판매글 작성 불가."
+            break;
+    
+        default:
+            fakeInfoMsg = " ⛔ 누적된 경고3회, 판매글 작성 불가"
+
+            break;
     }
 
     const infoUpdate = ()=>{
@@ -161,7 +161,7 @@ const Mypage = () => {
 
         const labelElement = e.target.previousElementSibling;
         if(fieldValue){
-            labelElement.style.color = "blue";
+            labelElement.style.color = "orange";
 
             if(fieldName =='userid'){
                 setupdateId(fieldValue)
@@ -169,7 +169,7 @@ const Mypage = () => {
             else if(fieldName =='userphone'){
                 setupdatephone(fieldValue)
             }
-            else if(fieldName =='useradderss'){
+            else if(fieldName =='useraddress'){
                 setupdateaddress(fieldValue)
             }
         }
@@ -186,7 +186,7 @@ const Mypage = () => {
         const form = new FormData();
         form.append('userid',updateId);
         form.append('userphone',updatephone);
-        form.append('useradderss',updateaddress);
+        form.append('useraddress',updateaddress);
         form.append('upload',updateImg);
         
         const data = axios.post('http://localhost:8080/mypage/update',form,{
@@ -209,7 +209,9 @@ const Mypage = () => {
                 <button onClick={infoUpdate}>x</button>
             </Closediv>
             <Updateimg>
-                <div id="profileImg"></div>
+                <div id="profileImg">
+                    <img src={`http://localhost:8080/estate_imgs/${ImgUrl}`} alt="" />
+                </div>
                 <form action="/" method="post" encType='multipart/form-data'>
                     <label for="file"> 프로필 편집</label>
                     <input onChange={profileupdate} type="file" name='upload' id='file'></input>
@@ -232,8 +234,8 @@ const Mypage = () => {
                 <input onChange={onChangeHandler} id="userphone" name="userphone" placeholder={updatedata.phone}></input>
             </UpdateboxInput>
             <UpdateboxInput>
-                <label for="useradderss">ADDRESS</label>
-                <input onChange={onChangeHandler} id="useradderss" name="useradderss" placeholder={updatedata.address}></input>
+                <label for="useraddress">ADDRESS</label>
+                <input onChange={onChangeHandler} id="useraddress" name="useraddress" placeholder={updatedata.address}></input>
             </UpdateboxInput>
 
             <UpdateBtn onClick={updateHandler}>수정하기</UpdateBtn>
@@ -241,15 +243,17 @@ const Mypage = () => {
         </UpdateModal>: <></>}
         <MypageContainer height={"210px"}>
             <UserInfoDiv height={"230px"}>
-                <div></div>
-                <span>010-1234-5678</span>
+                <div>
+                    <img src={`http://localhost:8080/estate_imgs/${ImgUrl}`} alt="" />
+                </div>
+                <span>{updatedata.phone}</span>
             </UserInfoDiv>
                 <FakeInfo>
                     <FakeDiv>
                         <div>
                             <span>{roleText}</span>
                         </div>
-                        <span>{user_id}님,</span>
+                        <span>{updatedata.user_name}님,</span>
                         <div>{fakeInfoMsg}</div>
                     </FakeDiv>
                 </FakeInfo>
@@ -263,7 +267,7 @@ const Mypage = () => {
                 <ListItem isActive={componentsValue==="Check"} onClick={()=>selectComponents("Check")}>등록한 매물 내역</ListItem>
                 <ListItem isActive={componentsValue==="Register"} onClick={()=>selectComponents("Register")}>매물 거래 내역</ListItem>
                 <ListItem isActive={componentsValue==="Transaciton"} onClick={()=>selectComponents("Transaciton")}>찜한 매물 / 취소 보상 내역</ListItem>
-                {role ?<ListItem isActive={componentsValue==="Vote"} onClick={()=>selectComponents("Vote")}>투표한 매물 내역</ListItem>:<></>}
+                {updatedata.role ?<ListItem isActive={componentsValue==="Vote"} onClick={()=>selectComponents("Vote")}>투표한 매물 내역</ListItem>:<></>}
             </MypageList>
             <TabInfo>
                 {componentsValue==='Account' && <Account/>}

@@ -418,8 +418,8 @@ exports.getUpdateinfo= async(req,res)=>{
     try {
         const data = await User.findOne({
             where :{id : id},
-            attributes : ['user_img','user_id','user_name','address',
-            'phone','ssn']
+            // attributes : ['user_img','user_id','user_name','address',
+            // 'phone','ssn']
         })
     res.json(data);
     } catch (error) {
@@ -432,7 +432,7 @@ exports.userInfoUpdate = async(req,res)=>{
         console.log("req.bodyㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
         console.log(req.body);
         console.log(req.file);
-        const {userid,userphone,useradderess} = req.body;
+        const {userid,userphone,useraddress} = req.body;
 
         const updateFields = {};
 
@@ -444,8 +444,8 @@ if (userphone) {
   updateFields.phone = userphone;
 }
 
-if (useradderess) {
-  updateFields.address = useradderess;
+if (useraddress) {
+  updateFields.address = useraddress;
 }
 
 if (req.file) {

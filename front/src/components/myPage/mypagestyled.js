@@ -18,7 +18,7 @@ export const MypageContainer = styled.div`
 export const UserInfoDiv = styled.div`
     width: 20%;
     height: ${(props)=>props.height};
-    border-right: 1px solid lightgray;
+    /* border-right: 1px solid lightgray; */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -29,6 +29,13 @@ export const UserInfoDiv = styled.div`
         height: 130px;
         border: 1px solid black;
         border-radius: 50%;
+
+        & img{
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+
+        }
     }
 
     & span{
@@ -187,7 +194,10 @@ export const Updateimg = styled.div`
         border: 0;
     }
     & label{
-        border: 1px solid black;
+        background-color: orange;
+        color: white;
+        font-weight: 600;
+        font-size: smaller;
     }
     
 `
