@@ -426,3 +426,43 @@ exports.getUpdateinfo= async(req,res)=>{
         console.log("getUpdateinfo error",error)
     }
 }
+
+exports.userInfoUpdate = async(req,res)=>{
+    try {
+        console.log("req.bodyㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        console.log(req.body);
+        console.log(req.file);
+        const {userid,userphone,useradderess} = req.body;
+
+        const updateFields = {};
+
+if (userid) {
+  updateFields.user_id = userid;
+}
+
+if (userphone) {
+  updateFields.phone = userphone;
+}
+
+if (useradderess) {
+  updateFields.address = useradderess;
+}
+
+if (req.file) {
+  updateFields.user_img = req.file.path;
+}
+if (Object.keys(updateFields).length > 0) {
+    await User.update(updateFields, {
+      where: {
+        id: 1,
+      },
+    });
+  } else {
+    // 업데이트할 필드가 없는 경우에 대한 처리
+    console.log("No fields to update.");
+  }
+        
+    } catch (error) {
+        console.log("userInfoUpdate 컨트롤러에서 오류",error);
+    }
+}

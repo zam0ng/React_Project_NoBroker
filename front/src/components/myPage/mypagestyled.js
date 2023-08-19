@@ -138,17 +138,18 @@ export const TabInfo = styled.div`
 export const UpdateModal = styled.div`
     width : 100%;
     height : 1100px;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.815);
     position: absolute;
     top : 0;
     left: 0;
 `
 export const UpdateBox = styled.div`
     width: 500px;
-    height: 700px;
+    height: 600px;
     border : 1px solid white;
     position: absolute;
-    top: 40%;
+    background-color: white;
+    top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
 
@@ -164,15 +165,84 @@ justify-content: flex-end;
 
 export const Updateimg = styled.div`
     width: 100%;
-    height: 200px;
+    height: 250px;
     border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & div,
+    & img{
+        width: 200px;
+        height: 200px;
+        border: 1px solid black;
+        margin-bottom : 5px;
+    }
+    & input{
+        position: absolute;
+        width: 0;
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+    }
+    & label{
+        border: 1px solid black;
+    }
+    
 `
 export const Updatebox = styled.div`
     width: 100%;
     height: 50px;
-    border: 1px solid white;
-    color : white;
+    /* border: 1px solid white; */
+    color : black;
     display: flex;
     justify-content: space-around;
+    align-items: center;
     
+    & span{
+        width: 30%;
+    }
+
+    & div{
+        width: 60%;
+        height: 40px;
+        border: 1px solid black;
+        line-height: 40px;
+        background-color: lightgray;
+    }
     `
+export const UpdateboxInput = styled.div`
+width: 100%;
+height: 50px;
+/* border: 1px solid white; */
+color : black;
+display: flex;
+justify-content: space-around;
+align-items: center;
+
+& label{
+    width: 30%;
+}
+
+& input{
+    width: 59%;
+    height: 40px;
+    border: 1px solid black;
+    line-height: 40px;
+    text-align: center;
+    
+    &::placeholder{
+        color: black;
+    }
+}
+`
+export const UpdateBtn = styled.button`
+    width: 70px;
+    height: 30px;
+    border : none;
+    background-color: orange;
+    color : white;
+    margin-top: 20px;
+    font-weight: 600;
+`

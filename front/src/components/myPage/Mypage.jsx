@@ -1,7 +1,7 @@
-import React, { useState ,createContext} from 'react'
+import React, { useState ,createContext, useEffect} from 'react'
 import {MypageContainer,MypageAlldiv,UserInfoDiv,FakeInfo,UserInfoUpdate,FakeDiv,
     MypageList,TabInfo, ListItem,UpdateModal,UpdateBox,Closediv,Updateimg
-,Updatebox} from './mypagestyled'
+,Updatebox,UpdateboxInput,UpdateBtn} from './mypagestyled'
 import Account from './accounttab/Account'
 import Check from './checktab/Check'
 import Register from './registertab/Register'
@@ -14,7 +14,11 @@ export const MypageGlobal = createContext();
 const Mypage = () => {
     const [isActive, setisActive] = useState(false);
     const [componentsValue, setComponentsValue] = useState("Account");
-
+    const [updateId,setupdateId] = useState("");
+    const [updatephone,setupdatephone] = useState("");
+    const [updateaddress,setupdateaddress] = useState("");
+    const [updateImg,setupdateImg] = useState("");
+    
     const selectComponents= (params)=>{
         setComponentsValue(params);
 
@@ -50,6 +54,15 @@ const Mypage = () => {
 
             break;
     }
+    useEffect(()=>{
+        if(isActive==true){
+            document.body.style.overflow="hidden";
+        }
+        else{
+            document.body.style.overflow="visible";
+
+        }
+    },[isActive])
 
     // real_estate 테이블에서 내가 등록한 매물 내역 불러오기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     const getUserInfo = async () => {
@@ -89,15 +102,15 @@ const Mypage = () => {
     const {data: getmyregisterinfo,isLoading:getmyregisterinfoLoading, error : getmyregisterinfoError} = useQuery('getmyregister',getMyRegisterInfo);
     // console.log(getmyregisterinfo);
 
-    const {data : updatedata } =useQuery('update',getUpdateinfo)
-    console.log(updatedata)
-    console.log(updatedata.user_id)
-
+    const {data : updatedata,isLoading:updatedataLoading, error : updatedataError } =useQuery('update',getUpdateinfo)
+    const ta = (updatedata?.ssn)?.split("-");
+    
 
     const { data: transactionComdata, isLoading : transisLoading, error : transerror } = useQuery('transCom', transactionCom);
     // console.log(transactionComdata);
+    
 
-    if (userisLoading || getmyregisterinfoLoading) {
+    if (userisLoading || getmyregisterinfoLoading || updatedataLoading) {
         return <div>로딩 중...</div>;
     }
 
@@ -108,15 +121,84 @@ const Mypage = () => {
     if (getmyregisterinfoError) {
         return <div>오류: {getmyregisterinfoError.message}</div>;
     }
+    if (updatedataError){
+        return <div>오류: {updatedataError.message}</div>;
+
+    }
     const obj ={
         MyPageUserInfo,getmyregisterinfo
     }
 
     const infoUpdate = ()=>{
         setisActive(!isActive);
-    }  
+    }
+    const profileupdate =(e)=>{
+        let input = e.target;
 
+        let profileImg= document.getElementById("profileImg");
+        profileImg.innerHTML = '';
+        if(input.files){
 
+            let reader; 
+            let file = input.files[0];
+            setupdateImg(input.files[0]);
+            
+            reader = new FileReader();
+            reader.onload =function(e){
+                console.log("e.target--------------",e.target)
+                let img = document.createElement('img');
+                img.src = e.target.result;
+                
+                profileImg.appendChild(img);
+            }
+            reader.readAsDataURL(file);
+
+        }
+    }
+    const onChangeHandler =(e)=>{
+        const fieldName = e.target.name; 
+        const fieldValue = e.target.value;
+
+        const labelElement = e.target.previousElementSibling;
+        if(fieldValue){
+            labelElement.style.color = "blue";
+
+            if(fieldName =='userid'){
+                setupdateId(fieldValue)
+            }
+            else if(fieldName =='userphone'){
+                setupdatephone(fieldValue)
+            }
+            else if(fieldName =='useradderss'){
+                setupdateaddress(fieldValue)
+            }
+        }
+        else if(fieldValue ==""){
+            labelElement.style.color = "black";
+
+        }
+        // const placeholderValue = e.target.getAttribute('placeholder');
+        // console.log(placeholderValue);
+        // `${fieldName} changed to ${fieldValue}`
+    }
+    const updateHandler =()=>{
+
+        const form = new FormData();
+        form.append('userid',updateId);
+        form.append('userphone',updatephone);
+        form.append('useradderss',updateaddress);
+        form.append('upload',updateImg);
+        
+        const data = axios.post('http://localhost:8080/mypage/update',form,{
+            headers:{
+
+                "Content-Type" : "multipart/form-data",
+            },
+            withCredentials : true,
+        })
+    }   
+
+    
   return (
     <MypageGlobal.Provider value={obj}>
     <MypageIslogin/>
@@ -124,34 +206,37 @@ const Mypage = () => {
         {isActive ? <UpdateModal>
             <UpdateBox>
             <Closediv>
-                <button>x</button>
+                <button onClick={infoUpdate}>x</button>
             </Closediv>
             <Updateimg>
-                <img src="" alt="" />
-
+                <div id="profileImg"></div>
+                <form action="/" method="post" encType='multipart/form-data'>
+                    <label for="file"> 프로필 편집</label>
+                    <input onChange={profileupdate} type="file" name='upload' id='file'></input>
+                </form>
             </Updateimg>
             <Updatebox>
                 <span>이름</span>
                 <div>{updatedata.user_name}</div>
             </Updatebox>
             <Updatebox>
-                <span>생녀월일</span>
-                <div></div>
+                <span>생년월일</span>
+                <div>{ta[0]}</div>
             </Updatebox>
-            <Updatebox>
-                <span>id</span>
-                <div>qqer</div>
-            </Updatebox>
-            <Updatebox>
-                <span>phone</span>
-                <div>01097671800</div>
-            </Updatebox>
-            <Updatebox>
-                <span>address</span>
-                <div></div>
-            </Updatebox>
+            <UpdateboxInput>
+                <label for="userid">ID</label>
+                <input onChange={onChangeHandler} id="userid" name="userid" placeholder={updatedata.user_id}></input>
+            </UpdateboxInput>
+            <UpdateboxInput>
+                <label for="userphone">PHONE</label>
+                <input onChange={onChangeHandler} id="userphone" name="userphone" placeholder={updatedata.phone}></input>
+            </UpdateboxInput>
+            <UpdateboxInput>
+                <label for="useradderss">ADDRESS</label>
+                <input onChange={onChangeHandler} id="useradderss" name="useradderss" placeholder={updatedata.address}></input>
+            </UpdateboxInput>
 
-
+            <UpdateBtn onClick={updateHandler}>수정하기</UpdateBtn>
             </UpdateBox>
         </UpdateModal>: <></>}
         <MypageContainer height={"210px"}>
