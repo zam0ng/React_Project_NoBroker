@@ -1,11 +1,13 @@
 import React from 'react'
 import axios from '../../Axios'
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { LikeBtn, BuyBtn, Title, Content, ContentDiv, LikeBtnDiv, UserImg, Divider } from './detailBuy.styled';
 import { detail_heart, detail_emptyheart, userimg } from '../../img/index'
+import { useAuth } from 'AuthContext';
 
 const DetailBuy = ({estate, seller, like, queryClient}) => {
     const now = new Date();
+    const { logout } = useAuth();
 
     // 구매
     const createBuyMutation = useMutation(async (buyForm)=>{
@@ -23,6 +25,9 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
                 queryClient.invalidateQueries('estate');
             } else if (data.message && data.message == "돈 부족") {
                 alert("돈이 부족합니다.");
+            } else if (data.message && data.message == "다시 로그인") {
+                alert("로그인하세요.");
+                logout();
             } else {
                 console.log("오류",data);
                 alert("오류 발생");
@@ -56,6 +61,9 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
                 console.log("찜 추가 성공");
 
                 queryClient.invalidateQueries('estate');
+            } else if (data.message && data.message == "다시 로그인") {
+                alert("로그인 하세요.");
+                logout();
             } else {
                 console.log("오류",data);
                 alert("오류 발생");
@@ -76,6 +84,8 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
                 console.log("찜 삭제 성공");
 
                 queryClient.invalidateQueries('estate');
+            } else if (data.message && data.message == "다시 로그인") {
+                alert("로그인 하세요.");
             } else {
                 console.log("오류",data);
                 alert("오류 발생");
@@ -112,7 +122,7 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
 
         <h2 style={{marginTop:"40px"}}>판매자 정보</h2>
         {seller.fake_count!=0 ?  <p>해당 판매자는 허위 매물 <span style={{color:"red"}}>{seller.fake_count}</span>회 올린 적이 있습니다.</p> : <></>}
-        <UserImg src={seller.user_img!="userimg" || !seller.user_img ? "http://localhost:8080/user_imgs/"+seller.user_img.split("\\")[2] : userimg} alt="유저 이미지" />
+        <UserImg src={seller.user_img!="userimg" || !seller.user_img ? "http://localhost:8080/user_imgs/"+seller.user_img?.split("\\")[2] : userimg} alt="유저 이미지" />
         <ContentDiv><Title>이름</Title> <Content>{seller.user_name}</Content></ContentDiv>
         <ContentDiv><Title>연락처</Title> <Content>{seller.phone}</Content></ContentDiv>
 

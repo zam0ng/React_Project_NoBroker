@@ -5,9 +5,12 @@ import { LoginBtn } from "./LoginBtnStyled";
 import { LoginInput } from "./LoginInputStyled";
 import { useNavigate } from "react-router-dom";
 import axios from "../../Axios";
+import { useAuth } from '../../AuthContext';
 
 const Login = () => {
   const nav = useNavigate();
+  const { isLoggedIn, login, certificate } = useAuth();
+
   const Signup = () => {
     console.log("회원가입 페이지 긔긔");
     nav("/signup");
@@ -26,8 +29,11 @@ const Login = () => {
       .then((e) => {
         console.log("로그인 성공 목록으로", e.data.message);
         if (e.data.message == "로그인 완료") {
+          login();
+          if (e.data.certificate_user == 0) {
+            certificate(true);
+          }
           nav("/list");
-          setLogin(true);
         } else if (e.data.message == "비밀번호 오류") {
           alert("패스워드를 확인해주세요!");
         } else {
