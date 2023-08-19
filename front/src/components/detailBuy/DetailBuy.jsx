@@ -7,7 +7,7 @@ import { useAuth } from 'AuthContext';
 
 const DetailBuy = ({estate, seller, like, queryClient}) => {
     const now = new Date();
-    const { logout } = useAuth();
+    const { isLoggedIn, logout } = useAuth();
 
     // 구매
     const createBuyMutation = useMutation(async (buyForm)=>{
@@ -37,6 +37,11 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
 
     // 구매 신청 버튼 눌렀을때 실행되는 함수
     const clickBuyBtn = () => {
+        if (!isLoggedIn) {
+            alert("로그인하세요.");
+            return;
+        }
+
         if (estate.state != 0) {
             return;
         } else if (!document.querySelector("#date_input").value) {
@@ -86,6 +91,7 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
                 queryClient.invalidateQueries('estate');
             } else if (data.message && data.message == "다시 로그인") {
                 alert("로그인 하세요.");
+                logout();
             } else {
                 console.log("오류",data);
                 alert("오류 발생");
@@ -95,6 +101,11 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
 
 
     const clickLikeBtn = () => {
+        if (!isLoggedIn) {
+            alert("로그인하세요.");
+            return;
+        }
+
         if (like.user_like) {
             // 찜 취소
             createDelLikeMutation.mutate({real_estate_id : estate.id});
