@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {getMypageInfo,reSubmit,getmyregisterinfo,transactionStateUpdate,transactionCom
-,getMycheck,checkcancel,getCancelList,getMyvotedata,getUpdateinfo,userInfoUpdate} = require("../controllers/mypageController");
+,getMycheck,checkcancel,getCancelList,getMyvotedata,getUpdateinfo,userInfoUpdate,approvedUpdate} = require("../controllers/mypageController");
 const {updateUpload} =require("../middleware/imgUpload");
 
 router.get('/mypageinfo',getMypageInfo);
@@ -14,5 +14,6 @@ router.get('/getCancelList',getCancelList);
 router.get('/getMyvotedata',getMyvotedata);
 router.get('/getUpdateinfo',getUpdateinfo);
 router.post('/update',updateUpload.single("upload"),userInfoUpdate);
+router.get('/approvedUpdate',approvedUpdate);
 module.exports = router;
 

@@ -9,7 +9,7 @@ import Transaciton from './transactiontab/Transaciton'
 import Vote from './votetab/Vote'
 import axios from 'axios'
 import MypageIslogin from '../insertPage/isLogined/MypageIslogin'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 export const MypageGlobal = createContext();
 const Mypage = () => {
     const [isActive, setisActive] = useState(false);
@@ -67,19 +67,56 @@ const Mypage = () => {
         return data.data;
     }
 
+    const updatemutation =async()=>{
+
+        const form = new FormData();
+        form.append('userid',updateId);
+        form.append('userphone',updatephone);
+        form.append('useraddress',updateaddress);
+        form.append('upload',updateImg);
+        
+        const data = await axios.post('http://localhost:8080/mypage/update',form,{
+            headers:{
+
+                "Content-Type" : "multipart/form-data",
+            },
+            withCredentials : true,
+            
+        })
+        setisActive(!isActive);
+
+        return data.data;
+    } 
+
     const { data: MyPageUserInfo, isLoading : userisLoading, error : usererror } = useQuery('users', getUserInfo);
     
     const {data: getmyregisterinfo,isLoading:getmyregisterinfoLoading, error : getmyregisterinfoError} = useQuery('getmyregister',getMyRegisterInfo);
     // console.log(getmyregisterinfo);
 
     const {data : updatedata,isLoading:updatedataLoading, error : updatedataError } =useQuery('update',getUpdateinfo)
-    console.log(updatedata);
+    // console.log(updatedata);
     const ta = (updatedata?.ssn)?.split("-");
     const ImgUrl = (updatedata?.user_img)?.split("\\")[2];
     
 
     const { data: transactionComdata, isLoading : transisLoading, error : transerror } = useQuery('transCom', transactionCom);
     // console.log(transactionComdata);
+
+    const queryClient = useQueryClient();
+
+    const mutation =useMutation(updatemutation,{
+        onSuccess :(data)=>{
+            console.log("zxcvzxcvzx",data);
+            if(data=="유저정보수정성공"){
+
+            queryClient.invalidateQueries('update');
+
+            }
+        }
+    }) 
+    const updateHandler =async()=>{
+        mutation.mutate();
+    }
     
 
     if (userisLoading || getmyregisterinfoLoading || updatedataLoading) {
@@ -181,22 +218,8 @@ const Mypage = () => {
         // console.log(placeholderValue);
         // `${fieldName} changed to ${fieldValue}`
     }
-    const updateHandler =()=>{
 
-        const form = new FormData();
-        form.append('userid',updateId);
-        form.append('userphone',updatephone);
-        form.append('useraddress',updateaddress);
-        form.append('upload',updateImg);
-        
-        const data = axios.post('http://localhost:8080/mypage/update',form,{
-            headers:{
-
-                "Content-Type" : "multipart/form-data",
-            },
-            withCredentials : true,
-        })
-    }   
+    
 
     
   return (

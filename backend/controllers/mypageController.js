@@ -1,7 +1,9 @@
 const {User,Real_estate,Transaction, sequelize,Likes,Vote} =require('../models');
-const { findOne } = require('../models/users');
-const {Op, Sequelize} =require("sequelize");
-const cron = require("node-cron");
+const {Op} =require("sequelize");
+const fs = require("fs");
+const PDFDocument = require("pdfkit");
+const path = require("path");
+
 
 exports.getMypageInfo = async(req,res)=>{
     // 더미
@@ -156,6 +158,107 @@ exports.transactionCom = async(req,res)=>{
         console.log(error);
     }
 }
+exports.approvedUpdate = async(req,res) =>{
+
+    const {el}=req.query;
+        // 계약금 2배
+        // 계약금 : (amount/2) , 잔금 : ((amount/2)*9) , 전체금액 : (amount*5)
+        const amount = parseInt((el.deposit *2) * 10000);
+        console.log("amount------------",amount)
+    try {
+        
+        // 여기서 pdf 만들어야함.ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+            console.log("승인 들어오니?222222222");
+            // await Transaction.update({approved : true},{
+            //     where : {
+            //         id : el.estateId,
+            //     }
+            // })
+            // 승인했을 때 판매자에게 계약금 지급,
+            await User.increment('won',{
+                by : (amount/2),
+                where : {id : el.userID},
+            })
+
+            const doc = new PDFDocument();
+            const fontPath = path.join(__dirname,'../../front','public/fonts/NotoSansKR-Light.ttf')
+            const fileName = 'contract.pdf';
+            const stream = fs.createWriteStream(fileName);
+            doc.pipe(stream);
+            doc.font(fontPath).fontSize(24).text('부동산 매매 계약서', { align: 'center' });
+
+            // // 박스의 너비와 높이를 정의합니다.
+            // const boxWidth = 550;
+            // const boxHeight = 30;
+
+            // div 박스를 그립니다. 시작점 (100, 100), 너비: boxWidth, 높이: boxHeight
+            doc.rect(30, 150, 550, 30).stroke();
+
+            // div 박스 내용을 정의합니다.
+            const content = `매도인과 매수인은 쌍방은 아래 표시 부동산에 관하여 다음 계획 내용과 같이 매매계획을 체결한다.`;
+
+            doc.font(fontPath).fontSize(12).text(content, 40, 150, {align : 'left',valign :'center'});
+
+            const boxWidth1 = 550;
+            const boxHeight1 = 30;
+
+            // div 박스를 그립니다. 시작점 (100, 100), 너비: boxWidth, 높이: boxHeight
+            doc.rect(30, 150, boxWidth1, boxHeight1).stroke();
+
+            // div 박스 내용을 정의합니다.
+            const content1 = `매도인과 매수인은 쌍방은 아래 표시 부동산에 관하여 다음 계획 내용과 같이 매매계획을 체결한다.`;
+
+            // div 박스에 텍스트 내용을 추가합니다.
+            const textoptions1= {
+            width: boxWidth - 20,   // 박스 내부에서의 텍스트 가로 길이
+            height: boxHeight, // 박스 내부에서의 텍스트 세로 길이
+            align: 'left',          // 텍스트 가로 정렬: 왼쪽
+            valign: 'center'        // 텍스트 세로 정렬: 위쪽
+            // fontSize: 3,
+            };
+
+            doc.font(fontPath).fontSize(12).text(content, 40, 150, textoptions1);
+
+            // const rowCount = 7; // 행 수
+            // const columnCount = 7; // 열 수
+            // const cellWidth = 80; // 셀 너비
+            // const cellHeight = 30; // 셀 높이
+            // const tableX = 30; // 테이s블 시작 X 좌표
+            // const tableY = 130; // 테이블 시작 Y 좌표
+            
+            // const mergedRows = [0,1,3];
+
+            // // const tableData = Array.from({ length: rowCount - 1 }, (_, index) => ['Row', index + 1, '1', '2', '3', '4', '5']); // 테이블 데이터
+            // const tableData = ["매도인과 매수인은"]
+            // tableData.forEach((rowData, rowIndex) => {
+            //     if (mergedRows.includes(rowIndex)) {
+            //         const x = tableX;
+            //         const y = tableY + (rowIndex + 1) * cellHeight;
+            //         doc.rect(x, y, columnCount * cellWidth, cellHeight).stroke(); // 병합된 행의 테두리 그리기
+            //         doc.text(rowData.join(' '), x + 5, y + 5, { width: columnCount * cellWidth - 10, height: cellHeight - 10, align: 'center' }); // 병합된 행의 내용 그리기
+            //     } else {
+            //     rowData.forEach((cell, columnIndex) => {
+            //         const x = tableX + columnIndex * cellWidth;
+            //         const y = tableY + (rowIndex + 1) * cellHeight;
+            //         doc.rect(x, y, cellWidth, cellHeight).stroke(); // 셀 테두리 그리기
+            //         doc.text(cell.toString(), x + 5, y + 5, { width: cellWidth - 10, height: cellHeight - 10, align: 'center' }); // 셀 내용 그리기
+            //     });
+            // }
+            // });
+            doc.end();
+
+            stream.on("finish", () => {
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', 'attachment; filename=contract.pdf');
+                const readStream = fs.createReadStream(fileName);
+                readStream.pipe(res);
+            });
+
+        //여기서 pdf 만들어야함.ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    } catch (error) {
+        console.log("approvedUpdate 컨트롤러 오류",error)
+    }
+}
 
 exports.transactionStateUpdate = async(req,res)=>{
     
@@ -165,24 +268,9 @@ exports.transactionStateUpdate = async(req,res)=>{
         // 계약금 2배
         // 계약금 : (amount/2) , 잔금 : ((amount/2)*9) , 전체금액 : (amount*5)
         const amount = parseInt((el.deposit *2) * 10000);
+        console.log("amount------------",amount)
         
-        if(el.btnname=="승인"){
-            await Transaction.update({approved : true},{
-                where : {
-                    id : el.estateId,
-                }
-            })
-            // 승인했을 때 판매자에게 계약금 지급,
-            await User.increment('won',{
-                by : (amount/2),
-                where : {id : el.userID},
-            })
-
-            res.send("승인");
-        }
-        //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-        
-        else if(el.btnname=="판매취소"){
+         if(el.btnname=="판매취소"){
 
             // 거래 중인지 approved 가져와서 판별
             const data= await Transaction.findOne({
@@ -452,17 +540,14 @@ if (req.file) {
   updateFields.user_img = req.file.path;
 }
 if (Object.keys(updateFields).length > 0) {
-    await User.update(updateFields, {
+    const data = await User.update(updateFields, {
       where: {
         id: 1,
       },
     });
-  } else {
-    // 업데이트할 필드가 없는 경우에 대한 처리
-    console.log("No fields to update.");
-  }
-        
-    } catch (error) {
+}
+res.send("유저정보수정성공");
+} catch (error) {
         console.log("userInfoUpdate 컨트롤러에서 오류",error);
     }
 }

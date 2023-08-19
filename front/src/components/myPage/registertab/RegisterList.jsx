@@ -11,7 +11,7 @@ const RegisterList = ({data}) => {
   const [state,setState] = useState("");
   const [btnName,setbtnName] = useState();
   const [btnName2,setbtnName2] = useState();
-  console.log(data);
+  // console.log(data);
   useEffect(()=>{
 
     if( data.seller == userID && data.approved == 0 && data.cancel==null && data.completed ==0){
@@ -94,31 +94,58 @@ const RegisterList = ({data}) => {
         params : {el},
         withCredentials : true,
       })
-      return data.data;
+      return data;
+    }
+    const approvedUpdate = async(el)=>{
+      const data = await axios.get("http://localhost:8080/mypage/approvedUpdate",{
+        params : {el},
+        withCredentials : true,
+        responseType: 'blob',
+
+      })
+      return data;
     }
     const queryClient = useQueryClient();
+
+    const approveMutation = useMutation(approvedUpdate,{
+      onSuccess : async(data)=>{
+          try {
+            queryClient.invalidateQueries(['getmyregister'])
+            
+            const blob = new Blob([data.data], { type: 'application/pdf' });
+            console.log(blob);
+            const downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = 'contract.pdf';
+            downloadLink.click();
+          } catch (error) {
+            console.log("jsx 승인 에서 오류남 ",error);
+          }
+          
+        }
+      });
     
 
     const mutation = useMutation(transactionStateUpdate,{
-      onSuccess : (data)=>{
+      onSuccess : async(data)=>{
         console.log("거래 상태 업데이트 완료 ",data)
-        if(data=="성공"){
+        if(data.data=="성공"){
 
           queryClient.invalidateQueries(['getmyregister'])
           alert('판매 취소가 완료되었습니다.')
         }
-        else if(data=='판매취소완료'){
+        else if(data.data=='판매취소완료'){
           queryClient.invalidateQueries(['getmyregister'])
           alert('판매 취소가 완료되었습니다.')
 
         }
-        else if(data=='판매자잔고부족'){
+        else if(data.data=='판매자잔고부족'){
           alert("잔고금액이 계약금의 2배보다 적어 판매 취소가 불가능합니다.")
         }
-        else if(data=='구매취소완료'){
+        else if(data.data=='구매취소완료'){
           queryClient.invalidateQueries(['getmyregister']);
         }
-        else if(data=='재등록 완료'){
+        else if(data.data=='재등록 완료'){
           queryClient.invalidateQueries(['getmyregister']);
 
         }
@@ -132,7 +159,7 @@ const RegisterList = ({data}) => {
       console.log("params",btnname);
 
       if(btnname=="승인"){
-        mutation.mutate({btnname,estateId,userID,transactionID});
+        approveMutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID});
       }
       else if(btnname=="판매취소"){
         if(approved==1){
