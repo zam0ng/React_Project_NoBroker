@@ -11,11 +11,11 @@ export const NavbarTitle = styled.div`
     justify-content: center;
     box-sizing: border-box;
 
-    
+
 `
 export const NavbarTitleName = styled.div`
     height: 80px;
-    width: 85%; 
+    width: 85%;
     /* border: 1px solid black; */
     line-height: 80px;
 
@@ -39,7 +39,7 @@ export const NavbarIcon =styled.div`
 `
 
 export const Hamburger = styled.div`
-    
+
     margin-left: 20px;
     box-sizing: border-box;
     position: relative;
@@ -66,7 +66,7 @@ export const Hamburger = styled.div`
     }
     & span:nth-of-type(3){
        bottom: 0;
-    } 
+    }
 `
 
 export const Menu = styled.div`
@@ -113,7 +113,7 @@ export const MenuList = styled.div`
     width: 200px;
     height: 40px;
     line-height: 40px;
-    
+
     border-top: none;
     border-right: 1px solid gray;
     border-bottom: 1px solid gray;
@@ -129,5 +129,6 @@ export const Bodyy = styled.div`
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.705);
+    z-index: 10;
 ;
 `

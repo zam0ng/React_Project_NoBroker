@@ -133,7 +133,7 @@ exports.checkAuthorization = async (req, res) => {
   try {
     const { certificate_user } = req.acc_decoded;
 
-    if (certificate_user!=0) {
+    if (certificate_user==0) {
       return res.json({message : "권한 있음"});
     } else {
       return res.json({message : "권한 없음"});
@@ -151,6 +151,12 @@ exports.getUserVote = async (req, res) => {
     // const user_id = 1;
     const { real_estate_id } = req.params;
 
+    let certificate_user = false;
+    const user = await User.findOne({where : {id : user_id}});
+    if (user.certificate_user == 0) {
+      certificate_user = true;
+    }
+
     const vote = await Vote.findOne({where : {user_id, real_estate_id}});
 
     const voteCount = await Vote.count({where : {real_estate_id}});
@@ -159,9 +165,9 @@ exports.getUserVote = async (req, res) => {
     const estate = await Real_estate.findOne({where : {id : real_estate_id}});
 
     let maxVote = Math.floor(estate.dataValues.balance / 10000000);
-    if (maxVote==0) { maxVote = 1};
+    if (maxVote==0) { maxVote = 1 };
 
-    return res.json({ vote, voteCounts : {voteCount, trueCount, falseCount, maxVote} });
+    return res.json({ vote, voteCounts : {voteCount, trueCount, falseCount, maxVote}, certificate_user });
   } catch (error) {
     console.log(error);
     return res.json({ error });
@@ -191,6 +197,15 @@ exports.setEstateAccept = async () => {
         },
       }, accpet: 0
     });
+    // const estateList = await Real_estate.findAll({
+    //   where: {
+    //     vote_end_date: {
+    //       [Op.gte]: yesterday, // 어제 날짜 이상
+    //       [Op.lt]: today,      // 오늘 날짜 미만
+    //     },
+    //     accpet: 0
+    //   },
+    // });
     console.log("estateList : ", estateList)
 
     const promises = estateList.map(async (estate) => {

@@ -1,26 +1,41 @@
-import axios from '../Axios';
-import { Navigate } from 'react-router-dom';
+// import axios from '../Axios';
 
-// 권한 확인
-const CheckAuthorization = async ({element : Component}) => {
+// // 권한 확인
+// const CheckAuthorization = ({login, certificateUser}) => {
+// // const CheckAuthorization = () => {
 
-    const { data } = await axios.get(`/vote/`, {
-        withCredentials: true
-    });
-    console.log("받아온 데이터", data);
+//     const getData = async () => {
+//         const { data } = await axios.get(`http://localhost:8080/vote/checkAuthorization`, {
+//             withCredentials: true
+//         });
+//         console.log("CheckAuthorization : ", data);
 
-    // if (data.message && data.message == "권한 있음") {
-    //     return <Component />;
-    // } else if (data.message && data.message == "권한 없음") {
-    //     // window.alert("권한이 없습니다.");
-    //     return <Navigate to="/login" />;
-    // } else {
-    //     // window.alert("로그인 해주세요.");
-    //     return <Navigate to="/login" />;
-    // }
+//         if (data.message && data.message == "권한 있음") {
+//             return {isLogin : "로그인", isCertificateUser : true};
 
-    return data.message && data.message == "권한 있음" ? (<Component />) : (data.message && data.message == "권한 없음" ? (<Navigate to="/login" />) : (<Navigate to="/login" />))
+//         } else if (data.message && data.message == "권한 없음") {
+//             return {isLogin : "로그인", isCertificateUser : false};
 
-}
+//         } else {
+//             return {isLogin : "로그인 X", isCertificateUser : false};
+//         }
+//     }
 
-export default CheckAuthorization
+//     return getData();
+
+
+//     // try {
+//     //     if (login==null && certificateUser==null) {
+//     //         return getData();
+
+//     //     } else {
+//     //         return {isLogin : login, isCertificateUser : certificateUser};
+//     //     }
+
+//     // } catch (error) {
+//     //     console.log(error)
+//     // }
+
+// }
+
+// export default CheckAuthorization
