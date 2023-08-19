@@ -1,10 +1,20 @@
 import React from 'react'
 import {Bodyy,NavbarTitle,Hamburger,NavbarTitleName,MenuListTitle,Menu,MenuList,NavbarIcon} from './navbarStyled';
 import { useState } from 'react';
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const NavHeader = () => {
+  const nav = useNavigate()
   const [isactive,setIsactive] = useState(false);
+
+  const userClick = () => {
+    // axios로 isLogin받아오자
+    nav("/login");
+  };
+
+  const LogoClick = ()=>{
+    nav("/");
+  }
 
   function MenuOpen (){
     setIsactive(!isactive);

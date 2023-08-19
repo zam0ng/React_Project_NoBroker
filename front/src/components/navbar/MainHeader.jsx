@@ -20,9 +20,15 @@ const MainHeader = () => {
   }
 
   const userClick = () => {
-    console.log("크ㄹ릭");
+    // axios로 isLogin받아오자
     nav("/login");
   };
+
+  const LogoClick = ()=>{
+    nav("/");
+  }
+
+
   return isactive ? (
     <>
       <NavbarTitle>
@@ -43,13 +49,15 @@ const MainHeader = () => {
       </NavbarTitle>
 
       <Bodyy>
-        <Menu>
+        <Menu className="menu">
           <MenuListTitle>
-            <div>
-              NoBroker<span onClick={MenuOpen}></span>
+            <div className="navtitle">
+              <div>NoBroker</div><span onClick={MenuOpen}></span>
             </div>
           </MenuListTitle>
           <MenuList>
+            <Link to="/insert">매물 등록</Link>
+            <Link to="/insert">매물 등록</Link>
             <Link to="/insert">매물 등록</Link>
           </MenuList>
         </Menu>
@@ -63,7 +71,7 @@ const MainHeader = () => {
         <span></span>
         <span></span>
       </Hamburger>
-      <NavbarTitleName>
+      <NavbarTitleName onClick={LogoClick}>
         <img src={Logo} alt="" />
         <p>NOBROKER</p>
       </NavbarTitleName>
