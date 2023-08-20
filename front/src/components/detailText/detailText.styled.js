@@ -18,10 +18,15 @@ export const DetailUl = styled.ul`
 
     & li ${DetailTitle} {
         width : 30%;
+        padding-left: 10%;
+        display: flex;
+        justify-content: baseline;
     }
 
     & li ${DetailContent} {
         width: 70%;
+        display: flex;
+        justify-content: baseline;
     }
 `
 

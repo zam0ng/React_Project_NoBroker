@@ -2,9 +2,16 @@ import styled from "styled-components"
 
 
 export const LeftDiv = styled.div`
-    width: 60%;
+    width : ${(props) => props.width || "60%"};
+    min-height : ${(props) => props.height || "65vh"};
     margin: 20px;
-    /* background-color: cadetblue; */
+`
+
+export const VcDivider = styled.div`
+    width : 1px;
+    height: 60vh;
+    margin: auto 0;
+    background-color: gray;
 `
 
 export const RightDiv = styled.div`
@@ -22,12 +29,27 @@ export const RightDiv = styled.div`
     }
 `
 
+export const VoteDiv = styled.div`
+    position: absolute;
+    right: 0;
+    margin: 20px;
+`
+
 
 export const DivList = styled.div`
     width: 100%;
     display: flex;
+
     & ${LeftDiv} {
-        /* background-color: aquamarine; */
+        height: 55vh;
+    }
+
+    & ${VoteDiv} {
+        width: 40%;
+        height: 55vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 `
 
