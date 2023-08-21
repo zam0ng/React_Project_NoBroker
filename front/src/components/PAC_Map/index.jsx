@@ -77,9 +77,9 @@ const [isAreaModalOpen , setIsAreaModalOpen] = useState(false)
 const [arrMarker, setArrMarker] = useState([])        // 찍혀야 하는 마커들
 const [tradableData  , setTradableData] = useState([])      // state 기준으로 뽑은 거래가능한 데이터 | 현재는 테스트 버전만 뽑음
 const [checkboxValue , setCheckboxValue] = useState([])     // 배열 = 여러값을 '동시에' 담을 수 있음 -> so, 중복체크 구현 가능
-const [priceRangeValue , setPriceRangeValue] = useState([0, 1000000])
+const [priceRangeValue , setPriceRangeValue] = useState([0, 100000000000])
 const [builtYearValue , setBuiltYearValue] = useState()     // 기본값이 필요하려나 
-const [areaRangeValue , setAreaRangeValue] = useState([0,13500000])
+const [areaRangeValue , setAreaRangeValue] = useState([0,135000000000000])
 
 const [activeModal, setActiveModal] = useState()
 
@@ -529,13 +529,12 @@ const createZoomControl = ( map ) => {
                 value : item.deposit    // 이게 클러스터링 계산에 들어감. 유형은 숫자
             })
 
-                    // 임시. 정규표현식으로 앞자리만 가져오기 | 완전 임시 📛📛📛 
-                        const tempDeposit = String(item.deposit)
-                        // console.log(tempDeposit)
-                        const match = tempDeposit.match(/^\d+/);
-                            // console.log("정규표현식" ,match) // match == 1000 // console.log("정규표현식" ,match[0])  // const number = match ? match[0]: "";
-                        
-                        const contentString = `<div> ${match[0][0]} 억 </div>`;
+                    // 임시. 정규표현식으로 앞자리만 가져오기 | 😥😥 
+                        const tempDeposit = item.deposit
+                        const yuk = Math.floor(tempDeposit/10000000)
+                        const chenMan = Math.floor((tempDeposit%100000000)/1000000)
+                        const contentString = `<div> ${yuk}.${chenMan}억</div>`
+                        console.log("단위변환" ,contentString)
 
                         // marker 가 만들어질 때 마다 info window 생성
                         const infoWindow = new window.google.maps.InfoWindow();
@@ -547,10 +546,7 @@ const createZoomControl = ( map ) => {
                             shouldFocus : false
                         })
 
-            newMarkers.push(tradableMarker)
-            // ❓❓❓ 이렇게 해도, currentMarkers 에 저장되는거 아닌가 ❓❓❓ 
-            // setCurrentMarkers(prevState => [...prevState ,tradableMarker] );    // '방금 만들어진 마커' 를 'currentMarker' 에 저장 | ⭐⭐ -> 이게 있어야, 필터 버튼에 즉각 반응  
-            // setNewMarkers(prevState => [...prevState, currentMarkers])  // 
+            newMarkers.push(tradableMarker)  // ❓❓❓ 이렇게 해도, currentMarkers 에 저장되는거 아닌가 ❓❓❓ 
         })
 
         setCurrentMarkers(prevState => [...prevState, ...newMarkers]);
@@ -574,9 +570,9 @@ const createZoomControl = ( map ) => {
     }  , [checkboxValue] )
 
 
-return (
-    <>                  
-            <SubHeaderWrapper>
+    return (
+        <>                  
+                <SubHeaderWrapper>
 
                 <SearchContainer>
                     <SearchBarContainer>
@@ -673,11 +669,11 @@ return (
                     <div id='map' ref={mapRef} style={{ height: '100vh', width: '100%' }}  />
                     <CreateZoomControl map={map} />
 
-                </PAC_Map_Wrapper>
-            </MainContentWrap>
+                    </PAC_Map_Wrapper>
+                </MainContentWrap>
 
-    </>
-)    
-}
+        </>
+    )    
+    }
 
     export default PAC_Map
