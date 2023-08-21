@@ -89,3 +89,58 @@ export const TabDiv = styled.div`
     color : ${(props)=>props.isActive ? "orange" : "black"};
     border-collapse: collapse;
 `
+
+export const TossBox = styled.div`
+    width: 100%;
+    height: 400px;
+    /* border: solid 1px black; */
+
+    & div{
+        height: 100px;
+        display: flex;
+        justify-content: space-evenly;
+        /* border: 1px solid black; */
+        align-items: center;
+
+        & span{
+        /* border:  1px solid black; */
+        height: 50px;
+        line-height: 50px;
+        }
+
+        & input{
+            height: 50px;
+            width: 300px;
+            text-align: right;
+            padding-right:10px;
+       
+            &::placeholder{
+                text-align: right;
+                padding-right: 5px;
+            }
+        }
+    }
+
+    & ul{
+        height: 100px;
+        line-height: 30px;
+        /* border: 1px solid black; */
+        list-style-type : circle;
+        & li{
+            width: 400px;
+            font-size: small;
+            text-align: left;
+            margin-left: 20px;
+        }
+    }
+
+    & button{
+        border: none;
+        width: 500px;
+        height: 50px;
+        color: white;
+        font-weight: 600;
+        background-color: lightgray;
+    }
+    
+`

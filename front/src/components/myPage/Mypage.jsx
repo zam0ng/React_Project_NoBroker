@@ -135,7 +135,7 @@ const Mypage = () => {
 
     }
     const obj ={
-        MyPageUserInfo,getmyregisterinfo
+        MyPageUserInfo,getmyregisterinfo,updatedata
     }
     // (true : 공인중개사, false : 일반 유저)
 
