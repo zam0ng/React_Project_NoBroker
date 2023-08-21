@@ -23,6 +23,7 @@ export const RightDiv = styled.div`
     position: absolute;
     right: 0;
     margin: 20px;
+    background-color: white;
     box-shadow: 5px 5px 8px rgba(0,0,0,0.3), -5px 0px 8px rgba(0,0,0,0.3);
 
     &.fixed {
