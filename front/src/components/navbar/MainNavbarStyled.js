@@ -14,6 +14,8 @@ export const NavbarTitle = styled.div`
   box-sizing: border-box;
 `;
 export const NavbarTitleName = styled.div`
+  font-family: "SBAggroB";
+
   height: 80px;
   width: 85%;
   /* border: 1px solid black; */
@@ -31,8 +33,8 @@ export const NavbarTitleName = styled.div`
   & p {
     margin-left: 20px;
     /* font-size: 80px; */
-    font-size: 50px;
-    font-weight: 600;
+    font-size: 60px;
+    font-weight: 300;
     color: orange;
   }
 `;

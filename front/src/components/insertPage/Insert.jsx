@@ -217,7 +217,7 @@ const Insert = ({ queryClient }) => {
         <NavHeader />
         <Islogin />
         <Bodyy>
-          <MainTitle>방내놓기</MainTitle>
+          <MainTitle>매물 등록</MainTitle>
           <Caution>
             <ul>
               <li>

@@ -70,29 +70,60 @@ const AddressInsert = (props) => {
     const adr1 = document.getElementById("roadAddress").value;
     const adr2 = document.getElementById("detailAddress").value;
 
-    let Adr = `${adr1} ${adr2}`
-    props.adr(Adr)
+    let Adr = `${adr1} ${adr2}`;
+    props.adr(Adr);
   };
 
   return (
     <>
       <div className="adrbox2">
-        <div className="adr1">
-          <input
-            className="adrInput1"
-            type="text"
-            id="postcode"
-            placeholder="우편번호"
-          />
-          <button onClick={PostSearchClick}>우편번호 찾기</button>
-        </div>
-        <div>
+        <div
+          className="adr1"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <input
+              className="adrInput1"
+              type="text"
+              id="postcode"
+              placeholder="우편번호"
+              style={{
+                backgroundColor: "#fcfbf1",
+                border: "none",
+                borderBottom: "2px solid",
+                width: "160px",
+              }}
+            />
+            <button
+              onClick={PostSearchClick}
+              style={{
+                backgroundColor: "white",
+                width: "120px",
+                height: "30px",
+                border: "3px solid orange",
+                borderRadius: "2em",
+                cursor: "pointer",
+              }}
+            >
+              우편번호 찾기
+            </button>
+          </div>
           <input
             className="adrInput2"
             type="text"
             id="roadAddress"
             placeholder="도로명주소"
             onChange={AdrChange}
+            style={{
+              backgroundColor: "#fcfbf1",
+              border: "none",
+              borderBottom: "2px solid",
+              width: "280px",
+            }}
           />
           {/* <input className="adrInput" type="text" id="jibunAddress" placeholder="지번주소" /> */}
           <span id="guide"></span>
@@ -102,6 +133,12 @@ const AddressInsert = (props) => {
             id="detailAddress"
             placeholder="상세주소"
             onChange={AdrChange}
+            style={{
+              backgroundColor: "#fcfbf1",
+              border: "none",
+              borderBottom: "2px solid",
+              width: "280px",
+            }}
           />
           {/* <input className="adrInput" type="text" id="extraAddress" placeholder="참고항목" /> */}
         </div>

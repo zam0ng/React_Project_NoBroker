@@ -11,7 +11,7 @@ import {
 } from "./MainNavbarStyled";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Logo } from "../../img";
+import { Logo, Logo2 } from "../../img";
 const MainHeader = () => {
   const [isactive, setIsactive] = useState(false);
   const nav = useNavigate();
@@ -39,7 +39,7 @@ const MainHeader = () => {
         </Hamburger>
 
         <NavbarTitleName>
-          <img src={Logo} alt="" />
+          <img src={Logo2} alt="" />
           <p>NOBROKER</p>
         </NavbarTitleName>
 
@@ -72,7 +72,7 @@ const MainHeader = () => {
         <span></span>
       </Hamburger>
       <NavbarTitleName onClick={LogoClick}>
-        <img src={Logo} alt="" />
+        <img src={Logo2} alt="" />
         <p>NOBROKER</p>
       </NavbarTitleName>
 
