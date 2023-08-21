@@ -167,9 +167,10 @@ exports.getUserVote = async (req, res) => {
 
     const vote = await Vote.findOne({where : {user_id, real_estate_id}});
 
-    const voteCount = await Vote.count({where : {real_estate_id}});
+    // const voteCount = await Vote.count({where : {real_estate_id}});
     const trueCount = await Vote.count({where : {real_estate_id, result : true}});
     const falseCount = await Vote.count({where : {real_estate_id, result : false}});
+    const voteCount = trueCount + falseCount;
     const estate = await Real_estate.findOne({where : {id : real_estate_id}});
 
     let maxVote = Math.floor(estate.dataValues.deposit / 10000000);

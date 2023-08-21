@@ -22,7 +22,7 @@ const DetailText = ({estate, seller}) => {
   return (
     <div>
       <DetailUl>
-        <H1>상세정보</H1>
+      <H1>상세정보</H1>
         <li>
         <DetailTitle>매매가</DetailTitle>
         <DetailContent>{won(estate.balance + estate.deposit)}</DetailContent>

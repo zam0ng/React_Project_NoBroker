@@ -27,7 +27,7 @@ export const BtnDiv = styled.div`
 
 export const H1 = styled.h1`
     display: flex;
-    justify-content: center;
+    justify-content: start;
 `
 
 export const Bar = styled.div`

@@ -24,7 +24,8 @@ const VoteList = ({ votable }) => {
 
     // 투표 마감일 반환
     const voteEnd = (endDate) => {
-        const date = Math.floor((new Date(endDate).getTime() - new Date().getTime())/(1000*60*60*24));
+        const now = new Date();
+        const date = Math.floor((new Date(endDate).getTime() - new Date(`${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`).getTime())/(1000*60*60*24));
         let str;
         {date == 0 ? str = " (D-day)" : str = " (D-"+ date+")"}
         return endDate + str;
@@ -65,6 +66,7 @@ const VoteList = ({ votable }) => {
                                 </Chart>
                             </ChartDiv>
                             <VoteDate>투표 마감 : {voteEnd(el.vote_end_date?.substr(0, 10))}</VoteDate>
+                            {/* <VoteDate>투표 마감 : {voteEnd(el.vote_end_date)}</VoteDate> */}
                         </ContentDiv>
                     </Estate>
                 </>

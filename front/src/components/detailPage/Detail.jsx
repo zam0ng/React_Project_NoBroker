@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "../../Axios";
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 
 import DetailImage from '../detailImage/DetailImage';
 import DetailText from '../detailText/DetailText';
@@ -12,9 +12,12 @@ import { DivList, LeftDiv, RightDiv, Divider, VoteDiv, VcDivider } from './detai
 import DetailComment from '../detailComment/DetailComment';
 import NavHeader from "../navbar/NavHeader";
 
-const Detail = ({ queryClient, vote = false }) => {
+// const Detail = ({ queryClient, vote = false }) => {
+const Detail = ({ vote = false }) => {
   // 매물 아이디
   const { id } = useParams();
+
+  const queryClient = useQueryClient();
 
   // 조회수 올리기
   const viewEstate = async () => {
@@ -42,9 +45,6 @@ const Detail = ({ queryClient, vote = false }) => {
         window.scrollY
       ) {
         document.querySelector("[id='rightDiv']").classList.add("fixed");
-        // document.querySelector("[id='rightDiv']").style.position = "fixed";
-        // document.querySelector("[id='rightDiv']").style.top = "0";
-        console.log("vote : 이벤트", vote);
       } else {
         document.querySelector("[id='rightDiv']").classList.remove("fixed");
       }
