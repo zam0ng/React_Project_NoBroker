@@ -37,7 +37,7 @@ class User extends Model{
                     type : DataTypes.INTEGER,
                     defaultValue : 0,
                 },
-                // 판매 가능 여부 (패널티 여부)
+                // 판매 가능 여부 (패널티 여부) | 
                 ban :{
                     type : DataTypes.BOOLEAN,
                     defaultValue : false,
@@ -112,6 +112,7 @@ class User extends Model{
         db.User.hasMany(db.Real_estate, { foreignKey : "seller", sourceKey : "id"});
         db.User.hasMany(db.Transaction, { foreignKey : "buyer", sourceKey : "id"});
         db.User.hasMany(db.Transaction, { foreignKey : "seller", sourceKey : "id"});
+        db.User.hasMany(db.Transaction, { foreignKey : "cancel", sourceKey : "id"});
         db.User.hasMany(db.Comment, { foreignKey : "user_id", sourceKey : "id"});
         db.User.hasMany(db.Recomment, { foreignKey : "user_id", sourceKey : "id"});
         db.User.hasMany(db.Likes, { foreignKey : "user_id", sourceKey : "id"});

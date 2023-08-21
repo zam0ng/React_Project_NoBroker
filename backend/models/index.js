@@ -36,4 +36,15 @@ Recomment.assicoate(db);
 Likes.assicoate(db);
 Vote.assicoate(db);
 
+const createTestUser = async () => {
+    const userq = await User.findOne();
+    if (!userq) {
+        await User.create({user_id : "qwer", password :"qwer", role : true, user_name : "qwer", address : "주소", phone : "phone", ssn : "ssn"});
+        await User.create({user_id : "qq", password :"qq", role : true, user_name : "qwer", address : "주소", phone : "phone", ssn : "ssn"});
+    }
+}
+
+
+createTestUser();
+
 module.exports = db;
