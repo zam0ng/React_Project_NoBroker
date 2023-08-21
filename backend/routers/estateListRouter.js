@@ -7,7 +7,8 @@ const { isLogin, isLoginNext } = require("../middleware/isLogin")
 // router.get("/filterTradableEstate/" , getFilterTradableEstate)
 
 // | state 조건 수정 해야 함 | 심사 통과된, 판매가능한, 모든 매물 
-router.get("/tradableEstate", isLoginNext, getTradableEstate);
+// router.get("/tradableEstate", isLoginNext, getTradableEstate);
+router.get("/tradableEstate", getTradableEstate);   // 미들웨어 없이
 
 
 router.get("/test", (req, res)=>{

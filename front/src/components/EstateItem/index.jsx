@@ -115,7 +115,7 @@
         navigate("/login")
       }
 
-      // 클릭된 유저가 없으면
+      // 클릭된 유저가 없으면 | 
       if(estateLike[0] == null) {
         addLikeBtnMutation.mutate({real_estate_id : estateID})
       } else {
@@ -129,7 +129,6 @@
       
     }
     
-
 
     return (
 
@@ -147,7 +146,7 @@
 
             <LikeBtnWrap onClick={ handleLikeBtn } >
               {
-                estateLike[0] != null ? <img src={detail_heart}></img> : <img src={detail_emptyheart} ></img>
+                estateLike && estateLike[0] != null ? <img src={detail_heart}></img> : <img src={detail_emptyheart} ></img>
               }
               
             </LikeBtnWrap>

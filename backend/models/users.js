@@ -38,7 +38,7 @@ class User extends Model{
                     defaultValue : 0,
                 },
                 // 판매 가능 여부 (패널티 여부) | 
-                ban :{
+                ban : {
                     type : DataTypes.BOOLEAN,
                     defaultValue : false,
                 },
