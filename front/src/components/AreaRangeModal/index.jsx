@@ -12,7 +12,7 @@ import { defaultTest } from 'components/FilterRangeModal/defaultTest'
 import AreaRangeSlider from 'components/AreaRangeSlider/index';
 
 
-const FilterRangeModal = ({ priceRangeValue, left , handleAreaRangeBox }) => {
+const FilterRangeModal = ({ areaRangeValue, left , handleAreaRangeBox }) => {
   const _tooltipRef = useRef(null);
   
   return (
@@ -32,7 +32,7 @@ const FilterRangeModal = ({ priceRangeValue, left , handleAreaRangeBox }) => {
               min="1" max="100" value="50" class="slider" id="myRange" /> */}
 
             
-              <label> 집 평수 | 단위는 m2 | 표현은 평 까지 함 </label>
+              {/* <label> 집 평수 | 단위는 m2 | 표현은 평 까지 함 </label> */}
             
             </form>
           </FilterModalContainer>

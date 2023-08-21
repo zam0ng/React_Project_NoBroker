@@ -79,7 +79,7 @@ const [tradableData  , setTradableData] = useState([])      // state 기준으�
 const [checkboxValue , setCheckboxValue] = useState([])     // 배열 = 여러값을 '동시에' 담을 수 있음 -> so, 중복체크 구현 가능
 const [priceRangeValue , setPriceRangeValue] = useState([0, 100000000000])
 const [builtYearValue , setBuiltYearValue] = useState()     // 기본값이 필요하려나 
-const [areaRangeValue , setAreaRangeValue] = useState([0,135000000000000])
+const [areaRangeValue , setAreaRangeValue] = useState([0, 135000000000000])
 
 const [activeModal, setActiveModal] = useState()
 
@@ -162,7 +162,7 @@ const [ currentClusterer , setCurrentClusterer ] = useState(null)
     // area 핸들링
     const handleAreaRangeBox = (inputValue) => {
         setAreaRangeValue(inputValue)
-        console.log("areaRangeValue" , inputValue)
+        console.log("areaRangeValue👏👏" , inputValue)
     }
 
 
@@ -355,7 +355,6 @@ const createZoomControl = ( map ) => {
                 url += '?' + params.join('&');
             }
 
-
             const response = await axios.get(url , {
                 withCredentials : true, 
             })
@@ -369,7 +368,7 @@ const createZoomControl = ( map ) => {
         }
     
     // api 함수 호출해서 데이터 가져오기 | usequery 사용
-    const { data , error , isLoading } = useQuery( ['filterTradableEstateData' , priceRangeValue ,checkboxValue , builtYearValue , areaRangeValue] 
+    const { data , error , isLoading } = useQuery( ['filterTradableEstateData' , priceRangeValue , checkboxValue , builtYearValue , areaRangeValue] 
     , fetchFilterTradableEstateData , {
         // enabled : !!checkboxValue //  [해석] 이게 활성화 되면 -> checkboxValue 에 값이 있을 때만 값이 가져와짐
     })    
@@ -532,7 +531,7 @@ const createZoomControl = ( map ) => {
                     // 임시. 정규표현식으로 앞자리만 가져오기 | 😥😥 
                         const tempDeposit = item.deposit
                         const yuk = Math.floor(tempDeposit/100000000)
-                        const chenMan = Math.floor((tempDeposit%1000000000)/100000000)
+                        const chenMan = Math.floor((tempDeposit%100000000)/100000000)
                         const contentString = `<div> ${yuk}.${chenMan}억</div>`
                         console.log("단위변환" ,contentString)
 
@@ -646,6 +645,7 @@ const createZoomControl = ( map ) => {
                             activeModal == "area" && <AreaRangeModal  
                                                 // title={"range 모달 | 집 넓이 "} 
                                                 left = {"235px" } 
+                                                value = {areaRangeValue}
                                                 handleAreaRangeBox = {handleAreaRangeBox}
                                                 /> 
                         }
