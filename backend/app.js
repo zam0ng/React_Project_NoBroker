@@ -86,6 +86,7 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+const dot = require("dotenv").config();
 var createError = require("http-errors");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
@@ -94,7 +95,6 @@ var indexRouter = require("./routers/deposit");
 
 const express = require("express");
 const cors = require("cors");
-const dot = require("dotenv").config();
 const session = require("express-session");
 const path = require("path");
 const cron = require("node-cron");

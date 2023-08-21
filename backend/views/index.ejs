@@ -35,7 +35,8 @@
           orderId: "<%= orderId %>",
           orderName: "<%= orderName %>",
           customerName: "<%= customerName %>",
-          successUrl: window.location.origin + "/success",
+          // successUrl: window.location.origin + "/success",
+          successUrl: "http://localhost:8080" + "/success",
           failUrl: window.location.origin + "/fail",
         });
       });

@@ -95,7 +95,33 @@ export const TossBox = styled.div`
     height: 400px;
     /* border: solid 1px black; */
 
-    & div{
+    
+
+    & ul{
+        height: 100px;
+        line-height: 30px;
+        /* border: 1px solid black; */
+        list-style-type : circle;
+        & li{
+            width: 500px;
+            font-size: small;
+            text-align: left;
+            margin-left: 20px;
+        }
+    }
+
+    & button{
+        border: none;
+        width: 500px;
+        height: 50px;
+        color: white;
+        font-weight: 600;
+        background-color: ${props=>(props.disabled ? "lightgray" : "orange" )};
+    }
+    
+`
+export const DepositDiv = styled.div`
+    
         height: 100px;
         display: flex;
         justify-content: space-evenly;
@@ -119,28 +145,39 @@ export const TossBox = styled.div`
                 padding-right: 5px;
             }
         }
-    }
-
-    & ul{
-        height: 100px;
-        line-height: 30px;
-        /* border: 1px solid black; */
-        list-style-type : circle;
-        & li{
-            width: 400px;
-            font-size: small;
-            text-align: left;
-            margin-left: 20px;
-        }
-    }
-
-    & button{
-        border: none;
-        width: 500px;
-        height: 50px;
-        color: white;
-        font-weight: 600;
-        background-color: lightgray;
-    }
     
+`
+export const WithdrawDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    
+  
+
+    & input{
+            height: 50px;
+            width: 300px;
+            text-align: right;
+            padding-right:10px;
+       
+            &::placeholder{
+                text-align: right;
+                padding-right: 5px;
+            }
+        }
+`
+export const Ablewithdraw = styled.div`
+    width: 480px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    line-height: 50px;
+`
+export const WithdrawValue = styled.div`
+    width: 480px;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `
