@@ -116,7 +116,6 @@ export const TossBox = styled.div`
         height: 50px;
         color: white;
         font-weight: 600;
-        background-color: ${props=>(props.disabled ? "lightgray" : "orange" )};
     }
     
 `

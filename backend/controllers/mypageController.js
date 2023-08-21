@@ -195,11 +195,19 @@ exports.approvedUpdate = async(req,res) =>{
                 })
             // console.log(data);
             // console.log(data[0]);
-            // console.log(data[0].Real_estate.jibun);
+            console.log(data[0].Seller.seal_img);
+            console.log(data[0].Buyer.seal_img);
+            const sellerSealImg = (data[0].Seller.seal_img).split("\\")[2];
+            const buyerSealImg = (data[0].Buyer.seal_img).split("\\")[2];
+            console.log(sellerSealImg);
+            console.log(buyerSealImg);
+
 
             const doc = new PDFDocument();
             const fontPath = path.join(__dirname,'../../front','public/fonts/NotoSansKR-Light.ttf')
             const imgPath = path.join(__dirname,'../../front','public/NoBroker_Logo.png')
+            const sellerPath = path.join(__dirname,'../',`imgs/estate/${sellerSealImg}`)
+            const buyerPath = path.join(__dirname,'../',`imgs/estate/${buyerSealImg}`)
             const fileName = 'contract.pdf';
             const stream = fs.createWriteStream(fileName);
             doc.pipe(stream);
@@ -316,7 +324,10 @@ exports.approvedUpdate = async(req,res) =>{
             doc.font(fontPath).fontSize(12).fillColor('#000000').text(`인`, 550, 460, {align : 'left'});
             //-----------
             doc.image(imgPath, 530, 500, { width: 50, height: 50 });
+            doc.image(sellerPath, 535, 415, { width: 40, height: 30 });
+            doc.image(buyerPath, 535, 455, { width: 40, height: 30 });
             // 인감이미지 지원이랑 말해야함 저장하는거 ~~
+
             
             
 
@@ -629,5 +640,23 @@ exports.userInfoUpdate = async(req,res)=>{
         res.send("유저정보수정성공");
 } catch (error) {
         console.log("userInfoUpdate 컨트롤러에서 오류",error);
+    }
+}
+
+exports.withdraw = async(req,res)=>{
+    try {
+        console.log(req.query);
+        const id = req.acc_decoded.id;
+        const {el} = req.query;
+
+        await User.update({
+            won: sequelize.literal(`won - ${el.money}`)
+        },{
+            where : {id : id},
+        })
+
+        res.send("출금완료")
+    } catch (error) {
+        console.log("withdraw 컨트롤러에서 오류남",error);
     }
 }

@@ -39,10 +39,16 @@ const Account = () => {
     setwithdrawAmount(inputValue2)
     
       const withdrawBtn = document.getElementById("withdrawBtn");
+      const withdrawInput= document.getElementById("withdrawInput");
 
       if (inputValue2 !== "") {
         withdrawBtn.style.backgroundColor = "orange";
         setisdisabled2(false);
+        if(inputValue2 > updatedata.won){
+          alert("출금가능 금액을 확인해주세요.")
+          withdrawInput.value="";
+
+        }
       }
       else {
         withdrawBtn.style.backgroundColor = "lightgray";
@@ -71,6 +77,22 @@ const Account = () => {
     }
   }) 
 
+  const withdraw = async(el)=>{
+    const data = await axios.get("http://localhost:8080/mypage/withdraw",{
+      params :{el},
+      withCredentials : true,
+    })
+    return data.data;
+  }
+  const withdrawMutation = useMutation(withdraw,{
+    onSuccess :(data)=>{
+      console.log(data);
+      if(data =="출금완료"){
+        queryClient.invalidateQueries('update')
+      }
+    }
+  })
+
   const depositHandler = (id,money)=>{
     const depositInput= document.getElementById("depositInput");
     console.log("눌림?")
@@ -81,7 +103,7 @@ const Account = () => {
     const withdrawInput= document.getElementById("withdrawInput");
     console.log("눌림?")
     withdrawInput.value="";
-    mutation.mutate({id,money});
+    withdrawMutation.mutate({id,money});
   }
   
   
@@ -126,7 +148,7 @@ const Account = () => {
             <li>은행 점검시간에는 입금 서비스 이용이 원활하지 않을수 있습니다.</li>
             <li>VPN 환경을 활용해 접속한 경우 입출금 이용이 제한될 수 있습니다.</li>
           </ul>
-          <button id="depositBtn" onClick={()=>{depositHandler(updatedata.id,depositAmount)}} disabled={isdisabled}>입금 신청</button> 
+          <button id="depositBtn" onClick={()=>{depositHandler(updatedata.id,depositAmount)}} disabled={isdisabled} style={{backgroundColor: isdisabled ? "lightgray":"orange"}}>입금 신청</button> 
           </> : <>
           <WithdrawDiv>
             <Ablewithdraw>
@@ -143,7 +165,7 @@ const Account = () => {
             <li>은행 점검시간에는 입금 서비스 이용이 원활하지 않을수 있습니다.</li>
             <li>부정거래가 의심될 경우 출금이 제한될 수 있습니다.</li>
           </ul>
-          <button id="withdrawBtn" onClick={()=>{withdrawHandler(updatedata.id,withdrawAmount)}} disabled={isdisabled2}>출금 신청</button> 
+          <button id="withdrawBtn" onClick={()=>{withdrawHandler(updatedata.id,withdrawAmount)}} disabled={isdisabled2} style={{backgroundColor: isdisabled2 ? "lightgray":"orange"}}>출금 신청</button> 
           
           
           
