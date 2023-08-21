@@ -39,13 +39,18 @@
           <!-- [기능]
               마커를 가져오고, 관리하는데에 사용됨 -->
 
+      <!-- 4) Announcing: Advanced Markers 마커 사용 | https://www.youtube.com/watch?v=1ziIf4wOGzE 여기에서 확인 | 우선, library=places,marker 로 해봄  -->
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio&callback=initMap&libraries=marker,places"></script>
+      <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio&callback=initMap&v=beta&libraries=marker"></script> -->
 
 
       <!-- 3) 자동완성시 필요한 스크립트  -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio&libraries=places"></script>
-            <!-- 클러스터랑 다른 스크립트가 필요함. 어떻게 합칠지는 고민해야 함. -->
+        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio&libraries=places"></script> -->
+        <!-- 클러스터랑 다른 스크립트가 필요함. 어떻게 합칠지는 고민해야 함. -->
+        <!-- 다른 라이브러리 추가한다면, 쉼표 뒤에 marker 넣으면 됨 -->
+      
 
-
+    
     <!-- 오래된 브라우저에서 최신 JS 기능 사용할 수 있게 하는 스크립트 : 구글 공식문서 AUTO PLACE COMPOTE 튜토리얼에서 추가 | -->
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 

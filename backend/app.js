@@ -7,7 +7,8 @@ const cron = require("node-cron");
 const uploadRouter = require("./routers/upload");
 const getUserInfoRouter = require("./routers/insertpageRouter");
 const MypageRouter = require("./routers/mypageRouter")
-const { estateDetailRouter, estateVoteRouter, estateListRouter, loginRouter } = require("./routers");
+const { estateDetailRouter, estateVoteRouter, estateListRouter, loginRouter  } = require("./routers");
+const adminRouter = require('./routers/adminRouter')
 
 const { setEstateAccept } = require("./controllers/estateVoteController");
 
@@ -75,6 +76,8 @@ app.use("/estate_imgs", express.static(path.join(__dirname, "imgs", "estate")));
 app.use("/detail", estateDetailRouter);
 app.use("/list", estateListRouter);     // 목록 페이지 라우터
 app.use("/vote", estateVoteRouter);
+app.use("/admin", adminRouter);
+
 
 // 투표 마감기한인 매물 처리
 cron.schedule("0 0 * * *", setEstateAccept);

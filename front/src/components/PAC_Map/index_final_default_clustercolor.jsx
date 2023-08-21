@@ -1,7 +1,3 @@
-/* global google */
-
-
-
 import React, { useState, useEffect , useRef, useCallback} from 'react'
 import axios from '../../Axios';
 import { useQueryClient } from 'react-query';
@@ -232,11 +228,6 @@ const createZoomControl = ( map ) => {
             center: { lat: 37.521168186048, lng: 126.9791296664 },
             zoom: 13,
             mapTypeControl: false,
-            // icon: {
-            //     url: "/img/orangeCircle_53px.png", // 마커 이미지 URL을 설정합니다.
-            //     scaledSize: new google.maps.Size(40, 40), // 마커 크기를 조절합니다.
-            //   },
-              
             styles: [
                 {
                     "featureType": "landscape",
@@ -295,14 +286,13 @@ const createZoomControl = ( map ) => {
             {
                 "elementType": "labels.icon",
                 "stylers": [
-                    { "hue": "#222423" },
-                    { "gamma": 0.8 },
-                    { "saturation": -255.0989010989011234 },
-                    { "lightness": -5.3 },
-                    { "visibility": "Simplified"}, 
-                    // { "weight" : 1}, // 마커 크기를 조절 아직 안 됨 ㅠㅠ 
+                    { "hue": "#032512" },
+                    { "gamma": 0.3 },
+                    // { "saturation": 10.0989010989011234 },
+                    { "lightness": 0.3 },
+                    {"visibility": "on"}, 
 
-                    // {"size" : "1"}
+
                     ]
                 },
                 // {
@@ -508,8 +498,8 @@ const createZoomControl = ( map ) => {
 
         if(!map) return     // [해석] map 이 null 값인 경우, 오류가 나니까 넣음
 
-        // const customContent = document.createElement("div");
-        // customContent.textContent = "$2.5M";
+        const customContent = document.createElement("div");
+        customContent.textContent = "$2.5M";
 
 
         // 거래가능 데이터로 '마커' 그리고 -> info window 만들고 -> currentMarker 에 저장하기
@@ -519,13 +509,7 @@ const createZoomControl = ( map ) => {
             const tradableMarker = new window.google.maps.Marker({
                 position : tempLocation, 
                 map : map, 
-                icon : {                    
-                    // url : '/img/house-solid.svg',
-                    url : '/img/orange_house_icon.png',
-                    
-                    scaledSize: new window.google.maps.Size(30, 30),    // 크기 
-                },
-                // content : customContent, // 커스텀 마커 ✅ 
+                content : customContent, // 커스텀 마커 ✅ 
                 value : item.deposit    // 이게 클러스터링 계산에 들어감. 유형은 숫자
             })
 
