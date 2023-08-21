@@ -29,7 +29,7 @@ const FilterRangeModal = ({ priceRangeValue, left , handlePriceRangeBox }) => {
               <h1> 매매가격 </h1>
 
               <RangeSlider handlePriceRangeBox={handlePriceRangeBox} />
-
+    
               <RangeCriteria>
                 <div> 0 </div>
                 <div> 5억 </div>
