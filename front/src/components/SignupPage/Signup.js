@@ -15,6 +15,9 @@ import {
   SsnInput,
   NumInput,
   UserAdd,
+  BigBox,
+  SealInput,
+  UserInfoBox2,
 } from "./SignupStyled";
 import axios from "../../Axios";
 import { useNavigate } from "react-router-dom";
@@ -56,6 +59,7 @@ const Signup = () => {
     userSeal,
     userLicense,
     Check,
+    UserInfoBox2,
   ]);
 
   const signupMutation = useMutation(async () => {
@@ -269,6 +273,48 @@ const Signup = () => {
     }
   };
 
+  const Imginput = (e) => {
+    console.log("zfmzfm", e.target.id);
+    if (e.target.id == "inputBtn") {
+      const input = document.getElementById("Sealinput");
+      input.click();
+    } else if (e.target.id == "inputBtn2") {
+      const input = document.getElementById("Bisinput");
+      input.click();
+    }
+  };
+
+  const SealChange = (e) => {
+    console.log("nnnnaaammmmeeee", e.target.files[0]);
+    console.log("$$$$$$$$$$$$", e.target.id);
+    if (e.target.id == "Sealinput") {
+      const selecText = document.getElementById("SealSelec");
+      if (e.target.files[0] == undefined) {
+        console.log("파일 선택 안함");
+        selecText.textContent = "선택된 파일 없음";
+        setUserSeal("");
+      } else {
+        console.log("파일 선택 완");
+        console.log("파일 선택 완", e.target.files[0].name);
+        selecText.textContent = e.target.files[0].name;
+        setUserSeal(e.target.files[0]);
+      }
+    } else if (e.target.id == "Bisinput") {
+      const selecText = document.getElementById("BisSelec");
+
+      if (e.target.files[0] == undefined) {
+        console.log("파일 선택 안함");
+        selecText.textContent = "선택된 파일 없음";
+        setUserLicense("");
+      } else {
+        console.log("파일 선택 완");
+        console.log("파일 선택 완", e.target.files[0].name);
+        selecText.textContent = e.target.files[0].name;
+        setUserLicense(e.target.files[0]);
+      }
+    }
+  };
+
   const SignupAdd = () => {
     //회원가입 시 아이디, 패스워드, 이름, 주민번호, 전화번호, 주소, 인감사진이 등록되어 있어야만 한다.
     if (
@@ -342,127 +388,152 @@ const Signup = () => {
     <SignupBox>
       <NavHeader />
       <SignupMainTitle>회원가입</SignupMainTitle>
-      {/* 로그인 페이지로 넘어갈 수 있는 영역 만들기 */}
-      <div>
-        <div>이미 계정이 있으신가요?</div>
-        <div>로그인하기</div>
-      </div>
-      <SignupSubTitle>유저정보</SignupSubTitle>
-      <UserInfoBox>
-        <div className="infobox">
-          <div>계정정보</div>
-          <div className="userbox">
-            <UserLabel>유저 ID</UserLabel>
-            <UserInput onChange={UserIdChange}></UserInput>
+      <BigBox className="bog">
+        <UserInfoBox className="userinfobox">
+          {/* <SignupSubTitle>유저정보</SignupSubTitle> */}
+          <div className="infobox">
+            <div className="subtitle">계정정보</div>
+            <div className="userbox" style={{ marginTop: "50px" }}>
+              <UserLabel>유저 ID</UserLabel>
+              <UserInput onChange={UserIdChange}></UserInput>
+            </div>
             <p id="IDtext"></p>
-          </div>
-          <div className="userbox">
-            <UserLabel>유저 PW</UserLabel>
-            <UserInput
-              id="pass1"
-              type="password"
-              onChange={UserPWChange}
-            ></UserInput>
+            <div className="userbox">
+              <UserLabel>유저 PW</UserLabel>
+              <UserInput
+                id="pass1"
+                type="password"
+                onChange={UserPWChange}
+              ></UserInput>
+            </div>
             <p id="PWtext1"></p>
-          </div>
-          <div className="userbox">
-            <UserLabel>PW 확인</UserLabel>
-            <UserInput
-              id="pass2"
-              type="password"
-              onChange={UserPWChange}
-            ></UserInput>
+            <div className="userbox">
+              <UserLabel>PW 확인</UserLabel>
+              <UserInput
+                id="pass2"
+                type="password"
+                onChange={UserPWChange}
+              ></UserInput>
+            </div>
             <p id="PWtext2"></p>
           </div>
-        </div>
-        <div className="infobox">
-          <div>유저정보</div>
-          <div className="userbox">
-            <UserLabel>이름</UserLabel>
-            <UserInput
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
-            ></UserInput>
-          </div>
-          <div className="userbox">
-            <UserLabel>주민번호</UserLabel>
-            <div>
-              <SsnInput id="ssn1" onChange={SsnChange} /> -{" "}
-              <SsnInput id="ssn2" onChange={SsnChange} type="password" />
+          <div className="infobox">
+            <div className="subtitle">유저정보</div>
+            <div className="userbox" style={{ marginTop: "50px" }}>
+              <UserLabel>이름</UserLabel>
+              <UserInput
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
+              ></UserInput>
             </div>
-          </div>
-          <div className="userbox">
-            <UserLabel>전화번호</UserLabel>
-            <div>
-              <NumInput id="num1" onChange={NumChange} /> -{" "}
-              <NumInput id="num2" onChange={NumChange} /> -{" "}
-              <NumInput id="num3" onChange={NumChange} />
+            <div className="userbox">
+              <UserLabel>주민번호</UserLabel>
+              <div>
+                <SsnInput id="ssn1" onChange={SsnChange} placeholder="YYMMDD" />{" "}
+                -{" "}
+                <SsnInput
+                  id="ssn2"
+                  onChange={SsnChange}
+                  placeholder="NNNNNNN"
+                  type="password"
+                />
+              </div>
             </div>
-          </div>
-          <div className="adrbox">
-            <UserLabel>주소</UserLabel>
-            <AddressInsert adr={setUserAdr}></AddressInsert>
-          </div>
-          <div className="userbox">
-            <UserLabel>인감사진</UserLabel>
-            <UserInput
-              type="file"
-              onChange={(e) => {
-                setUserSeal(e.target.files[0]);
-              }}
-            ></UserInput>
-          </div>
-        </div>
-      </UserInfoBox>
-      <SignupSubTitle>공인중개사 회원</SignupSubTitle>
-      <UserInfoBox>
-        <BusiSelectBoxs>
-          <BusiSelectBox id="nobis" onClick={BisClick}>
-            <div>나는 일반회원 할래요</div>
-          </BusiSelectBox>
-          <BusiSelectBox id="imbis" onClick={BisClick}>
-            <div>나는 업자다하하하하</div>
-          </BusiSelectBox>
-        </BusiSelectBoxs>
-        {/* 선택한 것에 따라 이 안에서 보여지는 내용이 달라질 예정 */}
-        <BusinessBox>
-          <div className="nobisbox">
-            <div>
-              <span>일반 회원</span>으로 가입 시 매물을 등록하고 판매하실 수
-              있습니다! NoBroker에서 즐거운 거래되세요!
+            <div className="userbox">
+              <UserLabel>전화번호</UserLabel>
+              <div>
+                <NumInput id="num1" onChange={NumChange} /> -{" "}
+                <NumInput id="num2" onChange={NumChange} /> -{" "}
+                <NumInput id="num3" onChange={NumChange} />
+              </div>
             </div>
-          </div>
-          <div className="imbisbox">
-            <div>
-              <span>공인 중개사</span>회원으로 가입 시, 등록된 매물의 진위여부를
-              투표하고 받을 수 있는 보상을 받을 수 있습니다!
+            <div className="adrbox">
+              <UserLabel>주소</UserLabel>
+              <AddressInsert adr={setUserAdr}></AddressInsert>
             </div>
-            <div>
-              자격증 사진 첨부
+            <div className="userbox">
+              <UserLabel>인감사진</UserLabel>
               <input
                 type="file"
-                onChange={(e) => {
-                  setUserLicense(e.target.files[0]);
-                }}
+                id="Sealinput"
+                onChange={SealChange}
+                style={{ display: "none" }}
               ></input>
+              <div id="inputBtn" onClick={Imginput}>
+                클릭
+              </div>
+              <p id="SealSelec">선택된 파일 없음</p>
             </div>
           </div>
-        </BusinessBox>
-      </UserInfoBox>
-      <div>
-        <input
-          type="checkbox"
-          id="check"
-          onClick={(e) => setCheck(e.target.checked)}
-        ></input>
-        <span>개인 정보 제공 동의</span>
-        <div>
-          입력하신 정보를 다시 한 번 확인해주세요! 잘못된 정보를 기입하여 발생한
-          문제는 당사에서 책임지지 않습니다.
-        </div>
-      </div>
-      <UserAdd onClick={SignupAdd}>회원가입</UserAdd>
+        </UserInfoBox>
+        <UserInfoBox2 className="bis">
+          <div className="subtitle">공인중개사 회원</div>
+          <BusiSelectBoxs>
+            <BusiSelectBox id="nobis" onClick={BisClick}>
+              <div>나는 일반회원 할래요</div>
+            </BusiSelectBox>
+            <BusiSelectBox id="imbis" onClick={BisClick}>
+              <div>나는 업자다하하하하</div>
+            </BusiSelectBox>
+          </BusiSelectBoxs>
+          {/* 선택한 것에 따라 이 안에서 보여지는 내용이 달라질 예정 */}
+          <BusinessBox>
+            <div className="nobisbox pop">
+              <div>
+                <span>일반 회원</span>으로 가입 시 매물을 등록하고 판매하실 수
+                있습니다! NoBroker에서 즐거운 거래되세요!
+              </div>
+            </div>
+            <div className="imbisbox">
+              <div>
+                <span>공인 중개사</span>회원으로 가입 시, 등록된 매물의
+                진위여부를 투표하고 받을 수 있는 보상을 받을 수 있습니다!
+              </div>
+              <div style={{ display: "flex" }}>
+                <div
+                  style={{
+                    width: "200px",
+                    fontWeight: "bold",
+                    display: "flex",
+                    justifyContent: "center",
+                    fontSize: "18px",
+                    alignItems: "center",
+                  }}
+                >
+                  자격증 사진 첨부
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <input
+                    type="file"
+                    id="Bisinput"
+                    onChange={SealChange}
+                    style={{ display: "none" }}
+                  ></input>
+                  <div id="inputBtn2" onClick={Imginput}>
+                    클릭
+                  </div>
+                  <p id="BisSelec">선택된 파일 없음</p>
+                </div>
+              </div>
+            </div>
+          </BusinessBox>
+          <div>
+            <input
+              type="checkbox"
+              id="check"
+              onClick={(e) => setCheck(e.target.checked)}
+            ></input>
+            <span>개인 정보 제공 동의</span>
+            <div>
+              입력하신 정보를 다시 한 번 확인해주세요! 잘못된 정보를 기입하여
+              발생한 문제는 당사에서 책임지지 않습니다.
+            </div>
+          </div>
+        </UserInfoBox2>
+            <UserAdd onClick={SignupAdd}>회원가입</UserAdd>
+      </BigBox>
     </SignupBox>
   );
 };

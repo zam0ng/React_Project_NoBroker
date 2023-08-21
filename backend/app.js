@@ -55,6 +55,8 @@ app.use("/insert", getUserInfoRouter);
 app.use("/mypage", MypageRouter);
 app.use("/signup", signupRouter);
 
+// 유저 이미지 경로 지정
+app.use("/user_imgs", express.static(path.join(__dirname, "imgs", "userImg")));
 // 매물 이미지 경로 지정
 app.use("/estate_imgs", express.static(path.join(__dirname, "imgs", "estate")));
 app.use("/detail", estateDetailRouter);

@@ -5,8 +5,11 @@ import detail_heart from './detail_heart.png';
 import detail_emptyheart from './detail_emptyheart.png'
 import detail_arrow from './detail_arrow.png'
 import Logo from './NoBroker_Logo.png'
+import Logo2 from "./NoBroker_Logo_1.png"
 import userIcon from './userIcon.png'
 import userIcon_white from './userIcon_white.png'
 import heartButton from './heart-button.svg'
+import LoginBack from "./loginBackground.png"
+import pin from "./Pin.png"
 
-export {userimg,homeimg,apartimg, detail_heart, detail_emptyheart, detail_arrow, Logo, userIcon, userIcon_white, heartButton};
+export {userimg,homeimg,apartimg, detail_heart, detail_emptyheart, detail_arrow, Logo, userIcon, userIcon_white, heartButton, Logo2, LoginBack, pin};

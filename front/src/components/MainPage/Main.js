@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import * as WorldWind from "@nasaworldwind/worldwind"; // WorldWind 라이브러리를 불러옵니다.
 import Placemark from "./Placemark";
 import MainHeader from "../navbar/MainHeader";
+import { pin } from "../../img";
 
 const Main = () => {
   // 컴포넌트가 마운트 되었을 때 해당 코드 실행
@@ -69,29 +70,29 @@ const Main = () => {
     // ⭐️⭐️⭐️⭐️⭐️ 마커 그리는 코드 ⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️
     // RenderableLayer : 지구 캔버스에 그릴 수 있는 다양한 객체 또는 특징을 나타내는 개념. 맵에 그릴 수 있는 그래픽 요소들을 그룹화하고 관리하는 컨테이너
     // 이 클래스로 좌표를 찍을 수 있다.
-    // var placemarkLayer = new WorldWind.RenderableLayer();
-    // // placemarkLayer로 생성한 좌표를 레이어를 추가하여 그려낸다.
-    // wwd.addLayer(placemarkLayer);
+    var placemarkLayer = new WorldWind.RenderableLayer();
+    // placemarkLayer로 생성한 좌표를 레이어를 추가하여 그려낸다.
+    wwd.addLayer(placemarkLayer);
 
-    // // PlacemarkAttributes : 좌표의 모양, 크기, 색상, 라벨 등을 설정하는데 사용한다.
-    // var placemarkAttributes = new WorldWind.PlacemarkAttributes(null);
+    // PlacemarkAttributes : 좌표의 모양, 크기, 색상, 라벨 등을 설정하는데 사용한다.
+    var placemarkAttributes = new WorldWind.PlacemarkAttributes(null);
 
-    // // 좌표 이미지 오프셋 설정 (좌표 위치 조정)
-    // placemarkAttributes.imageOffset = new WorldWind.Offset(
+    // 좌표 이미지 오프셋 설정 (좌표 위치 조정)
+    placemarkAttributes.imageOffset = new WorldWind.Offset(
+      WorldWind.OFFSET_FRACTION,
+      0.3,
+      WorldWind.OFFSET_FRACTION,
+      0.0
+    );
+    // 좌표 라벨 오프셋 설정 (좌표 위치 조정)
+    // placemarkAttributes.labelAttributes.offset = new WorldWind.Offset(
     //   WorldWind.OFFSET_FRACTION,
-    //   0.3,
+    //   0.5,
     //   WorldWind.OFFSET_FRACTION,
-    //   0.0
+    //   1.0
     // );
-    // // 좌표 라벨 오프셋 설정 (좌표 위치 조정)
-    // // placemarkAttributes.labelAttributes.offset = new WorldWind.Offset(
-    // //   WorldWind.OFFSET_FRACTION,
-    // //   0.5,
-    // //   WorldWind.OFFSET_FRACTION,
-    // //   1.0
-    // // );
 
-    // const app = document.querySelector(".App");
+    const app = document.querySelector(".App");
     // var placemarkImage = document.createElement("img");
     // placemarkImage.src =
     //   WorldWind.configuration.baseUrl + "images/pushpins/plain-red.png";
@@ -104,30 +105,30 @@ const Main = () => {
     // placemarkImage.style.top = "0";
 
     // app.append(placemarkImage);
-    // // 좌표 이미지 경로 설정
-    // // placemarkAttributes.imageSource =
-    // //   WorldWind.configuration.baseUrl + "images/pushpins/plain-red.png";
-    // // position : 좌표 위치 설정 (위도 경도 고도?)
+    // 좌표 이미지 경로 설정
+    placemarkAttributes.imageSource = pin;
+    // WorldWind.configuration.baseUrl + "images/pushpins/plain-red.png";
+    // position : 좌표 위치 설정 (위도 경도 고도?)
     // placemarkAttributes.imageSource = placemarkImage;
-    // var position = new WorldWind.Position(37.0, 127.0, 100.0);
-    // // 좌표 생성
-    // var placemark = new WorldWind.Placemark(
-    //   position,
-    //   false,
-    //   placemarkAttributes
-    // );
+    var position = new WorldWind.Position(37.0, 127.0, 100.0);
+    // 좌표 생성
+    var placemark = new WorldWind.Placemark(
+      position,
+      false,
+      placemarkAttributes
+    );
 
-    // // 라벨 오프셋 (마커에 설명을 달 수 있을 듯)
-    // // placemark.label =
-    // //   "Placemark\n" +
-    // //   "Lat " +
-    // //   placemark.position.latitude.toPrecision(4).toString() +
-    // //   "\n" +
-    // //   "Lon " +
-    // //   placemark.position.longitude.toPrecision(5).toString();
+    // 라벨 오프셋 (마커에 설명을 달 수 있을 듯)
+    // placemark.label =
+    //   "Placemark\n" +
+    //   "Lat " +
+    //   placemark.position.latitude.toPrecision(4).toString() +
+    //   "\n" +
+    //   "Lon " +
+    //   placemark.position.longitude.toPrecision(5).toString();
 
-    // // 좌표가 항상 맨 위에 노출되도록 하는 구문. 이 좌표가 다른 객체나 레이어에 겹치더라도 최상단에 노출되어 시각적 강조
-    // placemark.alwaysOnTop = true;
+    // 좌표가 항상 맨 위에 노출되도록 하는 구문. 이 좌표가 다른 객체나 레이어에 겹치더라도 최상단에 노출되어 시각적 강조
+    placemark.alwaysOnTop = true;
 
     // placemark.clickRecognizer = new WorldWind.ClickRecognizer({
     //   // 클릭 이벤트 처리
@@ -137,8 +138,8 @@ const Main = () => {
     //   },
     // });
 
-    // // placemarkLayer 레이어의 생성되어있는 렌더러블 레이어애 좌표인 placemark를 추가
-    // placemarkLayer.addRenderable(placemark);
+    // placemarkLayer 레이어의 생성되어있는 렌더러블 레이어애 좌표인 placemark를 추가
+    placemarkLayer.addRenderable(placemark);
 
     // 🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼🔼
     // Add a polygon

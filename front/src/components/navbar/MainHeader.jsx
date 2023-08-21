@@ -11,7 +11,7 @@ import {
 } from "./MainNavbarStyled";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Logo } from "../../img";
+import { Logo, Logo2 } from "../../img";
 const MainHeader = () => {
   const [isactive, setIsactive] = useState(false);
   const nav = useNavigate();
@@ -20,9 +20,15 @@ const MainHeader = () => {
   }
 
   const userClick = () => {
-    console.log("크ㄹ릭");
+    // axios로 isLogin받아오자
     nav("/login");
   };
+
+  const LogoClick = ()=>{
+    nav("/");
+  }
+
+
   return isactive ? (
     <>
       <NavbarTitle>
@@ -33,7 +39,7 @@ const MainHeader = () => {
         </Hamburger>
 
         <NavbarTitleName>
-          <img src={Logo} alt="" />
+          <img src={Logo2} alt="" />
           <p>NOBROKER</p>
         </NavbarTitleName>
 
@@ -43,13 +49,15 @@ const MainHeader = () => {
       </NavbarTitle>
 
       <Bodyy>
-        <Menu>
+        <Menu className="menu">
           <MenuListTitle>
-            <div>
-              NoBroker<span onClick={MenuOpen}></span>
+            <div className="navtitle">
+              <div>NoBroker</div><span onClick={MenuOpen}></span>
             </div>
           </MenuListTitle>
           <MenuList>
+            <Link to="/insert">매물 등록</Link>
+            <Link to="/insert">매물 등록</Link>
             <Link to="/insert">매물 등록</Link>
           </MenuList>
         </Menu>
@@ -63,8 +71,8 @@ const MainHeader = () => {
         <span></span>
         <span></span>
       </Hamburger>
-      <NavbarTitleName>
-        <img src={Logo} alt="" />
+      <NavbarTitleName onClick={LogoClick}>
+        <img src={Logo2} alt="" />
         <p>NOBROKER</p>
       </NavbarTitleName>
 
