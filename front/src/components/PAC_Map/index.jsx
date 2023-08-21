@@ -531,8 +531,8 @@ const createZoomControl = ( map ) => {
 
                     // 임시. 정규표현식으로 앞자리만 가져오기 | 😥😥 
                         const tempDeposit = item.deposit
-                        const yuk = Math.floor(tempDeposit/10000000)
-                        const chenMan = Math.floor((tempDeposit%100000000)/1000000)
+                        const yuk = Math.floor(tempDeposit/100000000)
+                        const chenMan = Math.floor((tempDeposit%1000000000)/100000000)
                         const contentString = `<div> ${yuk}.${chenMan}억</div>`
                         console.log("단위변환" ,contentString)
 
