@@ -14,19 +14,26 @@ export const DetailUl = styled.ul`
 
     & li {
         display: flex;
+        /* margin-top: 10px; */
     }
 
     & li ${DetailTitle} {
         width : 30%;
-        padding-left: 10%;
+        padding-left: 20px;
         display: flex;
         justify-content: baseline;
+        font-size:21px;
+        margin-top: 16px;
+        margin-bottom: 16px;
     }
 
     & li ${DetailContent} {
         width: 70%;
         display: flex;
         justify-content: baseline;
+        font-size: 20px;
+        margin-top: 16px;
+        margin-bottom: 16px;
     }
 `
 
@@ -34,4 +41,5 @@ export const H1 = styled.h1`
     display: flex;
     padding-left: 20px;
     justify-content: start;
+    margin-top: -20px;
 `

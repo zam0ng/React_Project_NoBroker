@@ -18,7 +18,8 @@ export const Btn = styled.div`
 export const BtnDiv = styled.div`
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: ${(props) => props.justifyContent || "space-between"};
+    margin-top: 40px;
 
     & ${Btn}:nth-child(2) {
         margin-left: 20px;
@@ -43,6 +44,7 @@ export const Text = styled.p`
     font-weight: bold;
     text-align: left;
     margin: 0;
+    font-size: 18px;
 `
 
 export const Chart = styled.div`

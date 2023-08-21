@@ -27,8 +27,8 @@ const VoteList = ({ votable }) => {
         const now = new Date();
         const date = Math.floor((new Date(endDate).getTime() - new Date(`${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`).getTime())/(1000*60*60*24));
         let str;
-        {date == 0 ? str = " (D-day)" : str = " (D-"+ date+")"}
-        return endDate + str;
+        {date == 0 ? str = "D-day" : str = "D-"+ date}
+        return str;
     }
 
     const loop = () => {
@@ -36,8 +36,10 @@ const VoteList = ({ votable }) => {
         votable?.forEach((el, index) => {
             arr.push(
                 <>
+                    <div style={{display:"flex", position:"relative"}}>
+                    <EstateNum>{index + 1}</EstateNum>
                     <Estate onClick={() => { nav(`/vote/${el.id}`) }}>
-                        <EstateNum>{index + 1}</EstateNum>
+                        {/* <EstateNum>{index + 1}</EstateNum> */}
                         <BigImg src={el.img_1 && el.img_1 != "" ? "http://localhost:8080/estate_imgs/" + el.img_1?.substr(12) : 'http://localhost:8080/estate_imgs/null.png'} />
 
                         <ContentDiv>
@@ -47,10 +49,10 @@ const VoteList = ({ votable }) => {
                             <p>{el.area}㎡</p>
                             <p>매물 등록일 : {el.createdAt?.substr(0,10)}</p>
                         </ContentDiv>
-                        <div style={{width:"0px", height:"100%", border: "1px solid gray"}}></div>
+                        {/* <div style={{width:"0px", height:"100%", border: "1px solid gray"}}></div> */}
                         <ContentDiv>
                             <ChartDiv>
-                            <p>진행률 {el.maxVote != 0 ? Math.ceil(el.voteCount/el.maxVote * 100) : Math.ceil(el.voteCount / 1) * 100}%</p>
+                            <p>진행률 <span>{el.maxVote != 0 ? Math.ceil(el.voteCount/el.maxVote * 100) : Math.ceil(el.voteCount / 1) * 100}%</span></p>
                                 <Chart>
                                     {el.maxVote != 0 ?
                                     <>
@@ -65,10 +67,12 @@ const VoteList = ({ votable }) => {
                                     }
                                 </Chart>
                             </ChartDiv>
-                            <VoteDate>투표 마감 : {voteEnd(el.vote_end_date?.substr(0, 10))}</VoteDate>
+                            <VoteDate style={{marginBottom:0}}>마감 {voteEnd(el.vote_end_date?.substr(0, 10))}</VoteDate>
+                            <VoteDate style={{marginTop:0}}>({el.vote_end_date?.substr(0, 10)})</VoteDate>
                             {/* <VoteDate>투표 마감 : {voteEnd(el.vote_end_date)}</VoteDate> */}
                         </ContentDiv>
                     </Estate>
+                    </div>
                 </>
             );
 

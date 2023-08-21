@@ -99,7 +99,7 @@ const VoteBtn = ({ estate }) => {
               </Chart>
             </div>
 
-            <h3 style={{textAlign:"start"}}>득표율</h3>
+            <h2 style={{textAlign:"start", marginTop:"40px"}}>득표율</h2>
             <VerChart>
               {data.voteCounts.trueCount == 0 && data.voteCounts.falseCount == 0 ?
 
@@ -118,9 +118,14 @@ const VoteBtn = ({ estate }) => {
                   <Bar width={`${data.voteCounts.falseCount / data.voteCounts.voteCount * 100}%`} backgroundColor={"gray"}></Bar>
                 </>}
             </VerChart>
-            <BtnDiv>
-              {estate.accpet == 0 ? data.vote?.result != null ? <><Btn backgroundColor="gray">투표 불가</Btn></> : <><Btn backgroundColor="orange" onClick={() => { voteEstate(true) }}>정상매물</Btn> <Btn backgroundColor="gray" onClick={() => { voteEstate(false) }}>허위매물</Btn></> : <><Btn backgroundColor="gray">투표 불가</Btn></>}
-            </BtnDiv>
+
+              {estate.accpet == 0
+              ?
+              data.vote?.result != null
+              ? <BtnDiv justifyContent={"center"}><Btn backgroundColor="gray">투표 불가</Btn></BtnDiv>
+              : <BtnDiv><Btn backgroundColor="orange" onClick={() => { voteEstate(true) }}>정상매물</Btn> <Btn backgroundColor="gray" onClick={() => { voteEstate(false) }}>허위매물</Btn></BtnDiv>
+              : <BtnDiv justifyContent={"center"}><Btn backgroundColor="gray">투표 불가</Btn></BtnDiv>}
+
           </VoteDiv>
         </>
     }

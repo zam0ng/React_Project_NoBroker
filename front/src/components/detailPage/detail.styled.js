@@ -3,14 +3,16 @@ import styled from "styled-components"
 
 export const LeftDiv = styled.div`
     width : ${(props) => props.width || "60%"};
-    min-height : ${(props) => props.height || "65vh"};
+    min-height: 60vh;
+    max-height : ${(props) => props.height || "fit-content"};
     margin: 20px;
+    margin-left: 50px;
 `
 
 export const VcDivider = styled.div`
     width : 1px;
     height: 60vh;
-    margin: auto 0;
+    margin: 26px 0;
     background-color: gray;
 `
 
@@ -46,7 +48,8 @@ export const DivList = styled.div`
 
     & ${VoteDiv} {
         width: 40%;
-        height: 55vh;
+        min-height: fit-content;
+        max-height: 55vh;
         display: flex;
         justify-content: center;
         align-items: center;
