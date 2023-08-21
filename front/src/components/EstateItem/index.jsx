@@ -108,15 +108,16 @@
     } , [item.id])
     
 
-    const handleLikeBtn = () => {
+    const handleLikeBtn = (index) => {
 
       // 만약, 로그인 되었으면, 나오게 하고, 로그아웃 되면, 안 되게 하기 ✅✅ 
       if (!isLoggedIn) {
         navigate("/login")
+        return 
       }
 
-      // 클릭된 유저가 없으면 | 
-      if(estateLike[0] == null) {
+      // 클릭된 유저가 없으면 |
+      if(estateLike && estateLike[0] == null) {
         addLikeBtnMutation.mutate({real_estate_id : estateID})
       } else {
         delLikeBtnMutation.mutate({real_estate_id : estateID})
@@ -125,26 +126,23 @@
       console.log("클릭된 estateID" , estateID)
       // user_id : 이건 controller 에서 미들웨어로 받을거고 
       // real_estate_id : 이걸 여기에서 받아서 넘길 것 임
-
-      
+    
     }
     
 
     return (
 
       <CardItemWrapper>
-        <CardItem>
+        <CardItem onClick={ () => navigate(`/detail/${estateID}`)} >
 
           <ImgWrap>
 
             <ImgThumbnail>
 
-              {/* 이렇게 되겠지👇 */}
-              {/* <img src={estateImg} />  */}
               <img src={"https://d1774jszgerdmk.cloudfront.net/512/e4356ef7-5d88-4976-b422-fef2393c2551-2"} /> 
             </ImgThumbnail>
 
-            <LikeBtnWrap onClick={ handleLikeBtn } >
+            <LikeBtnWrap onClick={ () => handleLikeBtn(index) } >
               {
                 estateLike && estateLike[0] != null ? <img src={detail_heart}></img> : <img src={detail_emptyheart} ></img>
               }

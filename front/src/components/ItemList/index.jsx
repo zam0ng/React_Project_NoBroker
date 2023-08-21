@@ -19,7 +19,6 @@ const ItemList = ({isLoggedIn , item, index , queryClient}) => {
 
     // 여기에서 필요한 데이터는 이제 props 로 전달받아서 사용하면 됨 ⭐⭐⭐⭐⭐⭐ 
     <ItemListWrapper>
-
     
       <EstateItem
         queryClient = {queryClient}

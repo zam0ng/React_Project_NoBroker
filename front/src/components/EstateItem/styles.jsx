@@ -10,6 +10,7 @@ export const CardItemWrapper = styled.div`
 `
 
 export const CardItem = styled.div`
+
     /* background-color : rosybrown; */
     width : 100%;
     padding : 16px 15px;

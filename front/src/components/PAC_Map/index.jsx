@@ -658,9 +658,14 @@ const createZoomControl = ( map ) => {
                     {
                         tradableData.map( (item, index) => {
                             return (
-                                <ItemList key = {index}  isLoggedIn = {isLoggedIn} queryClient={queryClient} className="ItemList" item={item} index={index} /> 
-                            )
-                        } )
+                                <ItemList 
+                                    key = {index}  
+                                    isLoggedIn = {isLoggedIn} 
+                                    queryClient={queryClient} 
+                                    className="ItemList" 
+                                    item={item} 
+                                    index={index} /> 
+                        ) } )
                     }
                 </ContentWrapper> 
 
