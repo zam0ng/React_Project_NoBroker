@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../../Axios";
 import { useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
@@ -16,6 +16,7 @@ import NavHeader from "../navbar/NavHeader";
 const Detail = ({ vote = false }) => {
   // 매물 아이디
   const { id } = useParams();
+  const [isVoted, setIsVoted] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -31,6 +32,10 @@ const Detail = ({ vote = false }) => {
   };
 
   viewEstate();
+
+  useEffect(()=>{
+    console.log("isVoted", isVoted);
+  }, [isVoted]);
 
   if (!vote) {
 
@@ -86,7 +91,7 @@ const Detail = ({ vote = false }) => {
             </LeftDiv>
             <VcDivider />
             <VoteDiv>
-              <VoteBtn estate={data.estate} queryClient={queryClient} />
+              <VoteBtn estate={data.estate} queryClient={queryClient} setIsVoted={setIsVoted} />
             </VoteDiv>
           </DivList>
 

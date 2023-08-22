@@ -5,7 +5,7 @@ import { VoteDiv, Btn, BtnDiv, H1, Chart, Bar, Text, VerChart } from './voteBtn.
 import { useAuth } from 'AuthContext';
 
 // const VoteBtn = ({ estate, queryClient }) => {
-const VoteBtn = ({ estate }) => {
+const VoteBtn = ({ estate, setIsVoted }) => {
   // 투표, 투표 완료했을때 보여지는 부분
   // estate의 투표 가능 여부에 따라 버튼 표시
   // detail에서 해당 유저가 투표한 적 있는지 여부 확인(정보 표시)
@@ -27,6 +27,7 @@ const VoteBtn = ({ estate }) => {
     {
       onSuccess: (data) => {
         if (data.message && data.message == "성공") {
+          setIsVoted(true);
           queryClient.invalidateQueries("vote");
           // queryClient.invalidateQueries("estate");
           alert("투표 완료");
