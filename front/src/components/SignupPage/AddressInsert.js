@@ -1,4 +1,5 @@
 import React from "react";
+import { AdrSearchBtn } from "./SignupStyled";
 
 const AddressInsert = (props) => {
   // 주소 검색 api URL
@@ -99,21 +100,7 @@ const AddressInsert = (props) => {
                 width: "160px",
               }}
             />
-            <button
-              onClick={PostSearchClick}
-              style={{
-                backgroundColor: "white",
-                width: "120px",
-                height: "35px",
-                border: "3px solid orange",
-                borderRadius: "2em",
-                cursor: "pointer",
-                fontFamily: "GmarketSansMedium",
-                marginBottom: "20px",
-              }}
-            >
-              우편번호 찾기
-            </button>
+            <AdrSearchBtn onClick={PostSearchClick}>우편번호 찾기</AdrSearchBtn>
           </div>
           <input
             className="adrInput2"

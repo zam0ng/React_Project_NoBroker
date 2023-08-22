@@ -16,7 +16,7 @@ export const LoginBox = styled.div`
   }
 
   .LoginBtns {
-    width: 300px;
+    width: 380px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;

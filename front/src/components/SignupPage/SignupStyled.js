@@ -33,6 +33,11 @@ export const SignupBox = styled.div`
     border-radius: 2em;
     cursor: pointer;
   }
+
+  #inputBtn:hover,
+  #inputBtn2:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 `;
 
 // 회원가입 최상단 메인 타이틀
@@ -149,7 +154,7 @@ export const UserInfoBox2 = styled.div`
     display: flex;
   }
 
-  & p{
+  & p {
     margin: 40px;
   }
 `;
@@ -308,13 +313,19 @@ export const BusiSelectBox = styled.div`
 export const UserAdd = styled.button`
   width: 200px;
   height: 50px;
-  background-color: orange;
+  background-color: #8b8b8b;
   font-size: 30px;
   font-weight: 600;
   border-radius: 2em;
-  border: 5px solid rgb(184, 119, 0);
+  /* border: 5px solid rgb(184, 119, 0); */
+  color: white;
+  border: none;
   margin-bottom: 100px;
   cursor: pointer;
+
+  &:hover {
+    background-color: #ffa500;
+  }
 `;
 
 export const TypeTextTitle = styled.div`
@@ -323,4 +334,18 @@ export const TypeTextTitle = styled.div`
   font-size: 25px;
   border-bottom: 3px solid;
   margin-bottom: 20px;
+`;
+
+export const AdrSearchBtn = styled.button`
+  background-color: white;
+  width: 120px;
+  height: 35px;
+  border: 3px solid orange;
+  border-radius: 2em;
+  cursor: pointer;
+  font-family: "GmarketSansMedium";
+  margin-bottom: 20px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 `;
