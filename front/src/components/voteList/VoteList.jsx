@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { BigImg, Estate, List, ListDiv, EstateNum, Title, Road, ContentDiv, VoteDate, ChartDiv, Chart, Bar } from './votelist.styled';
+import { serverUrl } from 'components/serverURL';
 
 const VoteList = ({ votable }) => {
     console.log("voteable", votable);
@@ -40,7 +41,7 @@ const VoteList = ({ votable }) => {
                     <EstateNum>{index + 1}</EstateNum>
                     <Estate onClick={() => { nav(`/vote/${el.id}`) }}>
                         {/* <EstateNum>{index + 1}</EstateNum> */}
-                        <BigImg src={el.img_1 && el.img_1 != "" ? "http://localhost:8080/estate_imgs/" + el.img_1?.substr(12) : 'http://localhost:8080/estate_imgs/null.png'} />
+                        <BigImg src={el.img_1 && el.img_1 != "" ? `${serverUrl}estate_imgs/` + el.img_1?.substr(12) : `${serverUrl}estate_imgs/null.png`} />
 
                         <ContentDiv>
                             {/* <Title>매매 {won(el.balance + el.deposit)}</Title> */}

@@ -82,7 +82,7 @@ exports.getEstate = async (req, res) => {
       const voteCount = await Vote.count({where : {real_estate_id : estate.dataValues.id}});
       estate.dataValues.voteCount = voteCount;
       estate.dataValues.maxVote = Math.floor(estate.dataValues.deposit / 10000000);
-      return estate;
+      return estate
     });
 
     votable = await Promise.all(promises);

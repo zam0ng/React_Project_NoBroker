@@ -3,6 +3,7 @@ import axios from '../../Axios'
 import { useMutation, useQuery } from 'react-query';
 import { LikeBtn, BuyBtn, Title, Content, ContentDiv, LikeBtnDiv, UserImg, Divider } from './detailBuy.styled';
 import { detail_heart, detail_emptyheart, userimg } from '../../img/index'
+import { serverUrl } from 'components/serverURL';
 import { useAuth } from 'AuthContext';
 
 const DetailBuy = ({estate, seller, like, queryClient}) => {
@@ -126,14 +127,14 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
         <div>
         {/* 구매 가능 상태 아니면 회색 버튼 */}
         <div style={{display : 'flex', justifyContent: 'center'}}>
-            {estate.state==0 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"orange"}>신청하기</BuyBtn> : <BuyBtn onClick={clickBuyBtn} backgroundColor = {"grey"}>구매 불가</BuyBtn>}
+            {estate.state==0 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"orange"}>신청하기</BuyBtn> : <BuyBtn onClick={clickBuyBtn} backgroundColor = {"gray"}>구매 불가</BuyBtn>}
         </div>
 
         <Divider />
 
         <h2 style={{marginTop:"40px"}}>판매자 정보</h2>
         {seller.fake_count!=0 ?  <p>해당 판매자는 허위 매물 <span style={{color:"red"}}>{seller.fake_count}</span>회 올린 적이 있습니다.</p> : <></>}
-        <UserImg src={seller.user_img!="userimg" || !seller.user_img ? "http://localhost:8080/user_imgs/"+seller.user_img?.split("\\")[2] : userimg} alt="유저 이미지" />
+        <UserImg src={seller.user_img!="userimg" || !seller.user_img ? `${serverUrl}user_imgs/`+seller.user_img?.split("\\")[2] : userimg} alt="유저 이미지" />
         <ContentDiv><Title>이름</Title> <Content>{seller.user_name}</Content></ContentDiv>
         <ContentDiv><Title>연락처</Title> <Content>{seller.phone}</Content></ContentDiv>
 

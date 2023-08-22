@@ -5,6 +5,7 @@ import { useMutation } from "react-query";
 import { Comment, Recomment, InputDiv, CommentInput, InsertBtn, H1, CommentDiv, UserImg, Date } from "./detailComment.styled"
 import { detail_arrow, userimg } from "../../img";
 import { useNavigate } from "react-router-dom";
+import { serverUrl } from "components/serverURL";
 import { useAuth } from "AuthContext";
 
 const DetailComment = ({ estateId, comment, queryClient }) => {
@@ -137,7 +138,7 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
             <UserImg
               src={
                 el.User.user_img != "userimg" || !el.User.user_img
-                  ? "http://localhost:8080/user_imgs/" +
+                  ? `${serverUrl}user_imgs/` +
                   el.User.user_img?.split("\\")[2]
                   : userimg
               }
@@ -161,7 +162,7 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
                   <UserImg
                     src={
                       re.User.user_img != "userimg" || !re.User.user_img
-                        ? "http://localhost:8080/user_imgs/" +
+                        ? `${serverUrl}user_imgs/` +
                         re.User.user_img?.split("\\")[2]
                         : userimg
                     }

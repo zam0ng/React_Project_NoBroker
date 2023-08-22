@@ -79,7 +79,6 @@ const VoteBtn = ({ estate, setIsVoted }) => {
   const { data, isLoading } = useQuery(["vote", estate.id], getUserVote);
 
   const render = (data) => {
-    console.log("DATA : ",data);
 
     return <>{
       !data?.certificate_user
