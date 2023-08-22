@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { AuthProvider } from './AuthContext';
 
+
 const queryClient = new QueryClient();
 
 
@@ -20,10 +21,23 @@ root.render(
 
     <AuthProvider>
 
+
     <QueryClientProvider client={queryClient} >
 
         {/* devtools */}
-        <ReactQueryDevtools initialIsOpen={true} />
+
+        {/* 리액트 쿼리 아이콘 없애기
+            1) initialIsOpen={false}
+            2) style 에서 display 없애기  */}
+        <ReactQueryDevtools initialIsOpen={false} />
+        <style>
+            {`
+                .ReactQueryDevtools {
+                    display: none !important;
+                }
+            `}
+        </style>
+
         <BrowserRouter>
 
             <App />
@@ -31,9 +45,8 @@ root.render(
         </BrowserRouter>
 
     </QueryClientProvider>
+
     </AuthProvider>
-
-
 );
 
 reportWebVitals();

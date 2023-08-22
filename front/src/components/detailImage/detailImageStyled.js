@@ -72,12 +72,24 @@ export const ImgDiv = styled.div`
     /* background-color: grey; */
 
     display: flex;
-
+    position: relative;
     justify-content: center;
     align-items: center;
 
     & button {
         height: 20px;
+    }
+
+    & ${ImgBtn}:nth-child(1) {
+        position: absolute;
+        left: 15px;
+        z-index: 1;
+    }
+
+    & ${ImgBtn}:nth-child(3) {
+        position: absolute;
+        right: 15px;
+        z-index: 1;
     }
 `
 

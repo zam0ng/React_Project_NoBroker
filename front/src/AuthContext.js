@@ -4,24 +4,24 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem("login")));
-  const [isCertificate, setIsCertificate] = useState(JSON.parse(localStorage.getItem("certificate")));
+  const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(window.sessionStorage.getItem("login")));
+  const [isCertificate, setIsCertificate] = useState(JSON.parse(window.sessionStorage.getItem("certificate")));
 
   const login = () => {
     setIsLoggedIn(true);
-    localStorage.setItem("login", true);
+    window.sessionStorage.setItem("login", true);
 };
 
   const logout = () => {
     setIsLoggedIn(false);
     setIsCertificate(false);
-    localStorage.setItem("login", false);
-    localStorage.setItem("certificate", false);
+    window.sessionStorage.setItem("login", false);
+    window.sessionStorage.setItem("certificate", false);
   };
 
   const certificate = (certificate) => {
     setIsCertificate(certificate);
-    localStorage.setItem("certificate", certificate)
+    window.sessionStorage.setItem("certificate", certificate)
   }
 
   return (

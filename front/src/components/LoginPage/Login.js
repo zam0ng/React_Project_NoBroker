@@ -28,6 +28,7 @@ const Login = () => {
       .post("/login", { ID, PW }, { withCredentials: true })
       .then((e) => {
         console.log("로그인 성공 목록으로", e.data.message);
+        console.log("로그인", e.data.message)
         if (e.data.message == "로그인 완료") {
           login();
           if (e.data.certificate_user == 0) {
