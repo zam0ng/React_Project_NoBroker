@@ -9,13 +9,9 @@ import Transaciton from './transactiontab/Transaciton'
 import Vote from './votetab/Vote'
 import axios from '../../Axios'
 import MypageIslogin from '../insertPage/isLogined/MypageIslogin'
-<<<<<<< HEAD
 import NavHeader from 'components/navbar/NavHeader'
 import Footer from 'components/footer/Footer'
-import { useQuery } from 'react-query'
-=======
 import { useMutation, useQuery, useQueryClient } from 'react-query'
->>>>>>> j
 export const MypageGlobal = createContext();
 const Mypage = () => {
     const [isActive, setisActive] = useState(false);
@@ -24,12 +20,12 @@ const Mypage = () => {
     const [updatephone,setupdatephone] = useState("");
     const [updateaddress,setupdateaddress] = useState("");
     const [updateImg,setupdateImg] = useState("");
-    
+
     const selectComponents= (params)=>{
         setComponentsValue(params);
 
     }
-    
+
     useEffect(()=>{
         if(isActive==true){
             document.body.style.overflow="hidden";
@@ -44,8 +40,8 @@ const Mypage = () => {
     const getUserInfo = async () => {
         const response = await axios.get('/mypage/mypageinfo');
         return response.data;
-      };  
-  
+      };
+
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
     // transaction 테이블에서 내가 판매한, 구매한 내역 가져오기
@@ -80,22 +76,22 @@ const Mypage = () => {
         form.append('userphone',updatephone);
         form.append('useraddress',updateaddress);
         form.append('upload',updateImg);
-        
+
         const data = await axios.post('http://localhost:8080/mypage/update',form,{
             headers:{
 
                 "Content-Type" : "multipart/form-data",
             },
             withCredentials : true,
-            
+
         })
         setisActive(!isActive);
 
         return data.data;
-    } 
+    }
 
     const { data: MyPageUserInfo, isLoading : userisLoading, error : usererror } = useQuery('users', getUserInfo);
-    
+
     const {data: getmyregisterinfo,isLoading:getmyregisterinfoLoading, error : getmyregisterinfoError} = useQuery('getmyregister',getMyRegisterInfo);
     // console.log(getmyregisterinfo);
 
@@ -103,7 +99,7 @@ const Mypage = () => {
     // console.log(updatedata);
     const ta = (updatedata?.ssn)?.split("-");
     const ImgUrl = (updatedata?.user_img)?.split("\\")[2];
-    
+
 
     const { data: transactionComdata, isLoading : transisLoading, error : transerror } = useQuery('transCom', transactionCom);
     // console.log(transactionComdata);
@@ -119,11 +115,11 @@ const Mypage = () => {
 
             }
         }
-    }) 
+    })
     const updateHandler =async()=>{
         mutation.mutate();
     }
-    
+
 
     if (userisLoading || getmyregisterinfoLoading || updatedataLoading) {
         return <div>로딩 중...</div>;
@@ -132,7 +128,7 @@ const Mypage = () => {
     if (usererror) {
         return <div>오류: {usererror.message}</div>;
     }
-    
+
     if (getmyregisterinfoError) {
         return <div>오류: {getmyregisterinfoError.message}</div>;
     }
@@ -165,7 +161,7 @@ const Mypage = () => {
         case 2:
             fakeInfoMsg = " ❗ 누적된 경고2회, 1회 추가 경고 시 판매글 작성 불가."
             break;
-    
+
         default:
             fakeInfoMsg = " ⛔ 누적된 경고3회, 판매글 작성 불가"
 
@@ -182,16 +178,16 @@ const Mypage = () => {
         profileImg.innerHTML = '';
         if(input.files){
 
-            let reader; 
+            let reader;
             let file = input.files[0];
             setupdateImg(input.files[0]);
-            
+
             reader = new FileReader();
             reader.onload =function(e){
                 console.log("e.target--------------",e.target)
                 let img = document.createElement('img');
                 img.src = e.target.result;
-                
+
                 profileImg.appendChild(img);
             }
             reader.readAsDataURL(file);
@@ -199,7 +195,7 @@ const Mypage = () => {
         }
     }
     const onChangeHandler =(e)=>{
-        const fieldName = e.target.name; 
+        const fieldName = e.target.name;
         const fieldValue = e.target.value;
 
         const labelElement = e.target.previousElementSibling;
@@ -225,9 +221,9 @@ const Mypage = () => {
         // `${fieldName} changed to ${fieldValue}`
     }
 
-    
 
-    
+
+
   return (
     <MypageGlobal.Provider value={obj}>
         <NavHeader></NavHeader>
@@ -309,13 +305,9 @@ const Mypage = () => {
 
         </MypageContainer>
 
-        
+
     </MypageAlldiv>
-<<<<<<< HEAD
     <Footer></Footer>
-=======
-    
->>>>>>> j
     </MypageGlobal.Provider>
   )
 }
