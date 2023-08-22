@@ -50,6 +50,9 @@
 
     const { isLoggedIn, isCertificate } = useAuth();
 
+    const [estateImgUrl , setEstateImgUrl] = useState()
+    const [estateYear , setEstateYear] = useState()
+
 
     // 좋아요 버튼 추가 
     const addLikeBtnMutation = useMutation( async(likeForm) => {
@@ -89,11 +92,7 @@
           queryClient.invalidateQueries('filterTradableEstateData');  // ⭐⭐ filterTradableEstateData 키를 가진 usequery 를 재시작 해서, 새로고침없이 1) 데이터 받고 2) 그에 따라 하트 색깔 채우기
           queryClient.refetchQueries('filterTradableEstateData')    // ⭐⭐ 무효화된 쿼리를 다시 실행해서, UI 즉시 업데이트 | 그리고 맨 위에 이렇게 import 해줘야 함, 나의 경우 props 전달로는 안 됨 | const queryClient = useQueryClient(); // ✅✅ 이렇게 수정
         
-        } else {
-          console.log("찜 추가 과정에서 오류 발생📛 " , data);
-          alert("찜 삭제 오류 발생")
-        }
-      }
+        }} 
     }, {
       onError : (error) => {
         console.log(error)
@@ -108,15 +107,18 @@
     } , [item.id])
     
 
-    const handleLikeBtn = () => {
+    const handleLikeBtn = (index) => {
 
+      // console.log("좋아요 버튼 클릭☝☝" , index)
       // 만약, 로그인 되었으면, 나오게 하고, 로그아웃 되면, 안 되게 하기 ✅✅ 
       if (!isLoggedIn) {
+        console.log("isLoggedIn🚀🚀" , isLoggedIn)
         navigate("/login")
+        return 
       }
 
-      // 클릭된 유저가 없으면
-      if(estateLike[0] == null) {
+      // 클릭된 유저가 없으면 |
+      if(estateLike && estateLike[0] == null) {
         addLikeBtnMutation.mutate({real_estate_id : estateID})
       } else {
         delLikeBtnMutation.mutate({real_estate_id : estateID})
@@ -125,29 +127,49 @@
       console.log("클릭된 estateID" , estateID)
       // user_id : 이건 controller 에서 미들웨어로 받을거고 
       // real_estate_id : 이걸 여기에서 받아서 넘길 것 임
-
-      
-    }
     
+    }
+
+    useEffect( () => {
+      setEstateImgUrl(item.img_1);
+      // console.log("estateImgUrl" , estateImgUrl)
+    },[] )
+
+
+    useEffect( () => {
+      // console.log("item.built_year" , item.year_built)
+
+
+      if( 2018 <= item.year_built && item.year_built <= 2023) {
+        setEstateYear("신축(5년이내), ")
+      } else if (2013 <= item.year_built && item.year_built < 2018) {
+        setEstateYear("준신축(10년이내), ")
+      } else {
+        setEstateYear("")
+      }
+
+    } , [])
+    
+    useEffect( () => {
+      // console.log("estateYear" , estateYear)
+
+    } , [estateYear])
 
 
     return (
 
       <CardItemWrapper>
-        <CardItem>
+        <CardItem  >
 
           <ImgWrap>
 
-            <ImgThumbnail>
-
-              {/* 이렇게 되겠지👇 */}
-              {/* <img src={estateImg} />  */}
-              <img src={"https://d1774jszgerdmk.cloudfront.net/512/e4356ef7-5d88-4976-b422-fef2393c2551-2"} /> 
+            <ImgThumbnail>  
+              <img src={`http://localhost:8080/estate_imgs/${estateImgUrl}`} />
             </ImgThumbnail>
 
-            <LikeBtnWrap onClick={ handleLikeBtn } >
+            <LikeBtnWrap onClick={ () => handleLikeBtn(index) } >
               {
-                estateLike[0] != null ? <img src={detail_heart}></img> : <img src={detail_emptyheart} ></img>
+                estateLike && estateLike[0] != null ? <img src={detail_heart}></img> : <img src={detail_emptyheart} ></img>
               }
               
             </LikeBtnWrap>
@@ -155,11 +177,13 @@
           </ImgWrap>
 
 
-          <InfoWrap>
+          <InfoWrap onClick={ () => navigate(`/detail/${estateID}`)} >
 
             {/* deposit , 거래 유형 데이터를 가져와야함*/}
             <HeaderPrice> 
-              매매 {`${estatePrice}`}
+              매매  {`${Math.floor(estatePrice/10000000)}억`} 
+              {estatePrice % 100000000 === 0 ? " " : `${Math.floor((estatePrice % 100000000) / 10000)}`} 
+
 
             </HeaderPrice>  
               
@@ -174,7 +198,8 @@
               {/* m2 이거 변환해야 함 */}
               {/* const squareMeter = "m\u00B2"; */}
             <RoomDesc> 
-              신축(5년이내) , {`${estateArea}m2(수정)`} 
+              {`${estateYear}`} 
+              {`${estateArea}m²`}{`(${Math.floor(estateArea/3)}평)`} 
             </RoomDesc>
 
             {/* 특징 : 1) 지하철 3분 거리 2) 공원근처 | 구글 맵에서 계산해서 보여주면 좋을거 같음 ✅ */}
@@ -184,10 +209,9 @@
               {/* 추가 가능 한 것 : 남은 거래 기간 / 댓글 개수 / SNS스럽게 업데이트 해봐도 좋을 듯! */}
 
             {/* 누가 내놨는지 보여주기 : 1) 일반유저(다방은 방주인이라고 함), 2) 중개인 */}
-            <SellerType>
-              <span> 중개인 </span>
-              <span> 방주인 </span>
-            </SellerType>
+              <SellerType className={item.User.certificate_user == 0 ? "agent" : "owner"} >
+                { item.User.certificate_user == 0 ? "중개인" : "방주인" }     {/* real_setate 테이블에서 seller 의 User 테이블의 certificate_user == 0 이면 -> 중개인 |  */}
+              </SellerType>
 
           </InfoWrap>
 

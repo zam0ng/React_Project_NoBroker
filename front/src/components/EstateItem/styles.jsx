@@ -10,6 +10,7 @@ export const CardItemWrapper = styled.div`
 `
 
 export const CardItem = styled.div`
+
     /* background-color : rosybrown; */
     width : 100%;
     padding : 16px 15px;
@@ -111,8 +112,7 @@ export const SellerType = styled.div`
 
     display : flex;
 
-
-    > span:nth-child(1) {
+    &.agent {
         display : flex;
         justify-content : center;
         align-items : center;
@@ -122,10 +122,11 @@ export const SellerType = styled.div`
         color : rgb(248, 118, 128);
         border : 1px solid rgb(248, 118, 128);
         letter-spacing : -1px;
+        margin-left : -2px;
 
     }
     
-    > span:nth-child(2) {
+    &.owner {
         margin-left : 5px;
         display : flex;
         justify-content : center;
@@ -136,6 +137,7 @@ export const SellerType = styled.div`
         color : rgb(139, 124, 253);
         border : 1px solid rgb(139, 124, 253);
         letter-spacing : -1px;
+        margin-left : -2px;
 
     }
 

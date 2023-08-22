@@ -22,6 +22,7 @@ import {
     SearchContainer,
     SubHeaderWrapper,
     SearchBarContainer,
+    DefaultStyle,
 } from 'components/PAC_Map/styles';
 
 import FilterCheckBoxModal from 'components/FilterCheckBoxModal/index';
@@ -80,9 +81,9 @@ const [isAreaModalOpen , setIsAreaModalOpen] = useState(false)
 const [arrMarker, setArrMarker] = useState([])        // 찍혀야 하는 마커들
 const [tradableData  , setTradableData] = useState([])      // state 기준으로 뽑은 거래가능한 데이터 | 현재는 테스트 버전만 뽑음
 const [checkboxValue , setCheckboxValue] = useState([])     // 배열 = 여러값을 '동시에' 담을 수 있음 -> so, 중복체크 구현 가능
-const [priceRangeValue , setPriceRangeValue] = useState([0, 1000000])
+const [priceRangeValue , setPriceRangeValue] = useState([0, 100000000000])
 const [builtYearValue , setBuiltYearValue] = useState()     // 기본값이 필요하려나
-const [areaRangeValue , setAreaRangeValue] = useState([0,13500000])
+const [areaRangeValue , setAreaRangeValue] = useState([0, 135000000000000])
 
 const [activeModal, setActiveModal] = useState()
 
@@ -91,6 +92,7 @@ const [ currentClusterer , setCurrentClusterer ] = useState(null)
 // const [ newMarkers , setNewMarkers ] = useState([])
 // let currentClusterer = null; // 현재 활성화된 클러스터를 저장하기 위한 변수
 
+const [myLikeClickedList , setMyLikeClickedList] = useState(false)
 
 
 // 데이터 필터링 handler 함수
@@ -165,24 +167,40 @@ const [ currentClusterer , setCurrentClusterer ] = useState(null)
     // area 핸들링
     const handleAreaRangeBox = (inputValue) => {
         setAreaRangeValue(inputValue)
-        console.log("areaRangeValue" , inputValue)
+        console.log("areaRangeValue👏👏" , inputValue)
     }
 
 
-// modal handler | 이게 먹히려나
-const handleModalToggle = useCallback((modalName) => {
-    console.log("어떤 모달 버튼 클릭 확인" , modalName)
-    console.log("현재 activaModal 확인 1" , activeModal)
-    // 기존에 열려있는게 == 클릭된 모달이름이랑 같으면 -> 모달 닫는다.
-    if(modalName === activeModal){
-        setActiveModal(null);
-        console.log("현재 activaModal 확인 2" , activeModal)
-    } else {
-        // 기존 열린게 == 클릭된 모달이랑 다르면 -> 모달 연다.
-        setActiveModal(modalName)
-        console.log("현재 activaModal 확인 3" , activeModal)
+    // 내가 찜한 방 보기
+    const handleMyLikeClickedList = () => {
+        setMyLikeClickedList(true)
+        console.log("handleMyLikeClickedList 찜한방 true 클릭 🚀🚀🚀" , myLikeClickedList)
     }
-    } , [activeModal])
+
+    // 전체 매물 보기
+    const handleAllEstateList = () => {
+        setMyLikeClickedList(false)
+        console.log("handleAllEstateList 찜한방 false 클릭🚀🚀🚀" , myLikeClickedList)
+    }
+
+
+
+    // modal handler | 이게 먹히려나
+    const handleModalToggle = useCallback((modalName) => {
+        console.log("어떤 모달 버튼 클릭 확인" , modalName)
+        console.log("현재 activaModal 확인 1" , activeModal)
+        // 기존에 열려있는게 == 클릭된 모달이름이랑 같으면 -> 모달 닫는다.
+        if(modalName === activeModal){
+            setActiveModal(null);
+            console.log("현재 activaModal 확인 2" , activeModal)
+        } else {
+            // 기존 열린게 == 클릭된 모달이랑 다르면 -> 모달 연다.
+            setActiveModal(modalName)
+            console.log("현재 activaModal 확인 3" , activeModal)
+        }
+        } , [activeModal])
+
+
 
 
 // + - 버튼 나오게 하기 😥😥😥
@@ -354,10 +372,16 @@ const createZoomControl = ( map ) => {
                 params.push(`areaRangeValue=${areaRangeValue}`)
             }
 
+            // // 내가 찜한 것만 보게 하기
+            console.log("myLikeClickedList🔮🔮🔮" , myLikeClickedList)
+            if(myLikeClickedList == true){
+                params.push(`myLikeClickedList=${myLikeClickedList}`)
+            }
+
             if(params.length > 0) {
                 url += '?' + params.join('&');
             }
-
+            console.log("⭐서버로 보내는 url : " , url)
 
             const response = await axios.get(url , {
                 withCredentials : true,
@@ -372,7 +396,7 @@ const createZoomControl = ( map ) => {
         }
 
     // api 함수 호출해서 데이터 가져오기 | usequery 사용
-    const { data , error , isLoading } = useQuery( ['filterTradableEstateData' , priceRangeValue ,checkboxValue , builtYearValue , areaRangeValue]
+    const { data , error , isLoading } = useQuery( ['filterTradableEstateData' , priceRangeValue , checkboxValue , builtYearValue , areaRangeValue , myLikeClickedList]
     , fetchFilterTradableEstateData , {
         // enabled : !!checkboxValue //  [해석] 이게 활성화 되면 -> checkboxValue 에 값이 있을 때만 값이 가져와짐
     })
@@ -532,13 +556,12 @@ const createZoomControl = ( map ) => {
                 value : item.deposit    // 이게 클러스터링 계산에 들어감. 유형은 숫자
             })
 
-                    // 임시. 정규표현식으로 앞자리만 가져오기 | 완전 임시 📛📛📛
-                        const tempDeposit = String(item.deposit)
-                        // console.log(tempDeposit)
-                        const match = tempDeposit.match(/^\d+/);
-                            // console.log("정규표현식" ,match) // match == 1000 // console.log("정규표현식" ,match[0])  // const number = match ? match[0]: "";
-
-                        const contentString = `<div> ${match[0][0]} 억 </div>`;
+                    // 임시. 정규표현식으로 앞자리만 가져오기 | 😥😥
+                        const tempDeposit = item.deposit
+                        const yuk = Math.floor(tempDeposit/100000000)
+                        const chenMan = Math.floor((tempDeposit%100000000)/100000000)
+                        const contentString = `<div> ${yuk}.${chenMan}억</div>`
+                        // console.log("단위변환" ,contentString)
 
                         // marker 가 만들어질 때 마다 info window 생성
                         const infoWindow = new window.google.maps.InfoWindow();
@@ -550,10 +573,7 @@ const createZoomControl = ( map ) => {
                             shouldFocus : false
                         })
 
-            newMarkers.push(tradableMarker)
-            // ❓❓❓ 이렇게 해도, currentMarkers 에 저장되는거 아닌가 ❓❓❓
-            // setCurrentMarkers(prevState => [...prevState ,tradableMarker] );    // '방금 만들어진 마커' 를 'currentMarker' 에 저장 | ⭐⭐ -> 이게 있어야, 필터 버튼에 즉각 반응
-            // setNewMarkers(prevState => [...prevState, currentMarkers])  //
+            newMarkers.push(tradableMarker)  // ❓❓❓ 이렇게 해도, currentMarkers 에 저장되는거 아닌가 ❓❓❓
         })
 
         setCurrentMarkers(prevState => [...prevState, ...newMarkers]);
@@ -579,7 +599,12 @@ const createZoomControl = ( map ) => {
 
 return (
     <>
+    {/* 목차 */}
       <NavHeader />
+
+    {/* 본문 */}
+        <DefaultStyle>
+
             <SubHeaderWrapper>
 
                 <SearchContainer>
@@ -593,10 +618,11 @@ return (
                                 ref={autoCompleteRef}
                                 placeholder="서울대입구 원룸"
                                 type="text"
-                                style={{width : "100%" , marginLeft : '20px' , marginRight : '20px'}}
+                                style={{width : "100%" , marginLeft : '20px' , marginRight : '20px' , border : 'none' , backgroundColor : 'transparent'}}
                             />
 
-                            <SearchBarButton />
+                            {/* 매물 vs 찜한방 */}
+                            <SearchBarButton handleAllEstateList={handleAllEstateList}  handleMyLikeClickedList={handleMyLikeClickedList} />
 
                     </SearchBarContainer>
 
@@ -654,6 +680,7 @@ return (
                             activeModal == "area" && <AreaRangeModal
                                                 // title={"range 모달 | 집 넓이 "}
                                                 left = {"235px" }
+                                                value = {areaRangeValue}
                                                 handleAreaRangeBox = {handleAreaRangeBox}
                                                 />
                         }
@@ -666,9 +693,15 @@ return (
                     {
                         tradableData.map( (item, index) => {
                             return (
-                                <ItemList key = {index}  isLoggedIn = {isLoggedIn} queryClient={queryClient} className="ItemList" item={item} index={index} />
-                            )
-                        } )
+                                <ItemList
+                                    key = {index}
+                                    isLoggedIn = {isLoggedIn}
+                                    queryClient={queryClient}
+                                    className="ItemList"
+                                    item={item}
+                                    index={index}
+                                    />
+                        ) } )
                     }
                 </ContentWrapper>
 
@@ -677,12 +710,14 @@ return (
                     <div id='map' ref={mapRef} style={{ height: '100vh', width: '100%' }}  />
                     <CreateZoomControl map={map} />
 
-                </PAC_Map_Wrapper>
+                    </PAC_Map_Wrapper>
             </MainContentWrap>
+
+        </DefaultStyle>
         <Footer></Footer>
     </>
-)
-}
+    )
+    }
 
     export default PAC_Map
 

@@ -9,7 +9,6 @@ exports.estateAgentApproval = async (req, res) => {
     // mutate 로 서버에서 요청 보낸 것 받기
     const { user_id } = req.body;
 
-    
     try {
         await User.update(
             {
