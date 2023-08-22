@@ -58,7 +58,7 @@ exports.UserAdd = async (req, res) => {
     // 일반 회원이면
     else {
       await User.create({
-        user_img: "imgs/User_Profile.png",
+        user_img: "imgs/userImg/User_Profile.png",
         user_id: user_id,
         password: hash,
         role: false,

@@ -134,7 +134,7 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
 
         <h2 style={{marginTop:"40px"}}>판매자 정보</h2>
         {seller.fake_count!=0 ?  <p>해당 판매자는 허위 매물 <span style={{color:"red"}}>{seller.fake_count}</span>회 올린 적이 있습니다.</p> : <></>}
-        <UserImg src={seller.user_img!="userimg" || !seller.user_img ? `${serverUrl}user_imgs/`+seller.user_img?.split("\\")[2] : userimg} alt="유저 이미지" />
+        <UserImg src={seller.user_img ? `${serverUrl}user_imgs/`+seller.user_img?.substr(13) : `${serverUrl}user_imgs/User_Profile.png`} alt="유저 이미지" />
         <ContentDiv><Title>이름</Title> <Content>{seller.user_name}</Content></ContentDiv>
         <ContentDiv><Title>연락처</Title> <Content>{seller.phone}</Content></ContentDiv>
 
