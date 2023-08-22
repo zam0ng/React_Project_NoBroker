@@ -30,6 +30,7 @@ export const SignupBox = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 2em;
+    cursor: pointer;
   }
 `;
 
@@ -50,7 +51,7 @@ export const SignupSubTitle = styled.div`
 
 // 유저 기본 정보를 담을 박스영역
 export const UserInfoBox = styled.div`
-  width: 100%;
+  width: 80%;
   /* border: 1px solid chocolate; */
   margin-bottom: 80px;
   box-sizing: border-box;
@@ -60,6 +61,7 @@ export const UserInfoBox = styled.div`
 
   .infobox {
     width: 80%;
+    height: 550px;
     margin: 50px;
     border: 5px solid #ffca69;
     border-radius: 40px;
@@ -67,12 +69,13 @@ export const UserInfoBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 
     .subtitle {
-      font-size: 25px;
+      font-size: 35px;
       font-weight: 600;
       margin-top: -40px;
-      width: 120px;
+      width: 180px;
       background-color: #fcfbf1;
     }
   }
@@ -121,7 +124,7 @@ export const UserInfoBox = styled.div`
 `;
 
 export const UserInfoBox2 = styled.div`
-  width: 95%;
+  width: 75%;
   margin-bottom: 80px;
   box-sizing: border-box;
   display: flex;
@@ -131,17 +134,17 @@ export const UserInfoBox2 = styled.div`
   border-radius: 40px;
 
   .subtitle {
-    font-size: 25px;
-      font-weight: 600;
-      margin-top: -20px;
-      width: 200px;
-      background-color: #fcfbf1;
+    font-size: 35px;
+    font-weight: 600;
+    margin-top: -20px;
+    width: 280px;
+    background-color: #fcfbf1;
   }
 `;
 
 // 유저 인풋의 라벨을 적을 영역
 export const UserLabel = styled.div`
-  width: 200px;
+  width: 120px;
   font-weight: bold;
   /* border: 1px solid; */
   display: flex;
@@ -186,8 +189,11 @@ export const NumInput = styled.input`
 // 사업자정보 입력 영역을 기입할 박스
 export const BusinessBox = styled.div`
   width: 70%;
-  height: 100px;
-  border: 1px solid;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
 
   .nobisbox,
   .imbisbox {
@@ -197,30 +203,84 @@ export const BusinessBox = styled.div`
   .imbisbox.pop {
     display: block;
   }
+
+  #BisSelec {
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 10px;
+  }
+
+  & span{
+    font-weight: bold;
+  }
 `;
 
 // 사업자정보 입력 여부를 결정할 선택영역 박스
 export const BusiSelectBoxs = styled.div`
   width: 70%;
   height: 200px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   margin: 50px;
+
+  #nobis.pop,
+  #imbis.pop {
+    border: 8px solid orange;
+  }
 `;
 
 // 사업자정보 입력 여부를 결정할 각 선택영역 (입력, 안입력)
 export const BusiSelectBox = styled.div`
-  width: 30%;
+  width: 20%;
   height: 150px;
-  border: 1px solid green;
+  border: 8px solid gray;
+  border-radius: 30px;
   cursor: pointer;
+  position: relative;
+  background-color: white;
+
+  #checkimg1,
+  #checkimg2 {
+    /* border: 1px solid; */
+    width: 60px;
+    position: absolute;
+    top: -35px;
+    left: 10%;
+    display: none;
+  }
+
+  #checkimg1.pop,
+  #checkimg2.pop {
+    display: block;
+  }
+
+  #userSimg1,
+  #userSimg2 {
+    width: 120px;
+  }
 `;
 
 export const UserAdd = styled.button`
-  width: 100px;
+  width: 200px;
   height: 50px;
   background-color: orange;
+  font-size: 30px;
+  font-weight: 600;
+  border-radius: 2em;
+  border: 5px solid rgb(184, 119, 0);
+  margin-bottom: 100px;
+  cursor: pointer;
+`;
+
+export const TypeTextTitle = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 25px;
+  border-bottom: 3px solid;
+  margin-bottom: 20px;
 `;

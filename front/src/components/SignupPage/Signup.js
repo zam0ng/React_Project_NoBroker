@@ -18,10 +18,12 @@ import {
   BigBox,
   SealInput,
   UserInfoBox2,
+  TypeTextTitle
 } from "./SignupStyled";
 import axios from "../../Axios";
 import { useNavigate } from "react-router-dom";
-
+import { CheckImg, UserSelec1, UserSelec2 } from "../../img";
+import Footer from "components/footer/Footer";
 const Signup = () => {
   const nav = useNavigate();
 
@@ -260,14 +262,30 @@ const Signup = () => {
   // ------- 사업자 회원 선택 함수 ----------------------
   const BisClick = (e) => {
     const selec = e.target.id;
+    console.log("selec", selec);
+    // 각 타입별 설명박스
     const box1 = document.querySelector(".nobisbox");
     const box2 = document.querySelector(".imbisbox");
-    if (selec == "nobis") {
+    // 각 회원타입 선택박스
+    const selecNoBis = document.getElementById("nobis");
+    const selecImBis = document.getElementById("imbis");
+    // 박스위에 체크이미지
+    const checked1 = document.getElementById("checkimg1");
+    const checked2 = document.getElementById("checkimg2");
+    if (selec == "nobis" || selec == "userSimg1") {
+      checked1.classList.add("pop");
+      checked2.classList.remove("pop");
       box1.classList.add("pop");
+      selecNoBis.classList.add("pop");
+      selecImBis.classList.remove("pop");
       box2.classList.remove("pop");
       setUserRole(false);
-    } else if (selec == "imbis") {
+    } else if (selec == "imbis" || selec == "userSimg2") {
+      checked1.classList.remove("pop");
+      checked2.classList.add("pop");
       box1.classList.remove("pop");
+      selecNoBis.classList.remove("pop");
+      selecImBis.classList.add("pop");
       box2.classList.add("pop");
       setUserRole(true);
     }
@@ -393,29 +411,53 @@ const Signup = () => {
           {/* <SignupSubTitle>유저정보</SignupSubTitle> */}
           <div className="infobox">
             <div className="subtitle">계정정보</div>
-            <div className="userbox" style={{ marginTop: "50px" }}>
-              <UserLabel>유저 ID</UserLabel>
-              <UserInput onChange={UserIdChange}></UserInput>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <div className="userbox" style={{ marginTop: "10px" }}>
+                <UserLabel>유저 ID</UserLabel>
+                <UserInput onChange={UserIdChange}></UserInput>
+              </div>
+              <p id="IDtext" style={{ margin: "10px" }}></p>
             </div>
-            <p id="IDtext"></p>
-            <div className="userbox">
-              <UserLabel>유저 PW</UserLabel>
-              <UserInput
-                id="pass1"
-                type="password"
-                onChange={UserPWChange}
-              ></UserInput>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <div className="userbox">
+                <UserLabel>유저 PW</UserLabel>
+                <UserInput
+                  id="pass1"
+                  type="password"
+                  onChange={UserPWChange}
+                ></UserInput>
+              </div>
+              <p id="PWtext1" style={{ margin: "10px" }}></p>
             </div>
-            <p id="PWtext1"></p>
-            <div className="userbox">
-              <UserLabel>PW 확인</UserLabel>
-              <UserInput
-                id="pass2"
-                type="password"
-                onChange={UserPWChange}
-              ></UserInput>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <div className="userbox">
+                <UserLabel>PW 확인</UserLabel>
+                <UserInput
+                  id="pass2"
+                  type="password"
+                  onChange={UserPWChange}
+                ></UserInput>
+              </div>
+              <p id="PWtext2" style={{ margin: "10px" }}></p>
             </div>
-            <p id="PWtext2"></p>
           </div>
           <div className="infobox">
             <div className="subtitle">유저정보</div>
@@ -460,37 +502,69 @@ const Signup = () => {
                 onChange={SealChange}
                 style={{ display: "none" }}
               ></input>
-              <div id="inputBtn" onClick={Imginput}>
-                클릭
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <div id="inputBtn" onClick={Imginput}>
+                  클릭
+                </div>
+                <p
+                  id="SealSelec"
+                  style={{
+                    width: "200px",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  선택된 파일 없음
+                </p>
               </div>
-              <p id="SealSelec">선택된 파일 없음</p>
             </div>
           </div>
         </UserInfoBox>
         <UserInfoBox2 className="bis">
           <div className="subtitle">공인중개사 회원</div>
+          <p>회원 타입을 선택해주세요!</p>
           <BusiSelectBoxs>
-            <BusiSelectBox id="nobis" onClick={BisClick}>
-              <div>나는 일반회원 할래요</div>
+            <BusiSelectBox id="nobis" onClick={BisClick} className="pop">
+              <img src={CheckImg} alt="체크" id="checkimg1" className="pop" />
+              <img src={UserSelec1} alt="일반유저" id="userSimg1" />
+              <div>일반회원</div>
             </BusiSelectBox>
             <BusiSelectBox id="imbis" onClick={BisClick}>
-              <div>나는 업자다하하하하</div>
+              <img src={CheckImg} alt="체크" id="checkimg2" className="no" />
+              <img src={UserSelec2} alt="일반유저" id="userSimg2" />
+              <div>공인중개사</div>
             </BusiSelectBox>
           </BusiSelectBoxs>
           {/* 선택한 것에 따라 이 안에서 보여지는 내용이 달라질 예정 */}
           <BusinessBox>
             <div className="nobisbox pop">
               <div>
-                <span>일반 회원</span>으로 가입 시 매물을 등록하고 판매하실 수
-                있습니다! NoBroker에서 즐거운 거래되세요!
+                <TypeTextTitle>일반 회원으로 가입됩니다!</TypeTextTitle>
+                <span>일반 회원</span>으로 가입 시 직접 부동산 매물을 등록하고
+                판매하실 수 있습니다! <br />
+                NoBroker에서 즐거운 거래되세요!
               </div>
             </div>
             <div className="imbisbox">
               <div>
-                <span>공인 중개사</span>회원으로 가입 시, 등록된 매물의
-                진위여부를 투표하고 받을 수 있는 보상을 받을 수 있습니다!
+                <TypeTextTitle>공인중개사 회원으로 가입됩니다!</TypeTextTitle>
+                <div>
+                  <span>공인 중개사</span>회원으로 가입 시, 등록된 매물의
+                  진위여부를 투표하고 보상을 받을 수 있습니다!
+                </div>
+                <div>
+                  공인 중개사 회원으로 가입하기 위해서 공인중개사 자격증을
+                  등록하여 승인처리가 진행됩니다.
+                </div>
               </div>
-              <div style={{ display: "flex" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <div
                   style={{
                     width: "200px",
@@ -519,20 +593,21 @@ const Signup = () => {
               </div>
             </div>
           </BusinessBox>
-          <div>
+          <div style={{ marginTop: "100px" }}>
             <input
               type="checkbox"
               id="check"
               onClick={(e) => setCheck(e.target.checked)}
             ></input>
             <span>개인 정보 제공 동의</span>
-            <div>
+            <div style={{ marginTop: "20px", marginBottom: "80px", color:"gray" }}>
               입력하신 정보를 다시 한 번 확인해주세요! 잘못된 정보를 기입하여
               발생한 문제는 당사에서 책임지지 않습니다.
             </div>
           </div>
         </UserInfoBox2>
-            <UserAdd onClick={SignupAdd}>회원가입</UserAdd>
+        <UserAdd onClick={SignupAdd}>회원가입</UserAdd>
+        <Footer></Footer>
       </BigBox>
     </SignupBox>
   );

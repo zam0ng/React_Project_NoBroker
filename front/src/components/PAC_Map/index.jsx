@@ -37,6 +37,8 @@ import NavHeader from 'components/navbar/NavHeader';
 
 import { useAuth } from '../../AuthContext';
 
+import Footer from 'components/footer/Footer';
+
 // const queryClient = new QueryClient();
 
 
@@ -677,7 +679,7 @@ return (
 
                 </PAC_Map_Wrapper>
             </MainContentWrap>
-
+        <Footer></Footer>
     </>
 )
 }
