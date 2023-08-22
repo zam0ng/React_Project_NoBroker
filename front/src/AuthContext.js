@@ -4,6 +4,8 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
 
+  console.log("cookie ",document.cookie);
+
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(window.sessionStorage.getItem("login")));
   const [isCertificate, setIsCertificate] = useState(JSON.parse(window.sessionStorage.getItem("certificate")));
 

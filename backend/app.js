@@ -20,8 +20,9 @@ const cron = require("node-cron");
 const uploadRouter = require("./routers/upload");
 const getUserInfoRouter = require("./routers/insertpageRouter");
 const MypageRouter = require("./routers/mypageRouter")
-const { estateDetailRouter, estateVoteRouter, estateListRouter, loginRouter, signupRouter  } = require("./routers");
+const { estateDetailRouter, estateVoteRouter, estateListRouter, loginRouter, signupRouter } = require("./routers");
 const adminRouter = require('./routers/adminRouter')
+const { isLogin } = require('./middleware/isLogin');
 
 const { setEstateAccept } = require("./controllers/estateVoteController");
 const { sequelize } = require("./models");
@@ -64,59 +65,59 @@ sequelize
     console.error(err);
   });
 
-  function normalizePort(val) {
-    var port = parseInt(val, 10);
+function normalizePort(val) {
+  var port = parseInt(val, 10);
 
-    if (isNaN(port)) {
-      // named pipe
-      return val;
-    }
-
-    if (port >= 0) {
-      // port number
-      return port;
-    }
-
-    return false;
+  if (isNaN(port)) {
+    // named pipe
+    return val;
   }
 
-  function onError(error) {
-    if (error.syscall !== 'listen') {
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
       throw error;
-    }
-
-    var bind = typeof port === 'string'
-      ? 'Pipe ' + port
-      : 'Port ' + port;
-
-    // handle specific listen errors with friendly messages
-    switch (error.code) {
-      case 'EACCES':
-        console.error(bind + ' requires elevated privileges');
-        process.exit(1);
-        break;
-      case 'EADDRINUSE':
-        console.error(bind + ' is already in use');
-        process.exit(1);
-        break;
-      default:
-        throw error;
-    }
   }
+}
 
-  function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === 'string'
-      ? 'pipe ' + addr
-      : 'port ' + addr.port;
-    debug('Listening on ' + bind);
-  }
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
 
 app.use("/", indexRouter);
-app.use("/upload",uploadRouter);
+app.use("/upload", uploadRouter);
 app.use("/login", loginRouter);
 app.use("/insert", getUserInfoRouter);
-app.use("/mypage", MypageRouter);
+app.use("/mypage", isLogin, MypageRouter);
 app.use("/signup", signupRouter);
 
 // 유저 이미지 경로 지정

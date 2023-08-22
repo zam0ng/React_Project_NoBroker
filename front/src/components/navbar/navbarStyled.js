@@ -5,7 +5,7 @@ export const NavbarTitle = styled.div`
   /* top: 10px; */
   margin-top: 10px;
   width: 100%;
-  height: 10%;
+  height: 100px;
   background-color: #fcfbf1;
   color: black;
   /* border: 1px solid black; */

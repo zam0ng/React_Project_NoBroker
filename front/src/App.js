@@ -32,7 +32,8 @@ function App() {
         {/* <NavHeader></NavHeader> */}
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/login" element={isLoggedIn ? <Main /> : <Login />} />
+          {/* <Route path="/login" element={isLoggedIn ? <Main /> : <Login />} /> */}
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route
             path="/insert"
@@ -50,7 +51,7 @@ function App() {
           /> */}
           <Route
             path="/mypage"
-            element={<Mypage queryClient={queryClient} />}
+            element={isLoggedIn ? <Mypage queryClient={queryClient} /> : <Login />}
           />
           <Route path="/admin" element={<Admin />} />
 
