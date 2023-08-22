@@ -16,9 +16,10 @@ exports.getTradableEstate = async(req , res) => {
   try {
 
     // req.acc_decoded.id ? console.log("req.acc_decoded.id | 로그인한 유저 id : " , req.acc_decoded.id) : console.log("로그인하지 않은 상태😥😥")
-    // console.log("req.acc_decoded.id" , req)
-    // console.log("req.acc_decoded.id" , req.acc_decoded)
-    // console.log("req.acc_decoded.id" , req.acc_decoded.id)
+    // console.log("req" , req) // 🔵
+    // console.log("req.acc_decoded" , req.acc_decoded) // 🔵 
+    console.log("req.acc_decoded.id" , req.acc_decoded.id)  // 8 나옴 🔵
+    console.log("req.query.myLikeClickedList" , req.query.myLikeClickedList)  // 문자열 true 나옴
     // console.log(" req.query.roomType | 방 종류 " , req.query.roomType)
       // [목표 URL]`http://localhost:8080/list/tradableEstate?roomType=${checkedRoomTypes}&priceRangeValue=${priceRangeValue}`
       // 'req.query 는 객체' 임 => 따라서, 복수의 key 값이 있어도, 개별적으로 접근할 수 있음.
@@ -32,31 +33,26 @@ exports.getTradableEstate = async(req , res) => {
     }
 
     // // 내가 좋아요 클릭한 것만 지도에 표시하기 
-    // if(req.query.myLikeClickedList === 'true'){
-      
-    //   // console.log("req.acc_decoded.id" , req.acc_decoded.id) 
-    //   const currentUserID = req.acc_decoded.id
-    //   // console.log(currentUserID)
+    if(req.query.myLikeClickedList === 'true'){
+      const currentUserID = req.acc_decoded.id
 
-    //   // 로그인한 유저가 클릭한 좋아요 정보 
-    //   if(currentUserID){
-    //     const userLikeList = await Likes.findAll({
-    //       where : {user_id : currentUserID},  // 현재 로그인한 유저에 대해서 
-    //       attributes : ['real_estate_id'],    // 이게 없으면, 모든 열을 반환 받음 | 이게 있으면, real_estate_id 열만 반환
-    //       raw : true  // 결과물을 객체로 반환
-    //     })
+      // 로그인한 유저가 클릭한 좋아요 정보 
+      if(currentUserID){
+        const userLikeList = await Likes.findAll({
+          where : {user_id : currentUserID},  // 현재 로그인한 유저에 대해서 
+          attributes : ['real_estate_id'],    // 이게 없으면, 모든 열을 반환 받음 | 이게 있으면, real_estate_id 열만 반환
+          raw : true  // 결과물을 객체로 반환
+        })
+        console.log("userLikeList" , userLikeList)  // 🔵 userLikeList [ { real_estate_id: 3 }, { real_estate_id: 7 }, { real_estate_id: 1 } ]   
+        
+        const arrUserLikeBuildingID = userLikeList.map(item => item.real_estate_id)
+        console.log("arrUserLikeBuildingID" , arrUserLikeBuildingID)
 
-    //     // 좋아요 목록들의 '매물 id' 를 리스트로 만들기
-    //       const arrUserLikeBuildingID = userLikeList.map( item => item.real_estate_id)
-
-    //       whereConditions.id = {
-    //         [Op.in] : arrUserLikeBuildingID
-    //       }
-    //   }
-    // } else { 
-    //   return res.json({"message" : "로그인이 필요함!"})
-    // }
-
+        whereConditions.id = {
+          [Op.in] : arrUserLikeBuildingID
+        }
+      }
+    }
 
 
     if (req.query.roomType){

@@ -365,10 +365,10 @@ const createZoomControl = ( map ) => {
             }
 
             // // 내가 찜한 것만 보게 하기 
-            // console.log("myLikeClickedList🔮🔮🔮" , myLikeClickedList)
-            // if(myLikeClickedList == true){  
-            //     params.push(`myLikeClickedList=${myLikeClickedList}`)
-            // }
+            console.log("myLikeClickedList🔮🔮🔮" , myLikeClickedList)
+            if(myLikeClickedList == true){  
+                params.push(`myLikeClickedList=${myLikeClickedList}`)
+            }
 
             if(params.length > 0) {
                 url += '?' + params.join('&');
