@@ -169,11 +169,16 @@ const [myLikeClickedList , setMyLikeClickedList] = useState(false)
 
 
     // 내가 찜한 방 보기
-    const handleMyLikeClickedList = () => {
-        setMyLikeClickedList(!myLikeClickedList)
-        console.log("handleMyLikeClickedList 찜한방 클릭🚀🚀🚀🚀🚀" , myLikeClickedList)
+    const handleMyLikeClickedList = () => {        
+        setMyLikeClickedList(true)
+        console.log("handleMyLikeClickedList 찜한방 true 클릭 🚀🚀🚀" , myLikeClickedList)
     }
-
+    
+    // 전체 매물 보기
+    const handleAllEstateList = () => {        
+        setMyLikeClickedList(false)
+        console.log("handleAllEstateList 찜한방 false 클릭🚀🚀🚀" , myLikeClickedList)
+    }
 
 
 
@@ -609,7 +614,7 @@ return (
                             />
 
                             {/* 매물 vs 찜한방 */}
-                            <SearchBarButton handleMyLikeClickedList={handleMyLikeClickedList} />
+                            <SearchBarButton handleAllEstateList={handleAllEstateList}  handleMyLikeClickedList={handleMyLikeClickedList} />
 
                     </SearchBarContainer>
 
