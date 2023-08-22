@@ -24,10 +24,9 @@ const MainHeader = () => {
     nav("/login");
   };
 
-  const LogoClick = ()=>{
+  const LogoClick = () => {
     nav("/");
-  }
-
+  };
 
   return isactive ? (
     <>
@@ -52,7 +51,8 @@ const MainHeader = () => {
         <Menu className="menu">
           <MenuListTitle>
             <div className="navtitle">
-              <div>NoBroker</div><span onClick={MenuOpen}></span>
+              <div>NoBroker</div>
+              <span onClick={MenuOpen}></span>
             </div>
           </MenuListTitle>
           <MenuList>
@@ -61,6 +61,7 @@ const MainHeader = () => {
             <Link to="/mypage">마이페이지</Link>
             <Link to="/vote">투표목록</Link>
           </MenuList>
+          <p className="Copyright">Copyright 2023. NoBroker. <br/> All rights reserved.</p>
         </Menu>
       </Bodyy>
     </>
