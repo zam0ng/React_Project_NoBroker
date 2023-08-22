@@ -32,7 +32,7 @@ function App() {
         {/* <NavHeader></NavHeader> */}
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/login" element={isLoggedIn ? <Main /> : <Login />} />
+          <Route path="/login" element={isLoggedIn ? <Mypage /> : <Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route
             path="/insert"

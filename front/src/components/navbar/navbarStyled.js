@@ -46,16 +46,22 @@ export const NavbarIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
 
-  & div {
-    font-family: 'yg-jalnan';
-    width: 100px;
-    border: 4px solid orange;
-    border-radius: 2em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    font-size: 20px;
-    color: gray;
+export const NavLoginBtn = styled.div`
+  font-family: "yg-jalnan";
+  width: 100px;
+  border: 4px solid orange;
+  border-radius: 2em;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-size: 20px;
+  color: gray;
+  background-color: white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -70,6 +76,7 @@ export const Hamburger = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  
 
   & span {
     display: inline-block;
@@ -78,7 +85,7 @@ export const Hamburger = styled.div`
     left: 0;
     width: 100%;
     height: 8px;
-    background-color: black;
+    background-color: gray;
     border-radius: 4px;
   }
 
@@ -97,18 +104,23 @@ export const Menu = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 18%;
+  width: 16%;
   height: 100%;
   background-color: white;
   transition: 3s;
+
+  .Copyright {
+    color: gray;
+    line-height: 1.5;
+  }
 `;
 
 export const MenuListTitle = styled.div`
   font-family: "SBAggroB";
   width: 100%;
-  height: 100px;
+  height: 15%;
   line-height: 50px;
-  font-size: 35px;
+  font-size: 40px;
   font-weight: 600;
   color: orange;
   display: flex;
@@ -137,12 +149,13 @@ export const MenuListTitle = styled.div`
 `;
 export const MenuList = styled.div`
   width: 100%;
-  line-height: 40px;
+  line-height: 60px;
   /* border: 1px solid white; */
   margin-top: 10px;
+  height: 75%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
 
   & a {

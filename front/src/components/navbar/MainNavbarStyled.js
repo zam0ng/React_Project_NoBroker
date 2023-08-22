@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { userIcon_white } from "../../img";
 export const NavbarTitle = styled.div`
   position: absolute;
-  top: 10px;
+  top: 0px;
   width: 100%;
   height: 10%;
   /* background-color: white; */
@@ -94,15 +94,21 @@ export const Menu = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 18%;
+  width: 16%;
   height: 100%;
   background-color: #282828;
   transition: 3s;
+
+  .Copyright{
+    color: gray;
+    line-height: 1.5;
+  }
 `;
 
 export const MenuListTitle = styled.div`
+    font-family: "SBAggroB";
   width: 100%;
-  height: 100px;
+  height: 15%;
   /* border: 1px solid gray; */
   line-height: 50px;
   font-size: 40px;
@@ -134,12 +140,13 @@ export const MenuListTitle = styled.div`
 `;
 export const MenuList = styled.div`
   width: 100%;
-  line-height: 40px;
+  line-height: 60px;
   /* border: 1px solid white; */
+  height: 75%;
   margin-top: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
 
   & a {
