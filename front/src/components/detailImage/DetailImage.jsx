@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { DetailImg, BigDetailImg, ImgDiv, PopupBack, SmallImgDiv, ImgBtn } from './detailImageStyled'
+import { serverUrl } from 'components/serverURL';
 
 const DetailImage = ({list}) => {
    // 최대 7개의 이미지
@@ -48,7 +49,7 @@ const DetailImage = ({list}) => {
     const loop = () => {
         let arr = [];
         list.forEach((el, index) => {
-            arr.push(<DetailImg> <img id={`img_${index}`} onClick={(e)=>{thumbnailImg(e)}} src={el && el != "" ? "http://localhost:8080/estate_imgs/"+el.substr(12): 'http://localhost:8080/estate_imgs/null.png'} /> </DetailImg>);
+            arr.push(<DetailImg> <img id={`img_${index}`} onClick={(e)=>{thumbnailImg(e)}} src={el && el != "" ? `${serverUrl}estate_imgs/`+el.substr(12): `${serverUrl}estate_imgs/null.png`} /> </DetailImg>);
         });
         return arr;
     }

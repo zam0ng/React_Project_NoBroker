@@ -20,7 +20,8 @@ const MapApi = ({placeAddress, setIsNone}) => {
 
     axios.get(url, {
     headers: {
-      Authorization: `KakaoAK ${process.env.REACT_APP_REST_API_KEY}`,
+      // Authorization: `KakaoAK ${process.env.REACT_APP_REST_API_KEY}`,
+      Authorization: `KakaoAK e95bc49ef6eeb1cb7a196585b20308b9`,
     },
     }).then((e)=>{
         const data = e.data;

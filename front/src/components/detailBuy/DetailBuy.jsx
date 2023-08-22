@@ -1,17 +1,18 @@
 import React from 'react'
-import axios from 'axios'
-import { useMutation } from 'react-query';
+import axios from '../../Axios'
+import { useMutation, useQuery } from 'react-query';
 import { LikeBtn, BuyBtn, Title, Content, ContentDiv, LikeBtnDiv, UserImg, Divider } from './detailBuy.styled';
 import { detail_heart, detail_emptyheart, userimg } from '../../img/index'
-import { useNavigate } from 'react-router-dom';
+import { serverUrl } from 'components/serverURL';
+import { useAuth } from 'AuthContext';
 
 const DetailBuy = ({estate, seller, like, queryClient}) => {
     const now = new Date();
-    const nav = useNavigate();
+    const { isLoggedIn, logout } = useAuth();
 
     // 구매
     const createBuyMutation = useMutation(async (buyForm)=>{
-        const { data } = await axios.post("http://localhost:8080/detail/buyEstate", buyForm, {
+        const { data } = await axios.post("/detail/buyEstate", buyForm, {
         withCredentials : true
         });
         return data;
@@ -26,8 +27,8 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
             } else if (data.message && data.message == "돈 부족") {
                 alert("돈이 부족합니다.");
             } else if (data.message && data.message == "다시 로그인") {
-                alert("로그인 하세요.");
-                nav("/login");
+                alert("로그인하세요.");
+                logout();
             } else {
                 console.log("오류",data);
                 alert("오류 발생");
@@ -37,6 +38,11 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
 
     // 구매 신청 버튼 눌렀을때 실행되는 함수
     const clickBuyBtn = () => {
+        if (!isLoggedIn) {
+            alert("로그인하세요.");
+            return;
+        }
+
         if (estate.state != 0) {
             return;
         } else if (!document.querySelector("#date_input").value) {
@@ -51,7 +57,7 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
 
     // 찜 추가
     const createAddLikeMutation = useMutation(async (likeForm) => {
-        const { data } = await axios.post("http://localhost:8080/detail/like", likeForm, {
+        const { data } = await axios.post("/detail/like", likeForm, {
         withCredentials : true
         });
         return data;
@@ -63,7 +69,7 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
                 queryClient.invalidateQueries('estate');
             } else if (data.message && data.message == "다시 로그인") {
                 alert("로그인 하세요.");
-                nav("/login");
+                logout();
             } else {
                 console.log("오류",data);
                 alert("오류 발생");
@@ -74,7 +80,7 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
 
     // 찜 취소
     const createDelLikeMutation = useMutation(async (delLikeForm)=>{
-        const { data } = await axios.post("http://localhost:8080/detail/delLike", delLikeForm, {
+        const { data } = await axios.post("/detail/delLike", delLikeForm, {
         withCredentials : true
         });
         return data;
@@ -84,6 +90,9 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
                 console.log("찜 삭제 성공");
 
                 queryClient.invalidateQueries('estate');
+            } else if (data.message && data.message == "다시 로그인") {
+                alert("로그인 하세요.");
+                logout();
             } else {
                 console.log("오류",data);
                 alert("오류 발생");
@@ -93,6 +102,11 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
 
 
     const clickLikeBtn = () => {
+        if (!isLoggedIn) {
+            alert("로그인하세요.");
+            return;
+        }
+
         if (like.user_like) {
             // 찜 취소
             createDelLikeMutation.mutate({real_estate_id : estate.id});
@@ -113,14 +127,14 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
         <div>
         {/* 구매 가능 상태 아니면 회색 버튼 */}
         <div style={{display : 'flex', justifyContent: 'center'}}>
-            {estate.state==0 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"orange"}>신청하기</BuyBtn> : <BuyBtn onClick={clickBuyBtn} backgroundColor = {"grey"}>구매 불가</BuyBtn>}
+            {estate.state==0 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"orange"}>신청하기</BuyBtn> : <BuyBtn onClick={clickBuyBtn} backgroundColor = {"gray"}>구매 불가</BuyBtn>}
         </div>
 
         <Divider />
 
         <h2 style={{marginTop:"40px"}}>판매자 정보</h2>
         {seller.fake_count!=0 ?  <p>해당 판매자는 허위 매물 <span style={{color:"red"}}>{seller.fake_count}</span>회 올린 적이 있습니다.</p> : <></>}
-        <UserImg src={seller.user_img!="userimg" || !seller.user_img ? "http://localhost:8080/user_imgs/"+seller.user_img.split("\\")[2] : userimg} alt="유저 이미지" />
+        <UserImg src={seller.user_img ? `${serverUrl}user_imgs/`+seller.user_img?.substr(13) : `${serverUrl}user_imgs/User_Profile.png`} alt="유저 이미지" />
         <ContentDiv><Title>이름</Title> <Content>{seller.user_name}</Content></ContentDiv>
         <ContentDiv><Title>연락처</Title> <Content>{seller.phone}</Content></ContentDiv>
 

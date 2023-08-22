@@ -1,61 +1,98 @@
-import React from 'react'
-import {Bodyy,NavbarTitle,Hamburger,NavbarTitleName,MenuListTitle,Menu,MenuList,NavbarIcon} from './navbarStyled';
-import { useState } from 'react';
-import { Link } from "react-router-dom"
+import React from "react";
+import {
+  Bodyy,
+  NavbarTitle,
+  Hamburger,
+  NavbarTitleName,
+  MenuListTitle,
+  Menu,
+  MenuList,
+  NavbarIcon,
+} from "./navbarStyled";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Logo, Logo2 } from "../../img";
+import { useAuth } from "../../AuthContext";
 
 const NavHeader = () => {
-  const [isactive,setIsactive] = useState(false);
+  const nav = useNavigate();
+  const [isactive, setIsactive] = useState(false);
+  const { isLoggedIn, logout } = useAuth();
 
-  function MenuOpen (){
+  const LogoutClick = () => {
+    logout();
+  };
+
+  const LoginClick = () => {
+    nav("/login");
+  };
+
+  const LogoClick = () => {
+    nav("/");
+  };
+
+  function MenuOpen() {
     setIsactive(!isactive);
   }
-  return (
-    isactive ?
+  return isactive ? (
     <>
+      <NavbarTitle>
+        <Hamburger onClick={MenuOpen}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </Hamburger>
+        <NavbarTitleName>
+          <img src={Logo2} alt="logo" />
+          <p>NOBROKER</p>
+        </NavbarTitleName>
 
-    <NavbarTitle>
-    <Hamburger onClick ={MenuOpen}>
-        <span></span>
-        <span></span>
-        <span></span>
-    </Hamburger>
-    <NavbarTitleName>NoBroker</NavbarTitleName>
+        <NavbarIcon>
+          <div></div>
+        </NavbarIcon>
+      </NavbarTitle>
 
-    <NavbarIcon>
-      <div></div>
-    </NavbarIcon>
-  </NavbarTitle>
-
-    <Bodyy>
-    <Menu>
-      <MenuListTitle>
-        <div>NoBroker<span onClick={MenuOpen}></span></div>
-
-      </MenuListTitle>
-      <MenuList><Link to ='/insert'>매물 등록</Link></MenuList>
-      <MenuList><Link to ='/list'>매물 목록</Link></MenuList>
-      <MenuList></MenuList>
-
-    </Menu>
-    </Bodyy>
+      <Bodyy>
+        <Menu>
+          <MenuListTitle>
+            <div>
+              NoBroker<span onClick={MenuOpen}></span>
+            </div>
+          </MenuListTitle>
+          <MenuList>
+            <Link to="/insert">매물등록</Link>
+            <Link to="/list">매물목록</Link>
+            <Link to="/mypage">마이페이지</Link>
+            <Link to="/vote">투표목록</Link>
+          </MenuList>
+          <MenuList></MenuList>
+        </Menu>
+      </Bodyy>
     </>
-  :
-  <NavbarTitle>
-    <Hamburger onClick ={MenuOpen}>
+  ) : (
+    <NavbarTitle>
+      <Hamburger onClick={MenuOpen}>
         <span></span>
         <span></span>
         <span></span>
-    </Hamburger>
-    <NavbarTitleName>NoBroker</NavbarTitleName>
-
-    <Link to ='/mypage'>
+      </Hamburger>
+      <NavbarTitleName onClick={LogoClick}>
+        <img src={Logo2} alt="logo" />
+        <p>NOBROKER</p>
+      </NavbarTitleName>
       <NavbarIcon>
-        <div></div>
+        {isLoggedIn ? (
+          <div id="Logout" onClick={LogoutClick}>
+            Logout
+          </div>
+        ) : (
+          <div id="Login" onClick={LoginClick}>
+            Login
+          </div>
+        )}
       </NavbarIcon>
-    </Link>
+    </NavbarTitle>
+  );
+};
 
-  </NavbarTitle>
-  )
-}
-
-export default NavHeader
+export default NavHeader;

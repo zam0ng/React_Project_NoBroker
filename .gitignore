@@ -1,6 +1,9 @@
 node_modules
 package-lock.json
 .env
+noBroker.pem
+
+
 
 # 테스트용 파일
 GoogleMap_2_1_작동함_keep.jsx
@@ -11,6 +14,19 @@ GoogleMap_3 혼자서해보는중.jsx
 GoogleMap_3_STYLED.jsx
 GoogleMap_3.jsx
 TestMarker.jsx
+index copy.jsx
+index_final_default_clustercolor.jsx
+index_final_디폴트.jsx
+index_final_커스텀1개만 되는상태.jsx
+index_usequery_우선되긴함.jsx
+index_usequery_합치고_초기값나오는버전.jsx
+index_useState 로 최기화 직전.jsx
+index_상태관리하기전.jsx
+index_이벤트훅으로빼기전.jsx
+index_클러스터되긴하는데,평균이안돼.jsx
+index.다른calculate로가기전.jsx
+snazzy-maps-example-light-dream-style.html
+custom.html
 
 # 테스트용 폴더
 components/Supercluster_Test2

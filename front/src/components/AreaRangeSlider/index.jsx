@@ -15,6 +15,16 @@ function AreaRangeSlider({handleAreaRangeBox}) {
         <TooltipSlider
             defaultValue={[0, 135]}  // 초기 설정값 0원 ~ 150m2
             range
+
+            handleStyle={{
+              borderColor: 'blue',
+              height: 28,
+              width: 28,
+              marginLeft: -14,
+              marginTop: -9,
+              backgroundColor: 'black',
+            }}
+
             step = {1}  // 1의 자리 = 백만원 
             min={0}    // 16m2 , 5평,      
             max={150}  // 최대 150m2, 45평,  

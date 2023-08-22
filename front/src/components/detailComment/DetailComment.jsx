@@ -1,29 +1,22 @@
 import React from "react";
-import axios from "axios";
+import axios from "../../Axios";
 import { useMutation } from "react-query";
 
-import {
-  Comment,
-  Recomment,
-  InputDiv,
-  CommentInput,
-  InsertBtn,
-  H1,
-  CommentDiv,
-  UserImg,
-  Date
-} from "./detailComment.styled";
+import { Comment, Recomment, InputDiv, CommentInput, InsertBtn, H1, CommentDiv, UserImg, Date } from "./detailComment.styled"
 import { detail_arrow, userimg } from "../../img";
 import { useNavigate } from "react-router-dom";
+import { serverUrl } from "components/serverURL";
+import { useAuth } from "AuthContext";
 
 const DetailComment = ({ estateId, comment, queryClient }) => {
   let comment_id;
   const nav = useNavigate();
+  const { isLoggedIn, logout } = useAuth();
 
   const createMutation = useMutation(
     async (comment) => {
       const { data } = await axios.post(
-        "http://localhost:8080/detail/postComment",
+        "/detail/postComment",
         comment,
         {
           withCredentials: true,
@@ -39,6 +32,7 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
           queryClient.invalidateQueries("estate");
         } else if (data.message && data.message == "다시 로그인") {
           alert("로그인 하세요.");
+          logout();
           nav("/login");
         } else {
           alert("오류 발생");
@@ -49,6 +43,11 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
 
   // 댓글 등록 클릭하면 실행되는 함수
   const commentInsert = () => {
+    if (!isLoggedIn) {
+      alert("로그인하세요.");
+      return;
+    }
+
     if (document.querySelector("#commentInput").value.trim() == "") {
       alert("내용을 작성하세요.");
       return;
@@ -62,7 +61,7 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
   const createRecommentMutation = useMutation(
     async (recomment) => {
       const { data } = await axios.post(
-        "http://localhost:8080/detail/postRecomment",
+        "/detail/postRecomment",
         recomment,
         {
           withCredentials: true,
@@ -76,9 +75,10 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
           document.querySelector(`#recommentInput_${comment_id}`).value = "";
 
           queryClient.invalidateQueries("estate");
-        }else if (data.message && data.message == "다시 로그인") {
+        } else if (data.message && data.message == "다시 로그인") {
           alert("로그인 하세요.");
           nav("/login");
+          logout();
         } else {
           alert("오류 발생");
         }
@@ -89,6 +89,10 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
   // 대댓글 등록 클릭하면 실행되는 함수
   const recommentInsert = (id) => {
     comment_id = id;
+    if (!isLoggedIn) {
+      alert("로그인하세요.");
+      return;
+    }
     if (
       document.querySelector(`#recommentInput_${comment_id}`).value.trim() == ""
     ) {
@@ -130,16 +134,12 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
           }}
           id={`comment_${el.id}`}
         >
-          <div style={{ display: "flex", alignItems: "center", marginTop:"10px", marginBottom:"10px" }}>
-            <UserImg
-              src={
-                el.User.user_img != "userimg" || !el.User.user_img
-                  ? "http://localhost:8080/user_imgs/" +
-                    el.User.user_img.split("\\")[2]
-                  : userimg
-              }
-              alt="유저 이미지"
-            />{" "}
+          <div style={{ display: "flex", alignItems: "center", marginTop: "10px", marginBottom: "10px" }}>
+            {el.User.user_img ?
+              <UserImg src={`${serverUrl}user_imgs/` + el.User.user_img?.substr(13)} />
+              :
+              <UserImg src={`${serverUrl}user_imgs/User_Profile.png`} />
+            }{" "}
             {el.User.user_name}
           </div>
           {el.content}
@@ -154,20 +154,17 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
             <Recomment>
               <img src={detail_arrow}></img>
               <div>
-                <div style={{ display: "flex", alignItems: "center", marginBottom:"10px" }}>
-                  <UserImg
-                    src={
-                      re.User.user_img != "userimg" || !re.User.user_img
-                        ? "http://localhost:8080/user_imgs/" +
-                          re.User.user_img.split("\\")[2]
-                        : userimg
-                    }
-                    alt="유저 이미지"
-                  />{" "}
+                <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                  {re.User.user_img ?
+                    <UserImg src={`${serverUrl}user_imgs/` + re.User.user_img?.substr(13)} />
+                    :
+                    <UserImg src={`${serverUrl}user_imgs/User_Profile.png`} />
+                  }
+                  {" "}
                   {re.User.user_name}
                 </div>
-                  {re.re_content}
-                  <Date>{re.createdAt}</Date>
+                {re.re_content}
+                <Date>{re.createdAt}</Date>
               </div>
             </Recomment>
           );
@@ -194,7 +191,7 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
               onClick={(e) => {
                 commentClick(el.id);
               }}
-              style={{ backgroundColor: "rgba(0,0,0,0.3)" }}
+              border = {"4px solid rgba(0,0,0,0.3)"}
             >
               취소
             </InsertBtn>

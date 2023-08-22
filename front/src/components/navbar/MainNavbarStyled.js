@@ -14,6 +14,8 @@ export const NavbarTitle = styled.div`
   box-sizing: border-box;
 `;
 export const NavbarTitleName = styled.div`
+  font-family: "SBAggroB";
+
   height: 80px;
   width: 85%;
   /* border: 1px solid black; */
@@ -23,14 +25,16 @@ export const NavbarTitleName = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+
   & img {
     width: 80px;
   }
   & p {
     margin-left: 20px;
     /* font-size: 80px; */
-    font-size: 50px;
-    font-weight: 600;
+    font-size: 60px;
+    font-weight: 300;
     color: orange;
   }
 `;
@@ -90,35 +94,38 @@ export const Menu = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 200px;
+  width: 18%;
   height: 100%;
   background-color: #282828;
   transition: 3s;
 `;
 
 export const MenuListTitle = styled.div`
-  & div {
-    width: 200px;
-    height: 50px;
-    border: 1px solid gray;
-    line-height: 50px;
-    font-weight: 600;
-    color: orange;
-  }
+  width: 100%;
+  height: 100px;
+  /* border: 1px solid gray; */
+  line-height: 50px;
+  font-size: 40px;
+  font-weight: 600;
+  color: orange;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   & span {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     cursor: pointer;
   }
   & span:before,
   & span::after {
     position: absolute;
-    top: 15px;
-    left: 180px;
+    top: 10px;
+    right: 20px;
     content: "";
-    height: 25px;
-    width: 2px;
-    background-color: black;
+    height: 30px;
+    width: 5px;
+    border-radius: 2em;
+    background-color: white;
     transform: rotate(45deg);
   }
   & span::after {
@@ -126,14 +133,22 @@ export const MenuListTitle = styled.div`
   }
 `;
 export const MenuList = styled.div`
-  width: 200px;
-  height: 40px;
+  width: 100%;
   line-height: 40px;
+  /* border: 1px solid white; */
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
-  border-top: none;
-  border-right: 1px solid gray;
-  border-bottom: 1px solid gray;
-  border-left: 1px solid gray;
+  & a {
+    margin-top: 20px;
+    font-size: 25px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+  }
 `;
 export const Bodyy = styled.div`
   box-sizing: border-box;
