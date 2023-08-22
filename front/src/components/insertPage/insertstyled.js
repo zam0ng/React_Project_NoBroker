@@ -15,7 +15,7 @@ export const Caution = styled.div`
     /* border: 1px solid black; */
     display: flex;
     & ul{
-        height: 100px;
+        height: 140px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;

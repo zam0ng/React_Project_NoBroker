@@ -18,7 +18,7 @@ export const MypageContainer = styled.div`
 export const UserInfoDiv = styled.div`
     width: 20%;
     height: ${(props)=>props.height};
-    border-right: 1px solid lightgray;
+    /* border-right: 1px solid lightgray; */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -29,6 +29,13 @@ export const UserInfoDiv = styled.div`
         height: 130px;
         border: 1px solid black;
         border-radius: 50%;
+
+        & img{
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+
+        }
     }
 
     & span{
@@ -135,4 +142,117 @@ export const TabInfo = styled.div`
     height: 640px;
     border-left: 1px solid lightgray;
 `
+export const UpdateModal = styled.div`
+    width : 100%;
+    height : 1100px;
+    background-color: rgba(0, 0, 0, 0.815);
+    position: absolute;
+    top : 0;
+    left: 0;
+`
+export const UpdateBox = styled.div`
+    width: 500px;
+    height: 600px;
+    border : 1px solid white;
+    position: absolute;
+    background-color: white;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
+`
+
+export const Closediv= styled.div`
+width: 100%;
+height: 20px;
+display: flex;
+justify-content: flex-end;
+
+`
+
+export const Updateimg = styled.div`
+    width: 100%;
+    height: 250px;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & div,
+    & img{
+        width: 200px;
+        height: 200px;
+        border: 1px solid black;
+        margin-bottom : 5px;
+    }
+    & input{
+        position: absolute;
+        width: 0;
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+    }
+    & label{
+        background-color: orange;
+        color: white;
+        font-weight: 600;
+        font-size: smaller;
+    }
+    
+`
+export const Updatebox = styled.div`
+    width: 100%;
+    height: 50px;
+    /* border: 1px solid white; */
+    color : black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    & span{
+        width: 30%;
+    }
+
+    & div{
+        width: 60%;
+        height: 40px;
+        border: 1px solid black;
+        line-height: 40px;
+        background-color: lightgray;
+    }
+    `
+export const UpdateboxInput = styled.div`
+width: 100%;
+height: 50px;
+/* border: 1px solid white; */
+color : black;
+display: flex;
+justify-content: space-around;
+align-items: center;
+
+& label{
+    width: 30%;
+}
+
+& input{
+    width: 59%;
+    height: 40px;
+    border: 1px solid black;
+    line-height: 40px;
+    text-align: center;
+    
+    &::placeholder{
+        color: black;
+    }
+}
+`
+export const UpdateBtn = styled.button`
+    width: 70px;
+    height: 30px;
+    border : none;
+    background-color: orange;
+    color : white;
+    margin-top: 20px;
+    font-weight: 600;
+`
