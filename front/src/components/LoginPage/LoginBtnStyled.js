@@ -11,4 +11,10 @@ export const LoginBtn = styled.div`
   align-items: center;
   font-weight: 600;
   cursor: pointer;
+  background-color: white;
+  font-family: 'GmarketSansMedium';
+
+  &:hover{
+    background-color: rgba(0,0,0,0.2);
+  }
 `;

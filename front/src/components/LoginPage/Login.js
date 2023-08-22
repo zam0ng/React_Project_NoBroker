@@ -6,6 +6,7 @@ import { LoginInput } from "./LoginInputStyled";
 import { useNavigate } from "react-router-dom";
 import axios from "../../Axios";
 import { useAuth } from "../../AuthContext";
+import Footer from "components/footer/Footer";
 // import background from "../../../public/img/loginBackground.png";
 // import background from "../../../public/img/loginBackground.png";
 // import {apartimg} from "../../img"
@@ -58,6 +59,7 @@ const Login = () => {
             placeholder="아이디를 입력하세요."
           ></LoginInput>
           <LoginInput
+            type="password"
             id="userPW"
             placeholder="비밀번호를 입력하세요."
           ></LoginInput>
@@ -67,6 +69,7 @@ const Login = () => {
           </div>
         </LoginBox>
       </Box>
+      <Footer style={{ position: "absolute", bottom: "0" }}></Footer>
     </>
   );
 };

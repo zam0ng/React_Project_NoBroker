@@ -107,6 +107,7 @@ const AddressInsert = (props) => {
                 border: "3px solid orange",
                 borderRadius: "2em",
                 cursor: "pointer",
+                fontFamily: 'GmarketSansMedium'
               }}
             >
               우편번호 찾기

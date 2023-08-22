@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const LoginInput = styled.input`
+  font-family: 'GmarketSansMedium';
+
   width: 300px;
   height: 30px;
   background-color: #fcfbf1;
