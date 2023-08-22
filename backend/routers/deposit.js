@@ -71,7 +71,7 @@ router.get("/fail", function (req, res) {
 //...
 // 웹훅 받을 엔드포인트 추가하기
 router.post("/hook", async function (req,res){
-  // console.log(req.body)
+  console.log("------------",req.body)
   if(req.body.data.status=='DONE'){
     console.log("hook 들어옴")
     const user_id = req.body.data.orderName.split("님")[0];
