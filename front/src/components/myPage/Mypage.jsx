@@ -8,6 +8,8 @@ import Transaciton from './transactiontab/Transaciton'
 import Vote from './votetab/Vote'
 import axios from '../../Axios'
 import MypageIslogin from '../insertPage/isLogined/MypageIslogin'
+import NavHeader from 'components/navbar/NavHeader'
+import Footer from 'components/footer/Footer'
 import { useQuery } from 'react-query'
 export const MypageGlobal = createContext();
 const Mypage = () => {
@@ -87,6 +89,7 @@ const Mypage = () => {
 
   return (
     <MypageGlobal.Provider value={obj}>
+        <NavHeader></NavHeader>
     <MypageIslogin/>
     <MypageAlldiv>
         <MypageContainer height={"210px"}>
@@ -127,6 +130,7 @@ const Mypage = () => {
 
         
     </MypageAlldiv>
+    <Footer></Footer>
     </MypageGlobal.Provider>
   )
 }

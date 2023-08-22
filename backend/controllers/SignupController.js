@@ -41,7 +41,7 @@ exports.UserAdd = async (req, res) => {
       console.log("@@@@@@@@@@@@@@@@@@@@", certificate_img);
       //   console.log("@@@@@@@@@@@@@@@@@@@@", `${certificate_img.destination}${certificate_img.filename}`);
       await User.create({
-        user_img: "imgs/User_Profile.png",
+        user_img: "imgs/userImg/User_Profile.png",
         user_id: user_id,
         password: hash,
         role: true,
