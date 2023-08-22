@@ -16,16 +16,16 @@ exports.UserAdd = async (req, res) => {
     const { user_id, password, user_name, ssn, phone, address, role } =
       req.body;
     const seal_img = req.files.seal_img[0];
-    // console.log(
-    //   "@@@@@@@@@@@@@@@@@@@@",
-    //   user_id,
-    //   password,
-    //   user_name,
-    //   ssn,
-    //   phone,
-    //   address,
-    //   role
-    // );
+    console.log(
+      "@@@@@@@@@@@@@@@@@@@@",
+      //   user_id,
+      password
+      //   user_name,
+      //   ssn,
+      //   phone,
+      //   address,
+      //   role
+    );
     // console.log("@@@@@@@@@@@@@@@@@@@@", seal_img);
     // console.log(
     //   "@@@@@@@@@@@@@@@@@@@@",
@@ -33,6 +33,7 @@ exports.UserAdd = async (req, res) => {
     // );
     // console.log("################", req.files);
     const hash = bcrypt.hashSync(password, 10);
+    console.log("hhhhhhhhaaaaasssssyyyyyy", hash);
 
     // 사업자 회원이면
     if (role == "true") {
@@ -59,7 +60,7 @@ exports.UserAdd = async (req, res) => {
       await User.create({
         user_img: "imgs/User_Profile.png",
         user_id: user_id,
-        password: password,
+        password: hash,
         role: false,
         user_name: user_name,
         address: address,
