@@ -13,7 +13,7 @@ const FilterButton = ({title, handleModalToggle, id , fontWeight, color}) => {
 
             <button  
               id={id} 
-              style={{paddingLeft: '10px' , paddingRight: '10px'}}
+              style={{paddingLeft: '10px' , paddingRight: '10px' , border : 'none'}}
               onClick={ (e) => { 
                 console.log(" FilterButton 에서 id 확인 " , e.currentTarget.id)   // currentTarget 를 쓰면 -> e.target.id 보다 더 잘 찍힌다.
                 handleModalToggle(e.currentTarget.id) 

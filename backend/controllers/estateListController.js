@@ -26,6 +26,7 @@ exports.getTradableEstate = async(req , res) => {
       // 배열로 만들어서, 내가 필요한 값이 있나 없나 filter 를 안 해줘도 됨.
 
     let includeLikes = [];  // 특정 유저가, 특정 매물에 좋아요 표시한 데이터 가져올 외래키
+    let includeUsers = [];  // 판매한 사람이 일반 유저 vs 중개업자인지 구분하기 위해서, 판매한 사람에 대한 User 테이블 정보 가져오기
 
 
     const whereConditions = {
@@ -104,6 +105,16 @@ exports.getTradableEstate = async(req , res) => {
       })
     }
 
+    // 중개인, 일반유저 표시
+      includeUsers.push({
+        model : User,
+        attributes : ['certificate_user'],
+        required : false,
+        // where : {id : Real_estate.seller}
+      })
+    
+
+
     console.log("whereConditions" , whereConditions)
       // [문제상황] whereConditions { state: null, type: 'null' } 이렇게 찍힘 | 즉, type 이 null 이라는게 문제
       // [시도] 그래서, 문자열 null 이면, 일반 null 로 해달라고 해봄
@@ -112,7 +123,7 @@ exports.getTradableEstate = async(req , res) => {
     const tradableEstate = await Real_estate.findAll({
       // where: whereConditions.state    // [주의] 이렇게 state 까지 넣어야 null 이 들어감.
       where: whereConditions,    // [주의] 이렇게 하면, 선택된게 들어감., 
-      include : includeLikes
+      include : [...includeLikes , ...includeUsers]   // includeUsers 배열을 include 옵션에 추가
     });
 
 

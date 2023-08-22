@@ -29,10 +29,14 @@ export const SearchContainer = styled.div`
 `
 
 export const SubHeaderWrapper = styled.div `
+
+
+
     width : 100%;
     height : 64px;
     display : flex; 
     border-bottom: 1px solid rgb(205, 205, 205);
+    border-top: 1px solid rgb(205, 205, 205);
     /* background-color : #ecebeb; */
 `
 
@@ -59,4 +63,19 @@ export const SearchBarContainer = styled.div`
         font-size : 14px;
     }
 
+`
+
+
+export const DefaultStyle = styled.div `
+*{
+    
+    /* margin: 0px; */
+    /* vertical-align: baseline; */
+    /* border: 1px; */
+    /* box-sizing: border-box; */
+    
+    /* font: inherit; */
+    /* font-size : 13px; */
+    /* letter-spacing : -0.9; */
+}
 `

@@ -209,13 +209,9 @@
               {/* 추가 가능 한 것 : 남은 거래 기간 / 댓글 개수 / SNS스럽게 업데이트 해봐도 좋을 듯! */}
 
             {/* 누가 내놨는지 보여주기 : 1) 일반유저(다방은 방주인이라고 함), 2) 중개인 */}
-            <SellerType>
-              {
-                
-              }
-              <span> 중개인 </span>
-              <span> 방주인 </span>
-            </SellerType>
+              <SellerType className={item.User.certificate_user == 0 ? "agent" : "owner"} >
+                { item.User.certificate_user == 0 ? "중개인" : "방주인" }     {/* real_setate 테이블에서 seller 의 User 테이블의 certificate_user == 0 이면 -> 중개인 |  */}
+              </SellerType>
 
           </InfoWrap>
 

@@ -22,6 +22,7 @@ import {
     SearchContainer,
     SubHeaderWrapper,
     SearchBarContainer,
+    DefaultStyle,
 } from 'components/PAC_Map/styles';
 
 import FilterCheckBoxModal from 'components/FilterCheckBoxModal/index';
@@ -596,7 +597,12 @@ const createZoomControl = ( map ) => {
 
 return (
     <>
+    {/* 목차 */}
       <NavHeader />
+    
+    {/* 본문 */}
+        <DefaultStyle>
+
             <SubHeaderWrapper>
 
                 <SearchContainer>
@@ -610,7 +616,7 @@ return (
                                 ref={autoCompleteRef}
                                 placeholder="서울대입구 원룸"
                                 type="text"
-                                style={{width : "100%" , marginLeft : '20px' , marginRight : '20px'}}
+                                style={{width : "100%" , marginLeft : '20px' , marginRight : '20px' , border : 'none' , backgroundColor : 'transparent'}}
                             />
 
                             {/* 매물 vs 찜한방 */}
@@ -703,9 +709,10 @@ return (
                     <CreateZoomControl map={map} />
 
                     </PAC_Map_Wrapper>
-                </MainContentWrap>
+            </MainContentWrap>
 
-        </>
+        </DefaultStyle>
+    </>
     )    
     }
 
