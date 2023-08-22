@@ -60,10 +60,10 @@ const NavHeader = () => {
             </div>
           </MenuListTitle>
           <MenuList>
-            <Link to="/insert">매물 등록</Link>
-          </MenuList>
-          <MenuList>
-            <Link to="/list">매물 목록</Link>
+            <Link to="/insert">매물등록</Link>
+            <Link to="/list">매물목록</Link>
+            <Link to="/mypage">마이페이지</Link>
+            <Link to="/vote">투표목록</Link>
           </MenuList>
           <MenuList></MenuList>
         </Menu>
