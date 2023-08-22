@@ -2,6 +2,7 @@ import axios from '../../Axios';
 import React from 'react'
 import { useQuery } from 'react-query';
 import VoteList from '../voteList/VoteList';
+import NavHeader from "../navbar/NavHeader";
 
 const Vote = () => {
 
@@ -36,6 +37,7 @@ const Vote = () => {
 
   return (
     <div>
+      <NavHeader />
       <h1>투표 목록</h1>
       <VoteList votable = {data.votable} />
     </div>

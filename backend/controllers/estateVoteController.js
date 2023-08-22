@@ -2,11 +2,11 @@ const { Real_estate, User, Vote, sequelize } = require("../models");
 const { Op } = require("sequelize");
 
 // 투표 결과 처리
-const setVoteResult = async (real_estate_id, balance, seller) => {
+const setVoteResult = async (real_estate_id, deposit, seller) => {
   try {
     const { count: voteCount, rows: votes } = await Vote.findAndCountAll({ where: { real_estate_id } });
     // 미달
-    if (voteCount < Math.floor(balance / 10000000)) {
+    if (voteCount < Math.floor(deposit / 10000000)) {
       // 미달 처리
       await Real_estate.update({ accpet: 3 }, { where: { id: real_estate_id } });
       return;
@@ -57,7 +57,6 @@ const setVoteResult = async (real_estate_id, balance, seller) => {
 exports.getEstate = async (req, res) => {
   try {
     const user_id = req.acc_decoded.id;
-    // const user_id = 1;
 
     // 해당 유저가 투표할 수 있는 등급인지 판별
     const user = await User.findOne({ where: { id: user_id } });
@@ -66,7 +65,7 @@ exports.getEstate = async (req, res) => {
     }
 
     // 투표 가능한 매물 목록
-    const votable = await Real_estate.findAll({
+    let votable = await Real_estate.findAll({
       where: { accpet: 0 },
       include: [
         {
@@ -78,6 +77,15 @@ exports.getEstate = async (req, res) => {
       // having: sequelize.literal('"vote.id" IS NULL'),
       having: sequelize.literal("`Votes.id` IS NULL"),
     });
+
+    const promises = votable.map(async (estate) => {
+      const voteCount = await Vote.count({where : {real_estate_id : estate.dataValues.id}});
+      estate.dataValues.voteCount = voteCount;
+      estate.dataValues.maxVote = Math.floor(estate.dataValues.deposit / 10000000);
+      return estate;
+    });
+
+    votable = await Promise.all(promises);
 
     console.log("아직 투표하지 않은 매물 목록", votable);
     return res.json({ votable });
@@ -115,10 +123,10 @@ exports.voteEstate = async (req, res) => {
     const voteCount = await Vote.count({ where: { real_estate_id } });
 
     // 최대 투표수를 넘기면 투표 결과에 따른 처리
-    console.log("최대 투표수 : ", voteCount, Math.floor(estate.dataValues.balance / 10000000));
-    if (voteCount >= Math.floor(estate.dataValues.balance / 10000000)) {
-      console.log("최대 투표수 넘김", Math.floor(estate.dataValues.balance / 10000000));
-      setVoteResult(real_estate_id, estate.dataValues.balance, estate.dataValues.seller);
+    console.log("최대 투표수 : ", voteCount, Math.floor(estate.dataValues.deposit / 10000000));
+    if (voteCount >= Math.floor(estate.dataValues.deposit / 10000000)) {
+      console.log("최대 투표수 넘김", Math.floor(estate.dataValues.deposit / 10000000));
+      setVoteResult(real_estate_id, estate.dataValues.deposit, estate.dataValues.seller);
     }
 
     return res.json({ message: "성공" });
@@ -133,7 +141,7 @@ exports.checkAuthorization = async (req, res) => {
   try {
     const { certificate_user } = req.acc_decoded;
 
-    if (certificate_user!=0) {
+    if (certificate_user==0) {
       return res.json({message : "권한 있음"});
     } else {
       return res.json({message : "권한 없음"});
@@ -151,17 +159,24 @@ exports.getUserVote = async (req, res) => {
     // const user_id = 1;
     const { real_estate_id } = req.params;
 
+    let certificate_user = false;
+    const user = await User.findOne({where : {id : user_id}});
+    if (user.certificate_user == 0) {
+      certificate_user = true;
+    }
+
     const vote = await Vote.findOne({where : {user_id, real_estate_id}});
 
-    const voteCount = await Vote.count({where : {real_estate_id}});
+    // const voteCount = await Vote.count({where : {real_estate_id}});
     const trueCount = await Vote.count({where : {real_estate_id, result : true}});
     const falseCount = await Vote.count({where : {real_estate_id, result : false}});
+    const voteCount = trueCount + falseCount;
     const estate = await Real_estate.findOne({where : {id : real_estate_id}});
 
-    let maxVote = Math.floor(estate.dataValues.balance / 10000000);
-    if (maxVote==0) { maxVote = 1};
+    let maxVote = Math.floor(estate.dataValues.deposit / 10000000);
+    if (maxVote==0) { maxVote = 1 };
 
-    return res.json({ vote, voteCounts : {voteCount, trueCount, falseCount, maxVote} });
+    return res.json({ vote, voteCounts : {voteCount, trueCount, falseCount, maxVote}, certificate_user });
   } catch (error) {
     console.log(error);
     return res.json({ error });
@@ -191,11 +206,20 @@ exports.setEstateAccept = async () => {
         },
       }, accpet: 0
     });
+    // const estateList = await Real_estate.findAll({
+    //   where: {
+    //     vote_end_date: {
+    //       [Op.gte]: yesterday, // 어제 날짜 이상
+    //       [Op.lt]: today,      // 오늘 날짜 미만
+    //     },
+    //     accpet: 0
+    //   },
+    // });
     console.log("estateList : ", estateList)
 
     const promises = estateList.map(async (estate) => {
       console.log("setEstateAccept estate", estate.dataValues.id, estate);
-      await setVoteResult(estate.dataValues.id, estate.dataValues.balance, estate.dataValues.seller)
+      await setVoteResult(estate.dataValues.id, estate.dataValues.deposit, estate.dataValues.seller)
     });
 
     await Promise.all(promises);

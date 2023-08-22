@@ -26,7 +26,7 @@ root.render(
 
         {/* devtools */}
 
-        {/* 리액트 쿼리 아이콘 없애기 
+        {/* 리액트 쿼리 아이콘 없애기
             1) initialIsOpen={false}
             2) style 에서 display 없애기  */}
         <ReactQueryDevtools initialIsOpen={false} />
@@ -39,14 +39,14 @@ root.render(
         </style>
 
         <BrowserRouter>
-        
+
             <App />
-        
+
         </BrowserRouter>
 
     </QueryClientProvider>
+
     </AuthProvider>
-    
 );
 
 reportWebVitals();

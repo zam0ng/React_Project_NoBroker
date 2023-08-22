@@ -133,8 +133,8 @@ exports.buyEstate = async (req, res) => {
     // 사용자 계약금 빠져나가고 잔금 사용 불가능
     await User.update(
       {
-        won: user.won - estate.deposit,
-        disabled_won: user.disabled_won + estate.balance,
+        won: user.won - estate.balance,
+        disabled_won: user.disabled_won + estate.deposit,
       },
       { where: { id: buyer } }
     );
@@ -186,7 +186,16 @@ exports.postComment = async (req, res) => {
     // const user_id = 1;
     const { real_estate_id, content } = req.body;
 
-    await Comment.create({ user_id, real_estate_id, content });
+    const createdAt = new Date().toLocaleString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    })
+
+    await Comment.create({ user_id, real_estate_id, content, createdAt });
 
     return res.json({ message: "성공" });
   } catch (error) {
@@ -202,7 +211,17 @@ exports.postRecomment = async (req, res) => {
     // const user_id = 1;
     const { comment_id, re_content } = req.body;
 
-    await Recomment.create({ user_id, comment_id, re_content });
+    const createdAt = new Date().toLocaleString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    })
+
+
+    await Recomment.create({ user_id, comment_id, re_content, createdAt });
 
     return res.json({ message: "성공" });
   } catch (error) {

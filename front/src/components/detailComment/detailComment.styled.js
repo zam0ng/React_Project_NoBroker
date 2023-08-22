@@ -98,5 +98,5 @@ export const H1 = styled.h1`
 `
 
 export const CommentDiv = styled.div`
-    padding-left: 50px;
+    padding-left: 20px;
 `

@@ -6,7 +6,7 @@ class User extends Model{
             {
                 // 유저 프로필 사진
                 user_img : {
-                    type : DataTypes.STRING,                 
+                    type : DataTypes.STRING,
                 },
                 // 유저 아이디
                 user_id :{
@@ -68,7 +68,7 @@ class User extends Model{
                 },
                 // 유저 보유 원화
                 won :{
-                    type : DataTypes.INTEGER,
+                    type : DataTypes.BIGINT,
                     defaultValue : 0,
                 },
                 // 유저 보유 btc
@@ -83,7 +83,7 @@ class User extends Model{
                 },
                 // 유저 사용불가 원화
                 disabled_won :{
-                    type : DataTypes.INTEGER,
+                    type : DataTypes.BIGINT,
                     defaultValue : 0,
                 },
                 // 유저 사용불가 btc
@@ -108,7 +108,7 @@ class User extends Model{
         )
     }
     static assicoate(db) {
-        
+
         db.User.hasMany(db.Real_estate, { foreignKey : "seller", sourceKey : "id"});
         db.User.hasMany(db.Transaction, { foreignKey : "buyer", sourceKey : "id"});
         db.User.hasMany(db.Transaction, { foreignKey : "seller", sourceKey : "id"});

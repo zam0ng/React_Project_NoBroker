@@ -7,7 +7,7 @@ const cron = require("node-cron");
 const uploadRouter = require("./routers/upload");
 const getUserInfoRouter = require("./routers/insertpageRouter");
 const MypageRouter = require("./routers/mypageRouter")
-const { estateDetailRouter, estateVoteRouter, estateListRouter, loginRouter  } = require("./routers");
+const { estateDetailRouter, estateVoteRouter, estateListRouter, loginRouter, signupRouter  } = require("./routers");
 const adminRouter = require('./routers/adminRouter')
 
 const { setEstateAccept } = require("./controllers/estateVoteController");
@@ -35,46 +35,27 @@ app.use(
   })
 );
 
-// test
-const fs = require('fs');
-
 sequelize
   .sync({ force: false })
   .then(() => {
     console.log("database Connect");
-
-    fs.writeFile("./errtest", "database Connect", function(err){
-      if (err === null) {
-          console.log('success');
-      } else {
-          console.log('fail');
-      }
-    });
-
   })
   .catch((err) => {
     console.error(err);
-
-    fs.writeFile("./errtest", err, function(err){
-      if (err === null) {
-          console.log('success');
-      } else {
-          console.log('fail');
-      }
-    });
-
   });
 
-
-app.use("/upload",uploadRouter);
+app.use("/upload", uploadRouter);
 app.use("/login", loginRouter);
-app.use("/insert",getUserInfoRouter);
-app.use("/mypage",MypageRouter);
+app.use("/insert", getUserInfoRouter);
+app.use("/mypage", MypageRouter);
+app.use("/signup", signupRouter);
 
+// 유저 이미지 경로 지정
+app.use("/user_imgs", express.static(path.join(__dirname, "imgs", "userImg")));
 // 매물 이미지 경로 지정
 app.use("/estate_imgs", express.static(path.join(__dirname, "imgs", "estate")));
 app.use("/detail", estateDetailRouter);
-app.use("/list", estateListRouter);     // 목록 페이지 라우터
+app.use("/list", estateListRouter); // 목록 페이지 라우터
 app.use("/vote", estateVoteRouter);
 app.use("/admin", adminRouter);
 
