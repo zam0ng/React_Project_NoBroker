@@ -80,9 +80,10 @@ const AddressInsert = (props) => {
         <div
           className="adr1"
           style={{
+            marginLeft: "50px",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            // alignItems: "flex-start",
           }}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -92,9 +93,9 @@ const AddressInsert = (props) => {
               id="postcode"
               placeholder="우편번호"
               style={{
-                backgroundColor: "#fcfbf1",
-                border: "none",
-                borderBottom: "2px solid",
+                // backgroundColor: "#fcfbf1",
+                // border: "none",
+                // borderBottom: "2px solid",
                 width: "160px",
               }}
             />
@@ -103,11 +104,12 @@ const AddressInsert = (props) => {
               style={{
                 backgroundColor: "white",
                 width: "120px",
-                height: "30px",
+                height: "35px",
                 border: "3px solid orange",
                 borderRadius: "2em",
                 cursor: "pointer",
-                fontFamily: 'GmarketSansMedium'
+                fontFamily: "GmarketSansMedium",
+                marginBottom: "20px",
               }}
             >
               우편번호 찾기
@@ -120,9 +122,9 @@ const AddressInsert = (props) => {
             placeholder="도로명주소"
             onChange={AdrChange}
             style={{
-              backgroundColor: "#fcfbf1",
-              border: "none",
-              borderBottom: "2px solid",
+              // backgroundColor: "#fcfbf1",
+              // border: "none",
+              // borderBottom: "2px solid",
               width: "280px",
             }}
           />
@@ -135,9 +137,9 @@ const AddressInsert = (props) => {
             placeholder="상세주소"
             onChange={AdrChange}
             style={{
-              backgroundColor: "#fcfbf1",
-              border: "none",
-              borderBottom: "2px solid",
+              // backgroundColor: "#fcfbf1",
+              // border: "none",
+              // borderBottom: "2px solid",
               width: "280px",
             }}
           />
