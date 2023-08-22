@@ -23,7 +23,7 @@ import { useAuth } from "./AuthContext";
 const queryClient = new QueryClient();
 
 function App() {
-  const { isLoggedIn, isCertificate } = useAuth();
+  const { isLoggedIn, isCertificate, isAdmin } = useAuth();
 
   return (
 
@@ -46,12 +46,12 @@ function App() {
             element={<Detail queryClient={queryClient} />}
           />
           <Route path="/list" element={<PAC_Map queryClient={queryClient}/>}></Route>
-          
+
           <Route
             path="/mypage"
             element={isLoggedIn ? <Mypage queryClient={queryClient} /> : <Login />}
           />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={isAdmin ? <Admin /> : <Login />} />
 
           {/* 업자 회원만 접근 가능 */}
           <Route

@@ -1,8 +1,8 @@
   import React, { useState } from 'react'
   import axios from '../../Axios'
 
-  import { 
-    CardItemWrapper, 
+  import {
+    CardItemWrapper,
     CardItem,
     ImgWrap,
     InfoWrap,
@@ -27,22 +27,22 @@
 
 
 
-  const EstateItem = ({ 
-                    // 로그인체크useState, 
-                    // isLoggedIn, 
+  const EstateItem = ({
+                    // 로그인체크useState,
+                    // isLoggedIn,
                     estatePrice,
                     estateLike,
                     estateRoomType,
                     estateArea,
-                    item, 
+                    item,
                     index,
                     // queryClient
-                    // estateImg  , 
+                    // estateImg  ,
                     // estate설명포인트
                   }) => {
-    
+
     const [isLikeBtnClicked , setIsLikeBtnClicked] = useState();
-    
+
     const [estateID , setEstateID] = useState();
     const queryClient = useQueryClient(); // ✅✅ 이렇게 수정
 
@@ -54,7 +54,7 @@
     const [estateYear , setEstateYear] = useState()
 
 
-    // 좋아요 버튼 추가 
+    // 좋아요 버튼 추가
     const addLikeBtnMutation = useMutation( async(likeForm) => {
       // filterTradableEstateData
       const {data} = await axios.post("detail/like" , likeForm, {
@@ -76,8 +76,8 @@
         }
       }
     })
-    
-    // 좋아요 버튼 제거 
+
+    // 좋아요 버튼 제거
     const delLikeBtnMutation = useMutation( async(deLikeForm) => {
       // filterTradableEstateData
       const {data} = await axios.post("detail/delLike" , deLikeForm, {
@@ -91,8 +91,8 @@
 
           queryClient.invalidateQueries('filterTradableEstateData');  // ⭐⭐ filterTradableEstateData 키를 가진 usequery 를 재시작 해서, 새로고침없이 1) 데이터 받고 2) 그에 따라 하트 색깔 채우기
           queryClient.refetchQueries('filterTradableEstateData')    // ⭐⭐ 무효화된 쿼리를 다시 실행해서, UI 즉시 업데이트 | 그리고 맨 위에 이렇게 import 해줘야 함, 나의 경우 props 전달로는 안 됨 | const queryClient = useQueryClient(); // ✅✅ 이렇게 수정
-        
-        }} 
+
+        }}
     }, {
       onError : (error) => {
         console.log(error)
@@ -105,16 +105,16 @@
           // console.log("real_estate_id🐣🐣" , item.id)  // 매물 id 확인
       setEstateID(item.id)
     } , [item.id])
-    
+
 
     const handleLikeBtn = (index) => {
 
       // console.log("좋아요 버튼 클릭☝☝" , index)
-      // 만약, 로그인 되었으면, 나오게 하고, 로그아웃 되면, 안 되게 하기 ✅✅ 
+      // 만약, 로그인 되었으면, 나오게 하고, 로그아웃 되면, 안 되게 하기 ✅✅
       if (!isLoggedIn) {
         console.log("isLoggedIn🚀🚀" , isLoggedIn)
         navigate("/login")
-        return 
+        return
       }
 
       // 클릭된 유저가 없으면 |
@@ -125,13 +125,13 @@
       }
 
       console.log("클릭된 estateID" , estateID)
-      // user_id : 이건 controller 에서 미들웨어로 받을거고 
+      // user_id : 이건 controller 에서 미들웨어로 받을거고
       // real_estate_id : 이걸 여기에서 받아서 넘길 것 임
-    
+
     }
 
     useEffect( () => {
-      setEstateImgUrl(item.img_1);
+      setEstateImgUrl(item.img_1.substr(12));
       // console.log("estateImgUrl" , estateImgUrl)
     },[] )
 
@@ -149,7 +149,7 @@
       }
 
     } , [])
-    
+
     useEffect( () => {
       // console.log("estateYear" , estateYear)
 
@@ -163,7 +163,7 @@
 
           <ImgWrap>
 
-            <ImgThumbnail>  
+            <ImgThumbnail>
               <img src={`http://localhost:8080/estate_imgs/${estateImgUrl}`} />
             </ImgThumbnail>
 
@@ -171,7 +171,7 @@
               {
                 estateLike && estateLike[0] != null ? <img src={detail_heart}></img> : <img src={detail_emptyheart} ></img>
               }
-              
+
             </LikeBtnWrap>
 
           </ImgWrap>
@@ -180,13 +180,13 @@
           <InfoWrap onClick={ () => navigate(`/detail/${estateID}`)} >
 
             {/* deposit , 거래 유형 데이터를 가져와야함*/}
-            <HeaderPrice> 
-              매매  {`${Math.floor(estatePrice/10000000)}억`} 
-              {estatePrice % 100000000 === 0 ? " " : `${Math.floor((estatePrice % 100000000) / 10000)}`} 
+            <HeaderPrice>
+              매매  {`${Math.floor(estatePrice/10000000)}억`}
+              {estatePrice % 100000000 === 0 ? " " : `${Math.floor((estatePrice % 100000000) / 10000)}`}
 
 
-            </HeaderPrice>  
-              
+            </HeaderPrice>
+
             {/* real_estate 에서 > type 가져와서 넣어주면 됨 ex) 아파트, 주택, 등  */}
 
             <RoomType>
@@ -197,9 +197,9 @@
               {/* 특징 : 1) 신축 여부 (신축 0~5년, 준신축 5년~10년, ) 2) 면적 */}
               {/* m2 이거 변환해야 함 */}
               {/* const squareMeter = "m\u00B2"; */}
-            <RoomDesc> 
-              {`${estateYear}`} 
-              {`${estateArea}m²`}{`(${Math.floor(estateArea/3)}평)`} 
+            <RoomDesc>
+              {`${estateYear}`}
+              {`${estateArea}m²`}{`(${Math.floor(estateArea/3)}평)`}
             </RoomDesc>
 
             {/* 특징 : 1) 지하철 3분 거리 2) 공원근처 | 구글 맵에서 계산해서 보여주면 좋을거 같음 ✅ */}
@@ -224,8 +224,8 @@
   export default EstateItem
 
 
-  /* 
-    console.log("이 유저가 클릭한 매물 보기🚀🚀" , estateLike[0]) 데이터 들어오는 유형 
+  /*
+    console.log("이 유저가 클릭한 매물 보기🚀🚀" , estateLike[0]) 데이터 들어오는 유형
     {
       "user_id": 1,
       "real_estate_id": 1

@@ -13,7 +13,7 @@ import Footer from "components/footer/Footer";
 
 const Login = () => {
   const nav = useNavigate();
-  const { isLoggedIn, login, certificate } = useAuth();
+  const { isLoggedIn, login, certificate, admin } = useAuth();
 
   const Signup = () => {
     console.log("회원가입 페이지 긔긔");
@@ -33,6 +33,9 @@ const Login = () => {
           login();
           if (e.data.certificate_user == 0) {
             certificate(true);
+          }
+          if (e.data.user_id =="admin") {
+            admin(true)
           }
           nav("/list");
         } else if (e.data.message == "비밀번호 오류") {

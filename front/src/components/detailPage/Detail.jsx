@@ -8,9 +8,10 @@ import DetailText from '../detailText/DetailText';
 import DetailBuy from '../detailBuy/DetailBuy';
 import VoteBtn from '../voteBtn/VoteBtn';
 
-import { DivList, LeftDiv, RightDiv, Divider, VoteDiv, VcDivider } from './detail.styled';
+import { Div, DivList, LeftDiv, RightDiv, Divider, VoteDiv, VcDivider } from './detail.styled';
 import DetailComment from '../detailComment/DetailComment';
 import NavHeader from "../navbar/NavHeader";
+import Footer from "components/footer/Footer";
 
 // const Detail = ({ queryClient, vote = false }) => {
 const Detail = ({ vote = false }) => {
@@ -32,10 +33,6 @@ const Detail = ({ vote = false }) => {
   };
 
   viewEstate();
-
-  useEffect(()=>{
-    console.log("isVoted", isVoted);
-  }, [isVoted]);
 
   if (!vote) {
 
@@ -84,7 +81,7 @@ const Detail = ({ vote = false }) => {
 
       {/* 투표 버튼 표시 */}
       {vote ?
-        <>
+        <Div>
           <DivList>
             <LeftDiv width={"50%"}>
               <DetailText estate={data.estate} />
@@ -95,21 +92,23 @@ const Detail = ({ vote = false }) => {
             </VoteDiv>
           </DivList>
 
-        </>
+        </Div>
         :
-        <>
+        <Div>
           <DivList>
-            <LeftDiv>
+            
+            <LeftDiv >
               <DetailText estate={data.estate} />
               <Divider />
               <DetailComment estateId={data.estate.id} comment={data.estate.Comments} queryClient={queryClient}></DetailComment>
-
             </LeftDiv>
+
             <RightDiv id='rightDiv'>
               <DetailBuy estate={data.estate} seller={data.seller} like={data.like} queryClient={queryClient} />
             </RightDiv>
           </DivList>
-        </>}
+        </Div>}
+        <Footer />
     </>
   );
 };

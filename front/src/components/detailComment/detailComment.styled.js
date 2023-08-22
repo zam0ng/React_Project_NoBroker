@@ -4,6 +4,7 @@ export const UserImg = styled.img`
     width: 30px;
     height: 30px;
     margin-right: 4px;
+    border-radius: 50%;
 `
 
 export const Date = styled.p`
@@ -84,8 +85,7 @@ export const InsertBtn = styled.div`
     align-items: center;
     justify-content: center;
     background-color: white;
-    /* background-color: orange; */
-    border: ${(props) => props.border || "4px solid orange" };
+    background-color: ${(props) => props.backgroundColor || "orange" };
     border-radius: 10px;
     margin-left: 4px;
     user-select: none;

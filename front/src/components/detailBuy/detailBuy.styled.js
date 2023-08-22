@@ -84,6 +84,7 @@ export const LikeBtnDiv = styled.div`
 export const UserImg = styled.img`
     width: 60px;
     height: 60px;
+    border-radius: 50%;
 `
 
 export const Divider = styled.div`

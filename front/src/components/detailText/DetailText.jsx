@@ -25,7 +25,11 @@ const DetailText = ({estate, seller}) => {
       <H1>상세정보</H1>
         <li>
         <DetailTitle>매매가</DetailTitle>
-        <DetailContent>{won(estate.balance + estate.deposit)}</DetailContent>
+        <DetailContent>{won(estate.deposit)}</DetailContent>
+        </li>
+        <li>
+        <DetailTitle>계약금</DetailTitle>
+        <DetailContent>{won(estate.balance)}</DetailContent>
         </li>
         <li>
         <DetailTitle>주소</DetailTitle>

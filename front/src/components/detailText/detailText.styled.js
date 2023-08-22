@@ -11,6 +11,8 @@ export const DetailContent = styled.p`
 export const DetailUl = styled.ul`
     list-style: none;
     padding-inline-start: 0px;
+    /* height: fit-content; */
+    /* height: 100px; */
 
     & li {
         display: flex;
