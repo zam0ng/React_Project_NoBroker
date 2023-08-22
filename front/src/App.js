@@ -45,9 +45,7 @@ function App() {
             element={<Detail queryClient={queryClient} />}
           />
           <Route path="/list" element={<PAC_Map queryClient={queryClient}/>}></Route>
-          {/* <Route path="/vote" element={<Vote />} /> */}
-          {/* <Route path="/vote/:id" element={<Detail queryClient={queryClient} vote={true} />} />
-          /> */}
+          
           <Route
             path="/mypage"
             element={<Mypage queryClient={queryClient} />}

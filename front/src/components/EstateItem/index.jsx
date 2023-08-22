@@ -109,6 +109,7 @@
 
     const handleLikeBtn = (index) => {
 
+      // console.log("좋아요 버튼 클릭☝☝" , index)
       // 만약, 로그인 되었으면, 나오게 하고, 로그아웃 되면, 안 되게 하기 ✅✅ 
       if (!isLoggedIn) {
         console.log("isLoggedIn🚀🚀" , isLoggedIn)
@@ -131,12 +132,12 @@
 
     useEffect( () => {
       setEstateImgUrl(item.img_1);
-      console.log("estateImgUrl" , estateImgUrl)
+      // console.log("estateImgUrl" , estateImgUrl)
     },[] )
 
 
     useEffect( () => {
-      console.log("item.built_year" , item.year_built)
+      // console.log("item.built_year" , item.year_built)
 
 
       if( 2018 <= item.year_built && item.year_built <= 2023) {
@@ -149,31 +150,10 @@
 
     } , [])
     
-    
     useEffect( () => {
-      console.log("estateYear" , estateYear)
+      // console.log("estateYear" , estateYear)
 
     } , [estateYear])
-
-
-    // useEffect( () => {
-    //   const lat = item.lat
-    //   const lng = item.lng
-    //   // const API_KEY = "AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio"
-    //   const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=500&type=transit_station&key=AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio`;
-      
-    //   axios.get(url)
-    //   .then(response => {
-    //     const results = response.data.results;
-    //     const nearestStation = results[0];  // 가장 가까운 지하철 역을 선택합니다.
-    //     console.log('Nearest Subway Station:', nearestStation.name);
-    //   })
-    //   .catch(error => {
-    //     console.error('Error:', error);
-    //   });
-
-    // } , [])
-
 
 
     return (

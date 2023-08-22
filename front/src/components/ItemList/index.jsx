@@ -6,7 +6,7 @@ import EstateItem from 'components/EstateItem/index'
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
-const ItemList = ({isLoggedIn , item, index , queryClient}) => {
+const ItemList = ({handleMyLikeClickedList , isLoggedIn , item, index , queryClient}) => {
   
 // console.log("item 정보" , item)
 
@@ -25,7 +25,9 @@ const ItemList = ({isLoggedIn , item, index , queryClient}) => {
         item = {item}
         index = {index}  
         estatePrice = {item.deposit}  // 매매가
+        
         estateLike = {item.Likes}   // 좋아요 버튼 클릭 된 기록이 있나? 만약, 있으면 빈 하트 표시 해주기 위해
+
         estateRoomType = {item.type}  // 아파트 vs 주택
         estateArea = {item.area}
         // estateImg = {item.img_1}  

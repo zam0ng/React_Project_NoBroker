@@ -89,6 +89,7 @@ const [ currentClusterer , setCurrentClusterer ] = useState(null)
 // const [ newMarkers , setNewMarkers ] = useState([])
 // let currentClusterer = null; // 현재 활성화된 클러스터를 저장하기 위한 변수
 
+const [myLikeClickedList , setMyLikeClickedList] = useState(false)
 
 
 // 데이터 필터링 handler 함수
@@ -167,20 +168,31 @@ const [ currentClusterer , setCurrentClusterer ] = useState(null)
     }
 
 
-// modal handler | 이게 먹히려나
-const handleModalToggle = useCallback((modalName) => {
-    console.log("어떤 모달 버튼 클릭 확인" , modalName)
-    console.log("현재 activaModal 확인 1" , activeModal)
-    // 기존에 열려있는게 == 클릭된 모달이름이랑 같으면 -> 모달 닫는다.
-    if(modalName === activeModal){
-        setActiveModal(null);
-        console.log("현재 activaModal 확인 2" , activeModal)
-    } else {
-        // 기존 열린게 == 클릭된 모달이랑 다르면 -> 모달 연다.
-        setActiveModal(modalName)
-        console.log("현재 activaModal 확인 3" , activeModal)
+    // 내가 찜한 방 보기
+    const handleMyLikeClickedList = () => {
+        setMyLikeClickedList(!myLikeClickedList)
+        console.log("handleMyLikeClickedList 찜한방 클릭🚀🚀🚀🚀🚀" , myLikeClickedList)
     }
-    } , [activeModal])
+
+
+
+
+    // modal handler | 이게 먹히려나
+    const handleModalToggle = useCallback((modalName) => {
+        console.log("어떤 모달 버튼 클릭 확인" , modalName)
+        console.log("현재 activaModal 확인 1" , activeModal)
+        // 기존에 열려있는게 == 클릭된 모달이름이랑 같으면 -> 모달 닫는다.
+        if(modalName === activeModal){
+            setActiveModal(null);
+            console.log("현재 activaModal 확인 2" , activeModal)
+        } else {
+            // 기존 열린게 == 클릭된 모달이랑 다르면 -> 모달 연다.
+            setActiveModal(modalName)
+            console.log("현재 activaModal 확인 3" , activeModal)
+        }
+        } , [activeModal])
+
+
 
 
 // + - 버튼 나오게 하기 😥😥😥
@@ -352,9 +364,16 @@ const createZoomControl = ( map ) => {
                 params.push(`areaRangeValue=${areaRangeValue}`)
             }
 
+            // // 내가 찜한 것만 보게 하기 
+            // console.log("myLikeClickedList🔮🔮🔮" , myLikeClickedList)
+            // if(myLikeClickedList == true){  
+            //     params.push(`myLikeClickedList=${myLikeClickedList}`)
+            // }
+
             if(params.length > 0) {
                 url += '?' + params.join('&');
             }
+            console.log("⭐서버로 보내는 url : " , url)
 
             const response = await axios.get(url , {
                 withCredentials : true,
@@ -369,7 +388,7 @@ const createZoomControl = ( map ) => {
         }
 
     // api 함수 호출해서 데이터 가져오기 | usequery 사용
-    const { data , error , isLoading } = useQuery( ['filterTradableEstateData' , priceRangeValue , checkboxValue , builtYearValue , areaRangeValue] 
+    const { data , error , isLoading } = useQuery( ['filterTradableEstateData' , priceRangeValue , checkboxValue , builtYearValue , areaRangeValue , myLikeClickedList] 
     , fetchFilterTradableEstateData , {
         // enabled : !!checkboxValue //  [해석] 이게 활성화 되면 -> checkboxValue 에 값이 있을 때만 값이 가져와짐
     })
@@ -534,7 +553,7 @@ const createZoomControl = ( map ) => {
                         const yuk = Math.floor(tempDeposit/100000000)
                         const chenMan = Math.floor((tempDeposit%100000000)/100000000)
                         const contentString = `<div> ${yuk}.${chenMan}억</div>`
-                        console.log("단위변환" ,contentString)
+                        // console.log("단위변환" ,contentString)
 
                         // marker 가 만들어질 때 마다 info window 생성
                         const infoWindow = new window.google.maps.InfoWindow();
@@ -589,7 +608,8 @@ return (
                                 style={{width : "100%" , marginLeft : '20px' , marginRight : '20px'}}
                             />
 
-                            <SearchBarButton />
+                            {/* 매물 vs 찜한방 */}
+                            <SearchBarButton handleMyLikeClickedList={handleMyLikeClickedList} />
 
                     </SearchBarContainer>
 
@@ -660,13 +680,14 @@ return (
                     {
                         tradableData.map( (item, index) => {
                             return (
-                                <ItemList 
+                                <ItemList
                                     key = {index}  
                                     isLoggedIn = {isLoggedIn} 
                                     queryClient={queryClient} 
                                     className="ItemList" 
                                     item={item} 
-                                    index={index} /> 
+                                    index={index}
+                                    /> 
                         ) } )
                     }
                 </ContentWrapper>

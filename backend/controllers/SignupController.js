@@ -59,7 +59,7 @@ exports.UserAdd = async (req, res) => {
       await User.create({
         user_img: "imgs/User_Profile.png",
         user_id: user_id,
-        password: password,
+        password: hash,
         role: false,
         user_name: user_name,
         address: address,
