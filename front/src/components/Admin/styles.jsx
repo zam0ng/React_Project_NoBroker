@@ -44,6 +44,7 @@ export const UserListWrap = styled.div`
     
     justify-content: space-evenly;
 
+    margin-left : 10px;
     border-bottom: 1px solid rgb(243, 243, 243);
     letter-spacing : -1px;
 
@@ -51,53 +52,63 @@ export const UserListWrap = styled.div`
 
     > p:nth-child(1) {
         width : 80px;
+        flex-shrink : 0;
         /* background-color : blue; */
     }
     /* 유저이름 */
     > p:nth-child(2) {
         width : 80px;
+        flex-shrink : 0;
         /* background-color : lightgreen; */
     }
     /*  주소 */
     > p:nth-child(3) {
         width : 250px;
+        flex-shrink : 0;
         /* background-color : pink; */
     }
     /* 전화번호 */
     > p:nth-child(4) {
         width : 120px;
+        flex-shrink : 0;
         /* background-color : lightyellow; */
     }
     /* 허위 매물 등록 횟수 */
     > p:nth-child(5) {
         width : 100px;
+        flex-shrink : 0;
         /* background-color : blue; */
     }
     /* 판매 가능 여부 */
     > p:nth-child(6) {
         width : 100px;
+        flex-shrink : 0;
         /* background-color : lightgray */
     }
     /* 공인중개사 회원 여부 */
     > p:nth-child(7) {
         width : 100px;
+        flex-shrink : 0;
         /* background-color : lightcoral */
     }
     /* 공인중개사 자격증 이미지 */
     > p:nth-child(8) { 
         width : 100px;
+        flex-shrink : 0;
         /* background-color : lightblue */
     }
 
     // 인감사진 | 사이즈를 좀 더 키워야? 
     > p:nth-child(9) { 
         width : 80px;
+        flex-shrink : 0;
         /* background-color : lightcoral */
     }
     
     /* 업자 인증 버튼 */
     > div:nth-child(10) { 
         width : 120px;
+        flex-shrink : 0;
         /* background-color : lightcoral; */
         display : flex;
         justify-content: space-evenly;
@@ -106,6 +117,7 @@ export const UserListWrap = styled.div`
 `
 
 export const UserItemWrap = styled.div`
+    position : relative;
 
     font-size : 16px;
     letter-spacing : -0.9px;
@@ -126,63 +138,153 @@ export const UserItemWrap = styled.div`
     
     > p:nth-child(1) {
         width : 80px;
+        flex-shrink : 0;
         /* background-color : blue; */
     }
     /* 유저이름 */
     > p:nth-child(2) {
         width : 80px;
+        flex-shrink : 0;
         /* background-color : lightgreen; */
     }
     /*  주소 */
     > p:nth-child(3) {
         width : 250px;
+        flex-shrink : 0;
         /* background-color : pink; */
     }
     /* 전화번호 */
     > p:nth-child(4) {
         width : 120px;
+        flex-shrink : 0;
         /* background-color : lightyellow; */
     }
     /* 허위 매물 등록 횟수 */
     > p:nth-child(5) {
         width : 100px;
+        flex-shrink : 0;
         /* background-color : blue; */
     }
     /* 판매 가능 여부 */
     > p:nth-child(6) {
         width : 100px;
+        flex-shrink : 0;
         /* background-color : lightgray */
     }
     /* 공인중개사 회원 여부 */
     > p:nth-child(7) {
         width : 100px;
+        flex-shrink : 0;
         /* background-color : lightcoral */
     }
     /* 공인중개사 자격증 이미지 */
     > p:nth-child(8) { 
         width : 100px;
+        flex-shrink : 0;
         /* background-color : lightblue */
     }
 
     // 인감사진 | 사이즈를 좀 더 키워야? 
     > p:nth-child(9) { 
         width : 80px;
+        flex-shrink : 0;
         /* background-color : lightcoral */
     }
     
     /* 업자 인증 버튼 */
     > div:nth-child(10) { 
         width : 120px;
+        flex-shrink : 0;
         /* background-color : lightcoral; */
         display : flex;
         justify-content: space-evenly;
     
     }
+`
 
 
+export const ImageContainer = styled.div`
 
+    cursor: pointer;
+    
+    
+    width : 50px;
+    height : 50px;
+
+    background-image : url(${props => props.imageUrl});
+    background-position : center;
+    background-repeat : no-repeat;
+    background-size : cover;
 
 `
+
+export const ClickedImageContainer = styled.div`
+
+    cursor: pointer;
+    position : fixed;
+    top: 20%;
+    left: 65%;
+    /* transform: translate(-50%, 1%); */
+    z-index: 2000;
+    
+    display : ${props => props.display} ;
+    width : 500px;
+    height : 500px;
+
+    background-image : url(${props => props.imageUrl});
+    background-position : center;
+    background-repeat : no-repeat;
+    background-size : cover;
+
+`
+export const SealImageContainer = styled.div`
+
+    cursor: pointer;
+    
+    
+    width : 50px;
+    height : 50px;
+
+    background-image : url(${props => props.imageUrl});
+    background-position : center;
+    background-repeat : no-repeat;
+    background-size : cover;
+
+`
+
+export const SealClickedImageContainer = styled.div`
+
+    cursor: pointer;
+    position : fixed;
+    top: 20%;
+    left: 65%;
+    /* transform: translate(-50%, 1%); */
+    z-index: 2000;
+    
+    display : ${props => props.display} ;
+    width : 500px;
+    height : 500px;
+
+    background-image : url(${props => props.imageUrl});
+    background-position : center;
+    background-repeat : no-repeat;
+    background-size : cover;
+
+`
+
+// export const BackgroundImg = styled.div`
+//     position : fixed;
+//     z-index : 100;
+//     top : 0;
+//     background-color : rgba(0,0,0,0.3);
+//     width : 2000px;
+//     height : 2000px;
+    
+//     display : flex;
+//     justify-content : center;
+//     align-items : center;
+// `
+
 
 
 // export const CriteriaContainer = styled.div`

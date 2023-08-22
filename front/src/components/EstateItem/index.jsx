@@ -50,6 +50,9 @@
 
     const { isLoggedIn, isCertificate } = useAuth();
 
+    const [estateImgUrl , setEstateImgUrl] = useState()
+    const [estateYear , setEstateYear] = useState()
+
 
     // 좋아요 버튼 추가 
     const addLikeBtnMutation = useMutation( async(likeForm) => {
@@ -89,11 +92,7 @@
           queryClient.invalidateQueries('filterTradableEstateData');  // ⭐⭐ filterTradableEstateData 키를 가진 usequery 를 재시작 해서, 새로고침없이 1) 데이터 받고 2) 그에 따라 하트 색깔 채우기
           queryClient.refetchQueries('filterTradableEstateData')    // ⭐⭐ 무효화된 쿼리를 다시 실행해서, UI 즉시 업데이트 | 그리고 맨 위에 이렇게 import 해줘야 함, 나의 경우 props 전달로는 안 됨 | const queryClient = useQueryClient(); // ✅✅ 이렇게 수정
         
-        } else {
-          console.log("찜 추가 과정에서 오류 발생📛 " , data);
-          alert("찜 삭제 오류 발생")
-        }
-      }
+        }} 
     }, {
       onError : (error) => {
         console.log(error)
@@ -112,6 +111,7 @@
 
       // 만약, 로그인 되었으면, 나오게 하고, 로그아웃 되면, 안 되게 하기 ✅✅ 
       if (!isLoggedIn) {
+        console.log("isLoggedIn🚀🚀" , isLoggedIn)
         navigate("/login")
         return 
       }
@@ -128,18 +128,63 @@
       // real_estate_id : 이걸 여기에서 받아서 넘길 것 임
     
     }
+
+    useEffect( () => {
+      setEstateImgUrl(item.img_1);
+      console.log("estateImgUrl" , estateImgUrl)
+    },[] )
+
+
+    useEffect( () => {
+      console.log("item.built_year" , item.year_built)
+
+
+      if( 2018 <= item.year_built && item.year_built <= 2023) {
+        setEstateYear("신축(5년이내), ")
+      } else if (2013 <= item.year_built && item.year_built < 2018) {
+        setEstateYear("준신축(10년이내), ")
+      } else {
+        setEstateYear("")
+      }
+
+    } , [])
     
+    
+    useEffect( () => {
+      console.log("estateYear" , estateYear)
+
+    } , [estateYear])
+
+
+    // useEffect( () => {
+    //   const lat = item.lat
+    //   const lng = item.lng
+    //   // const API_KEY = "AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio"
+    //   const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=500&type=transit_station&key=AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio`;
+      
+    //   axios.get(url)
+    //   .then(response => {
+    //     const results = response.data.results;
+    //     const nearestStation = results[0];  // 가장 가까운 지하철 역을 선택합니다.
+    //     console.log('Nearest Subway Station:', nearestStation.name);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error:', error);
+    //   });
+
+    // } , [])
+
+
 
     return (
 
       <CardItemWrapper>
-        <CardItem onClick={ () => navigate(`/detail/${estateID}`)} >
+        <CardItem  >
 
           <ImgWrap>
 
-            <ImgThumbnail>
-
-              <img src={"https://d1774jszgerdmk.cloudfront.net/512/e4356ef7-5d88-4976-b422-fef2393c2551-2"} /> 
+            <ImgThumbnail>  
+              <img src={`http://localhost:8080/estate_imgs/${estateImgUrl}`} />
             </ImgThumbnail>
 
             <LikeBtnWrap onClick={ () => handleLikeBtn(index) } >
@@ -152,11 +197,13 @@
           </ImgWrap>
 
 
-          <InfoWrap>
+          <InfoWrap onClick={ () => navigate(`/detail/${estateID}`)} >
 
             {/* deposit , 거래 유형 데이터를 가져와야함*/}
             <HeaderPrice> 
-              매매 {`${estatePrice}`}
+              매매  {`${Math.floor(estatePrice/10000000)}억`} 
+              {estatePrice % 100000000 === 0 ? " " : `${Math.floor((estatePrice % 100000000) / 10000)}`} 
+
 
             </HeaderPrice>  
               
@@ -171,7 +218,8 @@
               {/* m2 이거 변환해야 함 */}
               {/* const squareMeter = "m\u00B2"; */}
             <RoomDesc> 
-              신축(5년이내) , {`${estateArea}m2(수정)`} 
+              {`${estateYear}`} 
+              {`${estateArea}m²`}{`(${Math.floor(estateArea/3)}평)`} 
             </RoomDesc>
 
             {/* 특징 : 1) 지하철 3분 거리 2) 공원근처 | 구글 맵에서 계산해서 보여주면 좋을거 같음 ✅ */}
@@ -182,6 +230,9 @@
 
             {/* 누가 내놨는지 보여주기 : 1) 일반유저(다방은 방주인이라고 함), 2) 중개인 */}
             <SellerType>
+              {
+                
+              }
               <span> 중개인 </span>
               <span> 방주인 </span>
             </SellerType>
