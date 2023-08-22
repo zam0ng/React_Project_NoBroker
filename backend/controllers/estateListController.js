@@ -18,8 +18,8 @@ exports.getTradableEstate = async(req , res) => {
     // req.acc_decoded.id ? console.log("req.acc_decoded.id | 로그인한 유저 id : " , req.acc_decoded.id) : console.log("로그인하지 않은 상태😥😥")
     // console.log("req" , req) // 🔵
     // console.log("req.acc_decoded" , req.acc_decoded) // 🔵
-    // console.log("req.acc_decoded.id" , req.acc_decoded.id)  // 8 나옴 🔵
-    // console.log("req.query.myLikeClickedList" , req.query.myLikeClickedList)  // 문자열 true 나옴
+    console.log("req.acc_decoded.id" , req.acc_decoded.id)  // 8 나옴 🔵
+    console.log("req.query.myLikeClickedList" , req.query.myLikeClickedList)  // 문자열 true 나옴
     // console.log(" req.query.roomType | 방 종류 " , req.query.roomType)
       // [목표 URL]`http://localhost:8080/list/tradableEstate?roomType=${checkedRoomTypes}&priceRangeValue=${priceRangeValue}`
       // 'req.query 는 객체' 임 => 따라서, 복수의 key 값이 있어도, 개별적으로 접근할 수 있음.
@@ -27,7 +27,6 @@ exports.getTradableEstate = async(req , res) => {
 
     let includeLikes = [];  // 특정 유저가, 특정 매물에 좋아요 표시한 데이터 가져올 외래키
     let includeUsers = [];  // 판매한 사람이 일반 유저 vs 중개업자인지 구분하기 위해서, 판매한 사람에 대한 User 테이블 정보 가져오기
-
 
     const whereConditions = {
         state : 0,   // 모든 집값 상태를 가져오겠다.
@@ -85,7 +84,6 @@ exports.getTradableEstate = async(req , res) => {
       }
     }
 
-
     if(req.query.areaRangeValue){
       const minArea = parseInt(req.query.areaRangeValue.split(',')[0], 10);
       const maxArea = parseInt(req.query.areaRangeValue.split(',')[1], 10);
@@ -119,14 +117,11 @@ exports.getTradableEstate = async(req , res) => {
       // [문제상황] whereConditions { state: null, type: 'null' } 이렇게 찍힘 | 즉, type 이 null 이라는게 문제
       // [시도] 그래서, 문자열 null 이면, 일반 null 로 해달라고 해봄
 
-
     const tradableEstate = await Real_estate.findAll({
       // where: whereConditions.state    // [주의] 이렇게 state 까지 넣어야 null 이 들어감.
       where: whereConditions,    // [주의] 이렇게 하면, 선택된게 들어감.,
       include : [...includeLikes , ...includeUsers]   // includeUsers 배열을 include 옵션에 추가
     });
-
-
 
     return res.json({ tradableEstate })
 

@@ -22,7 +22,7 @@ const Admin = () => {
     const [userData, setUserData] = useState();
 
     const userDataList = async() => {
-        let url = '/insert/userListData'
+        let url = '/admin/userListData'
 
         const response = await axios.get(url , {
             withCredentials : true,

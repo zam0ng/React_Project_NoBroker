@@ -25,7 +25,7 @@
 
   import { useAuth } from '../../AuthContext';
 
-
+  import { serverUrl } from 'components/serverURL'
 
   const EstateItem = ({
                     // 로그인체크useState,
@@ -131,8 +131,7 @@
     }
 
     useEffect( () => {
-      setEstateImgUrl(item.img_1.substr(12));
-      // console.log("estateImgUrl" , estateImgUrl)
+      setEstateImgUrl(item.img_1.substr(12));   // substr(12) = 앞에 파일 경로 지워주기 ✅✅
     },[] )
 
 
@@ -147,14 +146,12 @@
       } else {
         setEstateYear("")
       }
-
     } , [])
 
     useEffect( () => {
       // console.log("estateYear" , estateYear)
 
     } , [estateYear])
-
 
     return (
 

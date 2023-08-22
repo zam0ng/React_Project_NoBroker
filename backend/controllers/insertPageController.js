@@ -21,20 +21,20 @@ exports.getUserInfo = async (req,res)=>{
 }
 
 
-exports.getUserList = async(req, res) => {
-    try {
+// exports.getUserList = async(req, res) => {
+//     try {
         
-        const userListData = await User.findAll({
-            // where : {}
-        })
+//         const userListData = await User.findAll({
+//             // where : {}
+//         })
 
-        // console.log("userListData" , userListData)
-        return res.json({ userListData })
+//         // console.log("userListData" , userListData)
+//         return res.json({ userListData })
 
-    } catch (error) {
-        console.log("getUserList 에서 오류 " , error)
+//     } catch (error) {
+//         console.log("getUserList 에서 오류 " , error)
         
-    }
-}
+//     }
+// }
 
 
