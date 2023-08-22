@@ -74,6 +74,7 @@ export const CommentInput = styled.input`
     padding-right: 10px;
     font-size: 16px;
     border-radius: 10px;
+    font-family: 'GmarketSansMedium';
 `
 
 export const InsertBtn = styled.div`
@@ -82,7 +83,9 @@ export const InsertBtn = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: orange;
+    background-color: white;
+    /* background-color: orange; */
+    border: ${(props) => props.border || "4px solid orange" };
     border-radius: 10px;
     margin-left: 4px;
     user-select: none;

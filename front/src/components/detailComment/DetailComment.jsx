@@ -191,7 +191,7 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
               onClick={(e) => {
                 commentClick(el.id);
               }}
-              style={{ backgroundColor: "rgba(0,0,0,0.3)" }}
+              border = {"4px solid rgba(0,0,0,0.3)"}
             >
               취소
             </InsertBtn>

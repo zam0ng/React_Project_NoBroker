@@ -55,6 +55,7 @@ export const ContentDiv = styled.div`
         display: flex;
         padding-left : 20px;
         padding-right : 20px;
+        font-family: 'GmarketSansMedium';
     }
 `
 
