@@ -3,13 +3,8 @@ import {DateImg,OtherInfo,JustState} from '../checktab/checkstyled'
 import { MypageGlobal } from '../Mypage';
 import { useContext } from 'react';
 import {UpdateBtn, EstateAllInfo} from './registerstyled';
-<<<<<<< HEAD
 import axios from '../../../Axios';
-import { useMutation, useQueryClient } from 'react-query';
-=======
-import axios from 'axios';
-import { useMutation, useQueryClient,useQuery } from 'react-query';
->>>>>>> j
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 const RegisterList = ({data}) => {
   const {getmyregisterinfo} =useContext(MypageGlobal);
   const userID = getmyregisterinfo.user_id;
@@ -92,8 +87,8 @@ const RegisterList = ({data}) => {
 
     const ImgUrl = data.Real_estate.img_1?.split("\\")[2];
 
-    
-    
+
+
     const transactionStateUpdate = async(el)=>{
       const data = await axios.get("/mypage/transactionStateUpdate",{
         params : {el},
@@ -116,7 +111,7 @@ const RegisterList = ({data}) => {
       onSuccess : async(data)=>{
           try {
             queryClient.invalidateQueries(['getmyregister'])
-            
+
             const blob = new Blob([data.data], { type: 'application/pdf' });
             console.log(blob);
             const downloadLink = document.createElement('a');
@@ -126,10 +121,10 @@ const RegisterList = ({data}) => {
           } catch (error) {
             console.log("jsx 승인 에서 오류남 ",error);
           }
-          
+
         }
       });
-    
+
 
     const mutation = useMutation(transactionStateUpdate,{
       onSuccess : async(data)=>{
@@ -204,7 +199,7 @@ const RegisterList = ({data}) => {
         mutation.mutate({btnname,estateId,userID,transactionID});
       }
     }
-    
+
 
   return (
     <EstateAllInfo>
