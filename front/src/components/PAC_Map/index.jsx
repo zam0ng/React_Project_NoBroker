@@ -598,7 +598,7 @@ const createZoomControl = ( map ) => {
 return (
     <>
     {/* 목차 */}
-      <NavHeader />
+    <NavHeader />
     
     {/* 본문 */}
         <DefaultStyle>
@@ -668,7 +668,6 @@ return (
                                                 label_04 = {"10년 이내"}
                                                 label_05 = {"15년 이내"}
                                                 label_06 = {"15년 이상"}
-
                                                 />
                         }
 

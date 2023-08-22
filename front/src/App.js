@@ -50,7 +50,10 @@ function App() {
             path="/mypage"
             element={<Mypage queryClient={queryClient} />}
           />
-          <Route path="/admin" element={<Admin />} />
+
+          <Route path="/admin"    element={<Admin />} />  
+            {/* ID : admin | PW : admin1234 */}
+            {/* isLogin.req.acc_decoded 미들웨어추가해서, ?? */}
 
           {/* 업자 회원만 접근 가능 */}
           <Route
