@@ -1,16 +1,16 @@
 import React from 'react'
 import { Container, Title, DepositBox,DivBox,Name,Balance,Hover,SpeechBubble } from './depositestyled'
 
-const Deposite = ({setBalance,setDeposite,deposite}) => {
+const Deposite = ({setBalance,setDeposite,deposite,balance}) => {
 
     const BalanceInputValue = (e)=>{
-        setBalance(e.target.value);
+        setDeposite(e.target.value);
         const Deposite = parseInt(e.target.value)/10
-        setDeposite(Deposite);
+        setBalance(Deposite);
     }
 
     const DepositeInputValue =(e)=>{
-        setDeposite(e.target.value);
+        setBalance(e.target.value);
     }
 
   return (
@@ -29,7 +29,7 @@ const Deposite = ({setBalance,setDeposite,deposite}) => {
             <DivBox>
                 <Name>계약금</Name>
                 <Balance>
-                    <input type="text" placeholder={deposite} onChange ={DepositeInputValue}/>
+                    <input type="text" placeholder={balance} onChange ={DepositeInputValue}/>
                     <p>만원</p>
                 </Balance>
             </DivBox>

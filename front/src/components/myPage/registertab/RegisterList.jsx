@@ -4,14 +4,14 @@ import { MypageGlobal } from '../Mypage';
 import { useContext } from 'react';
 import {UpdateBtn, EstateAllInfo} from './registerstyled';
 import axios from '../../../Axios';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 const RegisterList = ({data}) => {
   const {getmyregisterinfo} =useContext(MypageGlobal);
   const userID = getmyregisterinfo.user_id;
   const [state,setState] = useState("");
   const [btnName,setbtnName] = useState();
   const [btnName2,setbtnName2] = useState();
-  console.log(data);
+  // console.log(data);
   useEffect(()=>{
 
     if( data.seller == userID && data.approved == 0 && data.cancel==null && data.completed ==0){
@@ -24,14 +24,14 @@ const RegisterList = ({data}) => {
       setbtnName("판매취소");
       setbtnName2("");
     }
-    else if(data.seller==userID && data.completed==1){
+    else if(data.seller==userID && data.completed==2){
       setState("판매완료");
       setbtnName("");
       setbtnName2("");
     }
     else if(data.seller==userID && data.cancel==userID){
       setState("판매취소");
-      setbtnName("");
+      setbtnName("재등록");
       setbtnName2("");
     }
     else if(data.buyer==userID && data.approved==0 && data.cancel==null && data.completed ==0){
@@ -44,7 +44,7 @@ const RegisterList = ({data}) => {
       setbtnName("구매취소");
       setbtnName2("");
     }
-    else if(data.buyer==userID && data.completed==1){
+    else if(data.buyer==userID && data.completed==2){
       setState("구매완료");
       setbtnName("");
       setbtnName2("");
@@ -87,32 +87,67 @@ const RegisterList = ({data}) => {
 
     const ImgUrl = data.Real_estate.img_1?.split("\\")[2];
 
+
+
     const transactionStateUpdate = async(el)=>{
       const data = await axios.get("/mypage/transactionStateUpdate",{
         params : {el},
         withCredentials : true,
       })
-      return data.data;
+      return data;
+    }
+    const approvedUpdate = async(el)=>{
+      const data = await axios.get("http://localhost:8080/mypage/approvedUpdate",{
+        params : {el},
+        withCredentials : true,
+        responseType: 'blob',
+
+      })
+      return data;
     }
     const queryClient = useQueryClient();
+
+    const approveMutation = useMutation(approvedUpdate,{
+      onSuccess : async(data)=>{
+          try {
+            queryClient.invalidateQueries(['getmyregister'])
+
+            const blob = new Blob([data.data], { type: 'application/pdf' });
+            console.log(blob);
+            const downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = 'contract.pdf';
+            downloadLink.click();
+          } catch (error) {
+            console.log("jsx 승인 에서 오류남 ",error);
+          }
+
+        }
+      });
+
+
     const mutation = useMutation(transactionStateUpdate,{
-      onSuccess : (data)=>{
+      onSuccess : async(data)=>{
         console.log("거래 상태 업데이트 완료 ",data)
-        if(data=="성공"){
+        if(data.data=="성공"){
 
           queryClient.invalidateQueries(['getmyregister'])
           alert('판매 취소가 완료되었습니다.')
         }
-        else if(data=='판매취소완료'){
+        else if(data.data=='판매취소완료'){
           queryClient.invalidateQueries(['getmyregister'])
           alert('판매 취소가 완료되었습니다.')
 
         }
-        else if(data=='판매자잔고부족'){
+        else if(data.data=='판매자잔고부족'){
           alert("잔고금액이 계약금의 2배보다 적어 판매 취소가 불가능합니다.")
         }
-        else if(data=='구매취소완료'){
+        else if(data.data=='구매취소완료'){
           queryClient.invalidateQueries(['getmyregister']);
+        }
+        else if(data.data=='재등록 완료'){
+          queryClient.invalidateQueries(['getmyregister']);
+
         }
       }
     })
@@ -120,25 +155,25 @@ const RegisterList = ({data}) => {
       return window.confirm(message);
     };
 
-    const transactionStateUpdateBtn=(btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,approved) =>{
+    const transactionStateUpdateBtn=(btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,approved,balance) =>{
       console.log("params",btnname);
 
       if(btnname=="승인"){
-        mutation.mutate({btnname,estateId,userID,transactionID});
+        approveMutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,balance});
       }
       else if(btnname=="판매취소"){
         if(approved==1){
 
           if(customConfirm('거래중인 매물을 판매 취소할 경우 계약금 2배를 구매자에게 배상합니다.')){
 
-            mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID});
+            mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,balance});
           }
           else{
             return;
           }
         }
         else{
-          mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID});
+          mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,balance});
         }
 
 
@@ -148,19 +183,24 @@ const RegisterList = ({data}) => {
 
           if(customConfirm('거래중인 매물을 구매 취소할 경우 계약금을 돌려받을 수 없습니다..')){
 
-            mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID});
+            mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,balance});
           }
           else{
             return;
           }
         }
         else{
-          mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID});
+          mutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,balance});
         }
 
 
       }
+      else if(btnname=="재등록"){
+        mutation.mutate({btnname,estateId,userID,transactionID});
+      }
     }
+
+
   return (
     <EstateAllInfo>
       <DateImg>
@@ -174,8 +214,8 @@ const RegisterList = ({data}) => {
       </OtherInfo>
       <JustState>
         <span>{state}</span>
-        {btnName ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved)}}>{btnName}</UpdateBtn> :<></>}
-        {btnName2 ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName2,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved)}}>{btnName2}</UpdateBtn> :<></>}
+        {btnName ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved,data.Real_estate.balance)}}>{btnName}</UpdateBtn> :<></>}
+        {btnName2 ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName2,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved,data.Real_estate.balance)}}>{btnName2}</UpdateBtn> :<></>}
       </JustState>
 
 

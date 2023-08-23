@@ -53,8 +53,8 @@ class Transaction extends Model{
 
     static assicoate(db) {
 
-        db.Transaction.belongsTo(db.User, { foreignKey : "buyer", targetKey : "id"});
-        db.Transaction.belongsTo(db.User, { foreignKey : "seller", targetKey : "id"});
+        db.Transaction.belongsTo(db.User, { foreignKey : "buyer", targetKey : "id", as: 'Buyer'});
+        db.Transaction.belongsTo(db.User, { foreignKey : "seller", targetKey : "id", as: 'Seller'});
         db.Transaction.belongsTo(db.User, { foreignKey : "cancel", targetKey : "id"});
         db.Transaction.belongsTo(db.Real_estate, { foreignKey : "real_estate_id", targetKey : "id"});
 

@@ -9,7 +9,6 @@ exports.estateAgentApproval = async (req, res) => {
     // mutate 로 서버에서 요청 보낸 것 받기
     const { user_id } = req.body;
 
-    
     try {
         await User.update(
             {
@@ -25,5 +24,22 @@ exports.estateAgentApproval = async (req, res) => {
     } catch (error) {
         console.log(error)
         return res.json(error)
+    }
+}
+
+
+exports.getUserList = async(req, res) => {
+    try {
+        
+        const userListData = await User.findAll({
+            // where : {}
+        })
+
+        // console.log("userListData" , userListData)
+        return res.json({ userListData })
+
+    } catch (error) {
+        console.log("getUserList 에서 오류 " , error)
+        
     }
 }

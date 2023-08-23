@@ -1,10 +1,10 @@
 const {User,Real_estate} =require('../models');
 const { findOne } = require('../models/users');
 
-exports.getUserInfo =async(req,res)=>{
-    // 더미 데이터
-    // const user_id = "";
-    const user_id = "qwer";
+exports.getUserInfo = async (req,res)=>{
+    console.log(req);
+    console.log(req.acc_decoded);
+    const user_id = req.acc_decoded.user_id;
 
     try {
         if(user_id==""){
@@ -14,28 +14,28 @@ exports.getUserInfo =async(req,res)=>{
             where : {user_id : user_id},
             raw : true,
         })
-        
+
         res.json(data);
     } catch (error) {
-        console.log("getUserInfo에서 오류남",error); 
-    }   
-}
-
-
-exports.getUserList = async(req, res) => {
-    try {
-        
-        const userListData = await User.findAll({
-            // where : {}
-        })
-
-        // console.log("userListData" , userListData)
-        return res.json({ userListData })
-
-    } catch (error) {
-        console.log("getUserList 에서 오류 " , error)
-        
+        console.log("getUserInfo에서 오류남",error);
     }
 }
+
+
+// exports.getUserList = async(req, res) => {
+//     try {
+
+//         const userListData = await User.findAll({
+//             // where : {}
+//         })
+
+//         // console.log("userListData" , userListData)
+//         return res.json({ userListData })
+
+//     } catch (error) {
+//         console.log("getUserList 에서 오류 " , error)
+
+//     }
+// }
 
 

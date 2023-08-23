@@ -55,6 +55,7 @@ export const ContentDiv = styled.div`
         display: flex;
         padding-left : 20px;
         padding-right : 20px;
+        font-family: 'GmarketSansMedium';
     }
 `
 
@@ -83,6 +84,7 @@ export const LikeBtnDiv = styled.div`
 export const UserImg = styled.img`
     width: 60px;
     height: 60px;
+    border-radius: 50%;
 `
 
 export const Divider = styled.div`

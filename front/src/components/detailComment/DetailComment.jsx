@@ -5,6 +5,7 @@ import { useMutation } from "react-query";
 import { Comment, Recomment, InputDiv, CommentInput, InsertBtn, H1, CommentDiv, UserImg, Date } from "./detailComment.styled"
 import { detail_arrow, userimg } from "../../img";
 import { useNavigate } from "react-router-dom";
+import { serverUrl } from "components/serverURL";
 import { useAuth } from "AuthContext";
 
 const DetailComment = ({ estateId, comment, queryClient }) => {
@@ -134,15 +135,11 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
           id={`comment_${el.id}`}
         >
           <div style={{ display: "flex", alignItems: "center", marginTop: "10px", marginBottom: "10px" }}>
-            <UserImg
-              src={
-                el.User.user_img != "userimg" || !el.User.user_img
-                  ? "http://localhost:8080/user_imgs/" +
-                  el.User.user_img?.split("\\")[2]
-                  : userimg
-              }
-              alt="유저 이미지"
-            />{" "}
+            {el.User.user_img ?
+              <UserImg src={`${serverUrl}user_imgs/` + el.User.user_img?.substr(13)} />
+              :
+              <UserImg src={`${serverUrl}user_imgs/User_Profile.png`} />
+            }{" "}
             {el.User.user_name}
           </div>
           {el.content}
@@ -158,15 +155,12 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
               <img src={detail_arrow}></img>
               <div>
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
-                  <UserImg
-                    src={
-                      re.User.user_img != "userimg" || !re.User.user_img
-                        ? "http://localhost:8080/user_imgs/" +
-                        re.User.user_img?.split("\\")[2]
-                        : userimg
-                    }
-                    alt="유저 이미지"
-                  />{" "}
+                  {re.User.user_img ?
+                    <UserImg src={`${serverUrl}user_imgs/` + re.User.user_img?.substr(13)} />
+                    :
+                    <UserImg src={`${serverUrl}user_imgs/User_Profile.png`} />
+                  }
+                  {" "}
                   {re.User.user_name}
                 </div>
                 {re.re_content}
@@ -197,7 +191,7 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
               onClick={(e) => {
                 commentClick(el.id);
               }}
-              style={{ backgroundColor: "rgba(0,0,0,0.3)" }}
+              backgroundColor = {"rgba(0,0,0,0.3)"}
             >
               취소
             </InsertBtn>

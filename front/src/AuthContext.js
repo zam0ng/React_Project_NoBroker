@@ -4,8 +4,11 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
 
+  console.log("cookie ",document.cookie);
+
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(window.sessionStorage.getItem("login")));
   const [isCertificate, setIsCertificate] = useState(JSON.parse(window.sessionStorage.getItem("certificate")));
+  const [isAdmin, setIsAdmin] = useState(JSON.parse(window.sessionStorage.getItem("admin")));
 
   const login = () => {
     setIsLoggedIn(true);
@@ -24,8 +27,13 @@ export function AuthProvider({ children }) {
     window.sessionStorage.setItem("certificate", certificate)
   }
 
+  const admin = (admin) => {
+    setIsAdmin(admin);
+    window.sessionStorage.setItem("admin", admin)
+  }
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, isCertificate, login, certificate, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, isCertificate, isAdmin, login, certificate, logout, admin }}>
       {children}
     </AuthContext.Provider>
   );

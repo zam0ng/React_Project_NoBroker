@@ -8,7 +8,8 @@ const ItemListWrapper = styled.div`
     width : 400px;
     height : 100%;
     position : relative;
-    background-color : white;
+    background-color : #fcfbf1;;
+    
     
     }
 `;

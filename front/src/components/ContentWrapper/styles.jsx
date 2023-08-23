@@ -10,7 +10,7 @@ const ContentWrapper = styled.div`
 
     /* margin: 0px; */
 
-    width : 490px;
+    width : 530px;
     height : 85vh;
     overflow-x: hidden;
     overflow-y: scroll;
