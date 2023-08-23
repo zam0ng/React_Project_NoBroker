@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { userIcon_white } from "../../img";
+import "../../index.css";
+
 export const NavbarTitle = styled.div`
   position: absolute;
   top: 10px;
@@ -104,7 +106,7 @@ export const Menu = styled.div`
   background-color: #282828;
   transition: 3s;
 
-  .Copyright{
+  .Copyright {
     color: gray;
     line-height: 1.5;
     font-size: smaller;
@@ -112,7 +114,7 @@ export const Menu = styled.div`
 `;
 
 export const MenuListTitle = styled.div`
-    font-family: "SBAggroB";
+  font-family: "SBAggroB";
   width: 100%;
   height: 15%;
   /* border: 1px solid gray; */
