@@ -45,16 +45,29 @@ const UserItem = ({item}) => {
         }
     })
     
-
-    // const handleExpandedContainer = () => {
-    //     setShowExpandedImg(false)
-    // }
-
-
-    // const handleImageContainer = () => {
-    //     setShowExpandedImg(true)
-    //     console.log("showExpandedImg" , showExpandedImg)
-    // }
+    const disApproveEstateAgent = useMutation( async(disapproveForm) => {
+        const {data} = await axios.post("/admin/agentDisapprove" , disapproveForm , {
+            withCredentials : true
+        });
+        return data;
+    } , {
+        onSuccess : (data) => {
+            if(data?.message == "성공") {
+                console.log("미승인 완료")
+                
+                queryClient.invalidateQueries('userDataList');    // UI 즉각 반영 
+                queryClient.refetchQueries('userDataList')    // 매개변수는 앞에서 쿼리 key 를 입력
+                
+            } else {
+                console.log("승인 과정 오류" , data)
+                alert("오류 발생")
+            }
+        }
+    }, {
+        onError : (error) => {
+            console.error(error)
+        }
+    })
 
 
     const handleImageClicked = () => {
@@ -66,18 +79,18 @@ const UserItem = ({item}) => {
 
     const handleApproveBtn = () => {
         console.log(`${item.user_id} : 승인 버튼 클릭하면 -> item.certificate_user 을 0 으로 변경시키기 `)
-        
         approveEstateAgent.mutate({user_id : item.user_id})
-    
     }
 
     const handleDisapproveBtn = () => {
         console.log(`${item.user_id} : 미승인 버튼 클릭`)
+        disApproveEstateAgent.mutate({user_id : item.user_id})
     }
 
-    const handleBanBtn = () => {
-        console.log( `${item.user_id}  : "ban 버튼`)
-    }
+
+    // const handleBanBtn = () => {
+    //     console.log( `${item.user_id}  : "ban 버튼`)
+    // }
 
     return (
     <>

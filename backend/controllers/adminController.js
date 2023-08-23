@@ -30,13 +30,36 @@ exports.estateAgentApproval = async (req, res) => {
 }
 
 
+exports.estateAgentDisapproval = async(req, res) => {
+        // mutate 로 서버에서 요청 보낸 것 받기
+        const { user_id } = req.body;
+
+        try {
+            await User.update(
+                {
+                    certificate_user : 2
+                },
+                {
+                    where : {
+                        user_id : user_id
+                    }
+                }
+            )
+            return res.json({message : "성공"})
+        } catch (error) {
+            console.log(error)
+            return res.json(error)
+        }
+}
+
+
+
+
 exports.getUserList = async(req, res) => {
 
-    const navigate = useNavigate();
-
-    if(req.acc_decoded.user_id !== "admin"){
-        return res.status(403).json({message : "관리자 권한이 없습니다."})
-    }
+    // if(req.acc_decoded.user_id !== "admin"){
+    //     return res.status(403).json({message : "관리자 권한이 없습니다."})
+    // }
     
     try {
         
