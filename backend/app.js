@@ -44,7 +44,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://3.37.244.154", "http://3.37.244.154/", "http://ec2-3-37-244-154.ap-northeast-2.compute.amazonaws.com/"],
+    origin: ["http://localhost:3000", "http://3.37.244.154","http://ec2-3-37-244-154.ap-northeast-2.compute.amazonaws.com", "http://busiman.shop", "http://192.168.0.16:3000"],
     credentials: true,
   })
 );

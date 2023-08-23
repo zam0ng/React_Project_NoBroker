@@ -13,6 +13,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Logo, Logo2 } from "../../img";
 import { useAuth } from "../../AuthContext";
+import { useEffect } from "react";
 
 const NavHeader = () => {
   const nav = useNavigate();
@@ -32,13 +33,18 @@ const NavHeader = () => {
   };
 
   function MenuOpen() {
-    if (!isactive) {
+    setIsactive(!isactive);
+  }
+
+  useEffect(() => {
+    if (isactive) {
       document.body.style.overflowY = "hidden";
+      window.scrollTo(0,0);
     } else {
       document.body.style.overflowY = "scroll";
     }
-    setIsactive(!isactive);
-  }
+  }, [isactive])
+
   return isactive ? (
     <>
       <NavbarTitle>
