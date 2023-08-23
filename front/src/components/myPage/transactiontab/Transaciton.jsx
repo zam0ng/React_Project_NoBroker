@@ -67,8 +67,8 @@ const Transaciton = () => {
   return (
     <Container>
       <ResigterEstate>
-        <StateDiv isActive={isselect==="check"} onClick={()=>{selectBtn("check")}}>찜한 매물 ♥️<span>{checkCnt}</span></StateDiv>
-        <StateDiv isActive={isselect==="cancelList"} onClick={()=>{selectBtn("cancelList")}}>취소된 내역😭 <span>{cancelCnt}</span></StateDiv>
+        <StateDiv isActive={isselect==="check"} onClick={()=>{selectBtn("check")}}>찜한 매물 🧡 <span>{checkCnt}</span></StateDiv>
+        <StateDiv isActive={isselect==="cancelList"} onClick={()=>{selectBtn("cancelList")}}>취소된 내역 😭 <span>{cancelCnt}</span></StateDiv>
 
       </ResigterEstate>
       <Selectstate>

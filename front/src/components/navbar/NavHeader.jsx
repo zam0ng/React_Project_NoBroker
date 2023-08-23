@@ -17,7 +17,7 @@ import { useAuth } from "../../AuthContext";
 const NavHeader = () => {
   const nav = useNavigate();
   const [isactive, setIsactive] = useState(false);
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, isCertificate, isAdmin, logout } = useAuth();
 
   const LogoutClick = () => {
     logout();
@@ -60,10 +60,11 @@ const NavHeader = () => {
             </div>
           </MenuListTitle>
           <MenuList>
-            <Link to="/insert">매물등록</Link>
             <Link to="/list">매물목록</Link>
+            <Link to="/insert">매물등록</Link>
             <Link to="/mypage">마이페이지</Link>
-            <Link to="/vote">투표목록</Link>
+            {isCertificate ? <Link to="/vote">투표목록</Link>:<></>}
+            {isAdmin ?<Link to="/admin">관리자페이지</Link>:<></>}
           </MenuList>
           <p className="Copyright">Copyright 2023. NoBroker. <br/> All rights reserved.</p>
         </Menu>

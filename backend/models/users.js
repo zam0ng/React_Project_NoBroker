@@ -12,6 +12,7 @@ class User extends Model{
                 user_id :{
                     type : DataTypes.STRING,
                     allowNull : false,
+                    unique: true
                 },
                 // 유저 패스워드
                 password :{
@@ -37,7 +38,7 @@ class User extends Model{
                     type : DataTypes.INTEGER,
                     defaultValue : 0,
                 },
-                // 판매 가능 여부 (패널티 여부) | 
+                // 판매 가능 여부 (패널티 여부) |
                 ban : {
                     type : DataTypes.BOOLEAN,
                     defaultValue : false,

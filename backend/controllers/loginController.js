@@ -36,12 +36,14 @@ exports.Login = async (req, res) => {
           }
         );
         req.session.access_token = token;
-        
+
         res.cookie("token", token, {
           httpOnly: true,
           secure: true,
           sameSite : "strict"
         });
+
+        console.log("로그인 완료");
 
         return res.json({
           message: "로그인 완료",

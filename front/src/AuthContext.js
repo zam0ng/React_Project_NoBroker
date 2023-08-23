@@ -16,8 +16,10 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setIsLoggedIn(false);
     setIsCertificate(false);
+    setIsAdmin(false);
     window.sessionStorage.setItem("login", false);
     window.sessionStorage.setItem("certificate", false);
+    window.sessionStorage.setItem("admin", false);
   };
 
   const certificate = (certificate) => {
