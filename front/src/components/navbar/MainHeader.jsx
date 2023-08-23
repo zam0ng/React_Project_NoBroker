@@ -15,9 +15,14 @@ import { Logo, Logo2 } from "../../img";
 import { useAuth } from "AuthContext";
 const MainHeader = () => {
   const [isactive, setIsactive] = useState(false);
-  const { isCertificate, isAdmin } = useAuth();
+  const { isLoggedIn, isCertificate, isAdmin } = useAuth();
   const nav = useNavigate();
   function MenuOpen() {
+    if (!isactive) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "scroll";
+    }
     setIsactive(!isactive);
   }
 
@@ -59,8 +64,8 @@ const MainHeader = () => {
           </MenuListTitle>
           <MenuList>
             <Link to="/list">매물목록</Link>
-            <Link to="/insert">매물등록</Link>
-            <Link to="/mypage">마이페이지</Link>
+            {isLoggedIn ? <Link to="/insert">매물등록</Link>:<></>}
+            {isLoggedIn ? <Link to="/mypage">마이페이지</Link>:<></>}
             {isCertificate ? <Link to="/vote">투표목록</Link>:<></>}
             {isAdmin ? <Link to="/admin">관리자페이지</Link>:<></>}
           </MenuList>
