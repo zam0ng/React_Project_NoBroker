@@ -572,8 +572,21 @@ const createZoomControl = ( map ) => {
                     // 임시. 정규표현식으로 앞자리만 가져오기 | 😥😥
                         const tempDeposit = item.deposit
                         const yuk = Math.floor(tempDeposit/100000000)
-                        const chenMan = Math.floor((tempDeposit%100000000)/100000000)
-                        const contentString = `<div> ${yuk}.${chenMan}억</div>`
+                        // const chenMan = Math.floor((tempDeposit%100000000)/100000000)
+
+
+                        const tempChenMan_manwon = Math.round((tempDeposit % 100000000) / 10000);
+                        const tempChenMan_cheonman = Math.round((tempDeposit % 100000000) / 10000000);
+
+                        const chenMan = parseFloat(tempChenMan_manwon).toString();
+                        const chenManWithYuk = parseFloat(tempChenMan_cheonman).toString();
+
+                        const contentString = yuk < 1 ? 
+                        `<div> ${chenMan}만원</div>`:
+                        `<div> ${yuk}.${chenManWithYuk}억</div>`
+
+
+
                         // console.log("단위변환" ,contentString)
 
             // marker 가 만들어질 때 마다 info window 생성
