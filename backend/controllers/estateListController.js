@@ -17,9 +17,9 @@ exports.getTradableEstate = async(req , res) => {
 
     // req.acc_decoded.id ? console.log("req.acc_decoded.id | 로그인한 유저 id : " , req.acc_decoded.id) : console.log("로그인하지 않은 상태😥😥")
     // console.log("req" , req) // 🔵
-    // console.log("req.acc_decoded" , req.acc_decoded) // 🔵 
+    // console.log("req.acc_decoded" , req.acc_decoded) // 🔵
     // console.log("req.acc_decoded.id" , req.acc_decoded.id)  // 8 나옴 🔵
-    // console.log("req.query.myLikeClickedList" , req.query.myLikeClickedList)  // 문자열 true 나옴
+    console.log("req.query.myLikeClickedList" , req.query.myLikeClickedList)  // 문자열 true 나옴
     // console.log(" req.query.roomType | 방 종류 " , req.query.roomType)
       // [목표 URL]`http://localhost:8080/list/tradableEstate?roomType=${checkedRoomTypes}&priceRangeValue=${priceRangeValue}`
       // 'req.query 는 객체' 임 => 따라서, 복수의 key 값이 있어도, 개별적으로 접근할 수 있음.
@@ -33,19 +33,19 @@ exports.getTradableEstate = async(req , res) => {
         accpet : 1    // 투표가 끝난, 정상매물을 의미 | accept 오타지만, 이미 모델에서 이렇게 설정되어서, 현재 상태에서는 기재해야 반영됨
     }
 
-    // // 내가 좋아요 클릭한 것만 지도에 표시하기 
+    // // 내가 좋아요 클릭한 것만 지도에 표시하기
     if(req.query.myLikeClickedList === 'true'){
       const currentUserID = req.acc_decoded.id
 
-      // 로그인한 유저가 클릭한 좋아요 정보 
+      // 로그인한 유저가 클릭한 좋아요 정보
       if(currentUserID){
         const userLikeList = await Likes.findAll({
-          where : {user_id : currentUserID},  // 현재 로그인한 유저에 대해서 
+          where : {user_id : currentUserID},  // 현재 로그인한 유저에 대해서
           attributes : ['real_estate_id'],    // 이게 없으면, 모든 열을 반환 받음 | 이게 있으면, real_estate_id 열만 반환
           raw : true  // 결과물을 객체로 반환
         })
-        console.log("userLikeList" , userLikeList)  // 🔵 userLikeList [ { real_estate_id: 3 }, { real_estate_id: 7 }, { real_estate_id: 1 } ]   
-        
+        console.log("userLikeList" , userLikeList)  // 🔵 userLikeList [ { real_estate_id: 3 }, { real_estate_id: 7 }, { real_estate_id: 1 } ]
+
         const arrUserLikeBuildingID = userLikeList.map(item => item.real_estate_id)
         console.log("arrUserLikeBuildingID" , arrUserLikeBuildingID)
 
@@ -97,10 +97,10 @@ exports.getTradableEstate = async(req , res) => {
 
     if (req.acc_decoded){
       includeLikes.push({
-        model : Likes, 
+        model : Likes,
         required: false,    // LEFT OUTER JOIN, Likes 테이블에 데이터가 없어도, 1) real_estate 정보를 가져오고 2) likes 는 null 임. 😥😥
         attributes: ['user_id', 'real_estate_id'],    // Likes 테이블에서 가져올 컬럼
-        where: { user_id: req.acc_decoded.id }    // 현재 로그인한 유저 id 와 일치하는 것만 가져오기! | 😥😥 
+        where: { user_id: req.acc_decoded.id }    // 현재 로그인한 유저 id 와 일치하는 것만 가져오기! | 😥😥
       })
     }
 
@@ -112,13 +112,15 @@ exports.getTradableEstate = async(req , res) => {
         // where : {id : Real_estate.seller}
       })
 
+
+
     console.log("whereConditions" , whereConditions)
       // [문제상황] whereConditions { state: null, type: 'null' } 이렇게 찍힘 | 즉, type 이 null 이라는게 문제
       // [시도] 그래서, 문자열 null 이면, 일반 null 로 해달라고 해봄
 
     const tradableEstate = await Real_estate.findAll({
       // where: whereConditions.state    // [주의] 이렇게 state 까지 넣어야 null 이 들어감.
-      where: whereConditions,    // [주의] 이렇게 하면, 선택된게 들어감., 
+      where: whereConditions,    // [주의] 이렇게 하면, 선택된게 들어감.,
       include : [...includeLikes , ...includeUsers]   // includeUsers 배열을 include 옵션에 추가
     });
 

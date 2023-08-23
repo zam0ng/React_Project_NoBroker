@@ -18,7 +18,7 @@ const Register = () => {
     cntArr.push(cnt.length);
     cnt = getmyregisterinfo.data?.filter((el)=>el.seller==getmyregisterinfo.user_id && el.approved==1 && el.cancel==null && el.completed==0 );
     cntArr.push(cnt.length);
-    cnt = getmyregisterinfo.data?.filter((el)=>el.seller==getmyregisterinfo.user_id && el.completed==1);
+    cnt = getmyregisterinfo.data?.filter((el)=>el.seller==getmyregisterinfo.user_id && el.completed==2);
     cntArr.push(cnt.length);
     cnt = getmyregisterinfo.data.filter((el)=>el.seller==getmyregisterinfo.user_id && el.cancel==getmyregisterinfo.user_id);
     cntArr.push(cnt.length);
@@ -26,7 +26,7 @@ const Register = () => {
     cntArr.push(cnt.length);
     cnt = getmyregisterinfo.data?.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.approved==1 && el.cancel==null && el.completed==0);
     cntArr.push(cnt.length);
-    cnt = getmyregisterinfo.data?.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.completed==1);
+    cnt = getmyregisterinfo.data?.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.completed==2);
     cntArr.push(cnt.length);
     cnt = getmyregisterinfo.data.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.cancel==getmyregisterinfo.user_id);
     cntArr.push(cnt.length);
@@ -47,7 +47,7 @@ const Register = () => {
     }
     // 판매완료 : seller : user_id / completed : 1 /
     else if(select =="SELLCOM"){
-      filterArr = getmyregisterinfo.data?.filter((el)=>el.seller==getmyregisterinfo.user_id && el.completed==1);
+      filterArr = getmyregisterinfo.data?.filter((el)=>el.seller==getmyregisterinfo.user_id && el.completed==2);
     }
     // 판매취소 : seller : user_id / cancel : user_id /
     else if(select =="SELLCAN"){
@@ -63,7 +63,7 @@ const Register = () => {
     } 
     // 구매완료 : buy : user_id / completed: 1 /
     else if(select =="BUYCOM"){
-      filterArr = getmyregisterinfo.data?.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.completed==1);
+      filterArr = getmyregisterinfo.data?.filter((el)=>el.buyer==getmyregisterinfo.user_id && el.completed==2);
     }
     // 구매취소 : buy : user_id / cancel : user_id / 
     else if(select =="BUYCAN"){

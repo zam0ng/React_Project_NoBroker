@@ -7,7 +7,7 @@ import {
   MenuListTitle,
   Menu,
   MenuList,
-  NavbarIcon,
+  NavbarIcon,NavLoginBtn
 } from "./navbarStyled";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -60,12 +60,12 @@ const NavHeader = () => {
             </div>
           </MenuListTitle>
           <MenuList>
-            <Link to="/insert">매물 등록</Link>
+            <Link to="/insert">매물등록</Link>
+            <Link to="/list">매물목록</Link>
+            <Link to="/mypage">마이페이지</Link>
+            <Link to="/vote">투표목록</Link>
           </MenuList>
-          <MenuList>
-            <Link to="/list">매물 목록</Link>
-          </MenuList>
-          <MenuList></MenuList>
+          <p className="Copyright">Copyright 2023. NoBroker. <br/> All rights reserved.</p>
         </Menu>
       </Bodyy>
     </>
@@ -82,13 +82,13 @@ const NavHeader = () => {
       </NavbarTitleName>
       <NavbarIcon>
         {isLoggedIn ? (
-          <div id="Logout" onClick={LogoutClick}>
+          <NavLoginBtn id="Logout" onClick={LogoutClick}>
             Logout
-          </div>
+          </NavLoginBtn>
         ) : (
-          <div id="Login" onClick={LoginClick}>
+          <NavLoginBtn id="Login" onClick={LoginClick}>
             Login
-          </div>
+          </NavLoginBtn>
         )}
       </NavbarIcon>
     </NavbarTitle>

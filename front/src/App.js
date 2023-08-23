@@ -23,7 +23,9 @@ import { useAuth } from "./AuthContext";
 const queryClient = new QueryClient();
 
 function App() {
-  const { isLoggedIn, isCertificate } = useAuth();
+  const { isLoggedIn, isCertificate, isAdmin } = useAuth();
+
+  console.log("isLoggedIn : ",isLoggedIn);
 
   return (
 
@@ -32,7 +34,8 @@ function App() {
         {/* <NavHeader></NavHeader> */}
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/login" element={isLoggedIn ? <Main /> : <Login />} />
+          {/* <Route path="/login" element={isLoggedIn ? <Mypage /> : <Login />} /> */}
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route
             path="/insert"
@@ -45,15 +48,12 @@ function App() {
             element={<Detail queryClient={queryClient} />}
           />
           <Route path="/list" element={<PAC_Map queryClient={queryClient}/>}></Route>
-          
+
           <Route
             path="/mypage"
-            element={<Mypage queryClient={queryClient} />}
+            element={isLoggedIn ? <Mypage queryClient={queryClient} /> : <Login />}
           />
-
-          <Route path="/admin"    element={<Admin />} />  
-            {/* ID : admin | PW : admin1234 */}
-            {/* isLogin.req.acc_decoded 미들웨어추가해서, ?? */}
+          <Route path="/admin" element={isAdmin ? <Admin /> : <Login />} />
 
           {/* 업자 회원만 접근 가능 */}
           <Route

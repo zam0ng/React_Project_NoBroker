@@ -41,11 +41,16 @@ const createTestUser = async () => {
 
     const userq = await User.findOne();
     if (!userq) {
+        const password = bcrypt.hashSync("admin1234", 10);
         const password1 = bcrypt.hashSync("qwer", 10);
         const password2 = bcrypt.hashSync("qq", 10);
+        await User.create({user_id : "admin", password, role : true, user_name : "qwer", address : "주소", phone : "phone", ssn : "ssn"});
         await User.create({user_id : "qwer", password :password1, role : true, user_name : "qwer", address : "주소", phone : "phone", ssn : "ssn"});
         await User.create({user_id : "qq", password :password2, role : true, user_name : "qwer", address : "주소", phone : "phone", ssn : "ssn"});
     }
+
+    // const password = bcrypt.hashSync("admin1234", 10);
+    // await User.create({user_id : "admin", password, role : true, user_name : "qwer", address : "주소", phone : "phone", ssn : "ssn"});
 }
 
 

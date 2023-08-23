@@ -4,6 +4,7 @@ export const UserImg = styled.img`
     width: 30px;
     height: 30px;
     margin-right: 4px;
+    border-radius: 50%;
 `
 
 export const Date = styled.p`
@@ -74,6 +75,7 @@ export const CommentInput = styled.input`
     padding-right: 10px;
     font-size: 16px;
     border-radius: 10px;
+    font-family: 'GmarketSansMedium';
 `
 
 export const InsertBtn = styled.div`
@@ -82,7 +84,8 @@ export const InsertBtn = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: orange;
+    background-color: white;
+    background-color: ${(props) => props.backgroundColor || "orange" };
     border-radius: 10px;
     margin-left: 4px;
     user-select: none;

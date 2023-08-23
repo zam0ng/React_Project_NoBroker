@@ -42,6 +42,8 @@ import { serverUrl } from 'components/serverURL';
 
 import ReactDOMServer from 'react-dom/server';
 
+import Footer from 'components/footer/Footer';
+
 // const queryClient = new QueryClient();
 
 
@@ -174,13 +176,13 @@ const [myLikeClickedList , setMyLikeClickedList] = useState(false)
 
 
     // 내가 찜한 방 보기
-    const handleMyLikeClickedList = () => {        
+    const handleMyLikeClickedList = () => {
         setMyLikeClickedList(true)
         console.log("handleMyLikeClickedList 찜한방 true 클릭 🚀🚀🚀" , myLikeClickedList)
     }
-    
+
     // 전체 매물 보기
-    const handleAllEstateList = () => {        
+    const handleAllEstateList = () => {
         setMyLikeClickedList(false)
         console.log("handleAllEstateList 찜한방 false 클릭🚀🚀🚀" , myLikeClickedList)
     }
@@ -380,9 +382,9 @@ const createZoomControl = ( map ) => {
                 params.push(`areaRangeValue=${areaRangeValue}`)
             }
 
-            // // 내가 찜한 것만 보게 하기 
+            // // 내가 찜한 것만 보게 하기
             console.log("myLikeClickedList🔮🔮🔮" , myLikeClickedList)
-            if(myLikeClickedList == true){  
+            if(myLikeClickedList == true){
                 params.push(`myLikeClickedList=${myLikeClickedList}`)
             }
 
@@ -404,7 +406,7 @@ const createZoomControl = ( map ) => {
         }
 
     // api 함수 호출해서 데이터 가져오기 | usequery 사용
-    const { data , error , isLoading } = useQuery( ['filterTradableEstateData' , priceRangeValue , checkboxValue , builtYearValue , areaRangeValue , myLikeClickedList] 
+    const { data , error , isLoading } = useQuery( ['filterTradableEstateData' , priceRangeValue , checkboxValue , builtYearValue , areaRangeValue , myLikeClickedList]
     , fetchFilterTradableEstateData , {
         // enabled : !!checkboxValue //  [해석] 이게 활성화 되면 -> checkboxValue 에 값이 있을 때만 값이 가져와짐
     })
@@ -548,7 +550,7 @@ const createZoomControl = ( map ) => {
         tradableData.forEach( (item) => {
             // console.log("item.deposit" , item.deposit)
             const tempLocation = new window.google.maps.LatLng(item.lat, item.lng)
-            
+
             const tradableMarker = new window.google.maps.Marker({
                 position : tempLocation,
                 map : map,
@@ -567,47 +569,18 @@ const createZoomControl = ( map ) => {
                 window.location.href = `http://localhost:3000/detail/${item.id}`;
             })
 
-            // || keep 🔵 | 기본 버전
-            // 임시. 정규표현식으로 앞자리만 가져오기 | 😥😥 
-                const tempDeposit = item.deposit
-                const yuk = Math.floor(tempDeposit/100000000)
-
-                // const tempChenMan = Math.round((tempDeposit%100000000)/10000000)
-                const tempChenMan_manwon = Math.round((tempDeposit % 100000000) / 10000);       // 만원 단위만 독자적으로 쓸 때의 값 계산
-                const tempChenMan_cheonman = Math.round((tempDeposit % 100000000) / 10000000);  // 억 단위랑 함께 쓸 때의 만원 단위 계산
-
-                const chenMan = parseFloat(tempChenMan_manwon).toString();
-                const chenManWithYuk = parseFloat(tempChenMan_cheonman).toString();
-
-                const contentString = yuk < 1 ?
-                `<div> ${chenMan}만원</div>`:
-                `<div> ${yuk}.${chenManWithYuk}억</div>`
-                    
-        
-                            // 경복궁, 이미지 잡을 버전 
-                                // const contentString = [
-                                //             // 경복궁 마커 | 원본 keep | 작동함 🔵 
-                                //                 // ['<div class="wrap"> <div class="text-box"><h4>경복궁</h4><div class="img-box"><img src="https://image.shutterstock.com/image-vector/palace-icon-outline-vector-web-260nw-1046855677.jpg"></div><a target="_blank" href="https://www.royalpalace.go.kr/"><p>홈페이지 방문하기</p></a></div>', 37.577624, 126.976020]
-                                //         // 
-                                //         [`<div class="wrap"> <p>경복궁</p> <img src=${serverUrl}estate_imgs/${}></div> <a target="_blank" href="https://www.royalpalace.go.kr/"><p>홈페이지 방문하기</p></a></div>`, 37.577624, 126.976020]
-                                    
-                                // ]
-
-                            // 리액트 버전 | 작동은 함 
-                                // const contentString = ReactDOMServer.renderToString(
-                                //         <InfoWindowDiv>
-                                //             {` 
-                                //                 ${yuk}.${chenMan}억
-                                //             `}
-                                //         </InfoWindowDiv>
-                                //     )
-                                // console.log("단위변환" ,contentString)
+                    // 임시. 정규표현식으로 앞자리만 가져오기 | 😥😥
+                        const tempDeposit = item.deposit
+                        const yuk = Math.floor(tempDeposit/100000000)
+                        const chenMan = Math.floor((tempDeposit%100000000)/100000000)
+                        const contentString = `<div> ${yuk}.${chenMan}억</div>`
+                        // console.log("단위변환" ,contentString)
 
             // marker 가 만들어질 때 마다 info window 생성
                 const infoWindow = new window.google.maps.InfoWindow();
 
                 infoWindow.setContent(contentString); // 기본 contentString
-                // infoWindow.setContent(contentString[0][0]); // 경복궁 마커에서 이렇게 배열 2차원으로 해야 함 ⭐⭐ 
+                // infoWindow.setContent(contentString[0][0]); // 경복궁 마커에서 이렇게 배열 2차원으로 해야 함 ⭐⭐
 
             // 기본적으로 마우스 오버 없이 올라가 있게 하는 것 | 바로 필요한 정보를 보면 좋을 것 같아서 마우스 오버 없이도 보이는 버전 선택
                     infoWindow.open({
@@ -616,23 +589,7 @@ const createZoomControl = ( map ) => {
                         shouldFocus : false
                     })
 
-                                // // '마우스 오버' 하면 -> info-window 보이게 하기
-                                //     tradableMarker.addListener( "mouseover" , () => {
-                                //             infoWindow.open({
-                                //                 anchor: tradableMarker,
-                                //                 map,
-                                //             })
-                                //     })
-                                                    
-                                // // '마우스 오버' 하면 -> info-window 사라지게 하기
-                                // tradableMarker.addListener( "mouseout" , () => {
-                                //         infoWindow.close({
-                                //             anchor: tradableMarker,
-                                //             map,
-                                //         })
-                                // })
-
-            newMarkers.push(tradableMarker)  // ❓❓❓ 이렇게 해도, currentMarkers 에 저장되는거 아닌가 ❓❓❓ 
+            newMarkers.push(tradableMarker)  // ❓❓❓ 이렇게 해도, currentMarkers 에 저장되는거 아닌가 ❓❓❓
         })
 
         setCurrentMarkers(prevState => [...prevState, ...newMarkers]);
@@ -659,8 +616,8 @@ const createZoomControl = ( map ) => {
 return (
     <>
     {/* 목차 */}
-    <NavHeader />
-    
+      <NavHeader />
+
     {/* 본문 */}
         <DefaultStyle>
 
@@ -742,9 +699,9 @@ return (
                     {/* 면적  필터 | 아파트 vs 오피스텔 */}
                         <FilterButton  color="rgb(76, 76, 76)" fontWeight={400} id={"area"} title={"면적"} handleModalToggle = {handleModalToggle }  />
                         {
-                            activeModal == "area" && <AreaRangeModal  
-                                                // title={"range 모달 | 집 넓이 "} 
-                                                left = {"235px" } 
+                            activeModal == "area" && <AreaRangeModal
+                                                // title={"range 모달 | 집 넓이 "}
+                                                left = {"235px" }
                                                 value = {areaRangeValue}
                                                 handleAreaRangeBox = {handleAreaRangeBox}
                                                 />
@@ -759,13 +716,13 @@ return (
                         tradableData.map( (item, index) => {
                             return (
                                 <ItemList
-                                    key = {index}  
-                                    isLoggedIn = {isLoggedIn} 
-                                    queryClient={queryClient} 
-                                    className="ItemList" 
-                                    item={item} 
+                                    key = {index}
+                                    isLoggedIn = {isLoggedIn}
+                                    queryClient={queryClient}
+                                    className="ItemList"
+                                    item={item}
                                     index={index}
-                                    /> 
+                                    />
                         ) } )
                     }
                 </ContentWrapper>
@@ -779,8 +736,9 @@ return (
             </MainContentWrap>
 
         </DefaultStyle>
+        <Footer></Footer>
     </>
-    )    
+    )
     }
 
     export default PAC_Map

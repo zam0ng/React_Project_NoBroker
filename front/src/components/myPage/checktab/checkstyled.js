@@ -4,7 +4,6 @@ export const Container = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
     flex-direction: column;
     align-items: center;
     
@@ -110,14 +109,12 @@ export const OtherInfo = styled.div`
 export const JustState = styled.div`
     width: 10%;
     height: 30px;
-    line-height: 30px;
+    line-height: 10px;
     font-size: 11px;
     border-left: 1px solid lightgray;
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    justify-content: space-between;
+    flex-direction: column
     
-    
-
 `

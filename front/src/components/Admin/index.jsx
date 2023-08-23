@@ -1,10 +1,12 @@
 import React from 'react'
 
 import {
-    TitleHeaderWrap, 
+    TitleHeaderWrap,
     AdminPageDefault,
     UserListWrap,
 } from 'components/Admin/styles'
+import NavHeader from 'components/navbar/NavHeader'
+import Footer from 'components/footer/Footer'
 
 import Criteria from './Criteria'
 import UserItem from './UserItem'
@@ -23,15 +25,15 @@ const Admin = () => {
         let url = '/admin/userListData'
 
         const response = await axios.get(url , {
-            withCredentials : true, 
+            withCredentials : true,
         })
-        
-        // 수정 필요 
+
+        // 수정 필요
         setUserData(response.data.userListData)
         return response.data
     }
 
-    const {data, error, isLoading} = useQuery ( [ 
+    const {data, error, isLoading} = useQuery ( [
         'userDataList' , userData] ,
         userDataList, {
             // enabled : !!userData //  [해석] 이게 활성화 되면 -> checkboxValue 에 값이 있을 때만 값이 가져와짐
@@ -45,7 +47,9 @@ const Admin = () => {
 
 
 return (
-    <AdminPageDefault>
+    <>
+    <NavHeader />
+    <AdminPageDefault style={{minHeight : "100vh"}}>
 
         <TitleHeaderWrap>
             <h1>admin 계정 관리</h1>
@@ -62,13 +66,11 @@ return (
                         return <UserItem item={item} >  </UserItem>
 
                     } )
-                } 
-
-
-
+                }
 
     </AdminPageDefault>
-    
+    <Footer />
+    </>
     )
 }
 

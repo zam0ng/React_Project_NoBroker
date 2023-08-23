@@ -8,7 +8,7 @@ const EstateDoc = ({setUniqueNum}) => {
   return (
     <Container>
 
-        <Title>매물 고유번호 *</Title>
+        <Title>매물 고유번호 <span>*</span></Title>
         <DocBox>
 
             <input onChange={uniqueNum} type="text" placeholder='매물 고유번호 입력' />

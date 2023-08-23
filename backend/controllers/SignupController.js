@@ -16,16 +16,16 @@ exports.UserAdd = async (req, res) => {
     const { user_id, password, user_name, ssn, phone, address, role } =
       req.body;
     const seal_img = req.files.seal_img[0];
-    // console.log(
-    //   "@@@@@@@@@@@@@@@@@@@@",
-    //   user_id,
-    //   password,
-    //   user_name,
-    //   ssn,
-    //   phone,
-    //   address,
-    //   role
-    // );
+    console.log(
+      "@@@@@@@@@@@@@@@@@@@@",
+      //   user_id,
+      password
+      //   user_name,
+      //   ssn,
+      //   phone,
+      //   address,
+      //   role
+    );
     // console.log("@@@@@@@@@@@@@@@@@@@@", seal_img);
     // console.log(
     //   "@@@@@@@@@@@@@@@@@@@@",
@@ -33,6 +33,7 @@ exports.UserAdd = async (req, res) => {
     // );
     // console.log("################", req.files);
     const hash = bcrypt.hashSync(password, 10);
+    console.log("hhhhhhhhaaaaasssssyyyyyy", hash);
 
     // 사업자 회원이면
     if (role == "true") {
@@ -40,7 +41,7 @@ exports.UserAdd = async (req, res) => {
       console.log("@@@@@@@@@@@@@@@@@@@@", certificate_img);
       //   console.log("@@@@@@@@@@@@@@@@@@@@", `${certificate_img.destination}${certificate_img.filename}`);
       await User.create({
-        user_img: "imgs/User_Profile.png",
+        user_img: "imgs/userImg/User_Profile.png",
         user_id: user_id,
         password: hash,
         role: true,
@@ -57,7 +58,7 @@ exports.UserAdd = async (req, res) => {
     // 일반 회원이면
     else {
       await User.create({
-        user_img: "imgs/User_Profile.png",
+        user_img: "imgs/userImg/User_Profile.png",
         user_id: user_id,
         password: hash,
         role: false,

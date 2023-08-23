@@ -22,7 +22,7 @@ const Area = ({m2,setM2}) => {
     }
   return (
     <Container>
-        <Title>매물 크기<span>*</span></Title>
+        <Title>매물 크기 <span>*</span></Title>
         <AreaBox>
             <p>전용면적</p>
             <AreaDivBox>
