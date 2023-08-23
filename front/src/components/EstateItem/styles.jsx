@@ -60,7 +60,7 @@ export const InfoWrap = styled.div`
     align-items : flex-start;
 `
 
-export const LikeBtnWrap = styled.button`
+export const LikeBtnWrap = styled.div`
     
     cursor: pointer;
     /* position : relative;/ */

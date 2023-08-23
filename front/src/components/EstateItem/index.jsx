@@ -62,10 +62,6 @@
       })
       return data;
     } , {
-      onError : (error) => {
-        console.error(error)
-      }
-    }, {
       onSuccess : (data) => {
         if(data.message && data.message == "성공") {
           console.log("찜 추가 성공🐣🐣🐣🐣")
@@ -74,6 +70,10 @@
           console.log("찜 추가 과정에서 오류 발생📛 " , data);
           alert("찜 추가 오류 발생")
         }
+      }
+    } , {
+      onError : (error) => {
+        console.error(error)
       }
     })
 
