@@ -97,7 +97,7 @@ export const UserInfoBox = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid rgb(219 195 158);
 
     .adrInput1 {
       width: 150px;
@@ -217,7 +217,7 @@ export const LabelInputDiv = styled.div`
   box-sizing: border-box;
   height: 70px;
   /* margin: 20px; */
-  border-bottom: 1px solid;
+  border-bottom: 1px solid rgb(219 195 158) ;
   display: flex;
   flex-direction: row;
   align-items: center;
