@@ -74,20 +74,19 @@ const UserItem = ({item}) => {
         setIsClicked(!isClicked)
     }
 
-
-
-
+    // role 이 true(공인중개사 신청) 이고 && certificate_user == 1(신청중 인 상황) 이면 -> 승인, 미승인 버튼이 나온 상황
     const handleApproveBtn = () => {
         console.log(`${item.user_id} : 승인 버튼 클릭하면 -> item.certificate_user 을 0 으로 변경시키기 `)
         approveEstateAgent.mutate({user_id : item.user_id})
     }
 
+    // role 이 true(공인중개사 신청) 이고 && certificate_user == 1(신청중 인 상황) 이면 -> 승인, 미승인 버튼이 나온 상황
     const handleDisapproveBtn = () => {
         console.log(`${item.user_id} : 미승인 버튼 클릭`)
         disApproveEstateAgent.mutate({user_id : item.user_id})
     }
 
-
+    // ban 버튼 | 사용 안 함 
     // const handleBanBtn = () => {
     //     console.log( `${item.user_id}  : "ban 버튼`)
     // }

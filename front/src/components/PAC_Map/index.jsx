@@ -677,7 +677,13 @@ return (
                                 ref={autoCompleteRef}
                                 placeholder="서울대입구 원룸"
                                 type="text"
-                                style={{width : "100%" , marginLeft : '20px' , marginRight : '20px' , border : 'none' , backgroundColor : 'transparent'}}
+                                style={{width : "100%" , 
+                                        marginLeft : '20px' , 
+                                        marginRight : '20px' , 
+                                        border : 'none' , 
+                                        // backgroundColor : 'transparent'
+                                        backgroundColor : '#ffffff'
+                                    }}
                             />
 
                             {/* 매물 vs 찜한방 */}
