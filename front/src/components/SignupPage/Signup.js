@@ -422,7 +422,7 @@ const Signup = () => {
           {/* <SignupSubTitle>유저정보</SignupSubTitle> */}
           <div className="infobox">
             <div className="subtitle">계정정보</div>
-            <LabelInputDiv style={{ marginTop: "30px" }}>
+            <LabelInputDiv>
               <div className="userbox">
                 <UserLabel>유저 ID</UserLabel>
                 <div style={{ display: "flex" }}>
@@ -460,7 +460,7 @@ const Signup = () => {
           </div>
           <div className="infobox">
             <div className="subtitle">유저정보</div>
-            <LabelInputDiv style={{ marginTop: "30px" }}>
+            <LabelInputDiv>
               <div className="userbox">
                 <UserLabel>이름</UserLabel>
                 <UserInput

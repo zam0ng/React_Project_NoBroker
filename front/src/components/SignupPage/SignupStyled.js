@@ -169,7 +169,8 @@ export const UserLabel = styled.div`
   justify-content: flex-start;
   padding-left: 10px;
   align-items: center;
-  font-size: 18px;
+  font-size: 17px;
+  font-weight: 600;
   background-color: rgb(255, 229, 197);
 `;
 
