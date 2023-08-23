@@ -18,7 +18,8 @@ import {
   BigBox,
   SealInput,
   UserInfoBox2,
-  TypeTextTitle
+  TypeTextTitle,
+  LabelInputDiv,
 } from "./SignupStyled";
 import axios from "../../Axios";
 import { useNavigate } from "react-router-dom";
@@ -207,6 +208,16 @@ const Signup = () => {
       } else {
         pwtext1.innerHTML = "사용 불가한 패스워드 입니다.";
         pwtext1.style.color = "red";
+      }
+      //  비밀번호 확인하고 윗 비밀번호 인풋의 값을 수정했을 때
+      if (pw1 == pw2) {
+        pwtext2.innerHTML = "패스워드가 일치합니다.";
+        pwtext2.style.color = "blue";
+        setUserPW(pw1);
+      } else {
+        pwtext2.innerHTML = "패스워드가 일치하지 않습니다.";
+        pwtext2.style.color = "red";
+        setUserPW("");
       }
     } else if (e.target.id == "pass2") {
       if (pw1 == pw2) {
@@ -411,114 +422,131 @@ const Signup = () => {
           {/* <SignupSubTitle>유저정보</SignupSubTitle> */}
           <div className="infobox">
             <div className="subtitle">계정정보</div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <div className="userbox" style={{ marginTop: "10px" }}>
+            <LabelInputDiv>
+              <div className="userbox">
                 <UserLabel>유저 ID</UserLabel>
-                <UserInput onChange={UserIdChange}></UserInput>
+                <div style={{ display: "flex" }}>
+                  <UserInput onChange={UserIdChange}></UserInput>
+                  <p id="IDtext" style={{ margin: "10px" }}></p>
+                </div>
               </div>
-              <p id="IDtext" style={{ margin: "10px" }}></p>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
+            </LabelInputDiv>
+            <LabelInputDiv>
               <div className="userbox">
                 <UserLabel>유저 PW</UserLabel>
-                <UserInput
-                  id="pass1"
-                  type="password"
-                  onChange={UserPWChange}
-                ></UserInput>
+                <div style={{ display: "flex" }}>
+                  <UserInput
+                    id="pass1"
+                    type="password"
+                    onChange={UserPWChange}
+                  ></UserInput>
+                  <p id="PWtext1" style={{ margin: "10px" }}></p>
+                </div>
               </div>
-              <p id="PWtext1" style={{ margin: "10px" }}></p>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
+            </LabelInputDiv>
+            <LabelInputDiv>
               <div className="userbox">
                 <UserLabel>PW 확인</UserLabel>
-                <UserInput
-                  id="pass2"
-                  type="password"
-                  onChange={UserPWChange}
-                ></UserInput>
+                <div style={{ display: "flex" }}>
+                  <UserInput
+                    id="pass2"
+                    type="password"
+                    onChange={UserPWChange}
+                  ></UserInput>
+                  <p id="PWtext2" style={{ margin: "10px" }}></p>
+                </div>
               </div>
-              <p id="PWtext2" style={{ margin: "10px" }}></p>
-            </div>
+            </LabelInputDiv>
           </div>
           <div className="infobox">
             <div className="subtitle">유저정보</div>
-            <div className="userbox" style={{ marginTop: "50px" }}>
-              <UserLabel>이름</UserLabel>
-              <UserInput
-                onChange={(e) => {
-                  setUserName(e.target.value);
-                }}
-              ></UserInput>
-            </div>
-            <div className="userbox">
-              <UserLabel>주민번호</UserLabel>
-              <div>
-                <SsnInput id="ssn1" onChange={SsnChange} placeholder="YYMMDD" />{" "}
-                -{" "}
-                <SsnInput
-                  id="ssn2"
-                  onChange={SsnChange}
-                  placeholder="NNNNNNN"
-                  type="password"
-                />
+            <LabelInputDiv>
+              <div className="userbox">
+                <UserLabel>이름</UserLabel>
+                <UserInput
+                  onChange={(e) => {
+                    setUserName(e.target.value);
+                  }}
+                ></UserInput>
               </div>
-            </div>
-            <div className="userbox">
-              <UserLabel>전화번호</UserLabel>
-              <div>
-                <NumInput id="num1" onChange={NumChange} /> -{" "}
-                <NumInput id="num2" onChange={NumChange} /> -{" "}
-                <NumInput id="num3" onChange={NumChange} />
+            </LabelInputDiv>
+            <LabelInputDiv>
+              <div className="userbox">
+                <UserLabel>주민번호</UserLabel>
+                <div>
+                  <SsnInput
+                    id="ssn1"
+                    onChange={SsnChange}
+                    placeholder="YYMMDD"
+                    style={{ marginLeft: "50px", marginRight: "10px" }}
+                  />{" "}
+                  -{" "}
+                  <SsnInput
+                    id="ssn2"
+                    onChange={SsnChange}
+                    placeholder="NNNNNNN"
+                    type="password"
+                    style={{ marginLeft: "10px" }}
+                  />
+                </div>
               </div>
-            </div>
+            </LabelInputDiv>
+            <LabelInputDiv>
+              <div className="userbox">
+                <UserLabel>전화번호</UserLabel>
+                <div>
+                  <NumInput
+                    id="num1"
+                    onChange={NumChange}
+                    style={{ marginLeft: "50px", marginRight: "10px" }}
+                  />{" "}
+                  -{" "}
+                  <NumInput
+                    id="num2"
+                    onChange={NumChange}
+                    style={{ marginLeft: "10px", marginRight: "10px" }}
+                  />{" "}
+                  -{" "}
+                  <NumInput
+                    id="num3"
+                    onChange={NumChange}
+                    style={{ marginLeft: "10px" }}
+                  />
+                </div>
+              </div>
+            </LabelInputDiv>
+
             <div className="adrbox">
               <UserLabel>주소</UserLabel>
               <AddressInsert adr={setUserAdr}></AddressInsert>
             </div>
-            <div className="userbox">
-              <UserLabel>인감사진</UserLabel>
-              <input
-                type="file"
-                id="Sealinput"
-                onChange={SealChange}
-                style={{ display: "none" }}
-              ></input>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <div id="inputBtn" onClick={Imginput}>
-                  클릭
+            <LabelInputDiv>
+              <div className="userbox">
+                <UserLabel>인감사진</UserLabel>
+                <input
+                  type="file"
+                  id="Sealinput"
+                  onChange={SealChange}
+                  style={{ display: "none" }}
+                ></input>
+                <div style={{ display: "flex", alignItems: "center", marginLeft:"50px" }}>
+                  <div id="inputBtn" onClick={Imginput}>
+                    클릭
+                  </div>
+                  <p
+                    id="SealSelec"
+                    style={{
+                      width: "200px",
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    선택된 파일 없음
+                  </p>
                 </div>
-                <p
-                  id="SealSelec"
-                  style={{
-                    width: "200px",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  선택된 파일 없음
-                </p>
               </div>
-            </div>
+            </LabelInputDiv>
           </div>
         </UserInfoBox>
         <UserInfoBox2 className="bis">
@@ -600,15 +628,17 @@ const Signup = () => {
               onClick={(e) => setCheck(e.target.checked)}
             ></input>
             <span>개인 정보 제공 동의</span>
-            <div style={{ marginTop: "20px", marginBottom: "80px", color:"gray" }}>
+            <div
+              style={{ marginTop: "20px", marginBottom: "80px", color: "gray" }}
+            >
               입력하신 정보를 다시 한 번 확인해주세요! 잘못된 정보를 기입하여
               발생한 문제는 당사에서 책임지지 않습니다.
             </div>
           </div>
         </UserInfoBox2>
         <UserAdd onClick={SignupAdd}>회원가입</UserAdd>
-        <Footer></Footer>
       </BigBox>
+      <Footer></Footer>
     </SignupBox>
   );
 };

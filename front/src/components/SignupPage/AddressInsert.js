@@ -1,4 +1,5 @@
 import React from "react";
+import { AdrSearchBtn } from "./SignupStyled";
 
 const AddressInsert = (props) => {
   // 주소 검색 api URL
@@ -80,9 +81,10 @@ const AddressInsert = (props) => {
         <div
           className="adr1"
           style={{
+            marginLeft: "50px",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            // alignItems: "flex-start",
           }}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -92,26 +94,13 @@ const AddressInsert = (props) => {
               id="postcode"
               placeholder="우편번호"
               style={{
-                backgroundColor: "#fcfbf1",
-                border: "none",
-                borderBottom: "2px solid",
+                // backgroundColor: "#fcfbf1",
+                // border: "none",
+                // borderBottom: "2px solid",
                 width: "160px",
               }}
             />
-            <button
-              onClick={PostSearchClick}
-              style={{
-                backgroundColor: "white",
-                width: "120px",
-                height: "30px",
-                border: "3px solid orange",
-                borderRadius: "2em",
-                cursor: "pointer",
-                fontFamily: 'GmarketSansMedium'
-              }}
-            >
-              우편번호 찾기
-            </button>
+            <AdrSearchBtn onClick={PostSearchClick}>우편번호 찾기</AdrSearchBtn>
           </div>
           <input
             className="adrInput2"
@@ -120,9 +109,9 @@ const AddressInsert = (props) => {
             placeholder="도로명주소"
             onChange={AdrChange}
             style={{
-              backgroundColor: "#fcfbf1",
-              border: "none",
-              borderBottom: "2px solid",
+              // backgroundColor: "#fcfbf1",
+              // border: "none",
+              // borderBottom: "2px solid",
               width: "280px",
             }}
           />
@@ -135,9 +124,9 @@ const AddressInsert = (props) => {
             placeholder="상세주소"
             onChange={AdrChange}
             style={{
-              backgroundColor: "#fcfbf1",
-              border: "none",
-              borderBottom: "2px solid",
+              // backgroundColor: "#fcfbf1",
+              // border: "none",
+              // borderBottom: "2px solid",
               width: "280px",
             }}
           />
