@@ -155,7 +155,7 @@ export const RangeCriteria = styled.div`
             left: 50%;
             transform: translateX(-50%);
         }
-    
+
     
     & div:nth-child(2) {
         margin-left : 15px

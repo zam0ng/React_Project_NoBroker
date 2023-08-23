@@ -83,7 +83,7 @@ const [isAreaModalOpen , setIsAreaModalOpen] = useState(false)
 const [arrMarker, setArrMarker] = useState([])        // 찍혀야 하는 마커들
 const [tradableData  , setTradableData] = useState([])      // state 기준으로 뽑은 거래가능한 데이터 | 현재는 테스트 버전만 뽑음
 const [checkboxValue , setCheckboxValue] = useState([])     // 배열 = 여러값을 '동시에' 담을 수 있음 -> so, 중복체크 구현 가능
-const [priceRangeValue , setPriceRangeValue] = useState([0, 100000000000])
+const [priceRangeValue , setPriceRangeValue] = useState([0, 1000000000000])
 const [builtYearValue , setBuiltYearValue] = useState()     // 기본값이 필요하려나 
 const [areaRangeValue , setAreaRangeValue] = useState([0, 135000000000000])
 
@@ -188,7 +188,7 @@ const [myLikeClickedList , setMyLikeClickedList] = useState(false)
     // 가격 무제한 보기
     const handlePriceInfiniteBtn = () => {
         console.log("가격 무제한 버튼 클릭")
-        
+
     }
 
 

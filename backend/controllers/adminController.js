@@ -1,5 +1,7 @@
 const {User} = require("../models")
 
+
+
 exports.estateAgentApproval = async (req, res) => {
 
     // 바꾸려는 user_id 설정 
@@ -29,6 +31,13 @@ exports.estateAgentApproval = async (req, res) => {
 
 
 exports.getUserList = async(req, res) => {
+
+    const navigate = useNavigate();
+
+    if(req.acc_decoded.user_id !== "admin"){
+        return res.status(403).json({message : "관리자 권한이 없습니다."})
+    }
+    
     try {
         
         const userListData = await User.findAll({
