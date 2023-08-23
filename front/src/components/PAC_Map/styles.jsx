@@ -79,3 +79,20 @@ export const DefaultStyle = styled.div `
     /* letter-spacing : -0.9; */
 }
 `
+
+
+export const InfoWindowDiv = styled.div`
+    font-size: 16px;
+    width : 100px;
+    height : 50px;
+    color: #ffffff;
+    /* background-color: #b6590c; */
+    border-radius: 6px;
+    padding-top: -81px;
+    /* background-image : url("https://cdn-icons-png.flaticon.com/512/135/135620.png"); */
+    background-image: url("https://cdn-icons-png.flaticon.com/512/135/135620.png");
+
+    /* margin-top: 80px; */
+    /* box-shadow: 0 2px 4px rgba(224, 13, 13, 0.1); */
+    box-shadow: 0 2px 4px rgba(255, 8, 8, 5.1);
+`

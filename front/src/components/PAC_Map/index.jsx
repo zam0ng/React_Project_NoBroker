@@ -23,6 +23,7 @@ import {
     SubHeaderWrapper,
     SearchBarContainer,
     DefaultStyle,
+    InfoWindowDiv,
 } from 'components/PAC_Map/styles';
 
 import FilterCheckBoxModal from 'components/FilterCheckBoxModal/index';
@@ -37,6 +38,9 @@ import SearchIcon from 'components/SearchIcon/index'
 import NavHeader from 'components/navbar/NavHeader';
 
 import { useAuth } from '../../AuthContext';
+import { serverUrl } from 'components/serverURL';
+
+import ReactDOMServer from 'react-dom/server';
 
 // const queryClient = new QueryClient();
 
@@ -505,10 +509,11 @@ const createZoomControl = ( map ) => {
                 styles: [
                     {
                         url: '/img/orangeCircle_53px.png',
-                        width: 50,
-                        height: 50,
-                        textColor: '#fcfcfcf',
-                        textSize: 14,
+                        width: 60,
+                        height: 60,
+                        // textColor: '#fcfcfcf',
+                        textColor: '#ffffff',
+                        textSize: 16,
                         backgroundPosition: 'center'
                     },
                     // 추가 스타일 객체를 여기에 추가할 수 있습니다.
@@ -533,14 +538,11 @@ const createZoomControl = ( map ) => {
 
         if(!map) return     // [해석] map 이 null 값인 경우, 오류가 나니까 넣음
 
-        // const customContent = document.createElement("div");
-        // customContent.textContent = "$2.5M";
-
-
         // 거래가능 데이터로 '마커' 그리고 -> info window 만들고 -> currentMarker 에 저장하기
         tradableData.forEach( (item) => {
             // console.log("item.deposit" , item.deposit)
             const tempLocation = new window.google.maps.LatLng(item.lat, item.lng)
+            
             const tradableMarker = new window.google.maps.Marker({
                 position : tempLocation,
                 map : map,
@@ -548,28 +550,81 @@ const createZoomControl = ( map ) => {
                     // url : '/img/house-solid.svg',
                     url : '/img/orange_house_icon.png',
 
-                    scaledSize: new window.google.maps.Size(30, 30),    // 크기
+                    scaledSize: new window.google.maps.Size(40, 40),    // 크기
                 },
                 // content : customContent, // 커스텀 마커 ✅
                 value : item.deposit    // 이게 클러스터링 계산에 들어감. 유형은 숫자
+            }
+            )
+
+            tradableMarker.addListener( "click" , () => {
+                window.location.href = `http://localhost:3000/detail/${item.id}`;
             })
 
-                    // 임시. 정규표현식으로 앞자리만 가져오기 | 😥😥 
-                        const tempDeposit = item.deposit
-                        const yuk = Math.floor(tempDeposit/100000000)
-                        const chenMan = Math.floor((tempDeposit%1000000000)/100000000)
-                        const contentString = `<div> ${yuk}.${chenMan}억</div>`
-                        // console.log("단위변환" ,contentString)
+            // || keep 🔵 | 기본 버전
+            // 임시. 정규표현식으로 앞자리만 가져오기 | 😥😥 
+                const tempDeposit = item.deposit
+                const yuk = Math.floor(tempDeposit/100000000)
 
-                        // marker 가 만들어질 때 마다 info window 생성
-                        const infoWindow = new window.google.maps.InfoWindow();
+                // const tempChenMan = Math.round((tempDeposit%100000000)/10000000)
+                const tempChenMan_manwon = Math.round((tempDeposit % 100000000) / 10000);       // 만원 단위만 독자적으로 쓸 때의 값 계산
+                const tempChenMan_cheonman = Math.round((tempDeposit % 100000000) / 10000000);  // 억 단위랑 함께 쓸 때의 만원 단위 계산
 
-                        infoWindow.setContent(contentString);
-                        infoWindow.open({
-                            anchor : tradableMarker,
-                            map,
-                            shouldFocus : false
-                        })
+                const chenMan = parseFloat(tempChenMan_manwon).toString();
+                const chenManWithYuk = parseFloat(tempChenMan_cheonman).toString();
+
+                const contentString = yuk < 1 ?
+                `<div> ${chenMan}만원</div>`:
+                `<div> ${yuk}.${chenManWithYuk}억</div>`
+                    
+        
+                            // 경복궁, 이미지 잡을 버전 
+                                // const contentString = [
+                                //             // 경복궁 마커 | 원본 keep | 작동함 🔵 
+                                //                 // ['<div class="wrap"> <div class="text-box"><h4>경복궁</h4><div class="img-box"><img src="https://image.shutterstock.com/image-vector/palace-icon-outline-vector-web-260nw-1046855677.jpg"></div><a target="_blank" href="https://www.royalpalace.go.kr/"><p>홈페이지 방문하기</p></a></div>', 37.577624, 126.976020]
+                                //         // 
+                                //         [`<div class="wrap"> <p>경복궁</p> <img src=${serverUrl}estate_imgs/${}></div> <a target="_blank" href="https://www.royalpalace.go.kr/"><p>홈페이지 방문하기</p></a></div>`, 37.577624, 126.976020]
+                                    
+                                // ]
+
+                            // 리액트 버전 | 작동은 함 
+                                // const contentString = ReactDOMServer.renderToString(
+                                //         <InfoWindowDiv>
+                                //             {` 
+                                //                 ${yuk}.${chenMan}억
+                                //             `}
+                                //         </InfoWindowDiv>
+                                //     )
+                                // console.log("단위변환" ,contentString)
+
+            // marker 가 만들어질 때 마다 info window 생성
+                const infoWindow = new window.google.maps.InfoWindow();
+
+                infoWindow.setContent(contentString); // 기본 contentString
+                // infoWindow.setContent(contentString[0][0]); // 경복궁 마커에서 이렇게 배열 2차원으로 해야 함 ⭐⭐ 
+
+            // 기본적으로 마우스 오버 없이 올라가 있게 하는 것 | 바로 필요한 정보를 보면 좋을 것 같아서 마우스 오버 없이도 보이는 버전 선택
+                    infoWindow.open({
+                        anchor : tradableMarker,
+                        map,
+                        shouldFocus : false
+                    })
+
+                                // // '마우스 오버' 하면 -> info-window 보이게 하기
+                                //     tradableMarker.addListener( "mouseover" , () => {
+                                //             infoWindow.open({
+                                //                 anchor: tradableMarker,
+                                //                 map,
+                                //             })
+                                //     })
+                                                    
+                                // // '마우스 오버' 하면 -> info-window 사라지게 하기
+                                // tradableMarker.addListener( "mouseout" , () => {
+                                //         infoWindow.close({
+                                //             anchor: tradableMarker,
+                                //             map,
+                                //         })
+                                // })
 
             newMarkers.push(tradableMarker)  // ❓❓❓ 이렇게 해도, currentMarkers 에 저장되는거 아닌가 ❓❓❓ 
         })

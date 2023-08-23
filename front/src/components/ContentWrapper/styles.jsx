@@ -15,7 +15,8 @@ const ContentWrapper = styled.div`
     overflow-x: hidden;
     overflow-y: scroll;
 
-    background-color : lightblue;
+    /* background-color : lightblue; */
+    background-color : transparent;
     position : relative;
 
     display : flex;
