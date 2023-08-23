@@ -79,7 +79,7 @@ export const ModalContentWrap = styled.div`
     width: 80%;
 
     border-top: 1px solid rgb(243, 243, 243);
-    border-bottom: 1px solid rgb(243, 243, 243);
+    /* border-bottom: 1px solid rgb(243, 243, 243); */
 
 
     & label {
@@ -95,8 +95,6 @@ export const ModalContentWrap = styled.div`
         /* margin-bottom : 5px; */
         /* background-color : pink; */
     }
-
-
 
     & input:checked + div {
     background-image: url("/static/media/check_off.svg");
