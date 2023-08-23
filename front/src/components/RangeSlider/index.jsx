@@ -6,7 +6,7 @@ import TooltipSlider, { handleRender } from 'components/TooltipSlider';
 const wrapperStyle = { 
                   width: 250, 
                   marginLeft: 7, 
-                  
+                  // backgroundColor : #FFA500,
                 };
 
 function RangeSlider({handlePriceRangeBox}) {
