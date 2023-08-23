@@ -11,14 +11,17 @@ export const NavbarTitle = styled.div`
   /* border: 1px solid black; */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   box-sizing: border-box;
+  padding-left: 20px;
+  padding-right: 40px;
+  
 `;
 export const NavbarTitleName = styled.div`
   font-family: "SBAggroB";
 
   height: 80px;
-  width: 85%;
+  /* width: 85%; */
   /* border: 1px solid black; */
   line-height: 80px;
   color: white;
@@ -110,6 +113,7 @@ export const Menu = styled.div`
   transition: 3s;
 
   .Copyright {
+    font-size: smaller;
     color: gray;
     line-height: 1.5;
   }
@@ -120,7 +124,7 @@ export const MenuListTitle = styled.div`
   width: 100%;
   height: 15%;
   line-height: 50px;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 600;
   color: orange;
   display: flex;
