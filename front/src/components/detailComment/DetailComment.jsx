@@ -204,7 +204,7 @@ const DetailComment = ({ estateId, comment, queryClient }) => {
   };
 
   return (
-    <div>
+    <div style={{marginBottom: "60px"}}>
       <H1>댓글</H1>
       <CommentDiv>{loop()}</CommentDiv>
       <InputDiv style={{ marginTop: "40px", display: "flex" }}>
