@@ -25,6 +25,8 @@ const queryClient = new QueryClient();
 function App() {
   const { isLoggedIn, isCertificate, isAdmin } = useAuth();
 
+  console.log("isLoggedIn : ",isLoggedIn);
+
   return (
 
     <QueryClientProvider client={queryClient}>

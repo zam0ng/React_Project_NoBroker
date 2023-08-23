@@ -4,6 +4,7 @@ const { findOne } = require('../models/users');
 exports.getUserInfo = async (req,res)=>{
     console.log(req);
     console.log(req.acc_decoded);
+    const user_id = req.acc_decoded.user_id;
 
     try {
         if(user_id==""){
@@ -13,17 +14,17 @@ exports.getUserInfo = async (req,res)=>{
             where : {user_id : user_id},
             raw : true,
         })
-        
+
         res.json(data);
     } catch (error) {
-        console.log("getUserInfo에서 오류남",error); 
-    }   
+        console.log("getUserInfo에서 오류남",error);
+    }
 }
 
 
 // exports.getUserList = async(req, res) => {
 //     try {
-        
+
 //         const userListData = await User.findAll({
 //             // where : {}
 //         })
@@ -33,7 +34,7 @@ exports.getUserInfo = async (req,res)=>{
 
 //     } catch (error) {
 //         console.log("getUserList 에서 오류 " , error)
-        
+
 //     }
 // }
 
