@@ -30,7 +30,7 @@ exports.getTradableEstate = async(req , res) => {
 
     const whereConditions = {
         state : 0,   // 모든 집값 상태를 가져오겠다.
-        accpet : 1    // 투표가 끝난, 정상매물을 의미
+        accpet : 1    // 투표가 끝난, 정상매물을 의미 | accept 오타지만, 이미 모델에서 이렇게 설정되어서, 현재 상태에서는 기재해야 반영됨
     }
 
     // // 내가 좋아요 클릭한 것만 지도에 표시하기 

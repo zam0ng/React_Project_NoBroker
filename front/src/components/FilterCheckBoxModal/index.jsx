@@ -38,7 +38,8 @@ const FilterCheckBoxModal = ({
                       type="checkbox" 
                       id="APT" 
                       value={label_01} 
-                      onChange={ e => handleCheckBox(e.target.value , e.target.checked) }/>
+                      onChange={ e => handleCheckBox(e.target.value , e.target.checked) }
+                      />
                   
                   <label> {label_01} </label>
                 </ModalCheck>
