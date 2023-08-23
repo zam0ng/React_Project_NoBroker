@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { userIcon_white } from "../../img";
 export const NavbarTitle = styled.div`
   position: absolute;
-  top: 0px;
+  top: 10px;
   width: 100%;
   height: 10%;
   /* background-color: white; */
@@ -10,14 +10,17 @@ export const NavbarTitle = styled.div`
   /* border: 1px solid wheat; */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   box-sizing: border-box;
+  margin-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 export const NavbarTitleName = styled.div`
   font-family: "SBAggroB";
 
   height: 80px;
-  width: 85%;
+  /* width: 85%; */
   /* border: 1px solid black; */
   line-height: 80px;
   color: white;
@@ -36,6 +39,8 @@ export const NavbarTitleName = styled.div`
     font-size: 60px;
     font-weight: 300;
     color: orange;
+    /* border:  1px solid white; */
+    padding-top: 10px;
   }
 `;
 export const NavbarIcon = styled.div`
@@ -102,6 +107,7 @@ export const Menu = styled.div`
   .Copyright{
     color: gray;
     line-height: 1.5;
+    font-size: smaller;
   }
 `;
 
@@ -111,7 +117,7 @@ export const MenuListTitle = styled.div`
   height: 15%;
   /* border: 1px solid gray; */
   line-height: 50px;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 600;
   color: orange;
   display: flex;
