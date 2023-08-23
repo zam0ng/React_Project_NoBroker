@@ -4,10 +4,10 @@ const path = require("path");
 
 
 exports.Upload = multer({
-    
+
     storage : multer.diskStorage({
         destination : (req,file,qwer) =>{
-        
+
             // uploads : 폴더명
             qwer(null,"imgs/estate/")
         },
@@ -26,10 +26,10 @@ exports.Upload = multer({
 });
 
 exports.updateUpload = multer({
-    
+
     storage : multer.diskStorage({
         destination : (req,file,qwer) =>{
-        
+
             // uploads : 폴더명
             qwer(null,"imgs/estate/")
         },

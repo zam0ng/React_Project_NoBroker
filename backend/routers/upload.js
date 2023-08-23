@@ -1,15 +1,16 @@
 const router = require("express").Router();
 const {Upload} =require("../middleware/imgUpload");
 const {EstateInfo} =require("../controllers/uploadcontroller");
+const { isLogin } = require("../middleware/isLogin");
 // router.post("/",Upload.array("upload"),(req,res)=>{
 
-    
+
 //     try {
 //         console.log("----------------------req.files");
 //         // console.log(req.files)
-        
+
 //         for (let index = 0; index < req.files.length; index++) {
-           
+
 //             console.log(req.files[index].path)
 //         }
 //         // console.log(req.body)
@@ -20,6 +21,7 @@ const {EstateInfo} =require("../controllers/uploadcontroller");
 //     }
 // })
 router.post("/",Upload.array("upload"),EstateInfo)
+// router.post("/", isLogin, Upload.fields(["upload"]),EstateInfo)
 router.post("/estateInfo",EstateInfo);
 
 module.exports = router;
