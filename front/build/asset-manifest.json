@@ -1,20 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.6cc6143a.css",
-    "main.js": "/static/js/main.7541f5a1.js",
+    "main.css": "/static/css/main.ae31cb33.css",
+    "main.js": "/static/js/main.37f19096.js",
     "static/js/787.71df535f.chunk.js": "/static/js/787.71df535f.chunk.js",
+    "static/media/loginBackground.png": "/static/media/loginBackground.649aa1a922e75f150fd7.png",
     "static/media/NoBroker_Logo.png": "/static/media/NoBroker_Logo.a4fbc8bfab53c20c0b6f.png",
+    "static/media/NoBroker_Logo_1.png": "/static/media/NoBroker_Logo_1.7b00dec51df8b4b6dd14.png",
     "static/media/userIcon.png": "/static/media/userIcon.150251e9c35d71b76ca4.png",
     "static/media/userIcon_white.png": "/static/media/userIcon_white.9c9dd6ded3293f17ea48.png",
+    "static/media/home.png": "/static/media/home.9238ef3298478f8795fe.png",
     "static/media/index.less": "/static/media/index.a312cdbf0bd2366bddc3.less",
     "index.html": "/index.html",
     "static/media/heart-button.svg": "/static/media/heart-button.c2608ab71fdcd9a9a05770d71ca4653e.svg",
-    "main.6cc6143a.css.map": "/static/css/main.6cc6143a.css.map",
-    "main.7541f5a1.js.map": "/static/js/main.7541f5a1.js.map",
+    "main.ae31cb33.css.map": "/static/css/main.ae31cb33.css.map",
+    "main.37f19096.js.map": "/static/js/main.37f19096.js.map",
     "787.71df535f.chunk.js.map": "/static/js/787.71df535f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6cc6143a.css",
-    "static/js/main.7541f5a1.js"
+    "static/css/main.ae31cb33.css",
+    "static/js/main.37f19096.js"
   ]
 }
