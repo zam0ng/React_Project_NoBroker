@@ -133,7 +133,7 @@
     useEffect( () => {
       // insert 할 때, 굳이 파일 경로를 앞에 안 붙여준 경우 -> 파싱 없이 넣어야 나옴
         console.log("item.img_1 담긴 것 👲👲👲" , item.img_1) // 👉 nobroker_erd_1692354792331.png
-        setEstateImgUrl(item.img_1);   // substr(12) = 앞에 파일 경로 지워주기 ✅✅
+        setEstateImgUrl(item.img_1.substr(12));   // substr(12) = 앞에 파일 경로 지워주기 ✅✅
 
       // insert 할 때, 경로 붙인 경우 -> 파싱 해야 나옴
         // setEstateImgUrl(item.img_1.substr(12));   // substr(12) = 앞에 파일 경로 지워주기 ✅✅
@@ -166,12 +166,12 @@
           <ImgWrap>
 
             <ImgThumbnail>
-              <img src={`http://localhost:8080/estate_imgs/${estateImgUrl}`} />
+              <img src={`${serverUrl}estate_imgs/${estateImgUrl}`} />
             </ImgThumbnail>
 
             <LikeBtnWrap onClick={ () => handleLikeBtn(index) } >
               {
-                estateLike && estateLike[0] != null ? <img src={detail_heart}></img> : <img src={detail_emptyheart} ></img>
+                isLoggedIn && estateLike && estateLike[0] != null ? <img src={detail_heart}></img> : <img src={detail_emptyheart} ></img>
               }
 
             </LikeBtnWrap>

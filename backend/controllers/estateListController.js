@@ -18,7 +18,7 @@ exports.getTradableEstate = async(req , res) => {
     // req.acc_decoded.id ? console.log("req.acc_decoded.id | 로그인한 유저 id : " , req.acc_decoded.id) : console.log("로그인하지 않은 상태😥😥")
     // console.log("req" , req) // 🔵
     // console.log("req.acc_decoded" , req.acc_decoded) // 🔵
-    console.log("req.acc_decoded.id" , req.acc_decoded.id)  // 8 나옴 🔵
+    // console.log("req.acc_decoded.id" , req.acc_decoded.id)  // 8 나옴 🔵
     console.log("req.query.myLikeClickedList" , req.query.myLikeClickedList)  // 문자열 true 나옴
     // console.log(" req.query.roomType | 방 종류 " , req.query.roomType)
       // [목표 URL]`http://localhost:8080/list/tradableEstate?roomType=${checkedRoomTypes}&priceRangeValue=${priceRangeValue}`
