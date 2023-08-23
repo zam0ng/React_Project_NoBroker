@@ -3,14 +3,17 @@ import Slider from 'rc-slider';
 import 'components/RangeSliderAsset/index.less';
 import TooltipSlider, { handleRender } from 'components/TooltipSlider';
 
-const wrapperStyle = { width: 200, margin: 50 };
+const wrapperStyle = { 
+                  width: 255, 
+                  margin: 7 
+                };
 
 function AreaRangeSlider({handleAreaRangeBox}) {
   return (
     <div>
 
       <div style={wrapperStyle}>
-        <p>Range with custom tooltip</p>
+        {/* <p>Range with custom tooltip</p> */}
         
         <TooltipSlider
             defaultValue={[0, 480]}  // 초기 설정값 0원 ~ 300m2
@@ -22,17 +25,14 @@ function AreaRangeSlider({handleAreaRangeBox}) {
             onChange = {handleAreaRangeBox}     // 사용자가 설정한 값을, 자동으로 handle 함수의 인자, 로 설정함
             tipFormatter={(value) => `${Math.floor(value)}㎡ (${Math.floor(value/3.3)}평)`}    // '\u339C' == ㎡ 이거 임 
             
-            handleStyle={{
-              borderColor: 'blue',
-              height: 28,
-              width: 28,
-              marginLeft: -14,
-              marginTop: -9,
-              backgroundColor: 'black',
-            }}
-
-
-
+            // handleStyle={{
+              // borderColor: 'blue',
+              // height: 28,
+              // width: 28,
+              // marginLeft: -14,
+              // marginTop: -9,
+              // backgroundColor: 'black',
+            // }}
         />
       </div>
       

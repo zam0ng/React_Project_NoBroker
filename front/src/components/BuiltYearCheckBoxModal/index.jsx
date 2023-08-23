@@ -25,7 +25,7 @@ const FilterCheckBoxModal = ({
                               label_06, 
                             }) => {
   
-    
+
   return (
     <>
           <FilterModalBuiltYearContainer left={left} >

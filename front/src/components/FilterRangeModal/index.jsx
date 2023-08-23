@@ -3,7 +3,8 @@ import {
   FilterModalContainer,
   ModalHeaderWrap,
   RangeCriteria,
-  TooltipSliderContainer
+  TooltipSliderContainer,
+  InfinitePriceBtn
   } from 'components/FilterRangeModal/styles'
 
 import Slider, { Range } from 'rc-slider';
@@ -14,7 +15,7 @@ import { defaultTest } from 'components/FilterRangeModal/defaultTest'
 import RangeSlider from 'components/RangeSlider/index';
 
 
-const FilterRangeModal = ({ priceRangeValue, left , handlePriceRangeBox }) => {
+const FilterRangeModal = ({ handlePriceInfiniteBtn, priceRangeValue, left , handlePriceRangeBox }) => {
   const _tooltipRef = useRef(null);
   
 
@@ -33,9 +34,19 @@ const FilterRangeModal = ({ priceRangeValue, left , handlePriceRangeBox }) => {
               <RangeCriteria>
                 <div> 0 </div>
                 <div> 5억 </div>
-                <div> 무제한 </div>
+                <div> 10억 </div>
               </RangeCriteria>
-              
+
+
+              {/* <div style={{borderTop : "1px solid rgb(0,0,0)"}} > */}
+                <InfinitePriceBtn 
+                  onClick={ () => handlePriceRangeBox(1000000000) }   // 100억 까지 조회되게 설정
+                  // handlePriceRangeBox
+                  > 
+                  <p>매매가 무제한</p>
+                </InfinitePriceBtn>
+              {/* </div> */}
+
             </ModalHeaderWrap>
 
             </form>

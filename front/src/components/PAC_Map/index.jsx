@@ -185,6 +185,11 @@ const [myLikeClickedList , setMyLikeClickedList] = useState(false)
         console.log("handleAllEstateList 찜한방 false 클릭🚀🚀🚀" , myLikeClickedList)
     }
 
+    // 가격 무제한 보기
+    const handlePriceInfiniteBtn = () => {
+        console.log("가격 무제한 버튼 클릭")
+        
+    }
 
 
     // modal handler | 이게 먹히려나
@@ -201,6 +206,7 @@ const [myLikeClickedList , setMyLikeClickedList] = useState(false)
             console.log("현재 activaModal 확인 3" , activeModal)
         }
         } , [activeModal])
+
 
 
 
@@ -705,6 +711,7 @@ return (
                         <FilterButton color="rgb(34, 34, 34)"  fontWeight={800} id={"priceRange"} title={"거래 가격"} handleModalToggle = {handleModalToggle }  />
                         {
                             activeModal == "priceRange" && <FilterRangeModal
+                                                    handlePriceInfiniteBtn = {handlePriceInfiniteBtn}
                                                     left={"75px"}
                                                     value={priceRangeValue}
                                                     handlePriceRangeBox={handlePriceRangeBox} />

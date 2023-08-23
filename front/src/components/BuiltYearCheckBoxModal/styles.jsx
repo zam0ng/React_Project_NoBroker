@@ -112,6 +112,7 @@ export const ModalContentWrap = styled.div`
     margin-top: 10px;
     margin-bottom : -10px;
     margin-left: 30px;
+    
 
     height: 75px;
     width: 80%;
@@ -264,3 +265,6 @@ export const ModalCheckBuiltYear = styled.div`
         letter-spacing : -0.9px
     }
 `
+
+
+
