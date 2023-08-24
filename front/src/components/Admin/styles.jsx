@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 
 export const AdminPageDefault = styled.section`
-    margin: 0px;
+    min-height : 100vh;
+    margin-bottom : 50px;
+    /* margin: 0px; */
     padding: 0px;
     border: 0px;
     font: inherit;
@@ -14,41 +16,49 @@ export const TitleHeaderWrap = styled.div`
 
     margin-top : 10px;
     margin-bottom : 30px;
-    margin-left : 90px;
-    display : flex;
-    flex-direction : column;
-    align-items : flex-start;
+    /* margin-left : 90px; */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     & h1 {
         color : rgb(59, 59, 59);
-        font-size : 18px;
-        font-weight : 600;
+        font-size : 220%;
+        font-weight : 800;
+        letter-spacing : -1px;
         /* line-height : 27px/ */
     }
-
+    
     & p {
         color : rgb(134, 134, 134);
-        font-size : 13px;
-        font-weight : 400;
-        margin-top : -7px;
+        letter-spacing : -1px;
+        font-size : 130%;
+        font-weight : 600;
+        margin-top : -20px;
         /* line-height : 20px; */
     }
 `
 
 export const UserListWrap = styled.div`
-    
+    margin : 0 auto;
+    width : 1500px;
+    background-color: rgb(255, 229, 197);
     font-size : 16px;
-    font-weight : 600;
+    font-weight : 300;
     display : flex;
-    color : rgb(134, 134, 134);
+    color : rgb(15, 15, 15);
+    height : 65px;
     
     justify-content: space-evenly;
 
-    margin-left : 10px;
+    /* margin-left : 10px; */
     border-bottom: 1px solid rgb(243, 243, 243);
-    letter-spacing : -1px;
+    letter-spacing : -0.5px;
 
     flex-shrink : 0;
+    align-items: center;
+
 
     > p:nth-child(1) {
         width : 80px;
@@ -91,7 +101,8 @@ export const UserListWrap = styled.div`
         flex-shrink : 0;
         /* background-color : lightcoral */
     }
-    /* 공인중개사 자격증 이미지 */
+    /* 공인중개사 자격증 이미지 | 
+        목차는 styled component 에서 주고, 내용물은 inline css 로 줌 | <div style={{width : '100px'}}> */
     > p:nth-child(8) { 
         width : 100px;
         flex-shrink : 0;
@@ -99,6 +110,7 @@ export const UserListWrap = styled.div`
     }
 
     // 인감사진 | 사이즈를 좀 더 키워야? 
+        /* 목차는 styled component 에서 주고, 내용물은 inline css 로 줌 | <div style={{width : '100px'}}>  */
     > p:nth-child(9) { 
         width : 80px;
         flex-shrink : 0;
@@ -107,7 +119,7 @@ export const UserListWrap = styled.div`
     
     /* 업자 인증 버튼 */
     > div:nth-child(10) { 
-        width : 120px;
+        width : 90px;
         flex-shrink : 0;
         /* background-color : lightcoral; */
         display : flex;
@@ -117,14 +129,15 @@ export const UserListWrap = styled.div`
 `
 
 export const UserItemWrap = styled.div`
+    width : 1500px;
+    margin : 0 auto;
+
     position : relative;
 
     font-size : 16px;
     letter-spacing : -0.9px;
-    font-weight : 600;
+    font-weight : 300;
     color : rgb(10,10,10);    
-    width : 100%;
-
 
     display : flex;
     align-items: center;
@@ -134,7 +147,6 @@ export const UserItemWrap = styled.div`
     letter-spacing : -1px;
 
     flex-shrink : 0;
-
     
     > p:nth-child(1) {
         width : 80px;
@@ -193,11 +205,15 @@ export const UserItemWrap = styled.div`
     
     /* 업자 인증 버튼 */
     > div:nth-child(10) { 
-        width : 120px;
+        height : 70px;
+        /* background-color : blue; */
+
+        width : 90px;
         flex-shrink : 0;
         /* background-color : lightcoral; */
         display : flex;
-        justify-content: space-evenly;
+        justify-content: center;
+        align-items : center;
     
     }
 `
@@ -271,6 +287,57 @@ export const SealClickedImageContainer = styled.div`
     background-size : cover;
 
 `
+
+
+export const ApproveBtn = styled.button`
+    cursor: pointer;
+    font-family : 'GmarketSansMedium';    
+    width : 60px;
+    font-size: 15px;
+    font-weight : 500;
+    letter-spacing : 1px;
+
+    height : 30px;
+    border : none;
+    border-radius : 2px;
+    background-color : rgb(255 165 0);
+    color : rgb(250, 250, 250);
+
+    `
+    
+
+    export const DisapproveBtn = styled.button`
+    cursor: pointer;
+    font-family : 'GmarketSansMedium';    
+    width : 60px;
+    font-size: 15px;
+    font-weight : 500;
+    letter-spacing : 1px;
+
+    font-family : 'GmarketSansMedium';    
+    width : 60px;
+    height : 30px;
+    border : none;
+    color : rgb(10,10,10);
+    background-color : rgb(224, 224, 224);
+
+`
+
+
+export const ButtonWrap = styled.div`
+    width: 120px;
+    height : 70px;
+
+    display: flex;
+    /* background-color: green; */
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+`
+
+
+
 
 // export const BackgroundImg = styled.div`
 //     position : fixed;

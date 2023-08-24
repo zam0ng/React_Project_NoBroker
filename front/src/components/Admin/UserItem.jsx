@@ -5,6 +5,9 @@ import { UserItemWrap ,
         ClickedImageContainer,
         SealImageContainer,
         SealClickedImageContainer,
+        ApproveBtn,
+        DisapproveBtn,
+        ButtonWrap
 
     } from './styles'
 import { useMutation } from 'react-query'
@@ -27,8 +30,7 @@ const UserItem = ({item}) => {
             withCredentials : true
         });
         return data;
-    } , {
-        onSuccess : (data) => {
+    } , {onSuccess : (data) => {
             if(data?.message == "성공") {
                 console.log("부동산 업자 승인 완료")
 
@@ -40,8 +42,7 @@ const UserItem = ({item}) => {
                 alert("오류 발생")
             }
         }
-    }, {
-        onError : (error) => {
+    }, {onError : (error) => {
             console.error(error)
         }
     })
@@ -51,8 +52,7 @@ const UserItem = ({item}) => {
             withCredentials : true
         });
         return data;
-    } , {
-        onSuccess : (data) => {
+    } , {onSuccess : (data) => {
             if(data?.message == "성공") {
                 console.log("미승인 완료")
                 
@@ -134,7 +134,7 @@ const UserItem = ({item}) => {
 
             {/* | certificate_img | */}
             {
-                <div>
+                <div style={{width : '100px', display : 'flex' , alignItems : 'center' , justifyContent : 'center'} } >
                     <ImageContainer
                         onClick={handleImageClicked}
                         imageUrl={`${serverUrl}user_imgs/${item.certificate_img?.substr(13)}`} />
@@ -145,7 +145,7 @@ const UserItem = ({item}) => {
 
             {/* | seal_img | */}
             {
-                <div>
+                <div style={{width : '80px' , display : 'flex' , alignItems : 'center' , justifyContent : 'center' }} >
                     <ImageContainer
                         onClick={handleImageClicked}
                         imageUrl={`${serverUrl}user_imgs/${item.seal_img?.substr(13)}`} />
@@ -157,16 +157,24 @@ const UserItem = ({item}) => {
             {/* role 이 true(공인중개사 신청) 이고 && certificate_user == 1(신청중 인 상황) 이면 -> 승인, 미승인 버튼이 나오게 하기
                 role 이 true(공인중개사 신청) 이고 && certificate_user == 0(신청 완료) 이면 -> ban 할 수도 있으니까
             */}
-            <p>
+            
+            <div>
                 {item.role == true && item.certificate_user == 1 ? (
-                    <div style={{width : '120px'}}>
-                        <button onClick={handleApproveBtn} >승인</button>
-                        <button onClick={handleDisapproveBtn} >미승인</button>
-                    </div>
+                <>
+                    <ButtonWrap>
+                        <ApproveBtn onClick={handleApproveBtn} >
+                            승인
+                        </ApproveBtn>
+
+                        <DisapproveBtn onClick={handleDisapproveBtn} >
+                            미승인
+                        </DisapproveBtn>
+                    </ButtonWrap>
+                </>
                 // ) : item.certificate_user == 0 ? ( <div style={{width : '120px'}} > <button onClick={handleBanBtn} >ban</button> </div>
                 ) : <div style={{width : '120px'}} > </div>
             }
-            </p>
+            </div>
 
 
         </UserItemWrap>
