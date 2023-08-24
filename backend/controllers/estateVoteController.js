@@ -117,6 +117,12 @@ exports.voteEstate = async (req, res) => {
       return res.json({ message: "투표할 수 있는 매물이 아닙니다." });
     }
 
+    // 이전에 투표한 적이 있으면 투표 금지
+    const vote = await Vote.findOne({where : {user_id, real_estate_id}});
+    if (vote) {
+      return res.json({ message : "이미 투표한 매물입니다." });
+    }
+
     // 투표 테이블 추가
     await Vote.create({ user_id, real_estate_id, result });
 

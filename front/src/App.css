@@ -1,66 +1,66 @@
-.App {
-  text-align: center;
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-}
+  .App {
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+  }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    height: 40vmin;
+    pointer-events: none;
   }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
   }
-  to {
-    transform: rotate(360deg);
+
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
   }
-}
 
-.LoginBtns {
-  display: flex;
-}
+  .App-link {
+    color: #61dafb;
+  }
 
-/* 슬라이더 적용 👇  */
-.rc-slider-track {
-  background-color: #fabb96 !important; 
-  /* 원본 슬라이더 색상 : #96dbfa  */
-  /* important 가 들어가야 -> 변경됨 | 왜냐면, 라이브러리 가져온거니까 */
-}
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 
-.rc-slider-handle {
-  /* border: solid 2px #fabb96 !important ; */
-  border: 1px solid rgb(237, 237, 237) !important;
-  opacity: 1 !important;
-  width: 24px !important ;
-  height: 24px !important ;
-  top : -1px !important;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+  .LoginBtns {
+    display: flex;
+  }
 
-}
+  /* 슬라이더 적용 👇  */
+  .rc-slider-track {
+    background-color: #fabb96 !important;
+    /* 원본 슬라이더 색상 : #96dbfa  */
+    /* important 가 들어가야 -> 변경됨 | 왜냐면, 라이브러리 가져온거니까 */
+  }
+
+  .rc-slider-handle {
+    /* border: solid 2px #fabb96 !important ; */
+    border: 1px solid rgb(237, 237, 237) !important;
+    opacity: 1 !important;
+    width: 24px !important ;
+    height: 24px !important ;
+    top : -1px !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+
+  }
 
 
 
