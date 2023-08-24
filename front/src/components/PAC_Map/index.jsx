@@ -178,6 +178,7 @@ const [myLikeClickedList , setMyLikeClickedList] = useState(false)
     // 내가 찜한 방 보기
     const handleMyLikeClickedList = () => {
         setMyLikeClickedList(true)
+        
         console.log("handleMyLikeClickedList 찜한방 true 클릭 🚀🚀🚀" , myLikeClickedList)
     }
 
@@ -647,7 +648,12 @@ return (
                                 ref={autoCompleteRef}
                                 placeholder="서울대입구 원룸"
                                 type="text"
-                                style={{width : "100%" , 
+                                style={{
+                                        height : '32px',
+                                        fontWeight : '500',
+                                        color : 'rgb(20, 20, 20)',
+                                        fontSize : '15px',
+                                        width : "100%" , 
                                         marginLeft : '20px' , 
                                         marginRight : '20px' , 
                                         border : 'none' , 
@@ -657,7 +663,7 @@ return (
                             />
 
                             {/* 매물 vs 찜한방 */}
-                            <SearchBarButton handleAllEstateList={handleAllEstateList}  handleMyLikeClickedList={handleMyLikeClickedList} />
+                            <SearchBarButton myLikeClickedList = {myLikeClickedList}   handleAllEstateList={handleAllEstateList}  handleMyLikeClickedList={handleMyLikeClickedList} />
 
                     </SearchBarContainer>
 
@@ -665,7 +671,7 @@ return (
 
                 <FilterContainer>
                     {/* Roomtype 필터 | 아파트 vs 오피스텔 */}
-                        <FilterButton color="rgb(34, 34, 34)" fontWeight={800}  id={"roomType"} title={"아파트, 오피스텔, 주택"} handleModalToggle = {handleModalToggle }  />
+                        <FilterButton color="rgb(34, 34, 34)" fontWeight={600}  id={"roomType"} title={"아파트, 오피스텔, 주택"} handleModalToggle = {handleModalToggle }  />
                         {
                             // 클릭되면 -> 1번으로 target.id 또는 value 를 품고 있는다.
                             activeModal == "roomType" && <FilterCheckBoxModal
@@ -684,7 +690,7 @@ return (
                         }
 
                     {/* 매매 가격 필터 | 아파트 vs 오피스텔 */}
-                        <FilterButton color="rgb(34, 34, 34)"  fontWeight={800} id={"priceRange"} title={"거래 가격"} handleModalToggle = {handleModalToggle }  />
+                        <FilterButton color="rgb(34, 34, 34)"  fontWeight={600} id={"priceRange"} title={"거래 가격"} handleModalToggle = {handleModalToggle }  />
                         {
                             activeModal == "priceRange" && <FilterRangeModal
                                                     handlePriceInfiniteBtn = {handlePriceInfiniteBtn}

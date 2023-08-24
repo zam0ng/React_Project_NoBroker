@@ -10,3 +10,4 @@ axios.defaults.baseURL = 'http://localhost:8080';   // 로컬 테스트용 🔵
 
 // Now you can use axios for making requests throughout your React components
 export default axios;
+
