@@ -31,8 +31,8 @@ export const UserInfoDiv = styled.div`
         border-radius: 50%;
 
         & img{
-            width: 100%;
-            height: 100%;
+            width: 150px;
+            height: 130px;
             border-radius: 50%;
 
         }
@@ -51,6 +51,7 @@ export const ListItem = styled.div`
     text-align: left;
     /* font-weight: 600 */
     font-weight: ${(props)=>props.isActive ? 600 : 100};
+    color : ${(props)=>props.isActive ? "black": "gray"};
 
 `
 export const MypageList = styled.div`
@@ -135,11 +136,12 @@ export const UserInfoUpdate = styled.div`
         background-color: orange;
         color : white;
         font-weight: 600;
+        cursor: pointer;
     }
 `
 export const TabInfo = styled.div`
     width: 80%;
-    height: 640px;
+    height: 500px;
     border-left: 1px solid lightgray;
 `
 export const UpdateModal = styled.div`
@@ -153,7 +155,7 @@ export const UpdateModal = styled.div`
 export const UpdateBox = styled.div`
     width: 500px;
     height: 600px;
-    border : 1px solid white;
+    /* border : 1px solid white; */
     position: absolute;
     background-color: white;
     top: 35%;
@@ -167,13 +169,18 @@ width: 100%;
 height: 20px;
 display: flex;
 justify-content: flex-end;
-
+ & button{
+    font-size: x-large;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+ }
 `
 
 export const Updateimg = styled.div`
     width: 100%;
     height: 250px;
-    border: 1px solid white;
+    /* border: 1px solid white; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -198,6 +205,7 @@ export const Updateimg = styled.div`
         color: white;
         font-weight: 600;
         font-size: smaller;
+        cursor: pointer;
     }
     
 `
@@ -255,4 +263,5 @@ export const UpdateBtn = styled.button`
     color : white;
     margin-top: 20px;
     font-weight: 600;
+    cursor: pointer;
 `

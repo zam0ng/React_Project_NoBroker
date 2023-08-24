@@ -48,14 +48,15 @@ const ImgMulter = ({temp,setTemp}) => {
 
   function loadImg(event) {
     let input = event.target;
-  
-
+    
     // input.files 값을 스프레드 연산자로 temp2에 재생성(값은 같지만 주소는 다름)/ 완전일치가 아님
     // 아래서 input 값을 비워도 upload할때는 input으로 하는게 아니고 temp2로 함.
     temp2 = [...temp2, ...input.files];
+    // console.log(temp2);
+    // setTemp(prevTemp =>[...prevTemp, ...input.files]);
     setTemp(temp2);
     // 매물을 또 등록할 때 이전에 등록한 매물의 사진이 쌓여서 초기화
-    temp2=[];
+    // temp2=[];
     setCnt(cnt+ parseInt(input.files.length));
     
     const imgContainer = document.getElementById("imgCotainer");
@@ -73,7 +74,8 @@ const ImgMulter = ({temp,setTemp}) => {
           let deleteButton = document.createElement('button');
           let div = document.createElement('div');
           deleteButton.textContent ="X";
-
+          
+          // x 버튼 눌렀을 때
           deleteButton.onclick=()=>{
             imgContainer.removeChild(div);
             deleteButton.parentNode.removeChild(deleteButton);
@@ -88,8 +90,11 @@ const ImgMulter = ({temp,setTemp}) => {
             temp2.splice(idx, 1);
             console.log("temp222222",temp2);
             // temp2 = [...temp2, ...input.files];
+            setTemp(temp2);
 
           }
+          //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
           div.appendChild(img);
           div.appendChild(deleteButton);
           imgContainer.appendChild(div);

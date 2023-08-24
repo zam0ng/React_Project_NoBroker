@@ -10,7 +10,7 @@ const TypeSelect = ({selectValue,setSelectValue}) => {
   }
 
   useEffect(()=>{
-    console.log(selectValue);
+    // console.log(selectValue);
   },[selectValue])
   return (
     

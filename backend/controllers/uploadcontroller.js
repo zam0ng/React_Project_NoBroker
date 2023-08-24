@@ -2,7 +2,9 @@ const { raw } = require('express');
 const {Real_estate} =require('../models');
 
 exports.EstateInfo = async(req,res)=>{
- 
+  const id = req.acc_decoded.id;
+  console.log("id---------------",id);
+  console.log(req.files);
   const seller = req.body[0];
   const province = req.body[1];
   const city = req.body[2];
@@ -42,7 +44,7 @@ exports.EstateInfo = async(req,res)=>{
       console.log("doc정보임", data);
       if(data==null){
       await Real_estate.create({
-        seller,
+        seller : id,
         province,
         city,
         town,
@@ -51,8 +53,8 @@ exports.EstateInfo = async(req,res)=>{
         lng,
         lat,
         additional_address,
-        balance,
-        deposit,
+        balance : balance *10000,
+        deposit : deposit *10000,
         area,
         doc,
         type,

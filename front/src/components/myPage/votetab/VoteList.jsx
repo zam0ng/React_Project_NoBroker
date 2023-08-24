@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {EstateAllInfo,DateImg,OtherInfo,JustState} from '../checktab/checkstyled';
-
+import { serverUrl } from 'components/serverURL';
 const VoteList = ({data}) => {
     // console.log(data);
     const [voteState, setvoteState]= useState("");
@@ -48,7 +48,7 @@ const VoteList = ({data}) => {
     <EstateAllInfo>
       <DateImg>
         <span>{revisedFormattedDate}</span>
-        <img src={`http://localhost:8080/estate_imgs/${ImgUrl}`}></img>
+        <img src={`${serverUrl}estate_imgs/${ImgUrl}`}></img>
       </DateImg>
       <OtherInfo>
         <div>{data.Real_estate.balance}만원</div>

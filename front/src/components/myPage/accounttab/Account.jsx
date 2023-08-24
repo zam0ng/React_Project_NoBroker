@@ -2,7 +2,8 @@ import React, { useState,useContext } from 'react'
 import {Container,Myaccount,DepositWithdraw,Coincontainer,Coinlist,CoinlistDiv,
   SecondCoinlist,TabDiv,TossBox,DepositDiv,WithdrawDiv,Ablewithdraw,WithdrawValue} from './accountstyled';
 import { MypageGlobal } from '../Mypage';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../../Axios';
 import { useMutation ,useQueryClient} from 'react-query';
 const Account = () => {
   const [istab, setIstab]= useState(1);
@@ -10,7 +11,9 @@ const Account = () => {
   const [isdisabled2, setisdisabled2] = useState(true);
   const [depositAmount, setdepositAmount] =useState(0);
   const [withdrawAmount, setwithdrawAmount] =useState(0);
-
+  const [depositvalue,setdepositvalue]= useState("");
+  const [withdrwavalue,setwithdrawvalue]= useState("");
+  const [tc,settc]= useState("");
   const {updatedata} = useContext(MypageGlobal);
   // console.log(updatedata)
   const handlerBtn=(index)=>{
@@ -18,6 +21,11 @@ const Account = () => {
   }
 
   const depositValue = (e) =>{
+    // 천단위 마다 , 찍기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    let ta = (e.target.value).replace(/\D/g, '');
+    ta = ta.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    setdepositvalue(ta)                           
     const inputValue = e.target.value.trim();
     setdepositAmount(inputValue)
     
@@ -35,6 +43,11 @@ const Account = () => {
   }
 
   const withdrawValue = (e) =>{
+    // 천단위 마다 , 찍기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    let ta = (e.target.value).replace(/\D/g, '');
+    ta = ta.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    setwithdrawvalue(ta); 
     const inputValue2 = e.target.value.trim();
     setwithdrawAmount(inputValue2)
     
@@ -59,7 +72,7 @@ const Account = () => {
   
 
   const deposit = async(el)=>{
-    const data = await axios.get("http://localhost:8080/",{
+    const data = await axios.get("/",{
       params :{el},
       withCredentials :true,
     })
@@ -71,14 +84,13 @@ const Account = () => {
     onSuccess: (data) => {
 
       console.log(data);
-      // const newWindow = window.open("http://localhost:8080/", "_blank");
-      const newWindow = window.open("http://localhost:8080/", "_blank");
+      const newWindow = window.open("/", "_blank");
       newWindow.document.write(data);
     }
   }) 
 
   const withdraw = async(el)=>{
-    const data = await axios.get("http://localhost:8080/mypage/withdraw",{
+    const data = await axios.get("/mypage/withdraw",{
       params :{el},
       withCredentials : true,
     })
@@ -123,7 +135,7 @@ const Account = () => {
           <CoinlistDiv>
             <h4>보유금액</h4>
             <SecondCoinlist>
-              <div>{updatedata.won} KRW</div>
+              <div>{(updatedata.won).toLocaleString()} KRW</div>
               <div>{updatedata.btc} BTC</div>
               <div>{updatedata.eth} ETH</div>
             </SecondCoinlist>
@@ -141,7 +153,7 @@ const Account = () => {
             <>
           <DepositDiv>
             <span>입금금액 (KRW)</span>
-            <input id="depositInput" type="text" placeholder='KRW' onChange={depositValue} />
+            <input id="depositInput" type="text" placeholder='KRW' onChange={depositValue} value={depositvalue}/>
           </DepositDiv>
           <ul>
             <li>입금 실행시, 신청한 금액만큼 NoBroker 지갑으로 이체됩니다.</li>
@@ -153,11 +165,11 @@ const Account = () => {
           <WithdrawDiv>
             <Ablewithdraw>
               <span>출금가능</span>
-              <span>{updatedata.won} KRW</span>
+              <span>{(updatedata.won).toLocaleString()} KRW</span>
             </Ablewithdraw>
             <WithdrawValue>
               <span>출금금액 (KRW)</span>
-              <input id="withdrawInput" type="text" placeholder='KRW' onChange={withdrawValue} />
+              <input id="withdrawInput" type="text" placeholder='KRW' onChange={withdrawValue} value ={withdrwavalue}/>
             </WithdrawValue>
           </WithdrawDiv>
           <ul>
