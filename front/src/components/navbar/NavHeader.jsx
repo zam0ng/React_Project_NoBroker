@@ -61,8 +61,8 @@ const NavHeader = () => {
           </MenuListTitle>
           <MenuList>
             <Link to="/list">매물목록</Link>
-            <Link to="/insert">매물등록</Link>
-            <Link to="/mypage">마이페이지</Link>
+            {isLoggedIn ? <Link to="/insert">매물등록</Link>:<></>}
+            {isLoggedIn ? <Link to="/mypage">마이페이지</Link>:<></>}
             {isCertificate ? <Link to="/vote">투표목록</Link>:<></>}
             {isAdmin ?<Link to="/admin">관리자페이지</Link>:<></>}
           </MenuList>

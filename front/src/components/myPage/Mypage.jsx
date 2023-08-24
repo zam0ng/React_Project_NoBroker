@@ -106,7 +106,8 @@ const Mypage = () => {
         Navigate("/login");
     }
     const ta = (updatedata?.ssn)?.split("-");
-    const ImgUrl = (updatedata?.user_img)?.split("\\")[2];
+    // const ImgUrl = (updatedata?.user_img)?.split("\\")[2];
+    const ImgUrl = (updatedata?.user_img)?.substr(13);
 
     console.log("imgurl", ImgUrl);
 
@@ -152,7 +153,7 @@ const Mypage = () => {
     // (true : 공인중개사, false : 일반 유저)
 
     // 인증된 공인중개사 회원인지 여부 (0: 공인중개사 승인, 1: 신청중, 2: 승인 거절)
-    // certificate_user 
+    // certificate_user
     let roleText;
     if (updatedata.certificate_user  == 0 ) {
         roleText = "공인중개사";
@@ -270,7 +271,7 @@ const Mypage = () => {
                         {/* <UpdateboxInput>
                             <label for="userid">ID</label>
                             <input onChange={onChangeHandler} id="userid" name="userid" placeholder={updatedata.user_id}></input>
-                            
+
                         </UpdateboxInput> */}
                         <UpdateboxInput>
                             <label for="userphone">PHONE</label>

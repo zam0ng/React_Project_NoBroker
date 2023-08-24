@@ -105,18 +105,12 @@ exports.buyEstate = async (req, res) => {
       return res.json({ message: "거래할 수 없는 매물입니다." });
     }
 
-    console.log("user.won - user.disabled_won", user.won - user.disabled_won);
-    console.log(
-      "estate.deposit + estate.balance",
-      estate.deposit + estate.balance
-    );
-
-    // 신청자에게 계약금&잔금 없으면
-    if (user.won - user.disabled_won < estate.deposit + estate.balance) {
+    // 신청자에게 매매가만큼 돈  없으면
+    if (user.won < estate.deposit) {
       return res.json({ message: "돈 부족" });
     }
 
-    // 신청자에게 계약금&잔금 있으면 거래 신청 진행
+    // 신청자에게 거래 신청 진행
 
     // 매물 거래 신청
     // estate 거래 요청으로 업데이트
@@ -133,8 +127,8 @@ exports.buyEstate = async (req, res) => {
     // 사용자 계약금 빠져나가고 잔금 사용 불가능
     await User.update(
       {
-        won: user.won - estate.balance,
-        disabled_won: user.disabled_won + estate.deposit,
+        won: user.won - estate.deposit,
+        disabled_won: user.disabled_won + (estate.deposit - estate.balance),
       },
       { where: { id: buyer } }
     );

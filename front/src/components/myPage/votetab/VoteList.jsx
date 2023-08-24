@@ -26,7 +26,8 @@ const VoteList = ({data}) => {
         "$3/$1/$2"
     );
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    const ImgUrl = data.img_1?.split("\\")[2];
+    // const ImgUrl = data.img_1?.split("\\")[2];
+    const ImgUrl = data.Real_estate.img_1?.substr(12);
     // 아직 투표중일때
 
     useEffect(()=>{
@@ -43,7 +44,7 @@ const VoteList = ({data}) => {
             setvoteState("나머지")
         }
     },[data])
-    
+
   return (
     <EstateAllInfo>
       <DateImg>
@@ -61,7 +62,7 @@ const VoteList = ({data}) => {
         <p>+1000</p></>}
       </JustState>
     </EstateAllInfo>
-    
+
 
   )
 }

@@ -45,7 +45,9 @@ const List = ({data}) => {
     );
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-    const ImgUrl = data.img_1?.split("\\")[2];
+    // const ImgUrl = data.img_1?.split("\\")[2];
+    const ImgUrl = data.img_1?.substr(12);
+    console.log("img", ImgUrl)
 
     const updateAccept = async(el)=>{
         const data= await axios.get('/mypage/resubmit',{
@@ -70,7 +72,7 @@ const List = ({data}) => {
 
        mutation.mutate(el);
     }
-    
+
 
 
   return (
@@ -78,7 +80,7 @@ const List = ({data}) => {
     <EstateAllInfo>
         <DateImg>
             <span>{revisedFormattedDate}</span>
-            <img src={`${serverUrl}/estate_imgs/${ImgUrl}`}></img>
+            <img src={`${serverUrl}estate_imgs/${ImgUrl}`}></img>
         </DateImg>
         <OtherInfo>
             <div> {data.deposit /10000}만원</div>
