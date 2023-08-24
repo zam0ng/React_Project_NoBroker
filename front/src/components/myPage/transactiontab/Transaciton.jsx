@@ -30,9 +30,15 @@ const Transaciton = () => {
   }
 
   const {data: myCheckdata, isLoading: myCheckLoading, error : myCheckError} = useQuery('mycheck',getMycheck);
-
+  // console.log(myCheckdata)
   const {data :cancelListdata, isLoading : cancelListLoading , error : cancelListError } = useQuery('cancelList',getCancelList)
-  console.log(cancelListdata);
+  // console.log(cancelListdata);
+  
+
+  // useEffect(()=>{
+  //   const newArr = [...cancelListdata.data,...cancelListdata.data2];
+  //   console.log(newArr);
+  // },[cancelListdata])
 
   useEffect(()=>{
     setcheckCnt(myCheckdata?.length);
