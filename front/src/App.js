@@ -40,7 +40,7 @@ function App() {
           <Route
             path="/insert"
             element={
-               <Insert queryClient={queryClient} /> 
+              <Insert queryClient={queryClient} /> 
             }
           />
           {/* <Route

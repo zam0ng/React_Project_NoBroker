@@ -15,11 +15,12 @@ const { Op } = require('sequelize');  // 여러 값 한번에 조회하기 위�
 exports.getTradableEstate = async(req , res) => {
   try {
 
+    
     // req.acc_decoded.id ? console.log("req.acc_decoded.id | 로그인한 유저 id : " , req.acc_decoded.id) : console.log("로그인하지 않은 상태😥😥")
     // console.log("req" , req) // 🔵
     // console.log("req.acc_decoded" , req.acc_decoded) // 🔵
     // console.log("req.acc_decoded.id" , req.acc_decoded.id)  // 8 나옴 🔵
-    console.log("req.query.myLikeClickedList" , req.query.myLikeClickedList)  // 문자열 true 나옴
+    // console.log("req.query.myLikeClickedList" , req.query.myLikeClickedList)  // 문자열 true 나옴
     // console.log(" req.query.roomType | 방 종류 " , req.query.roomType)
       // [목표 URL]`http://localhost:8080/list/tradableEstate?roomType=${checkedRoomTypes}&priceRangeValue=${priceRangeValue}`
       // 'req.query 는 객체' 임 => 따라서, 복수의 key 값이 있어도, 개별적으로 접근할 수 있음.
@@ -95,7 +96,16 @@ exports.getTradableEstate = async(req , res) => {
       }
     }
 
+    
+
     if (req.acc_decoded){
+
+      try {
+        
+      } catch (error) {
+        
+      }
+
       includeLikes.push({
         model : Likes,
         required: false,    // LEFT OUTER JOIN, Likes 테이블에 데이터가 없어도, 1) real_estate 정보를 가져오고 2) likes 는 null 임. 😥😥

@@ -30,7 +30,8 @@ const queryClient = new QueryClient();
 
 const UserItem = ({item}) => {
     const [showExpandedImg , setShowExpandedImg] = useState(false)
-    const [isClicked , setIsClicked] = useState(false)
+    const [isCertificateImgClicked , setIsCertificateImgClicked ] = useState(false)
+    const [isSealImgClicked , setIsSealImgClicked] = useState(false)
 
     const approveEstateAgent = useMutation( async(approveForm) => {
         const {data} = await axios.post("/admin/agentApprove" , approveForm , {
@@ -78,8 +79,11 @@ const UserItem = ({item}) => {
     })
 
 
-    const handleImageClicked = () => {
-        setIsClicked(!isClicked)
+    const handleCertificateImgClicked = () => {
+        setIsCertificateImgClicked (!isCertificateImgClicked)
+    }
+    const handleSealImgClicked = () => {
+        setIsSealImgClicked(!isSealImgClicked )
     }
 
     // role 이 true(공인중개사 신청) 이고 && certificate_user == 1(신청중 인 상황) 이면 -> 승인, 미승인 버튼이 나온 상황
@@ -148,10 +152,10 @@ const UserItem = ({item}) => {
             {
                 <div style={{width : '100px', display : 'flex' , alignItems : 'center' , justifyContent : 'center'} } >
                     <ImageContainer
-                        onClick={handleImageClicked}
+                        onClick={handleCertificateImgClicked}
                         imageUrl={`${serverUrl}user_imgs/${item.certificate_img?.substr(13)}`} />
 
-                    <ClickedImageContainer onClick={handleImageClicked} display={isClicked ? 'block' : 'none'} imageUrl={`${serverUrl}user_imgs/${item.certificate_img?.substr(13)}`} />
+                    <ClickedImageContainer onClick={handleCertificateImgClicked} display={isCertificateImgClicked ? 'block' : 'none'} imageUrl={`${serverUrl}user_imgs/${item.certificate_img?.substr(13)}`} />
                 </div>
             }
 
@@ -159,10 +163,10 @@ const UserItem = ({item}) => {
             {
                 <div style={{width : '80px' , display : 'flex' , alignItems : 'center' , justifyContent : 'center' }} >
                     <ImageContainer
-                        onClick={handleImageClicked}
+                        onClick={handleSealImgClicked}
                         imageUrl={`${serverUrl}user_imgs/${item.seal_img?.substr(13)}`} />
 
-                    <ClickedImageContainer onClick={handleImageClicked} display={isClicked ? 'block' : 'none'} imageUrl={`${serverUrl}user_imgs/${item.seal_img?.substr(13)}`} />
+                    <ClickedImageContainer onClick={handleSealImgClicked} display={isSealImgClicked ? 'block' : 'none'} imageUrl={`${serverUrl}user_imgs/${item.seal_img?.substr(13)}`} />
                 </div>
             }
 
