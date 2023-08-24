@@ -9,7 +9,7 @@ const MapApi = ({placeAddress, setIsNone}) => {
     const {lng,setLng,lat,setLat} = useContext(Global);
     const [mapLoaded ,setMapLoaded] = useState(false);
 
-    console.log("mapapi", process.env.REACT_APP_REST_API_KEY);
+    // console.log("mapapi", process.env.REACT_APP_REST_API_KEY);
 
     // console.log("placeAddress");
     // console.log(placeAddress); // 내가 검색한 주소 들어옴
@@ -34,10 +34,10 @@ const MapApi = ({placeAddress, setIsNone}) => {
 
     useEffect(()=>{
 
-        console.log("------------------mapLoaded");
-        console.log(mapLoaded);
-        console.log(lat)
-        console.log(lng)
+        // console.log("------------------mapLoaded");
+        // console.log(mapLoaded);
+        // console.log(lat)
+        // console.log(lng)
         if(mapLoaded){
         setIsNone("none");
 

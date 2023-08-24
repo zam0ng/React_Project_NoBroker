@@ -8,14 +8,14 @@ router.get('/mypageinfo', getMypageInfo);
 router.get('/resubmit', reSubmit)
 router.get('/getmyregisterinfo', getmyregisterinfo);
 router.get('/transactionStateUpdate', transactionStateUpdate);
-router.get('/transactionCom', transactionCom);
+// router.get('/transactionCom', transactionCom);
 router.get('/getMycheck', getMycheck)
 router.get('/checkcancel', checkcancel);
-router.get('/getCancelList', getCancelList);
-router.get('/getMyvotedata', getMyvotedata);
+router.get('/getCancelList',getCancelList);
+router.get('/getMyvotedata',getMyvotedata);
 router.get('/getUpdateinfo', getUpdateinfo);
-router.post('/update', updateUpload.single("upload"), userInfoUpdate);
-router.get('/approvedUpdate', approvedUpdate);
+router.post('/update', updateUpload.single("upload"),isLogin, userInfoUpdate);
+router.get('/approvedUpdate' ,approvedUpdate);
 router.get('/withdraw', withdraw);
 module.exports = router;
 

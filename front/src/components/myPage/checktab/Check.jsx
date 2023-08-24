@@ -2,10 +2,11 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import List from './List'
 import { Container, ResigterEstate, StateDiv, Selectstate } from './checkstyled'
 import { MypageGlobal } from '../Mypage'
+
 const Check = () => {
   const { MyPageUserInfo } = useContext(MypageGlobal);
 
-  console.log("MyPageUserInfo : ", MyPageUserInfo);
+  // console.log("MyPageUserInfo : ", MyPageUserInfo);
 
   const [isSelect, setisSelect] = useState("ALL");
   // let cntArr= [];

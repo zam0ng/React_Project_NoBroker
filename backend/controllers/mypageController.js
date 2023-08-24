@@ -6,20 +6,14 @@ const path = require("path");
 
 
 exports.getMypageInfo = async (req, res) => {
-    console.log("getMypageInfo controller 들어오나?");
-    // // 더미
-    // const id = 1;
+
     const { id } = req.acc_decoded;
 
-
     try {
-        // if(id==""){
-        //     return res.send("미로그인");
-        // }
-
+ 
         const data = await Real_estate.findAll({
             where: { seller: id },
-            attributes: ["id", "accpet", "jibun", "additional_address", "balance", "year_built", "area", "type", "img_1", "createdAt"],
+            attributes: ["id", "accpet", "jibun", "additional_address","deposit","balance", "year_built", "area", "type", "img_1", "createdAt"],
             order: [["createdAt", "DESC"]],
             raw: true,
         })
@@ -45,11 +39,11 @@ exports.reSubmit = async (req, res) => {
     }
 }
 
+// transaction 테이블에서 내가 판매한, 구매한 내역 가져오기
 exports.getmyregisterinfo = async (req, res) => {
-    // const id = 1;
+
     const { id } = req.acc_decoded;
-    // 매시간마다 Transaction 테이블에 거래 날짜와 현재 날짜를 비교하여
-    // 현재 날짜 > 거래 날짜 이면 completed 를 1로 변경transactionCompleted
+    //거래중인데 완료가 안된 매물을 불러옴.
     try {
         const transactionCom = await Transaction.findAll({
             attributes: ["transaction_date", "completed", "id"],
@@ -59,11 +53,11 @@ exports.getmyregisterinfo = async (req, res) => {
             },
             raw: true,
         })
-
+        // 현재 날짜와 거래 날짜를 비교해서 현재날짜가 크면 거래완료로 업데이트
         const currentTime = new Date();
         transactionCom.forEach(async (el) => {
             const transactionTime = new Date(el.transaction_date);
-
+            
             if (currentTime > transactionTime) {
                 const ta = await Transaction.update({ completed: true }, {
                     where: { id: el.id }
@@ -75,20 +69,21 @@ exports.getmyregisterinfo = async (req, res) => {
         console.log("transactionCompleted에서 오류", error);
     }
     try {
+        // 거래 완료가 된 거래내역을 가져와서 정산
         const data = await Transaction.findAll({
             where: { completed: 1 },
             include: [{ model: Real_estate, attributes: ["id", "balance", "deposit"] }],
             // raw : true,
         })
         data.forEach(async (el) => {
-
+            // 구매자 disabled_won 에서 잔금 빼기,
             await User.update({
                 disabled_won: sequelize.literal(`disabled_won - ${el.Real_estate.deposit - el.Real_estate.balance}`),
 
             }, {
                 where: { id: el.buyer },
             })
-
+            // 판매자 won에 잔금 더하기,
             await User.update({
                 won: sequelize.literal(`won + ${el.Real_estate.deposit - el.Real_estate.balance}`),
             }, {
@@ -105,9 +100,10 @@ exports.getmyregisterinfo = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 정산 끝
 
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    // 내가 팔고, 구매한 거래내역 가져오기
     try {
         const data = await Transaction.findAll({
             where: {
@@ -127,67 +123,84 @@ exports.getmyregisterinfo = async (req, res) => {
 
 }
 // 구매자의 disable_won 을 잔금 만큼 빼고, 판매자의 won 에 잔금만큼 더하기
-exports.transactionCom = async (req, res) => {
-    try {
-        const data = await Transaction.findAll({
-            where: { completed: 1 },
-            include: [{ model: Real_estate, attributes: ["id", "balance", "deposit"] }],
-            // raw : true,
-        })
-        data.forEach(async (el) => {
-            console.log(el.buyer)
-            console.log(el.Real_estate.deposit - el.Real_estate.balanc);
+// exports.transactionCom = async (req, res) => {
+//     try {
+//         const data = await Transaction.findAll({
+//             where: { completed: 1 },
+//             include: [{ model: Real_estate, attributes: ["id", "balance", "deposit"] }],
+//             // raw : true,
+//         })
+//         data.forEach(async (el) => {
+//             // console.log(el.buyer)
+//             // console.log(el.Real_estate.deposit - el.Real_estate.balanc);
 
-            await User.update({
-                disabled_won: sequelize.litseral(`disabled_won - ${el.Real_estate.deposit - el.Real_estate.balance}`),
+//             await User.update({
+//                 disabled_won: sequelize.litseral(`disabled_won - ${el.Real_estate.deposit - el.Real_estate.balance}`),
 
-            }, {
-                where: { id: el.buyer },
-            })
+//             }, {
+//                 where: { id: el.buyer },
+//             })
 
-            await User.update({
-                won: sequelize.literal(`won + ${el.Real_estate.deposit - el.Real_estate.balance}`),
-            }, {
-                where: { id: el.seller }
-            })
+//             await User.update({
+//                 won: sequelize.literal(`won + ${el.Real_estate.deposit - el.Real_estate.balance}`),
+//             }, {
+//                 where: { id: el.seller }
+//             })
 
-            await Transaction.update({
-                completed: 2
-            }, {
-                where: { real_estate_id: el.Real_estate.id }
-            })
-        });
+//             await Transaction.update({
+//                 completed: 2
+//             }, {
+//                 where: { real_estate_id: el.Real_estate.id }
+//             })
+//         });
 
-    } catch (error) {
-        console.log(error);
-    }
-}
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+
+// 판매승인에서 승인 눌렀을 때 -> 판매자에게는 계약금 더하기, 구매자에게는 계약금 빼기
 exports.approvedUpdate = async (req, res) => {
-    console.log("req.decodedㅡㅡㅡㅡㅡㅡㅡㅡ");
-    // console.log(req.acc_decoded);
     const { el } = req.query;
-    // console.log(el);
-
-    const amount = parseInt((el.balance) * 10000); // 계약금
+    const amount = parseInt((el.balance)); // 계약금
     // 계약금 2배 : amount*2
-    const restMoney = parseInt((el.deposit - el.balance) * 10000);
+
+    //잔금
+    const restMoney = parseInt((el.deposit - el.balance));
+    
     // 매매금 : el.deposit
-    console.log("amount------------", amount)
-    console.log(restMoney);
+    // console.log("amount------------", amount) // 2,000,000
+    // console.log(restMoney); // 18,000,000
     try {
 
-        // 여기서 pdf 만들어야함.ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-        console.log("승인 들어오니?222222222");
+        // 거래테이블의 해당 매물번호 approved 로 1로 하여 승인상태로 업데이트
         await Transaction.update({ approved: true }, {
             where: {
                 real_estate_id: el.estateId,
             }
         })
-        // 승인했을 때 판매자에게 계약금 지급,
+        //----------------------
+
+        // ---판매자한테 계약금 지급,
         await User.increment('won', {
             by: (amount),
             where: { id: el.userID },
         })
+        //----------------------    
+
+        // ---구매자한테 매매금 빼고, disabled_won 에는 잔금 더하기 
+        // await User.decrement('won',{
+        //     by : (el.deposit),
+        //     where :{id: el.buyerID},
+        // })
+
+        // await User.increment(`disabled_won`,{
+        //     by :(restMoney),
+        //     where : {id : el.buyerID},
+        // })
+       
+        // pdf 만드는 구간 ---------------------------------------
         const data = await Transaction.findAll({
             where: {
                 id: el.transactionID,
@@ -197,16 +210,11 @@ exports.approvedUpdate = async (req, res) => {
                 { model: User, as: 'Seller', attributes: ["user_img", "address", "ssn", "phone", "user_name", "seal_img"] },
                 { model: Real_estate, attributes: ["jibun", "type", "area", "deposit", "balance", "year_built", "doc"] }],
         })
-        // console.log(data);
-        // console.log(data[0]);
-        console.log(data[0].Seller.seal_img);
-        console.log(data[0].Buyer.seal_img);
+       
+        
         const sellerSealImg = (data[0].Seller.seal_img).substr(13);
         const buyerSealImg = (data[0].Buyer.seal_img).substr(13);
-        console.log(sellerSealImg);
-        console.log(buyerSealImg);
-
-
+        
         const doc = new PDFDocument();
         const fontPath = path.join(__dirname, '../../front', 'public/fonts/NotoSansKR-Light.ttf')
         const imgPath = path.join(__dirname, '../../front', 'public/NoBroker_Logo.png')
@@ -330,13 +338,6 @@ exports.approvedUpdate = async (req, res) => {
         doc.image(imgPath, 530, 500, { width: 50, height: 50 });
         doc.image(sellerPath, 535, 415, { width: 40, height: 30 });
         doc.image(buyerPath, 535, 455, { width: 40, height: 30 });
-        // 인감이미지 지원이랑 말해야함 저장하는거 ~~
-
-
-
-
-
-
 
         doc.end();
 
@@ -347,23 +348,27 @@ exports.approvedUpdate = async (req, res) => {
             readStream.pipe(res);
         });
 
-        //여기서 pdf 만들어야함.ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+        //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     } catch (error) {
         console.log("approvedUpdate 컨트롤러 오류", error)
     }
 }
-
+// 거래 로직 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 exports.transactionStateUpdate = async (req, res) => {
 
     try {
 
         const { el } = req.query;
 
-        const amount = parseInt((el.balance) * 10000); // 계약금
+        const amount = parseInt((el.balance)); // 계약금
         // 계약금 2배 : amount*2
-        const restMoney = parseInt((el.deposit - el.balance) * 10000);
+
+        //잔금
+        const restMoney = parseInt((el.deposit - el.balance));
+        
         // 매매금 : el.deposit
-        console.log("amount------------", amount)
+        // console.log("amount------------", amount) // 2,000,000
+        // console.log(restMoney); // 18,000,000
 
         if (el.btnname == "판매취소") {
 
@@ -373,10 +378,10 @@ exports.transactionStateUpdate = async (req, res) => {
                     id: el.transactionID,
                 }, raw: true,
             })
-            console.log("--------------", data.approved);
             // 판매 승인을 누르기 전 취소(거래중이 아닐 때 취소)
-            // 구매자의 disabled 를 잔금 만큼 뺴고, 잔고에는 매매가 만큼 더하기
+            // 구매자의 disabled_won 에 잔금만큼 빼고, won에는 잔금,계약금(매매금) 더하기
             if (data.approved == 0) {
+                
 
                 await Transaction.update({ cancel: el.userID }, {
                     where: {
@@ -396,36 +401,34 @@ exports.transactionStateUpdate = async (req, res) => {
             // 판매 승인을 누르고 취소(거래중일 때 취소)
             // deposit(계약금)의 2배를 구매자에게 줘야함.
             else {
+
                 const data = await User.findOne({
                     where: {
                         id: el.userID,
                     }, raw: true, attributes: ["won"]
                 })
-                // const myWon = (data.won / 10000);
-                const myWon = data.won - data.disabled_won;
-                // console.log(myWon);
+                // 내 잔고
+                const myWon = data.won;
 
-                // 판매자의 잔고 확인 > 계약금 x 2 확인 해서 true
-                // 판매자의 잔고에서는 빼고, 구매자의 잔고에서는 더하고, 구매자의 사용불가 금액에서는 계약금만큼 차감
-                if (myWon >= (el.deposit) * 2) {
+                // 판매자의 잔고 확인 > 계약금 x 2 확인 해서 돈이 있으면,
+                // 구매자 won 에 계약금 x2 더하고, 판매자 won에 계약금 x2 빼고,
+                // 구매자 disabled_won 에 잔금 빼고, won 잔금 더하고,
+
+                if (myWon >= amount * 2) {
                     await Transaction.update({ cancel: el.userID }, {
                         where: {
                             real_estate_id: el.estateId,
                         }
                     })
 
-                    // console.log(amount)
-
                     try {
                         const updates = [
-                            { action: 'decrement', id: el.userID, amount: amount },
-                            { action: 'increment', id: el.buyerID, amount: amount }
+                            { action: 'decrement', id: el.userID, amount: amount*2 },
+                            { action: 'increment', id: el.buyerID, amount: amount*2 }
                         ];
                         const updateQueries = updates.map((value) => ({
                             won: sequelize.literal(`won ${value.action === 'increment' ? '+' : '-'} ${value.amount}`)
                         }));
-
-                        console.log(updateQueries);
 
                         updateQueries.map(async (value, index) => {
                             try {
@@ -444,7 +447,11 @@ exports.transactionStateUpdate = async (req, res) => {
                         })
 
                         await User.decrement('disabled_won', {
-                            by: (amount / 2),
+                            by: restMoney,
+                            where: { id: el.buyerID },
+                        })
+                        await User.increment('won',{
+                            by : restMoney,
                             where: { id: el.buyerID },
                         })
 
@@ -460,6 +467,7 @@ exports.transactionStateUpdate = async (req, res) => {
                 }
             }
         }
+        //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 확인완료
         else if (el.btnname == "구매취소") {
 
             await Transaction.update({ cancel: el.userID }, {
@@ -474,11 +482,11 @@ exports.transactionStateUpdate = async (req, res) => {
                     id: el.transactionID,
                 }, raw: true,
             })
-            // 거래 전 구매취소 -> 구매자의 disabled 에서 잔금만큼 빼고, 잔고에는 계약금+잔금 더하기
+            // 거래 전 구매취소 -> 구매자의 disabled 에서 잔금만큼 빼고, won에는 계약금+잔금(매매금) 더하기
             if (data.approved == 0) {
                 try {
                     await User.update({
-                        disabled_won: sequelize.literal(`disabled_won - ${(amount) * 9}`),
+                        disabled_won: sequelize.literal(`disabled_won - ${restMoney}`),
                         won: sequelize.literal(`won + ${el.deposit}`)
                     }, {
                         where: { id: el.userID }
@@ -488,7 +496,7 @@ exports.transactionStateUpdate = async (req, res) => {
                 }
 
             }
-            // 거래 중 구매 취소 -> 구매자의 disabled에서 잔금만큼 빼고, 잔고에는 잔금만큼 더해주고, 판매자의 잔고에는 계약금 만큼 더한다.
+            // 거래 중 구매 취소 -> 구매자의 disabled에서 잔금만큼 빼고, 잔고에는 잔금만큼 더해주고
             else {
                 await User.update({
                     disabled_won: sequelize.literal(`disabled_won - ${restMoney}`),
@@ -496,23 +504,24 @@ exports.transactionStateUpdate = async (req, res) => {
                 }, {
                     where: { id: el.userID }
                 })
-                await User.update({
-                    won: sequelize.literal(`won + ${(amount)}`),
+                // await User.update({
+                //     won: sequelize.literal(`won + ${(amount)}`),
 
-                }, {
-                    where: { id: el.sellerID },
-                })
+                // }, {
+                //     where: { id: el.sellerID },
+                // })
 
             }
             res.send("구매취소완료")
+            // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 확인완료
         }
-        // 매물id로 거래 테이블 삭제하고, 매물 accpet 를 1로
+        // 판매취소에서 재등록할 때 , 매물id로 거래 테이블 삭제하고, 매물 accpet 를 1로, state 도 0으로
         else if (el.btnname == "재등록") {
-            console.log(el);
+            // console.log(el);
             await Transaction.destroy({ where: { real_estate_id: el.estateId } })
             await Real_estate.update({
                 accpet: 1,
-
+                state : 0,
             }, {
                 where: { id: el.estateId },
             })
@@ -525,13 +534,15 @@ exports.transactionStateUpdate = async (req, res) => {
         console.log("거래 상태 업데이트 컨트롤러에서 오류", error)
     }
 }
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
+// 내가 찜한 매물 가져오기
 exports.getMycheck = async (req, res) => {
-    //더미
-    const user_id = 1;
+
+    const {id} =req.acc_decoded;
     try {
         const data = await Likes.findAll({
-            where: { user_id: user_id },
+            where: { user_id:id },
 
             include: [{ model: Real_estate, attributes: ["id", "jibun", "additional_address", "balance", "deposit", "year_built", "area", "type", "img_1"] }],
 
@@ -542,7 +553,7 @@ exports.getMycheck = async (req, res) => {
         console.log("getMycheck 컨트롤러 오류", error);
     }
 }
-
+// 찜 취소 했을 때 찜 테이블에서 행 삭제하기
 exports.checkcancel = async (req, res) => {
     try {
         const { el } = req.query;
@@ -555,10 +566,9 @@ exports.checkcancel = async (req, res) => {
         console.log("checkcancel 컨트롤러에서 오류남", error);
     }
 }
-
+// 취소 보상 내역 가져오기
 exports.getCancelList = async (req, res) => {
-    console.log("들어오니?");
-    // const id = 1;
+    
     const { id } = req.acc_decoded;
 
     // 구매했는데 취소가 내가 아닐 때
@@ -579,10 +589,9 @@ exports.getCancelList = async (req, res) => {
         console.log("getCancelList 컨트롤러에서 오류남", error);
     }
 }
-
+// 투표한 매물 내역 가져오기
 exports.getMyvotedata = async (req, res) => {
 
-    // const id = 2;
     const { id } = req.acc_decoded;
 
     try {
@@ -592,17 +601,16 @@ exports.getMyvotedata = async (req, res) => {
             },
             include: [{ model: Real_estate, attributes: ["id", "accpet", "jibun", "additional_address", "balance", "deposit", "year_built", "area", "type", "img_1"] }],
         })
-        console.log(data);
+        // console.log(data);
         res.json(data);
     } catch (error) {
         console.log("getMyvotedata 컨트롤러에서 오류남", error);
     }
 }
 
+// 회원정보 수정버튼 눌렀을 때 회원정보 가져오기
 exports.getUpdateinfo = async (req, res) => {
-    console.log("9999999")
 
-    // const id=1;
     const { id } = req.acc_decoded;
     try {
         const data = await User.findOne({
@@ -615,12 +623,11 @@ exports.getUpdateinfo = async (req, res) => {
         console.log("getUpdateinfo error", error)
     }
 }
-
+// 회원정보 변경했을 때 업데이트 
 exports.userInfoUpdate = async (req, res) => {
     try {
-        console.log("req.bodyㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-        console.log(req.body);
-        console.log(req.file);
+        
+        const id =req.acc_decoded.id;
         const { userid, userphone, useraddress } = req.body;
 
         const updateFields = {};
@@ -643,7 +650,7 @@ exports.userInfoUpdate = async (req, res) => {
         if (Object.keys(updateFields).length > 0) {
             const data = await User.update(updateFields, {
                 where: {
-                    id: 1,
+                    id: id,
                 },
             });
         }
@@ -652,10 +659,9 @@ exports.userInfoUpdate = async (req, res) => {
         console.log("userInfoUpdate 컨트롤러에서 오류", error);
     }
 }
-
+// 출금 신청 했을때 won 업데이트
 exports.withdraw = async (req, res) => {
     try {
-        console.log(req.query);
         const id = req.acc_decoded.id;
         const { el } = req.query;
 

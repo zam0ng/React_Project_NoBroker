@@ -1,6 +1,8 @@
 import React from 'react'
 import {EstateAllInfo,DateImg,OtherInfo,JustState} from '../checktab/checkstyled';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../../Axios'
+import { serverUrl } from 'components/serverURL';
 import { useMutation,useQueryClient} from 'react-query';
 const TransList = ({data,el}) => {
     console.log(el);
@@ -30,7 +32,7 @@ const TransList = ({data,el}) => {
     const ImgUrl = data.img_1?.split("\\")[2];
       
     const checkCancel= async(el)=>{
-      const data = await axios.get("http://localhost:8080/mypage/checkcancel",{
+      const data = await axios.get("/mypage/checkcancel",{
         params : {el},
         withCredentials : true,
       })
@@ -53,7 +55,7 @@ const TransList = ({data,el}) => {
     <EstateAllInfo>
       <DateImg>
         <span>{revisedFormattedDate}</span>
-        <img src={`http://localhost:8080/estate_imgs/${ImgUrl}`}></img>
+        <img src={`${serverUrl}estate_imgs/${ImgUrl}`}></img>
       </DateImg>
       <OtherInfo>
         <div>{data.Real_estate.balance}만원</div>

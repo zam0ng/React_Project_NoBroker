@@ -7,9 +7,9 @@ const TypeSelect = ({ selectValue, setSelectValue }) => {
     setSelectValue(e.target.value);
   };
 
-  useEffect(() => {
-    console.log(selectValue);
-  }, [selectValue]);
+  useEffect(()=>{
+    // console.log(selectValue);
+  },[selectValue])
   return (
     <Container>
       <Title>

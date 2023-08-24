@@ -31,7 +31,7 @@ exports.updateUpload = multer({
         destination : (req,file,qwer) =>{
 
             // uploads : 폴더명
-            qwer(null,"imgs/estate/")
+            qwer(null,"imgs/userImg/")
         },
 
         filename :(req,file,done) =>{

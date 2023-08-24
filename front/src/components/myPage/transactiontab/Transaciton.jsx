@@ -1,6 +1,7 @@
 import React from 'react'
 import {Container,ResigterEstate,StateDiv,Selectstate} from './transactionstyled';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../../Axios'
 import { useQuery } from 'react-query';
 import { useState, useEffect } from 'react';
 import TransList from './TransList';
@@ -13,7 +14,7 @@ const Transaciton = () => {
   
   const getMycheck = async()=>{
     console.log("123123213")
-    const data = await axios.get("http://localhost:8080/mypage/getMycheck",{
+    const data = await axios.get("/mypage/getMycheck",{
       withCredentials : true,
     })
     return data.data;
@@ -22,7 +23,7 @@ const Transaciton = () => {
   const getCancelList = async()=>{
     console.log("123123213")
 
-    const data = await axios.get('http://localhost:8080/mypage/getCancelList',{
+    const data = await axios.get('/mypage/getCancelList',{
       withCredentials : true,
     })
     return data.data;

@@ -10,13 +10,17 @@ import Register from './registertab/Register'
 import Transaciton from './transactiontab/Transaciton'
 import Vote from './votetab/Vote'
 import axios from '../../Axios'
-import MypageIslogin from '../insertPage/isLogined/MypageIslogin'
+// import MypageIslogin from '../insertPage/isLogined/MypageIslogin'
 import NavHeader from 'components/navbar/NavHeader'
 import Footer from 'components/footer/Footer'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { useAuth } from 'AuthContext'
+import { serverUrl } from "components/serverURL";
+import { useNavigate } from 'react-router'
+
 export const MypageGlobal = createContext();
 const Mypage = () => {
+    const Navigate = useNavigate();
     const [isActive, setisActive] = useState(false);
     const [componentsValue, setComponentsValue] = useState("Account");
     const [updateId, setupdateId] = useState("");
@@ -43,7 +47,7 @@ const Mypage = () => {
 
     // real_estate 테이블에서 내가 등록한 매물 내역 불러오기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     const getUserInfo = async () => {
-        const response = await axios.get('http://localhost:8080/mypage/mypageinfo', {
+        const response = await axios.get('/mypage/mypageinfo', {
             withCredentials: true,
         });
         return response.data;
@@ -62,7 +66,7 @@ const Mypage = () => {
 
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     const getUpdateinfo = async () => {
-        const data = await axios.get('http://localhost:8080/mypage/getUpdateinfo', {
+        const data = await axios.get('/mypage/getUpdateinfo', {
             withCredentials: true,
         })
         return data.data;
@@ -76,7 +80,7 @@ const Mypage = () => {
         form.append('useraddress', updateaddress);
         form.append('upload', updateImg);
 
-        const data = await axios.post('http://localhost:8080/mypage/update', form, {
+        const data = await axios.post('/mypage/update', form, {
             headers: {
 
                 "Content-Type": "multipart/form-data",
@@ -92,9 +96,15 @@ const Mypage = () => {
     console.log("MyPageUserInfo----", MyPageUserInfo);
     const { data: getmyregisterinfo, isLoading: getmyregisterinfoLoading, error: getmyregisterinfoError } = useQuery('getmyregister', getMyRegisterInfo);
     // console.log(getmyregisterinfo);
-
     const { data: updatedata, isLoading: updatedataLoading, error: updatedataError } = useQuery('update', getUpdateinfo)
     // console.log(updatedata);
+
+    if(MyPageUserInfo?.message=="다시 로그인" || getmyregisterinfo?.message=="다시 로그인" || updatedata?.message=="다시 로그인"){
+        alert("로그인이 만료되었습니다.")
+        logout();
+        certificate(false);
+        Navigate("/login");
+    }
     const ta = (updatedata?.ssn)?.split("-");
     const ImgUrl = (updatedata?.user_img)?.split("\\")[2];
 
@@ -141,12 +151,14 @@ const Mypage = () => {
     }
     // (true : 공인중개사, false : 일반 유저)
 
+    // 인증된 공인중개사 회원인지 여부 (0: 공인중개사 승인, 1: 신청중, 2: 승인 거절)
+    // certificate_user 
     let roleText;
-    if (updatedata.role == false) {
-        roleText = "일반유저";
+    if (updatedata.certificate_user  == 0 ) {
+        roleText = "공인중개사";
     }
     else {
-        roleText = "공인중개사"
+        roleText = "일반유저"
     }
     let fakeInfoMsg = "";
 
@@ -236,7 +248,7 @@ const Mypage = () => {
                         </Closediv>
                         <Updateimg>
                             <div id="profileImg">
-                                <img src={`http://localhost:8080/user_imgs/${ImgUrl}`} alt="" />
+                                <img src={`${serverUrl}user_imgs/${ImgUrl}`} alt="" />
                             </div>
                             <form action="/" method="post" encType='multipart/form-data'>
                                 <label for="file"> 프로필 편집</label>
@@ -251,10 +263,15 @@ const Mypage = () => {
                             <span>생년월일</span>
                             <div>{ta[0]}</div>
                         </Updatebox>
-                        <UpdateboxInput>
+                        <Updatebox>
+                            <span>ID</span>
+                            <div>{updatedata.user_id}</div>
+                        </Updatebox>
+                        {/* <UpdateboxInput>
                             <label for="userid">ID</label>
                             <input onChange={onChangeHandler} id="userid" name="userid" placeholder={updatedata.user_id}></input>
-                        </UpdateboxInput>
+                            
+                        </UpdateboxInput> */}
                         <UpdateboxInput>
                             <label for="userphone">PHONE</label>
                             <input onChange={onChangeHandler} id="userphone" name="userphone" placeholder={updatedata.phone}></input>
@@ -270,7 +287,7 @@ const Mypage = () => {
                 <MypageContainer height={"210px"}>
                     <UserInfoDiv height={"230px"}>
                         <div>
-                            <img src={`http://localhost:8080/user_imgs/${ImgUrl}`} alt="" />
+                            <img src={`${serverUrl}user_imgs/${ImgUrl}`} alt="" />
                         </div>
                         <span>{updatedata.phone}</span>
                     </UserInfoDiv>
@@ -283,8 +300,8 @@ const Mypage = () => {
                             <div>{fakeInfoMsg}</div>
                         </FakeDiv>
                     </FakeInfo>
-                    <UserInfoUpdate onClick={infoUpdate}>
-                        <div>회원정보 수정</div>
+                    <UserInfoUpdate >
+                        <div onClick={infoUpdate}>회원정보 수정</div>
                     </UserInfoUpdate>
                 </MypageContainer>
                 <MypageContainer height={"640px"}>

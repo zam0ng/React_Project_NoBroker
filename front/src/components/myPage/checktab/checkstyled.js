@@ -108,13 +108,13 @@ export const OtherInfo = styled.div`
 `
 export const JustState = styled.div`
     width: 10%;
-    height: 30px;
+    height: 45px;
     line-height: 10px;
     font-size: 11px;
     border-left: 1px solid lightgray;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column
     
 `
