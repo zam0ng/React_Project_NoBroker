@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import {DateImg,EstateAllInfo,OtherInfo,JustState} from './checkstyled';
+import {DateImg,EstateAllInfo,OtherInfo,JustState,Ta} from './checkstyled';
 import axios from '../../../Axios';
 import { serverUrl } from 'components/serverURL';
 import { useMutation, useQueryClient } from 'react-query';
 let eog,manwon;
 const List = ({data}) => {
-    // console.log(data);
-    const [isDisplay,setIsDisplay] = useState(false);
     console.log(data);
+    const [isDisplay,setIsDisplay] = useState(false);
+    // console.log(data);
     const state = data.accpet === 0 ? "투표중" :
     data.accpet === 1 ? "정상등록" :
     data.accpet === 2 ? "허위판정" :
@@ -74,21 +74,46 @@ const List = ({data}) => {
     }
 
 
+    // 돈 단위 바꾸기
+    const changeMoney = (td) => {
+        let uk = parseInt(td / 100000000);
+        let ukrest = (td % 100000000).toString().padStart(8, "0");
+        let manwon = (ukrest / 10000)
+        if (uk > 0) {
 
+            if (ukrest == 0) {
+                return (uk + "억");
+
+            }
+            else {
+                return (uk + "억" + manwon + "만원");
+
+            }
+        }
+        else {
+            return (manwon + "만원");
+        }
+    }
+
+    const detailpageblank = (el) => {
+        const url = `http://localhost:3000/detail/${el}`;
+        window.open(url, '_blank');
+    };
+    
   return (
     <>
     <EstateAllInfo>
+        <Ta onClick={()=>{detailpageblank(data.id)}}>
         <DateImg>
             <span>{revisedFormattedDate}</span>
             <img src={`${serverUrl}estate_imgs/${ImgUrl}`}></img>
         </DateImg>
         <OtherInfo>
-            <div> {data.deposit /10000}만원</div>
-
-            {/* <div>{data.deposit}만원</div> */}
+            <div> {changeMoney(data.deposit)}</div>
             <div>{data.jibun}&nbsp;{data.additional_address}</div>
             <div><span>{data.area}㎡</span><span>,&nbsp;{data.type}</span></div>
         </OtherInfo>
+        </Ta>
         <JustState id="juststate">
             <span>{state}</span>
             {isDisplay ? <button onClick={()=>{resubmit(data.id)}}>재등록</button>:<></>}

@@ -82,5 +82,8 @@ export const EstateAllInfo = styled.div`
     align-items: center;
     justify-content: space-evenly;
     border-bottom: 1px solid lightgray;
-
+    
+    &:hover{
+        background-color: #FFF3E0;
+    }
 `

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {DateImg,OtherInfo,JustState} from '../checktab/checkstyled'
+import {DateImg,OtherInfo,JustState,Ta} from '../checktab/checkstyled'
 import { MypageGlobal } from '../Mypage';
 import { useContext } from 'react';
 import {UpdateBtn, EstateAllInfo} from './registerstyled';
@@ -201,19 +201,45 @@ const RegisterList = ({data}) => {
         mutation.mutate({btnname,estateId,userID,transactionID});
       }
     }
+    // 돈 단위 바꾸기
+    const changeMoney = (td) => {
+      let uk = parseInt(td / 100000000);
+      let ukrest = (td % 100000000).toString().padStart(8, "0");
+      let manwon = (ukrest / 10000)
+      if (uk > 0) {
+
+          if (ukrest == 0) {
+              return (uk + "억");
+
+          }
+          else {
+              return (uk + "억" + manwon + "만원");
+
+          }
+      }
+      else {
+          return (manwon + "만원");
+      }
+  }
+  const detailpageblank = (el) => {
+    const url = `http://localhost:3000/detail/${el}`;
+    window.open(url, '_blank');
+  };
 
 
   return (
     <EstateAllInfo>
+      <Ta onClick={()=>{detailpageblank(data.id)}}>
       <DateImg>
         <span>{revisedFormattedDate}</span>
         <img src={`${serverUrl}estate_imgs/${ImgUrl}`}></img>
       </DateImg>
       <OtherInfo>
-        <div>{data.Real_estate.deposit/10000}만원</div>
+        <div>{changeMoney(data.Real_estate.deposit)}</div>
         <div>{data.Real_estate.jibun}&nbsp;{data.Real_estate.additional_address}</div>
         <div><span>{data.Real_estate.area}㎡</span><span>,&nbsp;{data.Real_estate.type}</span></div>
       </OtherInfo>
+      </Ta>
       <JustState>
         <span>{state}</span>
         {btnName ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved,data.Real_estate.balance)}}>{btnName}</UpdateBtn> :<></>}

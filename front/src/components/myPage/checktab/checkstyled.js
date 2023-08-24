@@ -62,9 +62,14 @@ export const EstateAllInfo = styled.div`
         border: none;
         border-radius: 10px;
     }
+
+    &:hover{
+        background-color: #FFF3E0;
+    }
+    
 `
 export const DateImg = styled.div`
-    width: 20%;
+    width: 38%;
     height: 90px;
     display: flex;
     flex-direction: column;
@@ -120,4 +125,11 @@ export const JustState = styled.div`
     & span{
         margin-bottom: 2px;
     }
+`
+
+export const Ta = styled.div`
+    display: flex;
+    width: 540px;
+    cursor: pointer;
+    align-items: center;
 `
