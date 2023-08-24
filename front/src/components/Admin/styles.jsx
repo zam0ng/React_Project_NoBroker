@@ -337,6 +337,120 @@ export const ButtonWrap = styled.div`
 `
 
 
+export const AvailableForSale = styled.div`
+
+    background-color: #ddddf7;
+
+    width: 80px;
+    font-size : 15px;
+    font-weight: 300;
+    letter-spacing : 0.1px;
+    color: #2323ff;
+    display: flex;
+    height: 32px;
+    border-radius: 3px;
+    justify-content: center;
+    align-items: center;
+
+`
+
+export const NotForSale = styled.div`
+    
+    background-color: #f7dddd;
+
+    width: 80px;
+    font-size : 15px;
+    font-weight: 300;
+    letter-spacing : 0.1px;
+    color: #ff4423;
+    display: flex;
+    height: 32px;
+    border-radius: 3px;
+    justify-content: center;
+    align-items: center;
+
+`
+
+
+export const GeneralUser = styled.div`
+    color: #555555;
+    font-size : 15px;
+    font-weight: 300;
+
+    display : flex;
+    align-items : center;
+    justify-content : center;
+
+
+    >div::before {
+        content : '';
+        width : 7px;
+        height : 7px;
+        display : inline-block;
+        background-color : #555555;
+        border-radius : 50%;
+        margin-right : 1px;
+    }
+
+`
+
+
+export const ApprovedAgent = styled.div`
+    color: #5050fa;
+    font-size : 15px;
+    font-weight: 300;
+
+    >div::before {
+        content : '';
+        width : 7px;
+        height : 7px;
+        display : inline-block;
+        background-color : #5050fa;
+        border-radius : 50%;
+        margin-right : 1px;
+    }
+
+
+`
+
+export const DecisionInProcessAgent = styled.div`
+    color : #197a19;
+    font-size : 15px;
+    font-weight: 300;
+
+    >div::before {
+        content : '';
+        width : 7px;
+        height : 7px;
+        display : inline-block;
+        background-color : #197a19;
+        border-radius : 50%;
+        margin-right : 1px;
+    }
+
+`
+
+export const LeaveOutAgent = styled.div`
+    color: #ff725a;
+    font-size : 15px;
+    font-weight: 300;
+
+    >div::before {
+        content : '';
+        width : 7px;
+        height : 7px;
+        display : inline-block;
+        background-color : #ff725a;
+        border-radius : 50%;
+        margin-right : 1px;
+    }
+
+
+
+`
+
+
+
 
 
 // export const BackgroundImg = styled.div`

@@ -7,7 +7,14 @@ import { UserItemWrap ,
         SealClickedImageContainer,
         ApproveBtn,
         DisapproveBtn,
-        ButtonWrap
+        ButtonWrap, 
+        AvailableForSale, 
+        GeneralUser,
+        NotForSale,
+        ApprovedAgent, 
+        DecisionInProcessAgent,
+        LeaveOutAgent,
+
 
     } from './styles'
 import { useMutation } from 'react-query'
@@ -114,21 +121,26 @@ const UserItem = ({item}) => {
             {/* ban | 저장된 값이 BOOLEAN 타입. 따라서 '0' 으로 함 */}
                 <p>
                     {
-                        item.ban == '0' ? '판매가능': '판매불가'
+                        item.ban == '0' ? <AvailableForSale> 판매 가능 </AvailableForSale> : <NotForSale> 판매 불가 </NotForSale>
                     }
                 </p>
+                {/* <p>
+                    {
+                        item.ban == '0' ? '판매가능': '판매불가'
+                    }
+                </p> */}
 
 
             {/* role == true -> 공인중개사 | role === false : 일반유저 |
 
              */}
             <p>
-                {
-                    item.role == false ? "일반유저" :
+                { 
+                    item.role == false ?  <GeneralUser> <div> 일반유저 </div> </GeneralUser>  :
                     // | item.role == true 인 경우 👇 | 공인중개사 신청한 경우 👇 |
-                        item.certificate_user == 0 ? '승인된 공인중개사' :
-                        item.certificate_user == 1 ? '공인중개사 자격 심사중' :
-                        '공인중개사 자격 미달'
+                        item.certificate_user == 0 ? <ApprovedAgent> <div>업자 승인완료</div> </ApprovedAgent>   :
+                        item.certificate_user == 1 ? <DecisionInProcessAgent> <div> 업자 심사중 </div> </DecisionInProcessAgent>   :
+                        <LeaveOutAgent>  <div> 업자 자격 미달 </div>  </LeaveOutAgent>  
                 }
             </p>
 
