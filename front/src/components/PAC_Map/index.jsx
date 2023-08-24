@@ -43,6 +43,7 @@ import { serverUrl } from 'components/serverURL';
 import ReactDOMServer from 'react-dom/server';
 
 import Footer from 'components/footer/Footer';
+import { useNavigate } from 'react-router';
 
 // const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ import Footer from 'components/footer/Footer';
 const PAC_Map = ({queryClient}) => {
 
     const { isLoggedIn, isCertificate, logout } = useAuth();
+    const nav = useNavigate();
 
 const mapRef = useRef();
 const autoCompleteRef = useRef();
@@ -562,7 +564,8 @@ const createZoomControl = ( map ) => {
             )
 
             tradableMarker.addListener( "click" , () => {
-                window.location.href = `http://localhost:3000/detail/${item.id}`;
+                nav(`/detail/${item.id}`);
+                // window.location.href = `http://localhost:3000/detail/${item.id}`;
             })
 
                     // 임시. 정규표현식으로 앞자리만 가져오기 | 😥😥
