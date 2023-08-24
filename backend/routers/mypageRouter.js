@@ -17,6 +17,6 @@ router.get('/getUpdateinfo', getUpdateinfo);
 router.post('/update', updateUpload.single("upload"), isLogin, userInfoUpdate);
 router.get('/approvedUpdate', approvedUpdate);
 router.get('/withdraw', withdraw);
-router.get('/rewardresumit', rewardresumit)
+// router.get('/rewardresumit', rewardresumit)
 module.exports = router;
 

@@ -49,17 +49,7 @@ import Footer from 'components/footer/Footer';
 
 const PAC_Map = ({queryClient}) => {
 
-    const { isLoggedIn, isCertificate } = useAuth();
-
-    console.log("axios : ", axios.defaults.baseURL);
-    const testFunc = async() => {
-        const test = await axios.get("/list/test" , {
-            withCredentials : true,
-        });
-        console.log("test : " , test);
-        console.log("test 입니다.")
-    }
-    testFunc();
+    const { isLoggedIn, isCertificate, logout } = useAuth();
 
 const mapRef = useRef();
 const autoCompleteRef = useRef();
@@ -86,7 +76,7 @@ const [arrMarker, setArrMarker] = useState([])        // 찍혀야 하는 마커
 const [tradableData  , setTradableData] = useState([])      // state 기준으로 뽑은 거래가능한 데이터 | 현재는 테스트 버전만 뽑음
 const [checkboxValue , setCheckboxValue] = useState([])     // 배열 = 여러값을 '동시에' 담을 수 있음 -> so, 중복체크 구현 가능
 const [priceRangeValue , setPriceRangeValue] = useState([0, 1000000000000])
-const [builtYearValue , setBuiltYearValue] = useState()     // 기본값이 필요하려나 
+const [builtYearValue , setBuiltYearValue] = useState()     // 기본값이 필요하려나
 const [areaRangeValue , setAreaRangeValue] = useState([0, 135000000000000])
 
 const [activeModal, setActiveModal] = useState()
@@ -178,7 +168,7 @@ const [myLikeClickedList , setMyLikeClickedList] = useState(false)
     // 내가 찜한 방 보기
     const handleMyLikeClickedList = () => {
         setMyLikeClickedList(true)
-        
+
         console.log("handleMyLikeClickedList 찜한방 true 클릭 🚀🚀🚀" , myLikeClickedList)
     }
 
@@ -400,10 +390,16 @@ const createZoomControl = ( map ) => {
             // setTradableData(data.tradableEstate) // 이건 setTradabledata 를 useeffect 로 저장할 때의 버전
             console.log("[1단계] 클릭한대로, 서버에서, 들어오나?" , response.data.tradableEstate)
 
-            setTradableData(response.data.tradableEstate)
-            console.log("tradableData 데이터가 제대로 바뀌었나" , tradableData)
+            if (response.data.tradableEstate == "로그인안됨") {
+                logout();
+                alert("로그인 하세요.");
+                return tradableData;
+            } else {
+                setTradableData(response.data.tradableEstate)
+                console.log("tradableData 데이터가 제대로 바뀌었나" , tradableData)
+                return response.data.tradableEstate
+            }
 
-            return response.data.tradableEstate
         }
 
     // api 함수 호출해서 데이터 가져오기 | usequery 사용
@@ -414,7 +410,6 @@ const createZoomControl = ( map ) => {
         // 여기에서 ['filterTradableEstateData' , checkboxValue] 여기를 -> priceRangeValue 이렇게 수정하면, -> priceRangeValue 이 범위 변화에 즉각적으로 반응 ⭐⭐⭐
         // 나는 priceRangeValue 랑, checkboxValue 모두, '즉각' 반응하게 하고 싶음
         // 그러면, useQuery 를 2번 써도 되나 ?
-
 
     console.log(" useQuery 에 담긴 데이터" , data)
 
@@ -582,7 +577,7 @@ const createZoomControl = ( map ) => {
                         const chenMan = parseFloat(tempChenMan_manwon).toString();
                         const chenManWithYuk = parseFloat(tempChenMan_cheonman).toString();
 
-                        const contentString = yuk < 1 ? 
+                        const contentString = yuk < 1 ?
                         `<div> ${chenMan}만원</div>`:
                         `<div> ${yuk}.${chenManWithYuk}억</div>`
 
@@ -653,10 +648,10 @@ return (
                                         fontWeight : '500',
                                         color : 'rgb(20, 20, 20)',
                                         fontSize : '15px',
-                                        width : "100%" , 
-                                        marginLeft : '20px' , 
-                                        marginRight : '20px' , 
-                                        border : 'none' , 
+                                        width : "100%" ,
+                                        marginLeft : '20px' ,
+                                        marginRight : '20px' ,
+                                        border : 'none' ,
                                         // backgroundColor : 'transparent'
                                         backgroundColor : '#ffffff'
                                     }}

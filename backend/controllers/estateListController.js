@@ -19,7 +19,7 @@ exports.getTradableEstate = async(req , res) => {
     // console.log("req" , req) // 🔵
     // console.log("req.acc_decoded" , req.acc_decoded) // 🔵
     // console.log("req.acc_decoded.id" , req.acc_decoded.id)  // 8 나옴 🔵
-    console.log("req.query.myLikeClickedList" , req.query.myLikeClickedList)  // 문자열 true 나옴
+    // console.log("req.query.myLikeClickedList" , req.query.myLikeClickedList)  // 문자열 true 나옴
     // console.log(" req.query.roomType | 방 종류 " , req.query.roomType)
       // [목표 URL]`http://localhost:8080/list/tradableEstate?roomType=${checkedRoomTypes}&priceRangeValue=${priceRangeValue}`
       // 'req.query 는 객체' 임 => 따라서, 복수의 key 값이 있어도, 개별적으로 접근할 수 있음.
@@ -33,8 +33,17 @@ exports.getTradableEstate = async(req , res) => {
         accpet : 1    // 투표가 끝난, 정상매물을 의미 | accept 오타지만, 이미 모델에서 이렇게 설정되어서, 현재 상태에서는 기재해야 반영됨
     }
 
+    let login = false;
+    if (req.acc_decoded) {
+      login = true;
+    }
+
     // // 내가 좋아요 클릭한 것만 지도에 표시하기
+    // if(req.query.myLikeClickedList === 'true' && req.acc_decoded){
     if(req.query.myLikeClickedList === 'true'){
+      if (!req.acc_decoded?.id) {
+        return res.json({tradableEstate : "로그인안됨"})
+      }
       const currentUserID = req.acc_decoded.id
 
       // 로그인한 유저가 클릭한 좋아요 정보
@@ -127,7 +136,7 @@ exports.getTradableEstate = async(req , res) => {
     return res.json({ tradableEstate })
 
   } catch (error) {
-    console.log("@getTradableEstate" , error);
+    console.log("@getTradableEstate");
     return res.json({error})
   }
 }
