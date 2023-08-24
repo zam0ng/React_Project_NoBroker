@@ -633,7 +633,7 @@ exports.getCancelList = async (req, res) => {
                     [Op.ne]: id,
                 }
             },
-            include: [{ model: Real_estate, attributes: ["id", "jibun", "additional_address", "balance", "deposit", "year_built", "area", "type", "img_1"] }],
+            include: [{ model: Real_estate, attributes: ["id","state", "jibun", "additional_address", "balance", "deposit", "year_built", "area", "type", "img_1"] }],
             // raw : true,
         })
         const data2 = await Transaction.findAll({
@@ -647,9 +647,10 @@ exports.getCancelList = async (req, res) => {
                     [Op.ne]: id,
                 }
             },
-            include: [{ model: Real_estate, attributes: ["id", "jibun", "additional_address", "balance", "deposit", "year_built", "area", "type", "img_1"] }],
+            include: [{ model: Real_estate, attributes: ["id","state","jibun", "additional_address", "balance", "deposit", "year_built", "area", "type", "img_1"] }],
         })
-        res.json(data, data2);
+        const data3 = [...data,...data2]
+        res.json(data3);
     } catch (error) {
         console.log("getCancelList 컨트롤러에서 오류남", error);
     }
@@ -742,3 +743,18 @@ exports.withdraw = async (req, res) => {
     }
 }
 
+exports.rewardresumit = async(req,res) =>{
+    const {el} = req.query;
+    console.log("elㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",el);
+    try {
+        await Real_estate.update({
+            state :0,
+        },{
+            where : {id : el.el},
+        })
+    
+        res.send("재등록 완료")
+    } catch (error) {
+        console.log("rewardresumit  에서 오류남", error);
+    }   
+}

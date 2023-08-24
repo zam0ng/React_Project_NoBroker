@@ -115,6 +115,9 @@ export const JustState = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column
-    
+    flex-direction: column;
+
+    & span{
+        margin-bottom: 2px;
+    }
 `

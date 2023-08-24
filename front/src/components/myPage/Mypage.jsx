@@ -93,7 +93,7 @@ const Mypage = () => {
     }
 
     const { data: MyPageUserInfo, isLoading: userisLoading, error: usererror } = useQuery('users', getUserInfo);
-    console.log("MyPageUserInfo----", MyPageUserInfo);
+    // console.log("MyPageUserInfo----", MyPageUserInfo);
     const { data: getmyregisterinfo, isLoading: getmyregisterinfoLoading, error: getmyregisterinfoError } = useQuery('getmyregister', getMyRegisterInfo);
     // console.log(getmyregisterinfo);
     const { data: updatedata, isLoading: updatedataLoading, error: updatedataError } = useQuery('update', getUpdateinfo)
@@ -109,7 +109,7 @@ const Mypage = () => {
     // const ImgUrl = (updatedata?.user_img)?.split("\\")[2];
     const ImgUrl = (updatedata?.user_img)?.substr(13);
 
-    console.log("imgurl", ImgUrl);
+    // console.log("imgurl", ImgUrl);
 
     const queryClient = useQueryClient();
 
