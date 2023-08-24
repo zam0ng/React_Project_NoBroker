@@ -59,9 +59,8 @@ function App() {
             path="/mypage"
             element={isLoggedIn ? <Mypage queryClient={queryClient} /> : <Login />}
           />
-          {/* ⭐⭐테스트 때문에 잠깐 빼둠  */}
-          {/* <Route path="/admin" element={isAdmin ? <Admin /> : <Login />} /> */}
-          <Route path="/admin" element={ <Admin />} />
+
+          <Route path="/admin" element={isAdmin ? <Admin /> : <Login />} />
 
           {/* 업자 회원만 접근 가능 */}
           <Route
