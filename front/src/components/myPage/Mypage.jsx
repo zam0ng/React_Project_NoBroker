@@ -99,12 +99,31 @@ const Mypage = () => {
     const { data: updatedata, isLoading: updatedataLoading, error: updatedataError } = useQuery('update', getUpdateinfo)
     // console.log(updatedata);
 
-    if(MyPageUserInfo?.message=="다시 로그인" || getmyregisterinfo?.message=="다시 로그인" || updatedata?.message=="다시 로그인"){
+    // if(MyPageUserInfo?.message=="다시 로그인" || getmyregisterinfo?.message=="다시 로그인" || updatedata?.message=="다시 로그인"){
+    //     alert("로그인이 만료되었습니다.")
+    //     logout();
+    //     certificate(false);
+    //     Navigate("/login");
+    // }
+    if(MyPageUserInfo?.message=="다시 로그인"){
         alert("로그인이 만료되었습니다.")
         logout();
         certificate(false);
         Navigate("/login");
     }
+    if(getmyregisterinfo?.message=="다시 로그인"){
+        alert("로그인이 만료되었습니다.")
+        logout();
+        certificate(false);
+        Navigate("/login");
+    }
+    if(updatedata?.message=="다시 로그인"){
+        alert("로그인이 만료되었습니다.")
+        logout();
+        certificate(false);
+        Navigate("/login");
+    }
+
     const ta = (updatedata?.ssn)?.split("-");
     // const ImgUrl = (updatedata?.user_img)?.split("\\")[2];
     const ImgUrl = (updatedata?.user_img)?.substr(13);
