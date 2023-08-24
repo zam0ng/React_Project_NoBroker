@@ -85,8 +85,8 @@ const [isAreaModalOpen , setIsAreaModalOpen] = useState(false)
 const [arrMarker, setArrMarker] = useState([])        // 찍혀야 하는 마커들
 const [tradableData  , setTradableData] = useState([])      // state 기준으로 뽑은 거래가능한 데이터 | 현재는 테스트 버전만 뽑음
 const [checkboxValue , setCheckboxValue] = useState([])     // 배열 = 여러값을 '동시에' 담을 수 있음 -> so, 중복체크 구현 가능
-const [priceRangeValue , setPriceRangeValue] = useState([0, 100000000000])
-const [builtYearValue , setBuiltYearValue] = useState()     // 기본값이 필요하려나
+const [priceRangeValue , setPriceRangeValue] = useState([0, 1000000000000])
+const [builtYearValue , setBuiltYearValue] = useState()     // 기본값이 필요하려나 
 const [areaRangeValue , setAreaRangeValue] = useState([0, 135000000000000])
 
 const [activeModal, setActiveModal] = useState()
@@ -178,6 +178,7 @@ const [myLikeClickedList , setMyLikeClickedList] = useState(false)
     // 내가 찜한 방 보기
     const handleMyLikeClickedList = () => {
         setMyLikeClickedList(true)
+        
         console.log("handleMyLikeClickedList 찜한방 true 클릭 🚀🚀🚀" , myLikeClickedList)
     }
 
@@ -190,7 +191,7 @@ const [myLikeClickedList , setMyLikeClickedList] = useState(false)
     // 가격 무제한 보기
     const handlePriceInfiniteBtn = () => {
         console.log("가격 무제한 버튼 클릭")
-        
+
     }
 
 
@@ -572,8 +573,21 @@ const createZoomControl = ( map ) => {
                     // 임시. 정규표현식으로 앞자리만 가져오기 | 😥😥
                         const tempDeposit = item.deposit
                         const yuk = Math.floor(tempDeposit/100000000)
-                        const chenMan = Math.floor((tempDeposit%100000000)/100000000)
-                        const contentString = `<div> ${yuk}.${chenMan}억</div>`
+                        // const chenMan = Math.floor((tempDeposit%100000000)/100000000)
+
+
+                        const tempChenMan_manwon = Math.round((tempDeposit % 100000000) / 10000);
+                        const tempChenMan_cheonman = Math.round((tempDeposit % 100000000) / 10000000);
+
+                        const chenMan = parseFloat(tempChenMan_manwon).toString();
+                        const chenManWithYuk = parseFloat(tempChenMan_cheonman).toString();
+
+                        const contentString = yuk < 1 ? 
+                        `<div> ${chenMan}만원</div>`:
+                        `<div> ${yuk}.${chenManWithYuk}억</div>`
+
+
+
                         // console.log("단위변환" ,contentString)
 
             // marker 가 만들어질 때 마다 info window 생성
@@ -634,11 +648,22 @@ return (
                                 ref={autoCompleteRef}
                                 placeholder="서울대입구 원룸"
                                 type="text"
-                                style={{width : "100%" , marginLeft : '20px' , marginRight : '20px' , border : 'none' , backgroundColor : 'transparent'}}
+                                style={{
+                                        height : '32px',
+                                        fontWeight : '500',
+                                        color : 'rgb(20, 20, 20)',
+                                        fontSize : '15px',
+                                        width : "100%" , 
+                                        marginLeft : '20px' , 
+                                        marginRight : '20px' , 
+                                        border : 'none' , 
+                                        // backgroundColor : 'transparent'
+                                        backgroundColor : '#ffffff'
+                                    }}
                             />
 
                             {/* 매물 vs 찜한방 */}
-                            <SearchBarButton handleAllEstateList={handleAllEstateList}  handleMyLikeClickedList={handleMyLikeClickedList} />
+                            <SearchBarButton myLikeClickedList = {myLikeClickedList}   handleAllEstateList={handleAllEstateList}  handleMyLikeClickedList={handleMyLikeClickedList} />
 
                     </SearchBarContainer>
 
@@ -646,7 +671,7 @@ return (
 
                 <FilterContainer>
                     {/* Roomtype 필터 | 아파트 vs 오피스텔 */}
-                        <FilterButton color="rgb(34, 34, 34)" fontWeight={800}  id={"roomType"} title={"아파트, 오피스텔, 주택"} handleModalToggle = {handleModalToggle }  />
+                        <FilterButton color="rgb(34, 34, 34)" fontWeight={600}  id={"roomType"} title={"아파트, 오피스텔, 주택"} handleModalToggle = {handleModalToggle }  />
                         {
                             // 클릭되면 -> 1번으로 target.id 또는 value 를 품고 있는다.
                             activeModal == "roomType" && <FilterCheckBoxModal
@@ -665,7 +690,7 @@ return (
                         }
 
                     {/* 매매 가격 필터 | 아파트 vs 오피스텔 */}
-                        <FilterButton color="rgb(34, 34, 34)"  fontWeight={800} id={"priceRange"} title={"거래 가격"} handleModalToggle = {handleModalToggle }  />
+                        <FilterButton color="rgb(34, 34, 34)"  fontWeight={600} id={"priceRange"} title={"거래 가격"} handleModalToggle = {handleModalToggle }  />
                         {
                             activeModal == "priceRange" && <FilterRangeModal
                                                     handlePriceInfiniteBtn = {handlePriceInfiniteBtn}

@@ -7,12 +7,19 @@ import {
     } from './styles'
 
 
-const SearchBarButton = ({handleMyLikeClickedList , handleAllEstateList}) => {
+const SearchBarButton = ({ myLikeClickedList ,  handleMyLikeClickedList , handleAllEstateList}) => {
   return (
     <SearchBarButtonContainer>
         
-        <ClickedSearchBarButtonItem onClick={handleAllEstateList} > <span> 매물 </span> </ClickedSearchBarButtonItem>
-        <UnClickedSearchBarButtonItem onClick={handleMyLikeClickedList} > <span> 찜한방 </span> </UnClickedSearchBarButtonItem>
+        
+          <ClickedSearchBarButtonItem myLikeClickedList={myLikeClickedList}  onClick={handleAllEstateList} > <span> 매물 </span> </ClickedSearchBarButtonItem>
+        
+          <UnClickedSearchBarButtonItem myLikeClickedList={myLikeClickedList} onClick={handleMyLikeClickedList} > <span> 찜한방 </span> </UnClickedSearchBarButtonItem>
+
+        {/* keep */}
+        {/* <ClickedSearchBarButtonItem onClick={handleAllEstateList} > 
+          <span> 매물 </span> </ClickedSearchBarButtonItem>
+        <UnClickedSearchBarButtonItem onClick={handleMyLikeClickedList} > <span> 찜한방 </span> </UnClickedSearchBarButtonItem> */}
         
     </SearchBarButtonContainer>
     

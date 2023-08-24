@@ -62,10 +62,6 @@
       })
       return data;
     } , {
-      onError : (error) => {
-        console.error(error)
-      }
-    }, {
       onSuccess : (data) => {
         if(data.message && data.message == "성공") {
           console.log("찜 추가 성공🐣🐣🐣🐣")
@@ -74,6 +70,10 @@
           console.log("찜 추가 과정에서 오류 발생📛 " , data);
           alert("찜 추가 오류 발생")
         }
+      }
+    } , {
+      onError : (error) => {
+        console.error(error)
       }
     })
 
@@ -133,11 +133,13 @@
     useEffect( () => {
       // insert 할 때, 굳이 파일 경로를 앞에 안 붙여준 경우 -> 파싱 없이 넣어야 나옴
         console.log("item.img_1 담긴 것 👲👲👲" , item.img_1) // 👉 nobroker_erd_1692354792331.png
-        setEstateImgUrl(item.img_1.substr(12));   // substr(12) = 앞에 파일 경로 지워주기 ✅✅
+        
+        // 🐣🐣 로컬 테스트용 | 테스트 
+        // setEstateImgUrl(item.img_1);   // substr(12) = 앞에 파일 경로 지워주기 ✅✅ | 이건 테스트용 
 
-      // insert 할 때, 경로 붙인 경우 -> 파싱 해야 나옴
-        // setEstateImgUrl(item.img_1.substr(12));   // substr(12) = 앞에 파일 경로 지워주기 ✅✅
-    },[] )
+        // 🚀🚀 업로드용 | insert 할 때, 경로 붙인 경우 -> 파싱 해야 나옴 | 배포 | 배포용
+        setEstateImgUrl(item.img_1.substr(12));   // substr(12) = 앞에 파일 경로 지워주기 ✅✅
+    },[estateImgUrl , item.img_1])
 
 
     useEffect( () => {

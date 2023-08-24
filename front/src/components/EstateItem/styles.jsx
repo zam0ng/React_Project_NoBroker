@@ -60,7 +60,7 @@ export const InfoWrap = styled.div`
     align-items : flex-start;
 `
 
-export const LikeBtnWrap = styled.button`
+export const LikeBtnWrap = styled.div`
     
     cursor: pointer;
     /* position : relative;/ */
@@ -76,6 +76,8 @@ export const LikeBtnWrap = styled.button`
 `
 
 export const HeaderPrice = styled.h1`
+    margin-top: 1px;
+    margin-bottom: 2px;
     font-size : 18px;
     font-weight : 700;
     height : 27px;
@@ -87,20 +89,23 @@ export const HeaderPrice = styled.h1`
 
 export const RoomType = styled.div`
     font-size : 13px;
-    font-weight : 400;
-
+    font-weight : 300;
+    
+    /* background-color : lightgreen; */
+    
     letter-spacing : -1px;
     white-space : nowrap;
     text-overflow : ellipsis;
     overflow : hidden;
-`
+    `
 
 export const RoomDesc = styled.div`
 
+    /* background-color : lightpink; */
     width : 195px;
     text-align : left;
     font-size : 14px;
-    font-weight : 400;
+    font-weight : 300;
     letter-spacing : -0.9px;
 
     white-space : nowrap;

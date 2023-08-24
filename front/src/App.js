@@ -40,9 +40,15 @@ function App() {
           <Route
             path="/insert"
             element={
-              isLoggedIn ? <Insert queryClient={queryClient} /> : <Login />
+               <Insert queryClient={queryClient} /> 
             }
           />
+          {/* <Route
+            path="/insert"
+            element={
+              isLoggedIn ? <Insert queryClient={queryClient} /> : <Login />
+            }
+          /> */}
           <Route
             path="/detail/:id"
             element={<Detail queryClient={queryClient} />}
@@ -53,6 +59,7 @@ function App() {
             path="/mypage"
             element={isLoggedIn ? <Mypage queryClient={queryClient} /> : <Login />}
           />
+
           <Route path="/admin" element={isAdmin ? <Admin /> : <Login />} />
 
           {/* 업자 회원만 접근 가능 */}

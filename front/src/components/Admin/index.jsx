@@ -49,7 +49,7 @@ const Admin = () => {
 return (
     <>
     <NavHeader />
-    <AdminPageDefault style={{minHeight : "100vh"}}>
+    <AdminPageDefault >
 
         <TitleHeaderWrap>
             <h1>admin 계정 관리</h1>
@@ -59,8 +59,8 @@ return (
             {/* 필터 기능 있어야?*/}
             <UserListWrap>
                 <Criteria > </Criteria >
-
             </UserListWrap>
+
                 {
                     userData && userData.map( (item, index) => {
                         return <UserItem item={item} >  </UserItem>
