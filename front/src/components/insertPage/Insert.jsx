@@ -28,9 +28,13 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import Islogin from "./isLogined/Islogin";
 import NavHeader from "components/navbar/NavHeader";
+import { useAuth } from 'AuthContext'
+
 export const Global = createContext();
 
 const Insert = ({ queryClient }) => {
+  const { logout, certificate } = useAuth();
+
   const navigate = useNavigate();
   const [balance, setBalance] = useState(0);
   const [deposite, setDeposite] = useState(0);
@@ -51,6 +55,7 @@ const Insert = ({ queryClient }) => {
   const [year, setYear] = useState("");
   const [isdisable, setisDisable] = useState(true);
 
+  
   let type;
 
   function None() {
@@ -113,8 +118,9 @@ const Insert = ({ queryClient }) => {
     for (let i = 0; i < files.length; i++) {
       form.append("upload", files[i]);
     }
+    
     console.log("------------------------------- files", files);
-
+    setTemp([]);
     axios
       .post("/upload", form, {
         "Content-Type": "multipart/form-data",
@@ -122,10 +128,10 @@ const Insert = ({ queryClient }) => {
       })
       .then((e) => {
         console.log(e);
-        console.log(e.data.msg);
-        console.log(e.data.acceptData);
-        console.log(typeof e.data.acceptData);
-        console.log("잘 전달됨.");
+        // console.log(e.data.msg);
+        // console.log(e.data.acceptData);
+        // console.log(typeof e.data.acceptData);
+        // console.log("잘 전달됨.");
         if (e.data.msg == "이미 등록") {
           switch (e.data.accpetData) {
             case 0:
@@ -150,6 +156,9 @@ const Insert = ({ queryClient }) => {
 
               break;
           }
+        }else if(e.message=="다시 로그인"){
+          logout();
+          certificate(false);
         } else {
           queryClient.invalidateQueries("users");
           navigate("/list");
@@ -162,7 +171,9 @@ const Insert = ({ queryClient }) => {
   // 유저정보 가져와서 식별
 
   const getUserInfo = async () => {
-    const response = await axios.get("/insert/userinfo");
+    const response = await axios.get("/insert/userinfo",{
+      withCredentials : true,
+    });
     return response.data;
   };
 
@@ -172,7 +183,14 @@ const Insert = ({ queryClient }) => {
     isLoading: userisLoading,
     error: usererror,
   } = useQuery("users", getUserInfo);
-  console.log("insertjsx", user);
+
+  console.log("user-----------", user);
+
+  if(user?.message == "다시 로그인"){
+      logout();
+      certificate(false);
+  }
+
   if (userisLoading) {
     return <div>로딩 중...</div>;
   }
@@ -215,7 +233,7 @@ const Insert = ({ queryClient }) => {
     <>
       <Global.Provider value={obj}>
         <NavHeader />
-        <Islogin />
+        <Islogin /> 
         <Bodyy>
           <MainTitle>매물 등록</MainTitle>
           <Caution>

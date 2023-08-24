@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const FilterModalContainer = styled.div`
+    
     z-index : 1;
     position: absolute;
     left : 0px ;
@@ -100,7 +101,7 @@ export const ModalHeaderWrap = styled.div`
 
 
 export const ModalContentWrap = styled.div`
-    
+
     /* margin-top : -81px; */
 
 

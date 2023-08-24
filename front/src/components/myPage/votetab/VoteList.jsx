@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {EstateAllInfo,DateImg,OtherInfo,JustState} from '../checktab/checkstyled';
-
+import { serverUrl } from 'components/serverURL';
 const VoteList = ({data}) => {
     // console.log(data);
     const [voteState, setvoteState]= useState("");
@@ -26,7 +26,8 @@ const VoteList = ({data}) => {
         "$3/$1/$2"
     );
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    const ImgUrl = data.img_1?.split("\\")[2];
+    // const ImgUrl = data.img_1?.split("\\")[2];
+    const ImgUrl = data.Real_estate.img_1?.substr(12);
     // 아직 투표중일때
 
     useEffect(()=>{
@@ -43,12 +44,12 @@ const VoteList = ({data}) => {
             setvoteState("나머지")
         }
     },[data])
-    
+
   return (
     <EstateAllInfo>
       <DateImg>
         <span>{revisedFormattedDate}</span>
-        <img src={`http://localhost:8080/estate_imgs/${ImgUrl}`}></img>
+        <img src={`${serverUrl}estate_imgs/${ImgUrl}`}></img>
       </DateImg>
       <OtherInfo>
         <div>{data.Real_estate.balance}만원</div>
@@ -61,7 +62,7 @@ const VoteList = ({data}) => {
         <p>+1000</p></>}
       </JustState>
     </EstateAllInfo>
-    
+
 
   )
 }

@@ -3,10 +3,11 @@ import {DateImg,EstateAllInfo,OtherInfo,JustState} from './checkstyled';
 import axios from '../../../Axios';
 import { serverUrl } from 'components/serverURL';
 import { useMutation, useQueryClient } from 'react-query';
+let eog,manwon;
 const List = ({data}) => {
     // console.log(data);
     const [isDisplay,setIsDisplay] = useState(false);
-
+    console.log(data);
     const state = data.accpet === 0 ? "투표중" :
     data.accpet === 1 ? "정상등록" :
     data.accpet === 2 ? "허위판정" :
@@ -44,7 +45,9 @@ const List = ({data}) => {
     );
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-    const ImgUrl = data.img_1?.split("\\")[2];
+    // const ImgUrl = data.img_1?.split("\\")[2];
+    const ImgUrl = data.img_1?.substr(12);
+    console.log("img", ImgUrl)
 
     const updateAccept = async(el)=>{
         const data= await axios.get('/mypage/resubmit',{
@@ -71,15 +74,18 @@ const List = ({data}) => {
     }
 
 
+
   return (
     <>
     <EstateAllInfo>
         <DateImg>
             <span>{revisedFormattedDate}</span>
-            <img src={`${serverUrl}/estate_imgs/${ImgUrl}`}></img>
+            <img src={`${serverUrl}estate_imgs/${ImgUrl}`}></img>
         </DateImg>
         <OtherInfo>
-            <div>{data.balance}만원</div>
+            <div> {data.deposit /10000}만원</div>
+
+            {/* <div>{data.deposit}만원</div> */}
             <div>{data.jibun}&nbsp;{data.additional_address}</div>
             <div><span>{data.area}㎡</span><span>,&nbsp;{data.type}</span></div>
         </OtherInfo>

@@ -41,7 +41,7 @@ const FilterRangeModal = ({ areaRangeValue, left , handleAreaRangeBox }) => {
             </AreaRangeCriteria>
 
             <InfiniteAreaBtn 
-              // onClick={ () => handlePriceRangeBox(1000000000) }   // 100억 까지 조회되게 설정
+              onClick={ () => handleAreaRangeBox([0, 100000000000000]) }   // 900평 까지 조회되게 설정
               // handlePriceRangeBox
               > 
               <p>면적 무제한</p>

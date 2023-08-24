@@ -3,12 +3,13 @@ import {Container,ResigterEstate,StateDiv,Selectstate} from './votestyled';
 import voteimg from '../../../img/voteimg.png'
 import VoteList from './VoteList';
 import { useQuery } from 'react-query';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../../Axios'
 
 const Vote = () => {
 
   const getMyvotedata = async()=>{
-    const data = await axios.get("http://localhost:8080/mypage/getMyvotedata",{
+    const data = await axios.get("/mypage/getMyvotedata",{
       withCredentials : true,
     })
     return data.data;

@@ -1,6 +1,7 @@
 import React from 'react'
 import {Container,ResigterEstate,StateDiv,Selectstate} from './transactionstyled';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../../Axios'
 import { useQuery } from 'react-query';
 import { useState, useEffect } from 'react';
 import TransList from './TransList';
@@ -13,7 +14,7 @@ const Transaciton = () => {
   
   const getMycheck = async()=>{
     console.log("123123213")
-    const data = await axios.get("http://localhost:8080/mypage/getMycheck",{
+    const data = await axios.get("/mypage/getMycheck",{
       withCredentials : true,
     })
     return data.data;
@@ -22,16 +23,22 @@ const Transaciton = () => {
   const getCancelList = async()=>{
     console.log("123123213")
 
-    const data = await axios.get('http://localhost:8080/mypage/getCancelList',{
+    const data = await axios.get('/mypage/getCancelList',{
       withCredentials : true,
     })
     return data.data;
   }
 
   const {data: myCheckdata, isLoading: myCheckLoading, error : myCheckError} = useQuery('mycheck',getMycheck);
-
+  // console.log(myCheckdata)
   const {data :cancelListdata, isLoading : cancelListLoading , error : cancelListError } = useQuery('cancelList',getCancelList)
-  console.log(cancelListdata);
+  // console.log(cancelListdata);
+  
+
+  // useEffect(()=>{
+  //   const newArr = [...cancelListdata.data,...cancelListdata.data2];
+  //   console.log(newArr);
+  // },[cancelListdata])
 
   useEffect(()=>{
     setcheckCnt(myCheckdata?.length);

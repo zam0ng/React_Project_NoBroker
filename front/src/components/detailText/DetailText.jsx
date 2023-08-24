@@ -13,8 +13,10 @@ const DetailText = ({estate, seller}) => {
           const eok = Math.floor(money / 100000000);
           const remainder = money % 100000000;
           return `${eok}억${remainder >= 10000 ? ` ${won(remainder)}` : ''}`;
+      } else if (money < 10000){
+          return `${money}원`;
       } else {
-          return `${money}`;
+        return money;
       }
   }
 

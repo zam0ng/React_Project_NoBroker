@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import {UpdateBtn, EstateAllInfo} from './registerstyled';
 import axios from '../../../Axios';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
+import { serverUrl } from 'components/serverURL';
 const RegisterList = ({data}) => {
   const {getmyregisterinfo} =useContext(MypageGlobal);
   const userID = getmyregisterinfo.user_id;
@@ -97,7 +98,7 @@ const RegisterList = ({data}) => {
       return data;
     }
     const approvedUpdate = async(el)=>{
-      const data = await axios.get("http://localhost:8080/mypage/approvedUpdate",{
+      const data = await axios.get("/mypage/approvedUpdate",{
         params : {el},
         withCredentials : true,
         responseType: 'blob',
@@ -160,6 +161,7 @@ const RegisterList = ({data}) => {
 
       if(btnname=="승인"){
         approveMutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,balance});
+        alert("승인이 완료되었습니다. 다운로드 창에서 계약서를 확인해주세요.")
       }
       else if(btnname=="판매취소"){
         if(approved==1){
@@ -205,10 +207,10 @@ const RegisterList = ({data}) => {
     <EstateAllInfo>
       <DateImg>
         <span>{revisedFormattedDate}</span>
-        <img src={`http://localhost:8080/estate_imgs/${ImgUrl}`}></img>
+        <img src={`${serverUrl}estate_imgs/${ImgUrl}`}></img>
       </DateImg>
       <OtherInfo>
-        <div>{data.Real_estate.balance}만원</div>
+        <div>{data.Real_estate.deposit/10000}만원</div>
         <div>{data.Real_estate.jibun}&nbsp;{data.Real_estate.additional_address}</div>
         <div><span>{data.Real_estate.area}㎡</span><span>,&nbsp;{data.Real_estate.type}</span></div>
       </OtherInfo>
