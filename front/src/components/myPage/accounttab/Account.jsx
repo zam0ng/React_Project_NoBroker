@@ -21,13 +21,14 @@ const Account = () => {
   }
 
   const depositValue = (e) =>{
+    
+    setdepositAmount(e.target.value.replace(/\,/g, ''));
     // 천단위 마다 , 찍기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     let ta = (e.target.value).replace(/\D/g, '');
     ta = ta.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     setdepositvalue(ta)                           
     const inputValue = e.target.value.trim();
-    setdepositAmount(inputValue)
     
       const depositBtn = document.getElementById("depositBtn");
 
@@ -43,13 +44,14 @@ const Account = () => {
   }
 
   const withdrawValue = (e) =>{
+    setdepositAmount(e.target.value.replace(/\,/g, ''));
     // 천단위 마다 , 찍기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     let ta = (e.target.value).replace(/\D/g, '');
     ta = ta.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     setwithdrawvalue(ta); 
     const inputValue2 = e.target.value.trim();
-    setwithdrawAmount(inputValue2)
+
     
       const withdrawBtn = document.getElementById("withdrawBtn");
       const withdrawInput= document.getElementById("withdrawInput");
@@ -72,6 +74,7 @@ const Account = () => {
   
 
   const deposit = async(el)=>{
+    console.log(el);
     const data = await axios.get("/",{
       params :{el},
       withCredentials :true,

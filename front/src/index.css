@@ -46,3 +46,13 @@ body {
 input {
   font-family: 'GmarketSansMedium';
 }
+/* a{
+  text-decoration: none;
+  color: black;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-weight: normal;
+  vertical-align: baseline;
+} */

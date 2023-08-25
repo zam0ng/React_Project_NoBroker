@@ -1,5 +1,5 @@
 import React from 'react'
-import { EstateAllInfo, DateImg, OtherInfo, JustState } from '../checktab/checkstyled';
+import { EstateAllInfo, DateImg, OtherInfo, JustState,Ta } from '../checktab/checkstyled';
 // import axios from 'axios';
 import axios from '../../../Axios'
 import { serverUrl } from 'components/serverURL';
@@ -78,17 +78,44 @@ const TransList = ({ data, el }) => {
     resubmitmutation.mutate({el});
   }
 
+  // 돈 단위 바꾸기
+  const changeMoney = (td) => {
+    let uk = parseInt(td / 100000000);
+    let ukrest = (td % 100000000).toString().padStart(8, "0");
+    let manwon = (ukrest / 10000)
+    if (uk > 0) {
+
+        if (ukrest == 0) {
+            return (uk + "억");
+
+        }
+        else {
+            return (uk + "억" + manwon + "만원");
+
+        }
+    }
+    else {
+        return (manwon + "만원");
+    }   
+  } 
+  const detailpageblank = (el) => {
+    const url = `http://localhost:3000/detail/${el}`;
+    window.open(url, '_blank');
+  };  
+
   return (
     <EstateAllInfo>
+      <Ta onClick={()=>{detailpageblank(data.Real_estate.id)}}>
       <DateImg>
         <span>{revisedFormattedDate}</span>
         <img src={`${serverUrl}estate_imgs/${ImgUrl}`}></img>
       </DateImg>
       <OtherInfo>
-        <div>{data.Real_estate.balance}만원</div>
+        <div>{changeMoney(data.Real_estate.deposit)}</div>
         <div>{data.Real_estate.jibun}&nbsp;{data.Real_estate.additional_address}</div>
         <div><span>{data.Real_estate.area}㎡</span><span>,&nbsp;{data.Real_estate.type}</span></div>
       </OtherInfo>
+      </Ta>
       <JustState>
         {/* <span>{state}</span> */}
         {el === "check" ? <button onClick={() => { checkCancelBtn(data.real_estate_id) }}>찜취소</button> :

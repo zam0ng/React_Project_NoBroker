@@ -44,14 +44,13 @@ import ReactDOMServer from 'react-dom/server';
 
 import Footer from 'components/footer/Footer';
 import { useNavigate } from 'react-router-dom';
-// import Islogin from 'components/insertPage/isLogined/Islogin';
+import Islogin from 'components/insertPage/isLogined/Islogin';
 
 
 
 const PAC_Map = ({queryClient}) => {
 
-
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const { isLoggedIn, isCertificate, logout } = useAuth();
     const nav = useNavigate();
@@ -179,8 +178,8 @@ const [arrCloseStation , setArrCloseStation] = useState([])
 
     // 내가 찜한 방 보기
     const handleMyLikeClickedList = () => {
-        setMyLikeClickedList(true)
 
+        isLoggedIn == true? setMyLikeClickedList(true) : alert('로그인 하세요')
         console.log("handleMyLikeClickedList 찜한방 true 클릭 🚀🚀🚀" , myLikeClickedList)
     }
 

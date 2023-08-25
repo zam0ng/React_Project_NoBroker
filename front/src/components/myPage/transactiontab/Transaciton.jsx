@@ -64,10 +64,10 @@ const Transaciton = () => {
   const filter =(el)=>{
     if(el=="check"){
 
-      return myCheckdata.map((item)=><TransList data={item} el={el}></TransList>)
+      return myCheckdata?.map((item)=><TransList data={item} el={el}></TransList>)
     }
     else if(el=="cancelList"){
-      return cancelListdata.map((item)=><TransList data={item} el={el}></TransList>)
+      return cancelListdata?.map((item)=><TransList data={item} el={el}></TransList>)
     }
   }
 

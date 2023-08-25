@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {EstateAllInfo,DateImg,OtherInfo,JustState} from '../checktab/checkstyled';
+import {EstateAllInfo,DateImg,OtherInfo,JustState, Ta} from '../checktab/checkstyled';
 import { serverUrl } from 'components/serverURL';
 const VoteList = ({data}) => {
     // console.log(data);
@@ -45,8 +45,15 @@ const VoteList = ({data}) => {
         }
     },[data])
 
+
+    const detailpageblank = (el) => {
+      const url = `http://localhost:3000/detail/${el}`;
+      window.open(url, '_blank');
+  };
+
   return (
     <EstateAllInfo>
+      <Ta onClick={()=>{detailpageblank(data.Real_estate.id)}}>
       <DateImg>
         <span>{revisedFormattedDate}</span>
         <img src={`${serverUrl}estate_imgs/${ImgUrl}`}></img>
@@ -56,6 +63,7 @@ const VoteList = ({data}) => {
         <div>{data.Real_estate.jibun}&nbsp;{data.Real_estate.additional_address}</div>
         <div><span>{data.Real_estate.area}㎡</span><span>,&nbsp;{data.Real_estate.type}</span></div>
       </OtherInfo>
+      </Ta>
       <JustState>
         {/* <span>{state}</span> */}
         {voteState === "투표중" ? <><span>투표중</span><p>정산 전</p></>: voteState ==="미달" ? <><span>미달</span><p>미지급</p></>:<><span>정산완료</span>
