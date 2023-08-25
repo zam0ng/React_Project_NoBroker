@@ -84,7 +84,7 @@ const Detail = ({ vote = false }) => {
         <Div>
           <DivList>
             <LeftDiv width={"50%"}>
-              <DetailText estate={data.estate} />
+              <DetailText estate={data.estate} doc={true} />
             </LeftDiv>
             <VcDivider />
             <VoteDiv>
@@ -96,9 +96,9 @@ const Detail = ({ vote = false }) => {
         :
         <Div>
           <DivList>
-            
+
             <LeftDiv >
-              <DetailText estate={data.estate} />
+              <DetailText estate={data.estate} doc={false}/>
               <Divider />
               <DetailComment estateId={data.estate.id} comment={data.estate.Comments} queryClient={queryClient}></DetailComment>
             </LeftDiv>

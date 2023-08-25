@@ -6,7 +6,7 @@ const setVoteResult = async (real_estate_id, deposit, seller) => {
   try {
     const { count: voteCount, rows: votes } = await Vote.findAndCountAll({ where: { real_estate_id } });
     // 미달
-    if (voteCount < Math.floor(deposit / 10000000)) {
+    if (voteCount < Math.floor(deposit / 10000000) * 0.7) {
       // 미달 처리
       await Real_estate.update({ accpet: 3 }, { where: { id: real_estate_id } });
       return;

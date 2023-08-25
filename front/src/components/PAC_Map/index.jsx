@@ -602,19 +602,22 @@ const createZoomControl = ( map ) => {
             // 위도 경도 받아서 -> 근처에 가까운 지하철 장소 추천 받기
                 const subWayCallback = (results, status) => {
                     if(status == google.maps.places.PlacesServiceStatus.OK) {
-                            // console.log("결과" ,results[0].name)    // 지하철 역 이름
-                            // console.log("결과" ,results[1].name)    // 지하철 역 이름
+                        if (results && results[0] && results[0]?.name) {
+                        // console.log("결과" ,results[0].name)    // 지하철 역 이름
+                        // console.log("결과" ,results[1].name)    // 지하철 역 이름
                         let closeStation_1 = results[0].name;  // 결과중 첫 번째를 선택 | 다만, 가장 가까운게 아닐 수도 있음!
-                        let closeStation_2 = results[1].name;  // 결과중 두 번째를 선택 | 다만, 가장 가까운게 아닐 수도 있음!
-                        console.log("👉👉👉" , closeStation_1, closeStation_2)
+                        // let closeStation_2 = results[1].name;  // 결과중 두 번째를 선택 | 다만, 가장 가까운게 아닐 수도 있음!
+                        console.log("👉👉👉" , closeStation_1)
 
                         let arrCloseStation = []
-                        arrCloseStation.push(closeStation_1, closeStation_2)
+                        // arrCloseStation.push(closeStation_1, closeStation_2)
+                        arrCloseStation.push(closeStation_1)
                         // ✅ 매물 id 가 뭐지?
                         nearSubway.mutate({real_estate_id : item.id , nearSubway : arrCloseStation})
 
+                        // console.log("closeStation 1등, 2등" , closeStation_1, closeStation_2, arrCloseStation)
 
-                        console.log("closeStation 1등, 2등" , closeStation_1, closeStation_2, arrCloseStation)
+                        }
                     }
                 }
 
