@@ -57,7 +57,7 @@
     const [estateYear , setEstateYear] = useState()
 
     const [nearSubway_1, setNearSubway_1] = useState()
-    const [nearSubway_2, setNearSubway_2] = useState()
+    // const [nearSubway_2, setNearSubway_2] = useState()
 
 
     // 좋아요 버튼 추가
@@ -122,7 +122,7 @@
       // console.log("parsedNearSubway🚀🚀" , parsedNearSubway[1])
       if (parsedNearSubway) {
         setNearSubway_1(parsedNearSubway[0])
-        setNearSubway_2(parsedNearSubway[1])
+        // setNearSubway_2(parsedNearSubway[1])
       }
     } )
 
@@ -232,7 +232,7 @@
 
             {/* 특징 : 1) 지하철 3분 거리 2) 공원근처 | 구글 맵에서 계산해서 보여주면 좋을거 같음 ✅ */}
             <RoomDesc>
-              {`${nearSubway_1}역`}, {`${nearSubway_2}역 5km 이내`}
+              {`${nearSubway_1}역 5km 이내`}
 
             </RoomDesc>
               {/* 추가 가능 한 것 : 남은 거래 기간 / 댓글 개수 / SNS스럽게 업데이트 해봐도 좋을 듯! */}
