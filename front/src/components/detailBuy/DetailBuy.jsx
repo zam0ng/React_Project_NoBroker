@@ -26,6 +26,8 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
                 queryClient.invalidateQueries('estate');
             } else if (data.message && data.message == "돈 부족") {
                 alert("돈이 부족합니다.");
+            } else if (data.message && data.message == "본인의 매물은 구매 불가") {
+                alert(data?.text);
             } else if (data.message && data.message == "다시 로그인") {
                 alert("로그인하세요.");
                 logout();

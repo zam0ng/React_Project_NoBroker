@@ -110,6 +110,11 @@ exports.buyEstate = async (req, res) => {
       return res.json({ message: "돈 부족" });
     }
 
+    // 구매자와 신청자가 동일한 사람이면
+    if (estate.dataValues.seller == buyer) {
+      return res.json({ message : "본인의 매물은 구매 불가", text : user.dataValues.user_name + "님이 등록하신 매물입니다."});
+    }
+
     // 신청자에게 거래 신청 진행
 
     // 매물 거래 신청
