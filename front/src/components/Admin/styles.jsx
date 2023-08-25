@@ -250,7 +250,7 @@ export const ClickedImageContainer = styled.div`
     background-image : url(${props => props.imageUrl});
     background-position : center;
     background-repeat : no-repeat;
-    background-size : cover;
+    background-size : contain;
 
 `
 export const SealImageContainer = styled.div`

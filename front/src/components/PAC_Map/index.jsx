@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect , useRef, useCallback} from 'react'
 import axios from '../../Axios';
-import { useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useQuery } from 'react-query';
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
@@ -43,12 +43,15 @@ import { serverUrl } from 'components/serverURL';
 import ReactDOMServer from 'react-dom/server';
 
 import Footer from 'components/footer/Footer';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+import Islogin from 'components/insertPage/isLogined/Islogin';
 
-// const queryClient = new QueryClient();
 
 
 const PAC_Map = ({queryClient}) => {
+
+
+    // const navigate = useNavigate();
 
     const { isLoggedIn, isCertificate, logout } = useAuth();
     const nav = useNavigate();
@@ -89,6 +92,13 @@ const [ currentClusterer , setCurrentClusterer ] = useState(null)
 // let currentClusterer = null; // 현재 활성화된 클러스터를 저장하기 위한 변수
 
 const [myLikeClickedList , setMyLikeClickedList] = useState(false)
+
+
+const [closeStation_1 , setCloseStation_1] = useState("")
+const [closeStation_2 , setCloseStation_2] = useState("")
+const [arrCloseStation , setArrCloseStation] = useState([])
+
+
 
 
 // 데이터 필터링 handler 함수
@@ -345,6 +355,10 @@ const createZoomControl = ( map ) => {
     } , [])
 
 
+
+
+
+
 // [데이터 가져오기]
     // api 함수 정의 | axios 활용
         const fetchFilterTradableEstateData = async () => {
@@ -483,6 +497,24 @@ const createZoomControl = ( map ) => {
     }, [map , tradableData])
 
 
+    // 가까운 지하철 역 찾아서 저장하기
+    const nearSubway = useMutation(async(subwayForm) => {
+        const {data} = await axios.post("/list/nearSubway" , subwayForm , {
+            withCredentials : true
+        });
+        return data;
+    },{
+        onSuccess : (data) => {
+            if(data?.message == "성공"){
+                console.log("근처 지하철 역 확인");
+            } else {
+                console.log("승인 과정 오류" , data)
+            }
+        }
+    });
+
+
+
 // [그리기]
     // 마커랑, 클러스터, 초기화 하기
     const makeDefault = () => {
@@ -560,13 +592,42 @@ const createZoomControl = ( map ) => {
                 },
                 // content : customContent, // 커스텀 마커 ✅
                 value : item.deposit    // 이게 클러스터링 계산에 들어감. 유형은 숫자
-            }
-            )
+            })
 
             tradableMarker.addListener( "click" , () => {
                 nav(`/detail/${item.id}`);
                 // window.location.href = `http://localhost:3000/detail/${item.id}`;
             })
+
+
+            // 위도 경도 받아서 -> 근처에 가까운 지하철 장소 추천 받기
+                const subWayCallback = (results, status) => {
+                    if(status == google.maps.places.PlacesServiceStatus.OK) {
+                            // console.log("결과" ,results[0].name)    // 지하철 역 이름
+                            // console.log("결과" ,results[1].name)    // 지하철 역 이름
+                        let closeStation_1 = results[0].name;  // 결과중 첫 번째를 선택 | 다만, 가장 가까운게 아닐 수도 있음!
+                        let closeStation_2 = results[1].name;  // 결과중 두 번째를 선택 | 다만, 가장 가까운게 아닐 수도 있음!
+                        console.log("👉👉👉" , closeStation_1, closeStation_2)
+
+                        let arrCloseStation = []
+                        arrCloseStation.push(closeStation_1, closeStation_2)
+                        // ✅ 매물 id 가 뭐지?
+                        nearSubway.mutate({real_estate_id : item.id , nearSubway : arrCloseStation})
+
+
+                        console.log("closeStation 1등, 2등" , closeStation_1, closeStation_2, arrCloseStation)
+                    }
+                }
+
+                const placeService = new google.maps.places.PlacesService(map);
+                placeService.nearbySearch({
+                    location : tempLocation,
+                    radius : 3000,  // 10km 반경 ,
+                    rankby : 'distance',  // 거리순으로 정렬
+                    type : ['subway_station'] // 'subway_station',
+                    // key : 'AIzaSyB2Ks0HcfUkSKcjRU39pReueRDIofHxPio'/
+                } , subWayCallback)
+
 
                     // 임시. 정규표현식으로 앞자리만 가져오기 | 😥😥
                         const tempDeposit = item.deposit
@@ -733,6 +794,9 @@ return (
                         tradableData.map( (item, index) => {
                             return (
                                 <ItemList
+                                arrCloseStation = {arrCloseStation}
+                                    closeStation_1 = {closeStation_1}
+                                    closeStation_2 = {closeStation_2}
                                     key = {index}
                                     isLoggedIn = {isLoggedIn}
                                     queryClient={queryClient}
@@ -749,7 +813,13 @@ return (
                     <div id='map' ref={mapRef} style={{ height: '100vh', width: '100%' }}  />
                     <CreateZoomControl map={map} />
 
-                    </PAC_Map_Wrapper>
+                </PAC_Map_Wrapper>
+
+                {/* <PriceAverageSwiper>
+                </PriceAverageSwiper> */}
+
+
+
             </MainContentWrap>
 
         </DefaultStyle>

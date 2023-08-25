@@ -132,6 +132,11 @@ class Real_estate extends Model {
                 img_7: {
                     type: DataTypes.STRING,
                 },
+                // nearSubway | 근처 역세권 지하철
+                nearSubway : {
+                    type : DataTypes.STRING,
+                }
+
 
             }, {
             sequelize,
