@@ -17,7 +17,7 @@ import { useEffect } from 'react'
 
 
 
-const Admin = () => {
+const Admin = ({queryClient}) => {
 
     const [userData, setUserData] = useState();
 
@@ -63,7 +63,7 @@ return (
 
                 {
                     userData && userData.map( (item, index) => {
-                        return <UserItem item={item} >  </UserItem>
+                        return <UserItem queryClient={queryClient}  item={item} >  </UserItem>
 
                     } )
                 }

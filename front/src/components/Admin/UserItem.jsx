@@ -27,8 +27,7 @@ const queryClient = new QueryClient();
 
 
 
-
-const UserItem = ({item}) => {
+const UserItem = ({item , queryClient}) => {
     const [showExpandedImg , setShowExpandedImg] = useState(false)
     const [isCertificateImgClicked , setIsCertificateImgClicked ] = useState(false)
     const [isSealImgClicked , setIsSealImgClicked] = useState(false)
@@ -43,7 +42,7 @@ const UserItem = ({item}) => {
                 console.log("부동산 업자 승인 완료")
 
                 queryClient.invalidateQueries('userDataList');    // UI 즉각 반영
-                queryClient.refetchQueries('userDataList')    // 매개변수는 앞에서 쿼리 key 를 입력
+                // queryClient.refetchQueries('userDataList')    // 'userDataList 키' 를 가진 usequery 를 재시작해서, 1) 새로고침없이 데이터를 받고, 2) 그에 따라 ui 변경하기
 
             } else {
                 console.log("승인 과정 오류" , data)
