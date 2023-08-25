@@ -141,3 +141,36 @@ exports.getTradableEstate = async(req , res) => {
     return res.json({error})
   }
 }
+
+  // 매물의 근처 지하철 역 정보 
+  exports.postNearSubway = async (req, res) => {
+    try {
+      // 클라이언트로부터 '매물 id'와 'nearsubway' 정보를 받아오기
+      const { real_estate_id, nearSubway } = req.body;
+      console.log("real_estate_id" , real_estate_id)
+      console.log("nearSubway" , nearSubway)
+      const stringNearSubway = JSON.stringify(nearSubway);
+
+  
+      if (!real_estate_id || !nearSubway) {
+        return res.status(400).json({ message: '매물 id와 nearSubway 정보가 필요함' });
+      }
+  
+      // 매물 id를 기반으로 DB에서 해당 매물을 
+      const realEstate = await Real_estate.findByPk(real_estate_id);
+  
+      if (!realEstate) {
+        return res.status(404).json({ message: '해당 매물을 찾을 수 없습니다.' });
+      }
+  
+      // nearsubway 정보를 업데이트합니다.
+      realEstate.nearSubway = stringNearSubway;
+      await realEstate.save();
+  
+      res.status(200).json({ message: '성공', nearSubway: realEstate.nearSubway });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: '서버 오류' });
+    }
+  };
+  
