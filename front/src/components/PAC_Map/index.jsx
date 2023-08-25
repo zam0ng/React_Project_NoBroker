@@ -46,6 +46,11 @@ import Footer from 'components/footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import Islogin from 'components/insertPage/isLogined/Islogin';
 
+// gmarket 폰트 받기 
+
+
+
+
 
 
 const PAC_Map = ({queryClient}) => {
@@ -647,8 +652,8 @@ const createZoomControl = ( map ) => {
                         const chenManWithYuk = parseFloat(tempChenMan_cheonman).toString();
 
                         const contentString = yuk < 1 ? 
-                        `<div> ${chenMan}만원</div>`:
-                        `<div> ${yuk}.${chenManWithYuk}억</div>`
+                        `<div  style="letter-spacing : -0.5px;   font-family: 'GmarketSansMedium'; font-size : 13px; font-weight : 500;" > ${chenMan}만원</div>`:
+                        `<div  style="letter-spacing : -0.5px;   font-family: 'GmarketSansMedium'; font-size : 13px; font-weight : 300;" > ${yuk}.${chenManWithYuk}억</div>`
 
 
 

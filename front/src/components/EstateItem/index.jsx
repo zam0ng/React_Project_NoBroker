@@ -154,11 +154,12 @@
         // console.log("item.img_1 담긴 것 👲👲👲" , item.img_1) // 👉 nobroker_erd_1692354792331.png
         
         // 🔵 테스트 | 로컬 테스트용 |  
-        // setEstateImgUrl(item.img_1);   // substr(12) = 앞에 파일 경로 지워주기 ✅✅ | 이건 테스트용 
+        setEstateImgUrl(item.img_1);   // substr(12) = 앞에 파일 경로 지워주기 ✅✅ | 이건 테스트용 
 
         // 🚀 배포 | insert 할 때, 경로 붙인 경우 -> 파싱 해야 나옴 | 배포용 🚀
-        setEstateImgUrl(item.img_1.substr(12));   // substr(12) = 앞에 파일 경로 지워주기 ✅✅
-    },[estateImgUrl , item.img_1])
+        // setEstateImgUrl(item.img_1.substr(12));   // substr(12) = 앞에 파일 경로 지워주기 ✅✅
+    
+      },[estateImgUrl , item.img_1])
 
 
 
