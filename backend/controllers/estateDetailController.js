@@ -100,8 +100,10 @@ exports.buyEstate = async (req, res) => {
     const estate = await Real_estate.findOne({ where: { id: real_estate_id } });
     const user = await User.findOne({ where: { id: buyer } });
 
+    console.log("estate.accpet", estate.accpet);
+
     // 구매가능한 매물이 아니면
-    if (estate.state != 0) {
+    if (estate.state != 0 || estate.accpet != 1) {
       return res.json({ message: "거래할 수 없는 매물입니다." });
     }
 

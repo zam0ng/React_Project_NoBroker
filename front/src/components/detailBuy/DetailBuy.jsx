@@ -129,7 +129,7 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
         <div>
         {/* 구매 가능 상태 아니면 회색 버튼 */}
         <div style={{display : 'flex', justifyContent: 'center'}}>
-            {estate.state==0 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"orange"}>신청하기</BuyBtn> : <BuyBtn onClick={clickBuyBtn} backgroundColor = {"gray"}>구매 불가</BuyBtn>}
+            {estate.state==0  && estate.accpet == 1 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"orange"}>신청하기</BuyBtn> : <BuyBtn onClick={()=>{alert("구매 불가 매물입니다.")}} backgroundColor = {"gray"}>구매 불가</BuyBtn>}
         </div>
 
         <Divider />

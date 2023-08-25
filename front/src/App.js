@@ -40,15 +40,9 @@ function App() {
           <Route
             path="/insert"
             element={
-              <Insert queryClient={queryClient} /> 
-            }
-          />
-          {/* <Route
-            path="/insert"
-            element={
               isLoggedIn ? <Insert queryClient={queryClient} /> : <Login />
             }
-          /> */}
+          />
           <Route
             path="/detail/:id"
             element={<Detail queryClient={queryClient} />}
