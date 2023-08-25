@@ -36,6 +36,9 @@
                     estateArea,
                     item,
                     index,
+                    closeStation_1 ,
+                    closeStation_2 , 
+                    arrCloseStation, 
                     // queryClient
                     // estateImg  ,
                     // estate설명포인트
@@ -52,6 +55,9 @@
 
     const [estateImgUrl , setEstateImgUrl] = useState()
     const [estateYear , setEstateYear] = useState()
+
+    const [nearSubway_1, setNearSubway_1] = useState()
+    const [nearSubway_2, setNearSubway_2] = useState()
 
 
     // 좋아요 버튼 추가
@@ -107,6 +113,19 @@
     } , [item.id])
 
 
+    // 근처 지하철 파싱해서 저장하기
+    useEffect( () => {
+      
+      const parsedNearSubway = JSON.parse(item.nearSubway)
+      console.log("parsedNearSubway🚀🚀" , parsedNearSubway)
+      console.log("parsedNearSubway🚀🚀" , parsedNearSubway[0])
+      console.log("parsedNearSubway🚀🚀" , parsedNearSubway[1])
+      setNearSubway_1(parsedNearSubway[0])
+      setNearSubway_2(parsedNearSubway[1])
+    } )
+
+
+
     const handleLikeBtn = (index) => {
 
       // console.log("좋아요 버튼 클릭☝☝" , index)
@@ -132,14 +151,15 @@
 
     useEffect( () => {
       // insert 할 때, 굳이 파일 경로를 앞에 안 붙여준 경우 -> 파싱 없이 넣어야 나옴
-        console.log("item.img_1 담긴 것 👲👲👲" , item.img_1) // 👉 nobroker_erd_1692354792331.png
+        // console.log("item.img_1 담긴 것 👲👲👲" , item.img_1) // 👉 nobroker_erd_1692354792331.png
         
-        // 🐣🐣 로컬 테스트용 | 테스트 
+        // 🔵 테스트 | 로컬 테스트용 |  
         // setEstateImgUrl(item.img_1);   // substr(12) = 앞에 파일 경로 지워주기 ✅✅ | 이건 테스트용 
 
-        // 🚀🚀 업로드용 | insert 할 때, 경로 붙인 경우 -> 파싱 해야 나옴 | 배포 | 배포용
+        // 🚀 배포 | insert 할 때, 경로 붙인 경우 -> 파싱 해야 나옴 | 배포용 🚀
         setEstateImgUrl(item.img_1.substr(12));   // substr(12) = 앞에 파일 경로 지워주기 ✅✅
     },[estateImgUrl , item.img_1])
+
 
 
     useEffect( () => {
@@ -155,10 +175,10 @@
       }
     } , [])
 
-    useEffect( () => {
-      // console.log("estateYear" , estateYear)
-
-    } , [estateYear])
+    useEffect(() => {
+      console.log('Updated arrCloseStation:', arrCloseStation);
+    }, [arrCloseStation]);
+   
 
     return (
 
@@ -210,7 +230,8 @@
 
             {/* 특징 : 1) 지하철 3분 거리 2) 공원근처 | 구글 맵에서 계산해서 보여주면 좋을거 같음 ✅ */}
             <RoomDesc>
-              천호역 도보 5분, 천호공원 및 한강 공원 도보 10분
+              {`${nearSubway_1}역`}, {`${nearSubway_2}역 5km 이내`} 
+
             </RoomDesc>
               {/* 추가 가능 한 것 : 남은 거래 기간 / 댓글 개수 / SNS스럽게 업데이트 해봐도 좋을 듯! */}
 

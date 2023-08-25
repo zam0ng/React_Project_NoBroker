@@ -27,10 +27,10 @@ const queryClient = new QueryClient();
 
 
 
-
-const UserItem = ({item}) => {
+const UserItem = ({item , queryClient}) => {
     const [showExpandedImg , setShowExpandedImg] = useState(false)
-    const [isClicked , setIsClicked] = useState(false)
+    const [isCertificateImgClicked , setIsCertificateImgClicked ] = useState(false)
+    const [isSealImgClicked , setIsSealImgClicked] = useState(false)
 
     const approveEstateAgent = useMutation( async(approveForm) => {
         const {data} = await axios.post("/admin/agentApprove" , approveForm , {
@@ -42,7 +42,7 @@ const UserItem = ({item}) => {
                 console.log("부동산 업자 승인 완료")
 
                 queryClient.invalidateQueries('userDataList');    // UI 즉각 반영
-                queryClient.refetchQueries('userDataList')    // 매개변수는 앞에서 쿼리 key 를 입력
+                // queryClient.refetchQueries('userDataList')    // 'userDataList 키' 를 가진 usequery 를 재시작해서, 1) 새로고침없이 데이터를 받고, 2) 그에 따라 ui 변경하기
 
             } else {
                 console.log("승인 과정 오류" , data)
@@ -78,8 +78,11 @@ const UserItem = ({item}) => {
     })
 
 
-    const handleImageClicked = () => {
-        setIsClicked(!isClicked)
+    const handleCertificateImgClicked = () => {
+        setIsCertificateImgClicked (!isCertificateImgClicked)
+    }
+    const handleSealImgClicked = () => {
+        setIsSealImgClicked(!isSealImgClicked )
     }
 
     // role 이 true(공인중개사 신청) 이고 && certificate_user == 1(신청중 인 상황) 이면 -> 승인, 미승인 버튼이 나온 상황
@@ -148,10 +151,10 @@ const UserItem = ({item}) => {
             {
                 <div style={{width : '100px', display : 'flex' , alignItems : 'center' , justifyContent : 'center'} } >
                     <ImageContainer
-                        onClick={handleImageClicked}
+                        onClick={handleCertificateImgClicked}
                         imageUrl={`${serverUrl}user_imgs/${item.certificate_img?.substr(13)}`} />
 
-                    <ClickedImageContainer onClick={handleImageClicked} display={isClicked ? 'block' : 'none'} imageUrl={`${serverUrl}user_imgs/${item.certificate_img?.substr(13)}`} />
+                    <ClickedImageContainer onClick={handleCertificateImgClicked} display={isCertificateImgClicked ? 'block' : 'none'} imageUrl={`${serverUrl}user_imgs/${item.certificate_img?.substr(13)}`} />
                 </div>
             }
 
@@ -159,10 +162,10 @@ const UserItem = ({item}) => {
             {
                 <div style={{width : '80px' , display : 'flex' , alignItems : 'center' , justifyContent : 'center' }} >
                     <ImageContainer
-                        onClick={handleImageClicked}
+                        onClick={handleSealImgClicked}
                         imageUrl={`${serverUrl}user_imgs/${item.seal_img?.substr(13)}`} />
 
-                    <ClickedImageContainer onClick={handleImageClicked} display={isClicked ? 'block' : 'none'} imageUrl={`${serverUrl}user_imgs/${item.seal_img?.substr(13)}`} />
+                    <ClickedImageContainer onClick={handleSealImgClicked} display={isSealImgClicked ? 'block' : 'none'} imageUrl={`${serverUrl}user_imgs/${item.seal_img?.substr(13)}`} />
                 </div>
             }
 

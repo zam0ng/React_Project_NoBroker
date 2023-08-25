@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { getTradableEstate , getFilterTradableEstate} = require("../controllers/estateListController");
+const { getTradableEstate , getFilterTradableEstate , postNearSubway} = require("../controllers/estateListController");
 const { isLogin, isLoginNext } = require("../middleware/isLogin")
 
 
@@ -10,6 +10,8 @@ const { isLogin, isLoginNext } = require("../middleware/isLogin")
 // router.get("/tradableEstate", getTradableEstate);   // 미들웨어 없이
 router.get("/tradableEstate", isLoginNext, getTradableEstate);   // 임시 사용한 미들웨어 | 이게 있어야 좋아요 표시됨
 // router.get("/tradableEstate", isLogin, getTradableEstate);  // isLogin 이 최종이면 이걸로 | 이게 있어야 좋아요 표시됨 | 이걸 켜면 오류 나는? 
+
+router.post("/nearSubway" , postNearSubway)
 
 
 router.get("/test", (req, res)=>{

@@ -6,7 +6,7 @@ import EstateItem from 'components/EstateItem/index'
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
-const ItemList = ({handleMyLikeClickedList , isLoggedIn , item, index , queryClient}) => {
+const ItemList = ({ arrCloseStation , closeStation_1 , closeStation_2, handleMyLikeClickedList , isLoggedIn , item, index , queryClient}) => {
   
 // console.log("item 정보" , item)
 
@@ -21,6 +21,9 @@ const ItemList = ({handleMyLikeClickedList , isLoggedIn , item, index , queryCli
     <ItemListWrapper>
     
       <EstateItem
+        arrCloseStation = {arrCloseStation}
+        closeStation_1 = {closeStation_1}
+        closeStation_2 = {closeStation_2}
         queryClient = {queryClient}
         item = {item}
         index = {index}  

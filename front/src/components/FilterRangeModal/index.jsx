@@ -17,7 +17,6 @@ import RangeSlider from 'components/RangeSlider/index';
 
 const FilterRangeModal = ({ handlePriceInfiniteBtn, priceRangeValue, left , handlePriceRangeBox }) => {
   const _tooltipRef = useRef(null);
-  
 
   return (
     <>
