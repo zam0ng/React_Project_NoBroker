@@ -200,6 +200,10 @@ const RegisterList = ({data}) => {
       else if(btnname=="재등록"){
         mutation.mutate({btnname,estateId,userID,transactionID});
       }
+      else if(btnname=="구매중"){
+        approveMutation.mutate({btnname,estateId,userID,transactionID,deposit,buyerID,sellerID,balance});
+        alert("다운로드 창에서 계약서를 확인해주세요.")
+      }
     }
     // 돈 단위 바꾸기
     const changeMoney = (td) => {
@@ -244,6 +248,7 @@ const RegisterList = ({data}) => {
         <span>{state}</span>
         {btnName ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved,data.Real_estate.balance)}}>{btnName}</UpdateBtn> :<></>}
         {btnName2 ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(btnName2,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved,data.Real_estate.balance)}}>{btnName2}</UpdateBtn> :<></>}
+        {state ==="구매중" ? <UpdateBtn onClick={()=>{transactionStateUpdateBtn(state,data.Real_estate.id,userID,data.id,data.Real_estate.deposit,data.buyer,data.seller,data.approved,data.Real_estate.balance)}} width={"65px"}>계약서 다운</UpdateBtn> : <></>}
       </JustState>
 
 
