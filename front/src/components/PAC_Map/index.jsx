@@ -44,7 +44,7 @@ import ReactDOMServer from 'react-dom/server';
 
 import Footer from 'components/footer/Footer';
 import { useNavigate } from 'react-router-dom';
-import Islogin from 'components/insertPage/isLogined/Islogin';
+// import Islogin from 'components/insertPage/isLogined/Islogin';
 
 
 
