@@ -576,7 +576,7 @@ const createZoomControl = ( map ) => {
         if(!map) return     // [해석] map 이 null 값인 경우, 오류가 나니까 넣음
 
         // 거래가능 데이터로 '마커' 그리고 -> info window 만들고 -> currentMarker 에 저장하기
-        tradableData.forEach( (item) => {
+        tradableData?.forEach( (item) => {
             // console.log("item.deposit" , item.deposit)
             const tempLocation = new window.google.maps.LatLng(item.lat, item.lng)
 
@@ -790,7 +790,7 @@ return (
             <MainContentWrap>
                 <ContentWrapper>
                     {
-                        tradableData.map( (item, index) => {
+                        tradableData?.map( (item, index) => {
                             return (
                                 <ItemList
                                 arrCloseStation = {arrCloseStation}
