@@ -170,6 +170,7 @@ exports.getmyregisterinfo = async (req, res) => {
 // 판매승인에서 승인 눌렀을 때 -> 판매자에게는 계약금 더하기, 구매자에게는 계약금 빼기
 exports.approvedUpdate = async (req, res) => {
     const { el } = req.query;
+    // console.log(el);
     const amount = parseInt((el.balance)); // 계약금
     // 계약금 2배 : amount*2
 
@@ -180,7 +181,7 @@ exports.approvedUpdate = async (req, res) => {
     // console.log("amount------------", amount) // 2,000,000
     // console.log(restMoney); // 18,000,000
     try {
-
+        if(el.btnname=="승인"){
         // 거래테이블의 해당 매물번호 approved 로 1로 하여 승인상태로 업데이트
         await Transaction.update({ approved: true }, {
             where: {
@@ -212,7 +213,7 @@ exports.approvedUpdate = async (req, res) => {
         //     by :(restMoney),
         //     where : {id : el.buyerID},
         // })
-
+        }
         // pdf 만드는 구간 ---------------------------------------
         const data = await Transaction.findAll({
             where: {
@@ -227,7 +228,7 @@ exports.approvedUpdate = async (req, res) => {
 
         const sellerSealImg = (data[0].Seller.seal_img).substr(13);
         const buyerSealImg = (data[0].Buyer.seal_img).substr(13);
-
+        const restDate = new Date(data[0].transaction_date);
         // console.log("pdf sellerimg", sellerSealImg)
 
         const doc = new PDFDocument();
@@ -286,7 +287,7 @@ exports.approvedUpdate = async (req, res) => {
         doc.font(fontPath).fontSize(12).fillColor('#000000').text("매매대금", 40, 230, { align: 'left' });
 
         doc.rect(120, 230, 460, 20).stroke();
-        doc.font(fontPath).fontSize(10).fillColor('#000000').text(`${data[0].Real_estate.deposit} 만원`, 130, 230, { align: 'left' });
+        doc.font(fontPath).fontSize(10).fillColor('#000000').text(`${(data[0].Real_estate.deposit).toLocaleString()} 원`, 130, 230, { align: 'left' });
         //-----------
 
         // 계약금
@@ -294,7 +295,7 @@ exports.approvedUpdate = async (req, res) => {
         doc.font(fontPath).fontSize(12).fillColor('#000000').text("계약금", 40, 250, { align: 'left' });
 
         doc.rect(120, 250, 460, 20).stroke();
-        doc.font(fontPath).fontSize(10).fillColor('#000000').text(`${data[0].Real_estate.balance} 만원`, 130, 250, { align: 'left' });
+        doc.font(fontPath).fontSize(10).fillColor('#000000').text(`${(data[0].Real_estate.balance).toLocaleString()} 원`, 130, 250, { align: 'left' });
         //-----------
 
         // 잔금
@@ -302,7 +303,7 @@ exports.approvedUpdate = async (req, res) => {
         doc.font(fontPath).fontSize(12).fillColor('#000000').text("잔금", 40, 270, { align: 'left' });
 
         doc.rect(120, 270, 460, 20).stroke();
-        doc.font(fontPath).fontSize(10).fillColor('#000000').text(`${data[0].Real_estate.deposit - data[0].Real_estate.balance} 만원 / 잔금날짜 : ${data[0].transaction_date}`, 130, 270, { align: 'left' });
+        doc.font(fontPath).fontSize(10).fillColor('#000000').text(`${(data[0].Real_estate.deposit - data[0].Real_estate.balance).toLocaleString()} 원 / 잔금날짜 : ${restDate}`, 130, 270, { align: 'left' });
         //-----------
         // 약조
         doc.font(fontPath).fontSize(10).fillColor('#000000').text("제 1 조", 40, 290, { align: 'left' });

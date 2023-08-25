@@ -65,7 +65,7 @@ export const BuyDiv = styled(SellDiv)`
 
 `
 export const UpdateBtn = styled.button`
-        width: 52px;
+        width: ${(props=>props.width || "52px")};
         height: 20px;
         font-size: x-small;
         background-color: orange;
@@ -82,5 +82,8 @@ export const EstateAllInfo = styled.div`
     align-items: center;
     justify-content: space-evenly;
     border-bottom: 1px solid lightgray;
-
+    
+    &:hover{
+        background-color: #FFF3E0;
+    }
 `
