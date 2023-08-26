@@ -51,8 +51,6 @@ const Account = () => {
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     setwithdrawvalue(ta); 
     const inputValue2 =e.target.value.replace(/\,/g, '');
-    console.log(inputValue2);
-
     
       const withdrawBtn = document.getElementById("withdrawBtn");
       const withdrawInput= document.getElementById("withdrawInput");
