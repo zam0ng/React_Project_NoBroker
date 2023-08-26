@@ -44,15 +44,14 @@ const Account = () => {
   }
 
   const withdrawValue = (e) =>{
-    setdepositAmount(e.target.value.replace(/\,/g, ''));
+    setwithdrawAmount(e.target.value.replace(/\,/g, ''));
     // 천단위 마다 , 찍기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     let ta = (e.target.value).replace(/\D/g, '');
     ta = ta.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    setwithdrawvalue(ta);
-    const inputValue2 = e.target.value.trim();
-
-
+    setwithdrawvalue(ta); 
+    const inputValue2 =e.target.value.replace(/\,/g, '');
+    
       const withdrawBtn = document.getElementById("withdrawBtn");
       const withdrawInput= document.getElementById("withdrawInput");
 
@@ -61,7 +60,11 @@ const Account = () => {
         setisdisabled2(false);
         if(inputValue2 > updatedata.won){
           alert("출금가능 금액을 확인해주세요.")
-          withdrawInput.value="";
+          // withdrawInput.value="";
+          setwithdrawvalue("");
+
+          
+          
 
         }
       }
@@ -111,13 +114,15 @@ const Account = () => {
   const depositHandler = (id,money)=>{
     const depositInput= document.getElementById("depositInput");
     console.log("눌림?")
-    depositInput.value="";
+    // depositInput.value="";
+    setdepositvalue("");
     mutation.mutate({id,money});
   }
   const withdrawHandler = (id,money)=>{
     const withdrawInput= document.getElementById("withdrawInput");
     console.log("눌림?")
-    withdrawInput.value="";
+    // withdrawInput.value=""
+    setwithdrawvalue("");
     withdrawMutation.mutate({id,money});
   }
 
@@ -128,19 +133,19 @@ const Account = () => {
         <h3>총 보유자산</h3>
         <Coincontainer>
           <CoinlistDiv>
-            <h4>코인명</h4>
+            <h4>KRW 상태</h4>
             <Coinlist>
-              <div>KRW</div>
-              <div>BTC</div>
-              <div>ETH</div>
+              <div>사용 가능한 KRW</div>
+              <div>거래에 사용중인 KRW</div>
+              {/* <div>ETH</div> */}
             </Coinlist>
           </CoinlistDiv>
           <CoinlistDiv>
             <h4>보유금액</h4>
             <SecondCoinlist>
               <div>{(updatedata.won)?.toLocaleString()} KRW</div>
-              <div>{updatedata.btc} BTC</div>
-              <div>{updatedata.eth} ETH</div>
+              <div>{(updatedata.disabled_won)?.toLocaleString()} KRW</div>
+              {/* <div>{updatedata.eth} ETH</div> */}
             </SecondCoinlist>
           </CoinlistDiv>
         </Coincontainer>

@@ -29,12 +29,12 @@ import { useNavigate } from "react-router-dom";
 import Islogin from "./isLogined/Islogin";
 import NavHeader from "components/navbar/NavHeader";
 import { useAuth } from 'AuthContext'
-
 export const Global = createContext();
 
 const Insert = ({ queryClient }) => {
-  const { logout, certificate } = useAuth();
 
+  const { logout, certificate } = useAuth();
+  
   const navigate = useNavigate();
   const [balance, setBalance] = useState(0);
   const [deposite, setDeposite] = useState(0);
@@ -52,9 +52,14 @@ const Insert = ({ queryClient }) => {
   const [uniqueNum, setUniqueNum] = useState("");
   const [selectValue, setSelectValue] = useState("1");
   const [temp, setTemp] = useState([]);
+  const [temp2, setTemp2] = useState([]);
   const [year, setYear] = useState("");
   const [isdisable, setisDisable] = useState(true);
 
+  useEffect(()=>{
+
+    setTemp2([]);
+  },[])
 
   let type;
 
@@ -72,9 +77,9 @@ const Insert = ({ queryClient }) => {
 
     console.log("매물등록 버튼 눌림");
     let seller = 1;
-    console.log(province, city, town, jibun, road, lng, lat, addiAddress);
-    console.log(balance, deposite, m2, uniqueNum);
-    console.log(selectValue, year);
+    // console.log(province, city, town, jibun, road, lng, lat, addiAddress);
+    // console.log(balance, deposite, m2, uniqueNum);
+    // console.log(selectValue, year);
 
     const years = year.slice(0, 4);
     if (selectValue == 1) {
@@ -121,6 +126,7 @@ const Insert = ({ queryClient }) => {
 
     console.log("------------------------------- files", files);
     setTemp([]);
+    // setTemp2([]);
     axios
       .post("/upload", form, {
         "Content-Type": "multipart/form-data",
@@ -185,7 +191,7 @@ const Insert = ({ queryClient }) => {
     error: usererror,
   } = useQuery("users", getUserInfo);
 
-  console.log("user-----------", user);
+  // console.log("user-----------", user);
 
   if(user?.message == "다시 로그인"){
       logout();
@@ -197,7 +203,6 @@ const Insert = ({ queryClient }) => {
     alert("이전 등록하신 매물들이 3개 이상 허위매물로 분류되어 더이상 매물을 등록할 수 없습니다.");
     navigate('/list');
   }
-
   if (userisLoading) {
     return <div>로딩 중...</div>;
   }
@@ -297,7 +302,7 @@ const Insert = ({ queryClient }) => {
               * 사진 등록 전, 반드시 확인해주세요!
             </WarningSpan>
           </EstataInfoTitle>
-          <ImgMulter temp={temp} setTemp={setTemp}></ImgMulter>
+          <ImgMulter temp={temp} setTemp={setTemp} temp2={temp2} setTemp2={setTemp2}></ImgMulter>
 
           <FinalCheck>
             <CheckDiv>

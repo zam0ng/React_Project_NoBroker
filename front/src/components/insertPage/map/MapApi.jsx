@@ -29,7 +29,7 @@ const MapApi = ({placeAddress, setIsNone}) => {
         setLat(data.documents[0].y); // 위도(lat)
         setMapLoaded(true);
     }).catch((err)=>{
-        console.log(err);
+        // console.log(err);
     });
 
     useEffect(()=>{

@@ -644,8 +644,8 @@ const createZoomControl = ( map ) => {
                         const chenManWithYuk = parseFloat(tempChenMan_cheonman).toString();
 
                         const contentString = yuk < 1 ?
-                        `<div> ${chenMan}만원</div>`:
-                        `<div> ${yuk}.${chenManWithYuk}억</div>`
+                        `<div  style="letter-spacing : -0.3px;   font-family: 'GmarketSansMedium'; font-size : 13px; font-weight : 300;" > ${chenMan}만원</div>`:
+                        `<div  style="letter-spacing : -0.3px;   font-family: 'GmarketSansMedium'; font-size : 13px; font-weight : 300;" > ${yuk}.${chenManWithYuk}억</div>`
 
 
 

@@ -226,9 +226,10 @@ const RegisterList = ({data}) => {
       }
   }
   const detailpageblank = (el) => {
-    const url = `http://localhost:3000/detail/${el}`;
+    const currentURL = window.location.origin;
+    const url = `${currentURL}/detail/${el}`;
     window.open(url, '_blank');
-  };
+};
 
 
   return (
