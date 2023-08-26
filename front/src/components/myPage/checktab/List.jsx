@@ -3,7 +3,6 @@ import {DateImg,EstateAllInfo,OtherInfo,JustState,Ta} from './checkstyled';
 import axios from '../../../Axios';
 import { serverUrl } from 'components/serverURL';
 import { useMutation, useQueryClient } from 'react-query';
-let eog,manwon;
 const List = ({data}) => {
     console.log(data);
     const [isDisplay,setIsDisplay] = useState(false);
@@ -96,7 +95,8 @@ const List = ({data}) => {
     }
 
     const detailpageblank = (el) => {
-        const url = `http://localhost:3000/detail/${el}`;
+        const currentURL = window.location.origin;
+        const url = `${currentURL}/detail/${el}`;
         window.open(url, '_blank');
     };
     

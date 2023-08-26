@@ -117,6 +117,7 @@ const Mypage = () => {
         certificate(false);
         Navigate("/login");
     }
+
     const ta = (updatedata?.ssn)?.split("-");
     // const ImgUrl = (updatedata?.user_img)?.split("\\")[2];
     const ImgUrl = (updatedata?.user_img)?.substr(13);

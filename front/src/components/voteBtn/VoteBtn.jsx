@@ -36,6 +36,12 @@ const VoteBtn = ({ estate, setIsVoted }) => {
           window.alert("권한이 없습니다.");
           certificate(false);
           return;
+        } else if (data.message && data.message == "투표할 수 있는 매물이 아닙니다.") {
+          window.alert("투표할 수 있는 매물이 아닙니다.");
+          return;
+        } else if (data.message && data.message == "이미 투표한 매물입니다.") {
+          window.alert("이미 투표한 매물입니다.");
+          return;
         } else if (data.message && data.message == "다시 로그인") {
           window.alert("로그인 하세요.");
           logout();
@@ -45,6 +51,9 @@ const VoteBtn = ({ estate, setIsVoted }) => {
           alert("오류 발생");
         }
       },
+      onError : (err) => {
+        console.log(err);
+      }
     }
   );
 

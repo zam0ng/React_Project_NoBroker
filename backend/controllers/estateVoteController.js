@@ -6,7 +6,7 @@ const setVoteResult = async (real_estate_id, deposit, seller) => {
   try {
     const { count: voteCount, rows: votes } = await Vote.findAndCountAll({ where: { real_estate_id } });
     // 미달
-    if (voteCount < Math.floor(deposit / 10000000)) {
+    if (voteCount < Math.floor(deposit / 10000000) * 0.7) {
       // 미달 처리
       await Real_estate.update({ accpet: 3 }, { where: { id: real_estate_id } });
       return;
@@ -115,6 +115,12 @@ exports.voteEstate = async (req, res) => {
     if (estate.dataValues.accpet != 0) {
       console.log(estate);
       return res.json({ message: "투표할 수 있는 매물이 아닙니다." });
+    }
+
+    // 이전에 투표한 적이 있으면 투표 금지
+    const vote = await Vote.findOne({where : {user_id, real_estate_id}});
+    if (vote) {
+      return res.json({ message : "이미 투표한 매물입니다." });
     }
 
     // 투표 테이블 추가

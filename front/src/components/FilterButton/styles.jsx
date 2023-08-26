@@ -2,6 +2,8 @@ import styled from 'styled-components'
 
 
 export const ButtonContainer = styled.div`
+    
+
     position : relative;
     display : flex;
     border : 1px solid rgb(223, 223, 223);
@@ -12,6 +14,8 @@ export const ButtonContainer = styled.div`
 
     
     & button {
+        font-family : 'GmarketSansMedium';
+        /* font : '14px'; */
 
         display : flex; 
         justify-content : center; 
@@ -29,8 +33,8 @@ export const ButtonContainer = styled.div`
 export const ButtonTitle = styled.p`
         margin-right : 5px;
 
-        letter-spacing : -0.8px;
-        font-size : 13px;
+        letter-spacing : -0.3px;
+        font-size : 14px;
         font-weight : ${props => props.fontWeight || 400};
         color : ${props => props.color || "rgb(76, 76, 76)"};
         

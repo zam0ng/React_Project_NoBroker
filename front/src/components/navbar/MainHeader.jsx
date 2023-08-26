@@ -13,6 +13,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Logo, Logo2 } from "../../img";
 import { useAuth } from "AuthContext";
+import { useEffect } from "react";
 const MainHeader = () => {
   const [isactive, setIsactive] = useState(false);
   const { isLoggedIn, isCertificate, isAdmin } = useAuth();
@@ -20,6 +21,15 @@ const MainHeader = () => {
   function MenuOpen() {
     setIsactive(!isactive);
   }
+
+  useEffect(() => {
+    if (isactive) {
+      document.body.style.overflowY = "hidden";
+      window.scrollTo(0,0);
+    } else {
+      document.body.style.overflowY = "scroll";
+    }
+  }, [isactive])
 
   const userClick = () => {
     // axios로 isLogin받아오자

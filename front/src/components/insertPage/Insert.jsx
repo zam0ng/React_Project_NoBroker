@@ -56,7 +56,11 @@ const Insert = ({ queryClient }) => {
   const [year, setYear] = useState("");
   const [isdisable, setisDisable] = useState(true);
 
-  
+  useEffect(()=>{
+
+    setTemp2([]);
+  },[])
+
   let type;
 
   function None() {
@@ -119,7 +123,7 @@ const Insert = ({ queryClient }) => {
     for (let i = 0; i < files.length; i++) {
       form.append("upload", files[i]);
     }
-    
+
     console.log("------------------------------- files", files);
     setTemp([]);
     // setTemp2([]);
@@ -161,6 +165,7 @@ const Insert = ({ queryClient }) => {
         }else if(e.message=="다시 로그인"){
           logout();
           certificate(false);
+          navigate("/login");
         } else {
           queryClient.invalidateQueries("users");
           navigate("/list");
@@ -186,11 +191,17 @@ const Insert = ({ queryClient }) => {
     error: usererror,
   } = useQuery("users", getUserInfo);
 
-  console.log("user-----------", user);
+  // console.log("user-----------", user);
 
   if(user?.message == "다시 로그인"){
       logout();
       certificate(false);
+      navigate('/login');
+  }
+
+  if (user?.ban == true) {
+    alert("이전 등록하신 매물들이 3개 이상 허위매물로 분류되어 더이상 매물을 등록할 수 없습니다.");
+    navigate('/list');
   }
   if (userisLoading) {
     return <div>로딩 중...</div>;
@@ -234,7 +245,7 @@ const Insert = ({ queryClient }) => {
     <>
       <Global.Provider value={obj}>
         <NavHeader />
-        <Islogin /> 
+        <Islogin />
         <Bodyy>
           <MainTitle>매물 등록</MainTitle>
           <Caution>

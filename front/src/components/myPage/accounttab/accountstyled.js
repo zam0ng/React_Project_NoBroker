@@ -40,7 +40,7 @@ export const Coincontainer = styled.div`
     display: flex;
         & h4{
             width: 40%;
-            height: 25px;
+            height: 28px;
             border-bottom : 3px solid orange
         }
 `
@@ -60,7 +60,7 @@ export const Coinlist = styled.div`
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    
+    font-size: smaller;
 
     & div{
         width: 100%;

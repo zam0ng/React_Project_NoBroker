@@ -26,6 +26,8 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
                 queryClient.invalidateQueries('estate');
             } else if (data.message && data.message == "돈 부족") {
                 alert("돈이 부족합니다.");
+            } else if (data.message && data.message == "본인의 매물은 구매 불가") {
+                alert(data?.text);
             } else if (data.message && data.message == "다시 로그인") {
                 alert("로그인하세요.");
                 logout();
@@ -127,7 +129,7 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
         <div>
         {/* 구매 가능 상태 아니면 회색 버튼 */}
         <div style={{display : 'flex', justifyContent: 'center'}}>
-            {estate.state==0 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"orange"}>신청하기</BuyBtn> : <BuyBtn onClick={clickBuyBtn} backgroundColor = {"gray"}>구매 불가</BuyBtn>}
+            {estate.state==0  && estate.accpet == 1 ? <BuyBtn onClick={clickBuyBtn} backgroundColor = {"orange"}>신청하기</BuyBtn> : <BuyBtn onClick={()=>{alert("구매 불가 매물입니다.")}} backgroundColor = {"gray"}>구매 불가</BuyBtn>}
         </div>
 
         <Divider />

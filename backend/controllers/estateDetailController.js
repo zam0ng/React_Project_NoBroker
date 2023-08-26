@@ -100,14 +100,21 @@ exports.buyEstate = async (req, res) => {
     const estate = await Real_estate.findOne({ where: { id: real_estate_id } });
     const user = await User.findOne({ where: { id: buyer } });
 
+    console.log("estate.accpet", estate.accpet);
+
     // 구매가능한 매물이 아니면
-    if (estate.state != 0) {
+    if (estate.state != 0 || estate.accpet != 1) {
       return res.json({ message: "거래할 수 없는 매물입니다." });
     }
 
     // 신청자에게 매매가만큼 돈  없으면
     if (user.won < estate.deposit) {
       return res.json({ message: "돈 부족" });
+    }
+
+    // 구매자와 신청자가 동일한 사람이면
+    if (estate.dataValues.seller == buyer) {
+      return res.json({ message : "본인의 매물은 구매 불가", text : user.dataValues.user_name + "님이 등록하신 매물입니다."});
     }
 
     // 신청자에게 거래 신청 진행

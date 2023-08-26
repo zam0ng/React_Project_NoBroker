@@ -17,7 +17,6 @@ import RangeSlider from 'components/RangeSlider/index';
 
 const FilterRangeModal = ({ handlePriceInfiniteBtn, priceRangeValue, left , handlePriceRangeBox }) => {
   const _tooltipRef = useRef(null);
-  
 
   return (
     <>
@@ -40,9 +39,10 @@ const FilterRangeModal = ({ handlePriceInfiniteBtn, priceRangeValue, left , hand
 
               {/* <div style={{borderTop : "1px solid rgb(0,0,0)"}} > */}
                 <InfinitePriceBtn 
-                  onClick={ () => handlePriceRangeBox(1000000000) }   // 100억 까지 조회되게 설정
+                  onClick={ () => handlePriceRangeBox([0, 50000000000]) }   // 100억 까지 조회되게 설정
                   // handlePriceRangeBox
                   > 
+
                   <p>매매가 무제한</p>
                 </InfinitePriceBtn>
               {/* </div> */}

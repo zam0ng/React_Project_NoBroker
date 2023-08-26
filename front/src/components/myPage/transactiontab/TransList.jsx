@@ -75,6 +75,7 @@ const TransList = ({ data, el }) => {
     mutation.mutate({ el });
   }
   const resubmitBtn =async(el)=>{
+    console.log(el);
     resubmitmutation.mutate({el});
   }
 
@@ -99,9 +100,10 @@ const TransList = ({ data, el }) => {
     }   
   } 
   const detailpageblank = (el) => {
-    const url = `http://localhost:3000/detail/${el}`;
+    const currentURL = window.location.origin;
+    const url = `${currentURL}/detail/${el}`;
     window.open(url, '_blank');
-  };  
+};
 
   return (
     <EstateAllInfo>
@@ -128,7 +130,6 @@ const TransList = ({ data, el }) => {
             <span>보상금액<br></br> :{(data.Real_estate.balance).toLocaleString()}원</span>
             <span>재등록 완료</span>
           </>
-          
           :
           <><span>보상금액<br></br> :{(data.Real_estate.balance * 2).toLocaleString()}원</span></>
           

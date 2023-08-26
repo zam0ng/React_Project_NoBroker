@@ -10,12 +10,12 @@ import {
   FileDiv,
 } from "./imgstyeld";
 import { useState } from "react";
-let temp2=[];
-const ImgMulter = ({ temp, setTemp}) => {
+// let temp2=[];
+const ImgMulter = ({ temp, setTemp,temp2,seTemp2}) => {
   // ,temp2,seTemp2
   const [heightValue, setHeightValue] = useState("60px");
   const [cnt, setCnt] = useState(0);
-
+  // const [temp2,settemp2]= useState([]);
   // function uploadBtn() {
   //   console.log("나 클릭", temp2)
   //   const form = new FormData();
@@ -39,7 +39,8 @@ const ImgMulter = ({ temp, setTemp}) => {
   // }
   useEffect(() => {
     if (cnt > 7) {
-      alert("사진 7개이상 등록 불가능");
+      alert("사진 8개이상 등록 불가능");
+      
       return;
     } else if (cnt == 0) {
       setHeightValue("60px");
@@ -56,15 +57,14 @@ const ImgMulter = ({ temp, setTemp}) => {
     // input.files 값을 스프레드 연산자로 temp2에 재생성(값은 같지만 주소는 다름)/ 완전일치가 아님
     // 아래서 input 값을 비워도 upload할때는 input으로 하는게 아니고 temp2로 함.
     temp2 = [...temp2, ...input.files];
-    console.log(temp2);
-    console.log(input.files)
     // setTemp(prevTemp =>[...prevTemp, ...input.files]);
     setTemp(temp2);
     // 매물을 또 등록할 때 이전에 등록한 매물의 사진이 쌓여서 초기화
     // temp2=[];
     setCnt(cnt+ parseInt(input.files.length));
-
+    console.log(input.files);
     const imgContainer = document.getElementById("imgCotainer");
+    
     if (input.files) {
       let reader;
       for (let i = 0; i < input.files.length; i++) {
@@ -83,17 +83,18 @@ const ImgMulter = ({ temp, setTemp}) => {
           deleteButton.onclick=()=>{
             imgContainer.removeChild(div);
             deleteButton.parentNode.removeChild(deleteButton);
-            // console.log("111",deleteButton.parentNode)
-            console.log("111", file.name);
             setCnt((prevCnt) => prevCnt - 1);
 
+            // let idx = newfiles.findIndex((el) => {
             let idx = temp2.findIndex((el) => {
               console.log(el.name);
               return el.name == file.name;
             });
+            // const updatedFileList = [...temp2];
+            // updatedFileList.splice(idx, 1);
+            // settemp2(updatedFileList);
+            // setTemp(updatedFileList);
             temp2.splice(idx, 1);
-            console.log("temp222222", temp2);
-            // temp2 = [...temp2, ...input.files];
             setTemp(temp2);
 
           }

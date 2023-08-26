@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const MypageAlldiv = styled.div` 
+export const MypageAlldiv = styled.div`
     width: 1300px;
     height: 100%;
     display: flex;
@@ -25,13 +25,12 @@ export const UserInfoDiv = styled.div`
     align-content: space-around;
 
     & div{
-        width: 60%;
+        width: 130px;
         height: 130px;
-        border: 1px solid black;
         border-radius: 50%;
 
         & img{
-            width: 150px;
+            width: 130px;
             height: 130px;
             border-radius: 50%;
 
@@ -82,17 +81,17 @@ export const FakeDiv = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    
+
     & > span {
         width: 80%;
         height: 50px;
         font-size: xx-large;
         text-align: left;
     }
-    
+
     & > div {
         text-align: left;
-        
+
         &:nth-of-type(1){
             width: 80%;
             height: 30px;
@@ -111,7 +110,7 @@ export const FakeDiv = styled.div`
                 font-weight: 600;
             }
         }
-        
+
         &:nth-of-type(2){
             width: 80%;
             height: 100px;
@@ -190,7 +189,7 @@ export const Updateimg = styled.div`
         width: 200px;
         height: 200px;
         border: 1px solid black;
-        margin-bottom : 5px;
+        margin-bottom : 10px;
     }
     & input{
         position: absolute;
@@ -206,8 +205,10 @@ export const Updateimg = styled.div`
         font-weight: 600;
         font-size: smaller;
         cursor: pointer;
+        padding: 6px;
+        border-radius: 4px;
     }
-    
+
 `
 export const Updatebox = styled.div`
     width: 100%;
@@ -217,7 +218,7 @@ export const Updatebox = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    
+
     & span{
         width: 30%;
     }
@@ -249,7 +250,7 @@ align-items: center;
     border: 1px solid black;
     line-height: 40px;
     text-align: center;
-    
+
     &::placeholder{
         color: black;
     }
