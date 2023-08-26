@@ -21,15 +21,15 @@ const Account = () => {
   }
 
   const depositValue = (e) =>{
-    
+
     setdepositAmount(e.target.value.replace(/\,/g, ''));
     // 천단위 마다 , 찍기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     let ta = (e.target.value).replace(/\D/g, '');
     ta = ta.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    setdepositvalue(ta)                           
+    setdepositvalue(ta)
     const inputValue = e.target.value.trim();
-    
+
       const depositBtn = document.getElementById("depositBtn");
 
       if (inputValue !== "") {
@@ -49,10 +49,10 @@ const Account = () => {
     let ta = (e.target.value).replace(/\D/g, '');
     ta = ta.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    setwithdrawvalue(ta); 
+    setwithdrawvalue(ta);
     const inputValue2 = e.target.value.trim();
 
-    
+
       const withdrawBtn = document.getElementById("withdrawBtn");
       const withdrawInput= document.getElementById("withdrawInput");
 
@@ -71,7 +71,7 @@ const Account = () => {
 
       }
   }
-  
+
 
   const deposit = async(el)=>{
     console.log(el);
@@ -90,7 +90,7 @@ const Account = () => {
       const newWindow = window.open("/", "_blank");
       newWindow.document.write(data);
     }
-  }) 
+  })
 
   const withdraw = async(el)=>{
     const data = await axios.get("/mypage/withdraw",{
@@ -120,8 +120,8 @@ const Account = () => {
     withdrawInput.value="";
     withdrawMutation.mutate({id,money});
   }
-  
-  
+
+
   return (
     <Container>
       <Myaccount>
@@ -138,7 +138,7 @@ const Account = () => {
           <CoinlistDiv>
             <h4>보유금액</h4>
             <SecondCoinlist>
-              <div>{(updatedata.won).toLocaleString()} KRW</div>
+              <div>{(updatedata.won)?.toLocaleString()} KRW</div>
               <div>{updatedata.btc} BTC</div>
               <div>{updatedata.eth} ETH</div>
             </SecondCoinlist>
@@ -163,12 +163,12 @@ const Account = () => {
             <li>은행 점검시간에는 입금 서비스 이용이 원활하지 않을수 있습니다.</li>
             <li>VPN 환경을 활용해 접속한 경우 입출금 이용이 제한될 수 있습니다.</li>
           </ul>
-          <button id="depositBtn" onClick={()=>{depositHandler(updatedata.id,depositAmount)}} disabled={isdisabled} style={{backgroundColor: isdisabled ? "lightgray":"orange"}}>입금 신청</button> 
+          <button id="depositBtn" onClick={()=>{depositHandler(updatedata.id,depositAmount)}} disabled={isdisabled} style={{backgroundColor: isdisabled ? "lightgray":"orange"}}>입금 신청</button>
           </> : <>
           <WithdrawDiv>
             <Ablewithdraw>
               <span>출금가능</span>
-              <span>{(updatedata.won).toLocaleString()} KRW</span>
+              <span>{(updatedata.won)?.toLocaleString()} KRW</span>
             </Ablewithdraw>
             <WithdrawValue>
               <span>출금금액 (KRW)</span>
@@ -180,12 +180,12 @@ const Account = () => {
             <li>은행 점검시간에는 입금 서비스 이용이 원활하지 않을수 있습니다.</li>
             <li>부정거래가 의심될 경우 출금이 제한될 수 있습니다.</li>
           </ul>
-          <button id="withdrawBtn" onClick={()=>{withdrawHandler(updatedata.id,withdrawAmount)}} disabled={isdisabled2} style={{backgroundColor: isdisabled2 ? "lightgray":"orange"}}>출금 신청</button> 
-          
-          
-          
+          <button id="withdrawBtn" onClick={()=>{withdrawHandler(updatedata.id,withdrawAmount)}} disabled={isdisabled2} style={{backgroundColor: isdisabled2 ? "lightgray":"orange"}}>출금 신청</button>
+
+
+
           </>
-          }   
+          }
         </TossBox>
       </DepositWithdraw>
 
