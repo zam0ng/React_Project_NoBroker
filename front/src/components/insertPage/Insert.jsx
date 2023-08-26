@@ -56,10 +56,9 @@ const Insert = ({ queryClient }) => {
   const [year, setYear] = useState("");
   const [isdisable, setisDisable] = useState(true);
 
-  useEffect(()=>{
-
-    setTemp2([]);
-  },[])
+  // useEffect(()=>{
+  //   setTemp2([]);
+  // },[])
 
   let type;
 
