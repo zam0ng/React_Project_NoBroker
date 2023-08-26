@@ -58,7 +58,6 @@ const Detail = ({ vote = false }) => {
     const { data } = await axios.get(`/detail/${id}`, {
       withCredentials: true,
     });
-    console.log("받아온 데이터", data);
     return data;
   };
 

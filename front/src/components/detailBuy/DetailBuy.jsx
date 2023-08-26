@@ -66,7 +66,6 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
     }, {
         onSuccess : (data) => {
             if (data.message && data.message == "성공") {
-                console.log("찜 추가 성공");
 
                 queryClient.invalidateQueries('estate');
             } else if (data.message && data.message == "다시 로그인") {
@@ -89,7 +88,6 @@ const DetailBuy = ({estate, seller, like, queryClient}) => {
     }, {
         onSuccess : (data) => {
             if (data.message && data.message == "성공") {
-                console.log("찜 삭제 성공");
 
                 queryClient.invalidateQueries('estate');
             } else if (data.message && data.message == "다시 로그인") {
