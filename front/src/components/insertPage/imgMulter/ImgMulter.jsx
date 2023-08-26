@@ -11,32 +11,11 @@ import {
 } from "./imgstyeld";
 import { useState } from "react";
 // let temp2=[];
-const ImgMulter = ({ temp, setTemp,temp2,seTemp2}) => {
+const ImgMulter = ({ temp, setTemp,temp2,setTemp2}) => {
   // ,temp2,seTemp2
   const [heightValue, setHeightValue] = useState("60px");
   const [cnt, setCnt] = useState(0);
-  // const [temp2,settemp2]= useState([]);
-  // function uploadBtn() {
-  //   console.log("나 클릭", temp2)
-  //   const form = new FormData();
-  //   const files = temp2;
-
-  //   for (let i = 0; i < files.length; i++) {
-  //     form.append("upload", files[i]);
-  //   }
-  //   console.log("------------------------------- files",files)
-
-  //   axios.post("http://localhost:8080/upload",form,{
-
-  //         "Content-Type" : "multipart/form-data",
-  //         withCredentials : true,
-  //       }).then((e)=>{
-  //         console.log(e);
-  //         console.log("잘 전달됨.")
-  //       }).catch((err)=>{
-  //           console.log(err);
-  //       })
-  // }
+  
   useEffect(() => {
     if (cnt > 7) {
       alert("사진 8개이상 등록 불가능");
@@ -56,11 +35,14 @@ const ImgMulter = ({ temp, setTemp,temp2,seTemp2}) => {
 
     // input.files 값을 스프레드 연산자로 temp2에 재생성(값은 같지만 주소는 다름)/ 완전일치가 아님
     // 아래서 input 값을 비워도 upload할때는 input으로 하는게 아니고 temp2로 함.
-    temp2 = [...temp2, ...input.files];
-    // setTemp(prevTemp =>[...prevTemp, ...input.files]);
-    setTemp(temp2);
+    // temp2 = [...temp2, ...input.files];
+    // setTemp(temp2);
+    // // setTemp(prevTemp =>[...prevTemp, ...input.files]);
     // 매물을 또 등록할 때 이전에 등록한 매물의 사진이 쌓여서 초기화
     // temp2=[];
+    setTemp2(prevTemp2 => [...prevTemp2, ...input.files]);
+    setTemp(prevTemp => [...prevTemp, ...input.files]);
+
     setCnt(cnt+ parseInt(input.files.length));
     console.log(input.files);
     const imgContainer = document.getElementById("imgCotainer");
@@ -80,23 +62,28 @@ const ImgMulter = ({ temp, setTemp,temp2,seTemp2}) => {
           deleteButton.textContent ="X";
 
           // x 버튼 눌렀을 때
-          deleteButton.onclick=()=>{
+          deleteButton.onclick=()=>{  
             imgContainer.removeChild(div);
             deleteButton.parentNode.removeChild(deleteButton);
             setCnt((prevCnt) => prevCnt - 1);
 
-            // let idx = newfiles.findIndex((el) => {
-            let idx = temp2.findIndex((el) => {
-              console.log(el.name);
-              return el.name == file.name;
-            });
-            // const updatedFileList = [...temp2];
-            // updatedFileList.splice(idx, 1);
-            // settemp2(updatedFileList);
-            // setTemp(updatedFileList);
-            temp2.splice(idx, 1);
-            setTemp(temp2);
+            // // let idx = newfiles.findIndex((el) => {
+            // let idx = temp2.findIndex((el) => {
+            //   console.log(el.name);
+            //   return el.name == file.name;
+            // });
+            // // const updatedFileList = [...temp2];
+            // // updatedFileList.splice(idx, 1);
+            // // settemp2(updatedFileList);
+            // // setTemp(updatedFileList);
+            // temp2.splice(idx, 1);
+            // setTemp(temp2);
+            const idx = temp2.findIndex(el => el.name === file.name);
+            const updatedTemp2 = [...temp2];
+            updatedTemp2.splice(idx, 1);
+            setTemp2(updatedTemp2);
 
+            setTemp(prevTemp => prevTemp.filter(item => item.name !== file.name));
           }
           //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
