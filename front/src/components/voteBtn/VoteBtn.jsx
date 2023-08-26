@@ -80,7 +80,6 @@ const VoteBtn = ({ estate, setIsVoted }) => {
     const { data } = await axios.get(`/vote/getUserVote/${estate.id}`, {
       withCredentials: true,
     });
-    console.log("받아온 데이터", data);
     // setVoteData(data);
     return data;
   }

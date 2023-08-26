@@ -4,7 +4,6 @@ import { BigImg, Estate, List, ListDiv, EstateNum, Title, Road, ContentDiv, Vote
 import { serverUrl } from 'components/serverURL';
 
 const VoteList = ({ votable }) => {
-    console.log("voteable", votable);
 
     const nav = useNavigate();
 
@@ -28,7 +27,6 @@ const VoteList = ({ votable }) => {
     // 투표 마감일 반환
     const voteEnd = (endDate) => {
         const now = new Date();
-        console.log(now);
         const date = Math.floor((new Date(endDate).getTime() - new Date(`${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`).getTime())/(1000*60*60*24));
         let str;
         {date == 0 ? str = "D-day" : str = "D-"+ date}

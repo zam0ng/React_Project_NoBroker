@@ -15,7 +15,6 @@ const Vote = () => {
     const { data } = await axios.get(`/vote`, {
       withCredentials : true
     });
-    console.log("받아온 데이터",data);
     return data;
   }
 
