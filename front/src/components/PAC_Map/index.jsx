@@ -44,18 +44,16 @@ import ReactDOMServer from 'react-dom/server';
 
 import Footer from 'components/footer/Footer';
 import { useNavigate } from 'react-router-dom';
-import Islogin from 'components/insertPage/isLogined/Islogin';
+// import Islogin from 'components/insertPage/isLogined/Islogin';
 
-// gmarket 폰트 받기 
-
-
+import PriceAverageSwiper from 'components/PriceAverageSwiper/index'
 
 
 
 
 const PAC_Map = ({queryClient}) => {
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const { isLoggedIn, isCertificate } = useAuth();
 
@@ -655,8 +653,6 @@ const createZoomControl = ( map ) => {
                         `<div  style="letter-spacing : -0.5px;   font-family: 'GmarketSansMedium'; font-size : 13px; font-weight : 500;" > ${chenMan}만원</div>`:
                         `<div  style="letter-spacing : -0.5px;   font-family: 'GmarketSansMedium'; font-size : 13px; font-weight : 300;" > ${yuk}.${chenManWithYuk}억</div>`
 
-
-
                         // console.log("단위변환" ,contentString)
 
             // marker 가 만들어질 때 마다 info window 생성
@@ -825,8 +821,8 @@ return (
 
                 </PAC_Map_Wrapper>
 
-                {/* <PriceAverageSwiper>
-                </PriceAverageSwiper> */}
+                <PriceAverageSwiper>
+                </PriceAverageSwiper>
 
 
 

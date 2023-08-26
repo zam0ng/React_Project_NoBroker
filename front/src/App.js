@@ -60,7 +60,9 @@ function App() {
             element={isLoggedIn ? <Mypage queryClient={queryClient} /> : <Login />}
           />
 
+          {/* 배포 */}
           <Route path="/admin" element={isAdmin ? <Admin /> : <Login />} />
+          {/* <Route path="/admin" element={<Admin queryClient={queryClient} />} /> */}
 
           {/* 업자 회원만 접근 가능 */}
           <Route

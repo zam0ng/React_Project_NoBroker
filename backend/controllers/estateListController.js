@@ -45,10 +45,10 @@ exports.getTradableEstate = async(req , res) => {
           attributes : ['real_estate_id'],    // 이게 없으면, 모든 열을 반환 받음 | 이게 있으면, real_estate_id 열만 반환
           raw : true  // 결과물을 객체로 반환
         })
-        console.log("userLikeList" , userLikeList)  // 🔵 userLikeList [ { real_estate_id: 3 }, { real_estate_id: 7 }, { real_estate_id: 1 } ]
+        // console.log("userLikeList" , userLikeList)  // 🔵 userLikeList [ { real_estate_id: 3 }, { real_estate_id: 7 }, { real_estate_id: 1 } ]
 
         const arrUserLikeBuildingID = userLikeList.map(item => item.real_estate_id)
-        console.log("arrUserLikeBuildingID" , arrUserLikeBuildingID)
+        // console.log("arrUserLikeBuildingID" , arrUserLikeBuildingID)
 
         whereConditions.id = {
           [Op.in] : arrUserLikeBuildingID
@@ -124,7 +124,7 @@ exports.getTradableEstate = async(req , res) => {
 
 
 
-    console.log("whereConditions" , whereConditions)
+    // console.log("whereConditions" , whereConditions)
       // [문제상황] whereConditions { state: null, type: 'null' } 이렇게 찍힘 | 즉, type 이 null 이라는게 문제
       // [시도] 그래서, 문자열 null 이면, 일반 null 로 해달라고 해봄
 
@@ -147,8 +147,8 @@ exports.getTradableEstate = async(req , res) => {
     try {
       // 클라이언트로부터 '매물 id'와 'nearsubway' 정보를 받아오기
       const { real_estate_id, nearSubway } = req.body;
-      console.log("real_estate_id" , real_estate_id)
-      console.log("nearSubway" , nearSubway)
+      // console.log("real_estate_id" , real_estate_id)
+      // console.log("nearSubway" , nearSubway)
       const stringNearSubway = JSON.stringify(nearSubway);
 
   
