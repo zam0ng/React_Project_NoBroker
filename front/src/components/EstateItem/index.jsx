@@ -227,7 +227,7 @@
               {/* const squareMeter = "m\u00B2"; */}
             <RoomDesc>
               {`${estateYear}`}
-              {`${estateArea}m²`}{`(${Math.floor(estateArea/3)}평)`}
+              {`${estateArea}m²`}{`(${Math.floor(estateArea/3.3)}평)`}
             </RoomDesc>
 
             {/* 특징 : 1) 지하철 3분 거리 2) 공원근처 | 구글 맵에서 계산해서 보여주면 좋을거 같음 ✅ */}
