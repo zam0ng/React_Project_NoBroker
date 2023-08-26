@@ -44,13 +44,14 @@ const Account = () => {
   }
 
   const withdrawValue = (e) =>{
-    setdepositAmount(e.target.value.replace(/\,/g, ''));
+    setwithdrawAmount(e.target.value.replace(/\,/g, ''));
     // 천단위 마다 , 찍기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     let ta = (e.target.value).replace(/\D/g, '');
     ta = ta.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     setwithdrawvalue(ta); 
-    const inputValue2 = e.target.value.trim();
+    const inputValue2 =e.target.value.replace(/\,/g, '');
+    console.log(inputValue2);
 
     
       const withdrawBtn = document.getElementById("withdrawBtn");
@@ -61,7 +62,11 @@ const Account = () => {
         setisdisabled2(false);
         if(inputValue2 > updatedata.won){
           alert("출금가능 금액을 확인해주세요.")
-          withdrawInput.value="";
+          // withdrawInput.value="";
+          setwithdrawvalue("");
+
+          
+          
 
         }
       }
@@ -111,13 +116,15 @@ const Account = () => {
   const depositHandler = (id,money)=>{
     const depositInput= document.getElementById("depositInput");
     console.log("눌림?")
-    depositInput.value="";
+    // depositInput.value="";
+    setdepositvalue("");
     mutation.mutate({id,money});
   }
   const withdrawHandler = (id,money)=>{
     const withdrawInput= document.getElementById("withdrawInput");
     console.log("눌림?")
-    withdrawInput.value="";
+    // withdrawInput.value=""
+    setwithdrawvalue("");
     withdrawMutation.mutate({id,money});
   }
   

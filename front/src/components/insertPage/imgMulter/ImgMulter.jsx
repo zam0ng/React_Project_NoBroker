@@ -10,9 +10,9 @@ import {
   FileDiv,
 } from "./imgstyeld";
 import { useState } from "react";
-
-let temp2 = [];
-const ImgMulter = ({ temp, setTemp }) => {
+let temp2=[];
+const ImgMulter = ({ temp, setTemp}) => {
+  // ,temp2,seTemp2
   const [heightValue, setHeightValue] = useState("60px");
   const [cnt, setCnt] = useState(0);
 
@@ -56,7 +56,8 @@ const ImgMulter = ({ temp, setTemp }) => {
     // input.files 값을 스프레드 연산자로 temp2에 재생성(값은 같지만 주소는 다름)/ 완전일치가 아님
     // 아래서 input 값을 비워도 upload할때는 input으로 하는게 아니고 temp2로 함.
     temp2 = [...temp2, ...input.files];
-    // console.log(temp2);
+    console.log(temp2);
+    console.log(input.files)
     // setTemp(prevTemp =>[...prevTemp, ...input.files]);
     setTemp(temp2);
     // 매물을 또 등록할 때 이전에 등록한 매물의 사진이 쌓여서 초기화
@@ -102,6 +103,7 @@ const ImgMulter = ({ temp, setTemp }) => {
           div.appendChild(deleteButton);
           imgContainer.appendChild(div);
           input.value = "";
+          // temp2=[];
           // console.log("비움sdfsdfsdfs",input.files)
           // console.log("비움sdfsdfsdfs",temp)
         };
