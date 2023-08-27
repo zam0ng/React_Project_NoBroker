@@ -19,7 +19,7 @@ exports.getEstate = async (req, res) => {
     const estate = await Real_estate.findOne({
       where: { id },
       // include: { model: Comment, order:[['createdAt', 'DESC']], include: [{ model: Recomment, order : [['createdAt', 'DESC']], include : {model : User, attributes : ['user_name', 'user_img']} }, {model : User, attributes : ['user_name', 'user_img']}] },
-      include: { model: Comment, include: [{ model: Recomment, include: { model: User, attributes: ['user_name', 'user_img'] } }, { model: User, attributes: ['user_name', 'user_img'] }] },
+      include: { model: Comment, include: [{ model: Recomment, include: { model: User, attributes: ['user_name', 'user_img'] }, order: [['id', 'ASC']] }, { model: User, attributes: ['user_name', 'user_img'] }] },
     });
 
     let user_like = false;
@@ -187,7 +187,9 @@ exports.postComment = async (req, res) => {
     // const user_id = 1;
     const { real_estate_id, content } = req.body;
 
-    const createdAt = new Date().toLocaleString("ko-KR", {
+    const now = new Date();
+    now.setHours(now.getHours() + 9);
+    const createdAt = now.toLocaleString("ko-KR", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
@@ -212,7 +214,9 @@ exports.postRecomment = async (req, res) => {
     // const user_id = 1;
     const { comment_id, re_content } = req.body;
 
-    const createdAt = new Date().toLocaleString("ko-KR", {
+    const now = new Date();
+    now.setHours(now.getHours() + 9);
+    const createdAt = now.toLocaleString("ko-KR", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",

@@ -86,7 +86,8 @@ const RegisterList = ({data}) => {
     );
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-    const ImgUrl = data.Real_estate.img_1?.split("\\")[2];
+    // const ImgUrl = data.Real_estate.img_1?.split("\\")[2];
+    const ImgUrl = data.Real_estate.img_1?.substr(12);
 
 
 
@@ -234,7 +235,7 @@ const RegisterList = ({data}) => {
 
   return (
     <EstateAllInfo>
-      <Ta onClick={()=>{detailpageblank(data.id)}}>
+      <Ta onClick={()=>{detailpageblank(data.Real_estate.id)}}>
       <DateImg>
         <span>{revisedFormattedDate}</span>
         <img src={`${serverUrl}estate_imgs/${ImgUrl}`}></img>
