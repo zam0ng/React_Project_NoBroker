@@ -303,7 +303,7 @@ exports.approvedUpdate = async (req, res) => {
         doc.font(fontPath).fontSize(12).fillColor('#000000').text("잔금", 40, 270, { align: 'left' });
 
         doc.rect(120, 270, 460, 20).stroke();
-        doc.font(fontPath).fontSize(10).fillColor('#000000').text(`${(data[0].Real_estate.deposit - data[0].Real_estate.balance).toLocaleString()} 원 / 잔금날짜 : ${restDate}`, 130, 270, { align: 'left' });
+        doc.font(fontPath).fontSize(10).fillColor('#000000').text(`${(data[0].Real_estate.deposit - data[0].Real_estate.balance).toLocaleString()} 원 / 잔금날짜 : ${restDate.toLocaleTimeString()}`, 130, 270, { align: 'left' });
         //-----------
         // 약조
         doc.font(fontPath).fontSize(10).fillColor('#000000').text("제 1 조", 40, 290, { align: 'left' });

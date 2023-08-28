@@ -18,7 +18,7 @@ const ImgMulter = ({ temp, setTemp,temp2,setTemp2}) => {
   
   useEffect(() => {
     if (cnt > 7) {
-      alert("사진은 7개까지만 등록 가능합니다.");
+      alert("사진은 7개까지만 등록 가능합니다1.");
       return;
     } else if (cnt == 0) {
       setHeightValue("60px");
@@ -29,16 +29,21 @@ const ImgMulter = ({ temp, setTemp,temp2,setTemp2}) => {
     }
   }, [cnt]);
 
+
   function loadImg(event) {
     let input = event.target;
     
     // setTemp2(prevTemp2 => [...prevTemp2, ...input.files]);
-    setTemp(prevTemp => [...prevTemp, ...input.files]);
-    setCnt(cnt+ parseInt(input.files.length));
+    
+    
+    if(cnt<7 && input.files.length <8 && cnt + input.files.length < 8){
 
-    const imgContainer = document.getElementById("imgCotainer");
-    if(cnt<7){
-
+      setTemp(prevTemp => [...prevTemp, ...input.files]);
+      console.log(input.files.length);
+      const imgContainer = document.getElementById("imgCotainer");
+      // setCnt(cnt+ parseInt(input.files.length));
+      setCnt(preCnt => preCnt +parseInt(input.files.length));
+      
     if (input.files) {
       let reader;
       for (let i = 0; i < input.files.length; i++) {
@@ -80,6 +85,9 @@ const ImgMulter = ({ temp, setTemp,temp2,setTemp2}) => {
         reader.readAsDataURL(file);
       }
     }
+    }
+    else{
+      alert("사진은 7개까지만 등록 가능합니다2.");
     }
   }
 
